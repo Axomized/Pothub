@@ -4,11 +4,11 @@ import java.sql.Timestamp;
 
 public class ForumVoteModel {
 	int postID;
-	String upOrDown; //Dont know datatype
+	int upOrDown;
 	String iGN;
 	Timestamp date;
 	
-	public ForumVoteModel(ForumPostModel fPM, String upOrDown, DatabaseUserModel dUM, Timestamp date) {
+	public ForumVoteModel(ForumPostModel fPM, int upOrDown, DatabaseUserModel dUM, Timestamp date) {
 		super();
 		this.postID = fPM.getPostID();
 		this.upOrDown = upOrDown;
@@ -20,7 +20,7 @@ public class ForumVoteModel {
 		return postID;
 	}
 
-	public String getUpOrDown() {
+	public int getUpOrDown() {
 		return upOrDown;
 	}
 
@@ -36,7 +36,7 @@ public class ForumVoteModel {
 		this.postID = postID;
 	}
 
-	public void setUpOrDown(String upOrDown) {
+	public void setUpOrDown(int upOrDown) {
 		this.upOrDown = upOrDown;
 	}
 
