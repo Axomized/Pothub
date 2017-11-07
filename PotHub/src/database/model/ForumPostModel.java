@@ -4,13 +4,13 @@ import java.sql.Timestamp;
 
 public class ForumPostModel {
 	int postID;
-	String thread; //Dont know datatype
-	String upvotes; //Dont know datatype
+	String thread;
+	int upvotes;
 	String iGN;
 	Timestamp date;
 	int fileAttachment;
 	
-	public ForumPostModel(int postID, String thread, String upvotes, DatabaseUserModel dUM, Timestamp date, FileTableModel fTM) {
+	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Timestamp date, FileTableModel fTM) {
 		super();
 		this.postID = postID;
 		this.thread = thread;
@@ -28,7 +28,7 @@ public class ForumPostModel {
 		return thread;
 	}
 
-	public String getUpvotes() {
+	public int getUpvotes() {
 		return upvotes;
 	}
 
@@ -52,7 +52,7 @@ public class ForumPostModel {
 		this.thread = thread;
 	}
 
-	public void setUpvotes(String upvotes) {
+	public void setUpvotes(int upvotes) {
 		this.upvotes = upvotes;
 	}
 
