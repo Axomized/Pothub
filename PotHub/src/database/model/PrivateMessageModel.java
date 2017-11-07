@@ -3,8 +3,8 @@ package database.model;
 import java.sql.Timestamp;
 
 public class PrivateMessageModel {
-	String iGNSend; //Dont know datatype
-	String iGNReceive; //Dont Know datatype
+	String iGNSend;
+	String iGNReceive;
 	String message;
 	Timestamp date;
 	boolean readOrNot;

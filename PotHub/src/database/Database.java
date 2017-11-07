@@ -6,8 +6,11 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
+import database.model.DatabaseUserModel;
 import database.model.ShoppingLoginModel;
 
 public class Database{
@@ -26,6 +29,9 @@ public class Database{
 		 	case 1:
 		 		conn = DriverManager.getConnection(DB_URL, loginModelArray.get(1).getLogin(), loginModelArray.get(1).getPassword());
 		 		break;
+		 	case 2:
+		 		conn = DriverManager.getConnection(DB_URL, loginModelArray.get(2).getLogin(), loginModelArray.get(2).getPassword());
+		 		break;
     	}
     }
     
@@ -34,6 +40,28 @@ public class Database{
     	PreparedStatement ps = conn.prepareStatement(sqlline);
     	ResultSet rs = ps.executeQuery();
     	return rs;
+    }
+    
+    public void updateDatabaseUser(String sql, DatabaseUserModel dUM) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement(sql);
+		ppstmt.setString(1, dUM.getEmail());
+		ppstmt.setString(2, dUM.getiGN());
+		ppstmt.setString(3, dUM.getContact_No());
+		ppstmt.setString(4, String.valueOf(dUM.getGender()));
+		ppstmt.setString(5, dUM.getAddress());
+		ppstmt.setTimestamp(6, dUM.getLastLogin());
+		ppstmt.setTimestamp(7, dUM.getJoinDate());
+		
+		executeUpdate(ppstmt);
+	}
+    
+    private void executeUpdate(PreparedStatement ppstmt) throws SQLException{
+    	int count = ppstmt.executeUpdate();
+        if(count ==0){
+        	System.out.println("!!! Update failed !!!\n");
+        }else{
+    	    System.out.println("!!! Update successful !!!\n");
+        }
     }
     
     /*

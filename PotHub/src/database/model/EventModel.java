@@ -8,19 +8,14 @@ public class EventModel {
 	Timestamp date;
 	String venue;
 	int max_No_People;
-	String pendingPeople; //Dont know datatype
-	String confirmedPeople; //Dont know datatype
 	
-	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People, String pendingPeople,
-			String confirmedPeople) {
+	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People) {
 		super();
 		this.eventID = eventID;
 		this.iGN = dUM.getiGN();
 		this.date = date;
 		this.venue = venue;
 		this.max_No_People = max_No_People;
-		this.pendingPeople = pendingPeople;
-		this.confirmedPeople = confirmedPeople;
 	}
 
 	public int getEventID() {
@@ -43,14 +38,6 @@ public class EventModel {
 		return max_No_People;
 	}
 
-	public String getPendingPeople() {
-		return pendingPeople;
-	}
-
-	public String getConfirmedPeople() {
-		return confirmedPeople;
-	}
-
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}
@@ -69,13 +56,5 @@ public class EventModel {
 
 	public void setMax_No_People(int max_No_People) {
 		this.max_No_People = max_No_People;
-	}
-
-	public void setPendingPeople(String pendingPeople) {
-		this.pendingPeople = pendingPeople;
-	}
-
-	public void setConfirmedPeople(String confirmedPeople) {
-		this.confirmedPeople = confirmedPeople;
 	}
 }
