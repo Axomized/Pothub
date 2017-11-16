@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/Admin")
-public class AdminPanel extends HttpServlet {
+@WebServlet("/Bans")
+public class BanPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AdminPanel() {
+    public BanPanel() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -47,7 +47,7 @@ public class AdminPanel extends HttpServlet {
 		+ "<div id='navigation'>"
 		+ "<ul>"
 		+ "<li><a href='Admin'>User Control</a></li>"
-		+ "<li><a href='Bans'>Bans</a></li>"
+		+ "<li><a href='banscreen.html'>Bans</a></li>"
 		+ "<li><a href='#02'>Appeals</a></li>"
 		+ "<li><a href='#03'>Donation History</a></li>"
 		+ "<li><a href='#04'>Forum Control</a></li>"
