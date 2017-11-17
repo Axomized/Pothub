@@ -2,14 +2,14 @@ html
 {
 	margin: 0;
 	padding: 0;
-	color: #aaaaaa;
-	background-color: #333333;
+	color: #555555;
+	background-color: #f8eee7;
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
 }
 
 /* Links */
 
-a:link { text-decoration: none; color: #7799bb; }
+a:link { text-decoration: none; color: #94618e; }
 
 a:visited { text-decoration: none; color: #557799; }
 
@@ -17,7 +17,7 @@ a:hover, a:active { color: #dd5555; }
 
 /* Html Elements */
 
-h1, h2, h3, h4, h5, h6 { font-weight: normal; margin: 0; padding: 10px 0; color: #ff8400; }
+h1, h2, h3, h4, h5, h6 { font-weight: normal; margin: 0; padding: 10px 0; color: #49274a; }
 
 h1 { font-size: 32px; }
 
@@ -31,13 +31,12 @@ h5, h6 { font-size: 17px; }
 
 ul, ol, dl, blockquote, pre
 {
-	color: #999999;
+	color: #555555;
 	margin: 10px 35px;
 	padding: 10px 30px;
 	line-height: 1.6em;
 	border: 1px solid #1a1a1a;
-	border-top: 10px solid #151515;
-	background: #404040;
+	background: #f8eee7;
 }
 
 p { margin: 0; }
@@ -47,7 +46,7 @@ ul { list-style-type: square; }
 dt
 {
 	margin: 0;
-	color: #7799bb;
+	color: #94618e;
 	font-size: 10px;
 	font-weight: bold;
 	padding: 2px 0 2px;
@@ -62,13 +61,13 @@ pre { font-family: Consolas, Verdana, "Courier New"; font-size: 11px; padding: 1
 
 code { color: #ff8400; }
 
-abbr, acronym { text-decoration: none; border-bottom: 1px dotted #aaaaaa; cursor: help; }
+abbr, acronym { text-decoration: none; border-bottom: 1px dotted #555555; cursor: help; }
 
 em { font-style: italic; }
 
 strong { font-weight: bold; }
 
-ins { color: #999999; text-decoration: none; padding-left: 20px;}
+ins { color: #555555; text-decoration: none; padding-left: 20px;}
 
 del { text-decoration: line-through; }
 
@@ -92,8 +91,7 @@ body
 	float: left;
 	width: 100%;
 	clear: both;
-	border-top: 10px solid #111111;
-	background: #222222;
+	background: #f3decb;
 }
 
 #navigation
@@ -101,9 +99,8 @@ body
 	float: left;
 	width: 100%;
 	clear: both;
-	color: #333333;
-	border-bottom: 5px solid #222222;
-	background: #eeeeee;
+	color: #f3decb;
+	background: #49274a;
 }
 
 #wrapper
@@ -111,7 +108,7 @@ body
 	clear: both;
 	float: left;
 	width: 100%;
-	margin: 10px 0;
+	margin: 10px 0 0 0;
 	min-height: 100%;
 }
 
@@ -148,9 +145,7 @@ body
 	width: 100%;
 	color: #888888;
 	text-align: center;
-	background-color: #222222;
-	border-top: 1px solid #000000;
-	border-bottom: 10px solid #191919;
+	background-color: #f3decb;
 }
 
 /* Header */
@@ -173,7 +168,7 @@ body
 #navigation a:link,
 #navigation a:visited
 {
-	color: #002244;
+	color: #f3decb;
 	font-weight: bold;
 	text-transform: uppercase;
 }
@@ -181,8 +176,7 @@ body
 #navigation a:hover,
 #navigation a:active
 {
-	color: #7799bb;
-	background: #333333 url(images/navigation_hover.gif) top left repeat;
+	color: #94618e;
 }
 
 li#lhome a:hover,
@@ -224,7 +218,7 @@ li#lcontact a:active
 body#babout li#labout a
 {
 	color: #99bbdd;
-	background: #333333;
+	background: #f3decb;
 }
 
 table {
@@ -244,12 +238,15 @@ tbody {
 		height:300px;
     overflow-y: auto;
     overflow-x: hidden;
-		border-top: 2px solid black;
 }
 
 tbody td, thead th {
     width: 140px;
 		border-right: 1px solid black;
+}
+
+thead th {
+	color:#94618e;
 }
 
 thead th:last-child {
@@ -271,6 +268,17 @@ tbody td:last-child {
 
 td button {
 	margin-left: 20px;
+	background: #94618e;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+}
+td button:hover {
+    background-color: #94618e;
+    color: white;
 }
 input {
 	margin-bottom: 10px;
@@ -282,13 +290,11 @@ input {
 
 #sidebar p
 {
-	color: #999999;
+	color: #555555;
 	margin: 10px 35px;
 	padding: 5px 30px;
 	line-height: 1.6em;
-	border: 1px solid #1a1a1a;
-	border-top: 10px solid #151515;
-	background: #404040;
+	background: #f8eee7;
 }
 
 /* Footer */
@@ -299,4 +305,4 @@ input {
 
 #footer a:visited { color: #666666; font-weight: bold; border-bottom: 1px dotted #666666; }
 
-#footer a:hover, #footer a:active { color: #999999; border-bottom: 1px solid #999999; }
+#footer a:hover, #footer a:active { color: #555555; border-bottom: 1px solid #555555; }
