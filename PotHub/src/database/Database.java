@@ -6,10 +6,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
-
 import database.model.DatabaseUserModel;
 import database.model.ShoppingLoginModel;
 
@@ -36,7 +33,8 @@ public class Database{
     }
     
     //public ArrayList<String>
-    private ResultSet getResultSet(String sqlline) throws SQLException{
+    @SuppressWarnings("unused")
+	private ResultSet getResultSet(String sqlline) throws SQLException{
     	PreparedStatement ps = conn.prepareStatement(sqlline);
     	ResultSet rs = ps.executeQuery();
     	return rs;
