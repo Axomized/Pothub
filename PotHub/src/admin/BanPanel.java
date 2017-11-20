@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/Bans")
+@WebServlet("/AdminBans")
 public class BanPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -49,11 +49,10 @@ public class BanPanel extends HttpServlet {
 +"</div>"
 +"<div id='navigation'>"
   +"<ul>"
-    +"<li>"+"<a href='Admin'>User Control</a>"+"</li>"
-    +"<li>"+"<a href='Bans'>Bans</a>"+"</li>"
-    +"<li>"+"<a href='#02'>Appeals</a>"+"</li>"
-    +"<li>"+"<a href='#03'>Donation History</a>"+"</li>"
-    +"<li>"+"<a href='#04'>Forum Control</a>"+"</li>"
+    +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
+    +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
+    +"<li>"+"<a href='AdminDonations'>Donation History</a>"+"</li>"
+    +"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
   +"</ul>"
 +"</div>"
 +"<div id='wrapper'>"
