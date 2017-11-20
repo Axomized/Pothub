@@ -27,6 +27,7 @@ public class HTMLtoServlet {
 	    }
 	    s = s.replaceAll("href=\'../css", "href=\'css");
 	    s = s.replaceAll("src=\'../script", "src=\'script");
+	    s = s.replaceAll("src=\'../images", "src=\'images");
 	    in.close();
 	        
 		StringSelection selection = new StringSelection(s);
