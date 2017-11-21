@@ -43,7 +43,62 @@ p {
 
 ul { 
 	list-style-type: square; 
-} 
+}
+
+/* Navigation */
+
+#navigation ul { 
+	float: left; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+	background: none; 
+	border-width: 0; 
+}
+
+#navigation li { 
+	float: left; 
+}
+
+#navigation a {
+	float: left;
+	display: block;
+	padding: 5px 10px; 
+	text-decoration: none;
+}
+
+#navigation a:link, #navigation a:visited {
+	color: #f3decb;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#navigation a:hover, #navigation a:active {
+	color: #94618e;
+}
+
+/* Header */
+
+#header h1 { 
+	padding: 20px; 
+	color:#49274a;
+}
+
+#companyTitle {
+	float: left;
+	padding-top: 10px;
+}
+
+#profilePic {
+	padding: 10px 20px;
+	float: right;
+	text-align: center;
+}
+
+#welcomeSpan {
+	display: block;
+	padding-top: 5px;
+}
 
 /* Structure */
 
@@ -86,7 +141,7 @@ body {
 
 #footer {
 	position: absolute;
-   	bottom: 0;
+	bottom: 0;
 	clear: both;
 	float: left;
 	width: 100%; 
@@ -95,59 +150,11 @@ body {
 	background-color: #f3decb;
 }
 
-/* Header */
-
-#header h1 { 
-	padding: 20px; 
-	color:#49274a;
-}
-
-#companyTitle {
-	float: left;
-}
-
-#profilePic {
-	padding: 10px 20px;
-	float: right;
-}
-
-/* Navigation */
-
-#navigation ul { 
-	float: left; 
-	list-style-type: none; 
-	margin: 0; 
-	padding: 0; 
-	background: none; 
-	border-width: 0; 
-}
-
-#navigation li { 
-	float: left; 
-}
-
-#navigation a {
-	float: left;
-	display: block;
-	padding: 5px 10px; 
-	text-decoration: none;
-}
-
-#navigation a:link, #navigation a:visited {
-	color: #f3decb;
-	font-weight: bold;
-	text-transform: uppercase;
-}
-
-#navigation a:hover, #navigation a:active {
-	color: #94618e;
-}
-
 #onBehalfDiv {
 	height: 100px;
 	width: 800px;
 	margin: auto;
-	border: 1px solid black;
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 }
 
 #askDiv {
@@ -163,7 +170,7 @@ body {
     display: block;
     margin: auto;
     width: 40%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #49274a;
 }
 
 #onBehalfCheckDiv {
@@ -186,12 +193,16 @@ body {
 	margin-right: auto;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
-	border: 1px solid black;
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 }
 
 #donateLabel {
 	display: block;
-	padding-bottom: 10px;
+}
+
+#donateAmt {
+	position: relative;
+	right: 2.5%;
 }
 
 #inputInfoDiv {
@@ -201,7 +212,7 @@ body {
 	margin-right: auto;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
-	border: 1px solid black;
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 }
 
 #nameInputDiv {
@@ -209,13 +220,14 @@ body {
 }
 
 #nameLabel {
+	display: block;
 	position: relative;
-	right: 11.1%;
+	right: 10.4%;
 }
 
 #nameInput {
 	position: relative;
-	left: 5.94%;
+	right: 2.5%;
 }
 
 #cardInputDiv {
@@ -223,31 +235,58 @@ body {
 }
 
 #cardLabel {
+	display: block;
 	position: relative;
-	right: 5.2%;
+	right: 5.6%;
 }
 
 #cardNo {
-	
+	position: relative;
+	right: 2.5%;
 }
 
 #dateCodeDiv {
-	
+	display: flex;
+}
+
+#dateDiv {
+	position: relative;
+	left: 30%;
+}
+
+#expiryDateLabel {
+	display: block;
+	position: relative;
+	left: 21%;
 }
 
 #selectMonth {
 	height: 26px;
 	width: 60px;
+	position: relative;
+	left: 50%;
 }
 
 #selectYear {
 	height: 26px;
 	width: 60px;
+	position: relative;
+	left: 50%;
+}
+
+#codeDiv {
+	position: relative;
+	left: 40%;
+}
+
+#codeLabel {
+	display: block;
+	position: relative;
+	right: 27.5%;
 }
 
 #securityCode {
-	position: relative;
-	left: 0.6%;
+	
 }
 
 /* Footer */
