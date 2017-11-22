@@ -1,4 +1,4 @@
-E<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
 		<meta charset="ISO-8859-1">
@@ -44,7 +44,7 @@ E<!DOCTYPE html>
 							<div id="askDiv">
 								Are you donating on behalf of someone? Check the box if yes, ignore if no.
 							</div>
-							<div id="thatLine"></div>
+							<div class="thatLine"></div>
 							<div id="onBehalfCheckDiv">
 								<input type="checkbox" id="checkYes" name="checkYes" value="Yes"><span id="yesSpan">Yes, I accept.</span>
 								<input type="text" id="behalfName" name="behalfName" required>
@@ -104,7 +104,11 @@ E<!DOCTYPE html>
 									<input type="text" id="securityCode" name="securityCode" required/>
 								</div>
 							</div>
-							<div id="errorMsg"></div>
+							<div id="errorMsg">Invalid credit card</div>
+							<div class="thatLine"></div>
+							<div id="buttonDiv">
+								<button id="donateBtn" name="donateBtn" value="donateBtn">Donate</button>
+							</div>
 						</div>
 					</form>
 				</div>

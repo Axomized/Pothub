@@ -88,13 +88,20 @@ body
 	color:#49274a;
 }
 
-#companyTitle{
+#companyTitle {
 	float: left;
+	padding-top: 10px;
 }
 
-#profilePic{
+#profilePic {
 	padding: 10px 20px;
 	float: right;
+	text-align: center;
+}
+
+#welcomeSpan {
+	display: block;
+	padding-top: 5px;
 }
 
 /* Navigation */

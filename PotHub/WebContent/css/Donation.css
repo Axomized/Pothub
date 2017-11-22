@@ -155,6 +155,7 @@ body {
 	width: 800px;
 	margin: auto;
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+	background-color: #f3decb;
 }
 
 #askDiv {
@@ -165,7 +166,7 @@ body {
 	text-align: center;
 }
 
-#thatLine {
+.thatLine {
 	content: "";
     display: block;
     margin: auto;
@@ -186,6 +187,12 @@ body {
 	padding-right: 10px;
 }
 
+#behalfName {
+	height: 25px;
+	width: 200px;
+	padding: 5px 5px;
+}
+
 #donateAmtDiv {
 	width: 800px;
 	margin-top: 10px;
@@ -194,15 +201,19 @@ body {
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+	background-color: #f3decb;
 }
 
 #donateLabel {
 	display: block;
+	position: relative;
+	right: 0.3%;
 }
 
 #donateAmt {
-	position: relative;
-	right: 2.5%;
+	height: 25px;
+	width: 200px;
+	padding: 5px 5px;
 }
 
 #inputInfoDiv {
@@ -213,6 +224,7 @@ body {
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+	background-color: #f3decb;
 }
 
 #nameInputDiv {
@@ -222,12 +234,13 @@ body {
 #nameLabel {
 	display: block;
 	position: relative;
-	right: 10.4%;
+	right: 10.5%;
 }
 
 #nameInput {
-	position: relative;
-	right: 2.5%;
+	height: 25px;
+	width: 200px;
+	padding: 5px 5px;
 }
 
 #cardInputDiv {
@@ -237,56 +250,86 @@ body {
 #cardLabel {
 	display: block;
 	position: relative;
-	right: 5.6%;
+	right: 5.8%;
 }
 
 #cardNo {
-	position: relative;
-	right: 2.5%;
+	height: 25px;
+	width: 200px;
+	padding: 5px 5px;
 }
 
 #dateCodeDiv {
 	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-bottom: 10px;
 }
 
 #dateDiv {
 	position: relative;
-	left: 30%;
+	right: 0.1%;
 }
 
 #expiryDateLabel {
 	display: block;
 	position: relative;
-	left: 21%;
+	right: 29%;
 }
 
 #selectMonth {
-	height: 26px;
+	height: 25px;
 	width: 60px;
-	position: relative;
-	left: 50%;
 }
 
 #selectYear {
-	height: 26px;
+	height: 25px;
 	width: 60px;
 	position: relative;
-	left: 50%;
+	right: 1.1%;
 }
 
 #codeDiv {
-	position: relative;
-	left: 40%;
+	
 }
 
 #codeLabel {
 	display: block;
 	position: relative;
-	right: 27.5%;
+	right: 1.5%;
 }
 
 #securityCode {
-	
+	height: 25px;
+	width: 75px;
+	padding: 5px 5px;
+}
+
+#errorMsg {
+	display: none;
+	width: 25%;
+	margin-left: auto;
+	margin-right: auto;
+	margin-bottom: 10px;
+	color: white;
+	background-color: #f74225;
+	padding: 5px;
+}
+
+#buttonDiv {
+	margin-top: 10px;
+}
+
+#donateBtn {
+	height: 25px;
+    width: 100px;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border-color: transparent;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 /* Footer */
