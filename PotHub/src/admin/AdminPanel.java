@@ -49,6 +49,7 @@ public class AdminPanel extends HttpServlet {
 	    +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 	    +"<li>"+"<a href='AdminDonations'>Donation History</a>"+"</li>"
 	    +"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
+	    +"<li>"+"<a href='AdminSupport'>Support Tickets</a>"+"</li>"
 		+ "</ul>"
 		+ "</div>"
 		+ "<div id='wrapper'>"

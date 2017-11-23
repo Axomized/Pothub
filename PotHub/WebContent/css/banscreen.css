@@ -276,6 +276,8 @@ td button {
     text-align: center;
     text-decoration: none;
     display: inline-block;
+    float:right;
+    width:60px;
 }
 td button:hover {
     background-color: #94618e;
