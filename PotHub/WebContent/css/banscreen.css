@@ -106,7 +106,6 @@ body
 	clear: both;
 	float: left;
 	width: 100%;
-	margin: 10px 0 0 0;
 	min-height: 100%;
 	background: #f8eee7
 }
@@ -223,13 +222,11 @@ body#babout li#labout a
 #tableWrapper {
 	height: 400px; 
 	overflow-y: scroll;
-	margin-bottom:100px;
 }
 
 table {
     width: 100%;
     border-spacing: 0;
-	margin-bottom: 25px;
 	border-color: black;
 	border-width: 1px;
 	border-style: solid;
@@ -284,6 +281,31 @@ td button:hover {
     color: white;
 }
 /*Table end*/
+
+#search {
+	margin: 10px;
+	border-top:1px solid #f3decb;
+}
+
+#fourbox {
+	float:left;
+	display:block;
+	width:30%;
+}
+
+#fourbox button {
+	margin:10px;
+	background: #94618e;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    width:30px;
+    height:30px;
+}
+
 input {
 	margin-bottom: 10px;
 }
