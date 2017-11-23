@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminForumControl")
-public class AdminForumControl extends HttpServlet {
+@WebServlet("/AdminSupport")
+public class AdminSupport extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminForumControl() {
+	public AdminSupport() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
