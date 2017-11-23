@@ -105,9 +105,58 @@ body
 {
 	clear: both;
 	float: left;
-	width: 100%;
 	min-height: 100%;
 	background: #f8eee7
+}
+
+#left-wrap
+{
+	padding-top:20px;
+	float: left;
+	width: 13%;
+	height:100%;
+	min-height: 1000px;
+	background: #f8eee7;
+	text-align: center;
+	display:none;
+}
+
+#left-wrap img{
+	padding-left: 20px;
+}
+
+#left-wrap p{
+	font-size:1.5em;
+	text-align: center;
+}
+
+#trendythings {
+	height: 400px;
+	max-height:400px;
+	margin-top: 80px;
+	background: #f8eee7;
+	width:87%;
+	margin-left:13%;
+	display:none;
+}
+
+#displayUnit {
+	width:360px;
+	display:none;
+}
+
+#displayUnit #foodtitle{
+	font-size:20px;
+	text-align:center;
+}
+
+#displayUnit #pickup{
+	font-size:18px;
+	text-align:center;
+}
+
+#trendythings img{
+	margin-left:30px;
 }
 
 #content-wrapper
@@ -115,6 +164,7 @@ body
 	width: 80%;
 	float: left;
 	margin-left: 20px;
+	background: #f3decb;
 }
 
 #content
