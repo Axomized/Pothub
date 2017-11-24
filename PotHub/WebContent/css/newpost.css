@@ -141,27 +141,3 @@ body
 #footer a:visited { color: #666666; font-weight: bold;}
 
 #footer a:hover, #footer a:active { color: #666666;}
-
-#title111{
-	border: 2px solid black;
-	background-color:#dddddd;
-	border-radius: 10px;
-	display: inline-flex;
-	width:80%;
-}
-
-.iconpic{
-	padding: 10px;
-}
-
-#author{
-	display:flex;
-}
-
-#reaction{
-	display:flex;
-}
-
-.tgt{
-	padding: 10px;
-}
