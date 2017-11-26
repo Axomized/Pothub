@@ -33,6 +33,7 @@ body
 
 #wrapper{
 	float: left;
+	clear: both;
 }
 
 #navigation
@@ -57,7 +58,7 @@ body
 
 #header h1 { 
 	padding: 20px; 
-	color:#49274a;
+	color: #49274a;
 }
 
 #companyTitle{
