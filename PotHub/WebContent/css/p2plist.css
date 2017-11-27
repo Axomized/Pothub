@@ -21,7 +21,7 @@ h1, h2, h3, h4, h5, h6 { font-weight: normal; margin: 0; padding: 10px 0; color:
 
 h1 { font-size: 32px; }
 
-h2 { font-size: 28px; }
+h2 { font-size: 3em; }
 
 h3 { font-size: 24px; }
 
@@ -103,10 +103,7 @@ body
 
 #wrapper
 {
-	clear: both;
-	float: left;
-	min-height: 100%;
-	background: #f8eee7
+	margin-left:15%
 }
 
 #left-wrap
@@ -118,7 +115,6 @@ body
 	min-height: 1000px;
 	background: #f8eee7;
 	text-align: center;
-	display:none;
 }
 
 #left-wrap img{
@@ -130,33 +126,9 @@ body
 	text-align: center;
 }
 
-#trendythings {
-	height: 400px;
-	max-height:400px;
-	margin-top: 80px;
-	background: #f8eee7;
-	width:87%;
-	margin-left:13%;
-	display:none;
-}
-
-#displayUnit {
-	width:360px;
-	display:none;
-}
-
-#displayUnit #foodtitle{
-	font-size:20px;
-	text-align:center;
-}
-
-#displayUnit #pickup{
-	font-size:18px;
-	text-align:center;
-}
-
-#trendythings img{
-	margin-left:30px;
+#secondHeader {
+	margin-top:5%;
+	margin-bottom:4%;
 }
 
 #content-wrapper
@@ -332,30 +304,6 @@ td button:hover {
 }
 /*Table end*/
 
-#search {
-	margin: 10px;
-	border-top:1px solid #f3decb;
-}
-
-#fourbox {
-	float:left;
-	display:block;
-	width:30%;
-}
-
-#fourbox button {
-	margin:10px;
-	background: #94618e;
-    border: none;
-    color: white;
-    padding:5px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    width:30px;
-    height:30px;
-}
-
 input {
 	margin-bottom: 10px;
 }
@@ -382,3 +330,30 @@ input {
 #footer a:visited { color: #666666; font-weight: bold; border-bottom: 1px dotted #666666; }
 
 #footer a:hover, #footer a:active { color: #555555; border-bottom: 1px solid #555555; }
+
+#displayUnit{
+	height:150px;
+	width:1400px; 
+	border-radius:10px; 
+	background-color:#f3decb; 
+	margin-top:20px;
+	margin-bottom:20px;
+	}
+	
+#displayUnit div { float:left;}
+
+#thumbnailBox { height:150px; width:200px;}
+
+#column1{ height:150px; width:300px;}
+
+#column2{ height:150px; width:450px;}
+
+.row1 { height:50%; width:300px; color:black; font-size:2em}
+
+.row2 { height:50%; width:300px; color:black; font-size:2em}
+
+.row3 { height:50%; width:450px; color:black; font-size:1em}
+
+.foodTitle {
+	font-size:2.5em;
+}
