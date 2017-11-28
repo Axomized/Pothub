@@ -13,13 +13,13 @@ import javax.servlet.http.HttpServletResponse;
  * Servlet implementation class Forum
  */
 @WebServlet("/p2plist")
-public class P2PList extends HttpServlet {
+public class PotcastList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public P2PList() {
+	public PotcastList() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -32,7 +32,7 @@ public class P2PList extends HttpServlet {
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
-+"<title>PotHub Bans</title>"
++"<title>PotCast Listings</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/p2plist.css' />"
@@ -45,11 +45,10 @@ public class P2PList extends HttpServlet {
 +"</div>"
 +"<div id='navigation'>"
   +"<ul>"
-    +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
-    +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
-    +"<li>"+"<a href='AdminDonations'>Donation History</a>"+"</li>"
-    +"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
-    +"<li>"+"<a href='AdminSupport'>Support Tickets</a>"+"</li>"
+  +"<li>"+"<a href='p2plist'>Active Potcasts</a>"+"</li>"
+  +"<li>"+"<a href='p2preg'>Start a Potcast</a>"+"</li>"
+  +"<li>"+"<a href='p2pmy'>My Potcasts</a>"+"</li>"
+  +"<li>"+"<a href='p2pjoined'>Joined Potcasts</a>"+"</li>"
   +"</ul>"
 +"</div>"
 +"<div id='left-wrap'>"
