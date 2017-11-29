@@ -8,10 +8,10 @@ import java.util.Scanner;
 import database.model.ShoppingLoginModel;
 
 public class EncryptionTesting {
-	private ArrayList<ShoppingLoginModel> clearTextArray = new ArrayList<>();
+	private ArrayList<ShoppingLoginModel> clearTextArray = new ArrayList<ShoppingLoginModel>();
 	
 	public EncryptionTesting() throws FileNotFoundException{
-	    ArrayList<String> scannerArray = new ArrayList<>();
+	    ArrayList<String> scannerArray = new ArrayList<String>();
 	    AES aes = null;
 	    
 	    File file = new File("src/database/TomatoFactoryPlans.txt");
