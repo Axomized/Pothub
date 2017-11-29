@@ -388,6 +388,14 @@ input {
 	border-radius:10px;
 }
 
+#foodPrice {
+	margin-top:20px;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
+	font-size:1.5em;
+}
+
 #foodBuyers {
 	margin-top:20px;
 	background-color:#f3decb;
