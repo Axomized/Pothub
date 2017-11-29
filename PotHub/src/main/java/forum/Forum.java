@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/Forum")
 public class Forum extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

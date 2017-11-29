@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/p2plist")
 public class PotcastList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
