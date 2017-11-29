@@ -30,6 +30,45 @@
 		<servlet-name>DonationPanel</servlet-name>
 		<servlet-class>admin.DonationPanel</servlet-class>
 	</servlet>
+	<!-- Donation -->
+	<servlet>
+		<servlet-name>Donation</servlet-name>
+		<servlet-class>donation.Donation</servlet-class>
+	</servlet>
+	<!-- Event -->
+	<servlet>
+		<servlet-name>EventPage</servlet-name>
+		<servlet-class>event.EventPage</servlet-class>
+	</servlet>
+	<!-- Forum -->
+	<servlet>
+		<servlet-name>Forum</servlet-name>
+		<servlet-class>forum.Forum</servlet-class>
+	</servlet>
+	<!-- Logs -->
+	<servlet>
+		<servlet-name>Logs</servlet-name>
+		<servlet-class>logs.Logs</servlet-class>
+	</servlet>
+	<!-- P2Pfood -->
+	<servlet>
+		<servlet-name>PotcastList</servlet-name>
+		<servlet-class>p2pfood.PotcastList</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PotcastMy</servlet-name>
+		<servlet-class>p2pfood.PotcastMy</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>PotcastRegister</servlet-name>
+		<servlet-class>p2pfood.PotcastRegister</servlet-class>
+	</servlet>
+	<!-- Profile -->
+	<servlet>
+		<servlet-name>Profile</servlet-name>
+		<servlet-class>profile.Profile</servlet-class>
+	</servlet>
+	
 	<!-- Admin Mapping -->
 	<servlet-mapping>
 		<servlet-name>AdminForumControl</servlet-name>
@@ -55,64 +94,26 @@
 		<servlet-name>DonationPanel</servlet-name>
 		<url-pattern>/AdminDonations</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Donation -->
-	<servlet>
-		<servlet-name>Donation</servlet-name>
-		<servlet-class>donation.Donation</servlet-class>
-	</servlet>
 	<!-- Donation Mapping -->
 	<servlet-mapping>
 		<servlet-name>Donation</servlet-name>
 		<url-pattern>/Donation</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Event -->
-	<servlet>
-		<servlet-name>EventPage</servlet-name>
-		<servlet-class>event.EventPage</servlet-class>
-	</servlet>
 	<!-- Event Mapping -->
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Forum -->
-	<servlet>
-		<servlet-name>Forum</servlet-name>
-		<servlet-class>forum.Forum</servlet-class>
-	</servlet>
 	<!-- Forum Mapping -->
 	<servlet-mapping>
 		<servlet-name>Forum</servlet-name>
 		<url-pattern>/Forum</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Forum -->
-	<servlet>
-		<servlet-name>Logs</servlet-name>
-		<servlet-class>logs.Logs</servlet-class>
-	</servlet>
-	<!-- Forum Mapping -->
+	<!-- Logs Mapping -->
 	<servlet-mapping>
 		<servlet-name>Logs</servlet-name>
 		<url-pattern>/Logs</url-pattern>
 	</servlet-mapping>
-	
-	<!-- P2Pfood -->
-	<servlet>
-		<servlet-name>PotcastList</servlet-name>
-		<servlet-class>p2pfood.PotcastList</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>PotcastMy</servlet-name>
-		<servlet-class>p2pfood.PotcastMy</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>PotcastRegister</servlet-name>
-		<servlet-class>p2pfood.PotcastRegister</servlet-class>
-	</servlet>
 	<!-- P2Pfood Mapping -->
 	<servlet-mapping>
 		<servlet-name>PotcastList</servlet-name>
@@ -126,12 +127,6 @@
 		<servlet-name>PotcastRegister</servlet-name>
 		<url-pattern>/p2preg</url-pattern>
 	</servlet-mapping>
-	
-	<!-- Profile -->
-	<servlet>
-		<servlet-name>Profile</servlet-name>
-		<servlet-class>profile.Profile</servlet-class>
-	</servlet>
 	<!-- Profile Mapping -->
 	<servlet-mapping>
 		<servlet-name>Profile</servlet-name>
