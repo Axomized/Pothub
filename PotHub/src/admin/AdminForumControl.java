@@ -138,8 +138,7 @@ public class AdminForumControl extends HttpServlet {
 +"</table>"
 +"</div>"
 +"</div>"
-  +"</div>"
-  +"<div id='fourbox'>"
++"<div id='fourbox'>"
 	+"<div id='search'>"
 	+"<p>Search Username: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
 	+"</div>"
@@ -158,6 +157,8 @@ public class AdminForumControl extends HttpServlet {
 +"<div id='fourbox'>"
 +"<button><</button><button>></button>"
 +"</div>"
+  +"</div>"
+
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"

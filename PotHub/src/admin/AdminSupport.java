@@ -163,8 +163,7 @@ public class AdminSupport extends HttpServlet {
 +"</table>"
 +"</div>"
 +"</div>"
-  +"</div>"
-  +"<div id='fourbox'>"
++"<div id='fourbox'>"
 	+"<div id='search'>"
 	+"<p>Search Ticket ID: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
 	+"</div>"
@@ -190,6 +189,7 @@ public class AdminSupport extends HttpServlet {
 +"</div>"
 +"</div>"
 +"</div>"
+
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"

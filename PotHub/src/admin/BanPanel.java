@@ -329,6 +329,7 @@ public class BanPanel extends HttpServlet {
    +"<div id='fourbox'>"
    +"<button><</button><button>></button>"
    +"</div>"
+   +"</div>"
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"
