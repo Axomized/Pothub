@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
+@WebServlet("/AdminGeneral")
 public class AdminPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
