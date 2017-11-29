@@ -153,6 +153,52 @@ body {
 	height: 100%;
 }
 
+#filterDiv {
+	width: 70%;
+	margin: auto;
+}
+
+#selectDiv {
+	width: 20%;
+	display: inline-block;
+}
+
+#selectFilter {
+	height: 25px;
+	width: 45%;
+	display: block;
+}
+
+#beforeDateDiv {
+	width: 20%;
+	display: inline0block;
+}
+
+#beforeDateInput {
+	height: 25px;
+	display: block;
+}
+
+#duringDateDiv {
+	width: 20%;
+	display: inline-block;
+}
+
+#duringDateInput {
+	height: 25px;
+	display: block;
+}
+
+#afterDateDiv {
+	width: 20%;
+	display: inline-block;
+}
+
+#afterDateInput {
+	height: 25px;
+	display: block;
+}
+
 ::-webkit-scrollbar {
     width: 10px;
 }

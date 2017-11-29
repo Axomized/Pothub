@@ -36,6 +36,29 @@
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
+					<div id="filterDiv">
+						<div id="selectDiv">
+							<label id="filterLabel">Filter by:</label>
+							<select id="selectFilter" name="selectFilter">
+								<option selected disabled hidden>Select</option>
+								<option value="IP Address">IP Address</option>
+								<option value="Username">Username</option>
+								<option value="Activity">Suspicious</option>
+							</select>
+						</div>
+						<div id="beforeDateDiv">
+							<label id="beforeDateLabel">Before:</label>
+							<input type="date" id="beforeDateInput" name="beforeDateInput">
+						</div>
+						<div id="duringDateDiv">
+							<label id="duringDateLabel">During:</label>
+							<input type="date" id="duringDateInput" name="duringDateInput">
+						</div>
+						<div id="afterDateDiv">
+							<label id="afterDateLabel">After:</label>
+							<input type="date" id="afterDateInput" name="afterDateInput">
+						</div>
+					</div>
 					<div id="tableWrap">
 						<table id="logsTable" class="table table-striped">
 							<thead id="tableHead">
