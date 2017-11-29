@@ -167,7 +167,12 @@ public class AdminForumControl extends HttpServlet {
 	+"</div>"
 +"</div>"
 +"<div id='fourbox'>"
++"<div id='search'>"
 +"<button><</button><button>></button>"
++"</div>"
++"<div id='search'>"
++"<button id='searchButton'>Search</button>"
++"</div>"
 +"</div>"
   +"</div>"
 

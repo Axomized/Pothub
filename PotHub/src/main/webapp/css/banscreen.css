@@ -309,6 +309,10 @@ td button:hover {
     height:30px;
 }
 
+#fourbox #searchButton {
+	width: 80px;
+}
+
 input {
 	margin-bottom: 10px;
 }
@@ -359,3 +363,4 @@ input {
 #footer a:visited { color: #666666; font-weight: bold; border-bottom: 1px dotted #666666; }
 
 #footer a:hover, #footer a:active { color: #555555; border-bottom: 1px solid #555555; }
+
