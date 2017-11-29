@@ -317,6 +317,30 @@ input {
 	margin-bottom: 20%;
 }
 
+#appealBlock {
+	font-size:1.5em;
+	text-align: left;
+	width:50%;
+	padding:30px;
+}
+
+#appealBlock button{
+	background: #94618e;
+    border: none;
+    color: white;
+    padding:10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 1.5em;
+    margin-left:15px;
+}
+
+#supportReply{
+	width:480px;
+	height:270px;
+}
+
 #sidebar p
 {
 	color: #555555;

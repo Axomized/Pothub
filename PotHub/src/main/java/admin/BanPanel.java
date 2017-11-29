@@ -72,12 +72,12 @@ public class BanPanel extends HttpServlet {
     +"<tbody>"
         +"<tr>"
             +"<td>Repenting Raphael</td>"
-            +"<td>Being Too Cool</td>"
+            +"<td>Saying bad word</td>"
             +"<td>30/10/2017 20:15</td>"
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<button>Read Appeal</button>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
         +"</tr>"+"<tr>"
             +"<td>Really Sorry Raynard</td>"
             +"<td>Being Too Cool</td>"
@@ -85,7 +85,7 @@ public class BanPanel extends HttpServlet {
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<button>Read Appeal</button>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
         +"</tr>"+"<tr>"
             +"<td>Sorry Sophie</td>"
             +"<td>Being Too Cool</td>"
@@ -93,7 +93,7 @@ public class BanPanel extends HttpServlet {
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<button>Read Appeal</button>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
         +"</tr>"+"<tr>"
 	        +"<td>Matt</td>"
 	        +"<td>Being Too Cool</td>"
