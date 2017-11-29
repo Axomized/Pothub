@@ -11,8 +11,12 @@
 		<servlet-class>admin.AdminForumControl</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>AdminGeneral</servlet-name>
-		<servlet-class>admin.AdminGeneral</servlet-class>
+		<servlet-name>AdminSupport</servlet-name>
+		<servlet-class>admin.AdminSupport</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AdminPanel</servlet-name>
+		<servlet-class>admin.AdminPanel</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>AdminSupport</servlet-name>
@@ -75,7 +79,7 @@
 		<url-pattern>/AdminForumControl</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>AdminGeneral</servlet-name>
+		<servlet-name>AdminPanel</servlet-name>
 		<url-pattern>/AdminGeneral</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
