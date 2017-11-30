@@ -31,97 +31,6 @@ public class AdminForumControl extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
-<<<<<<< HEAD
-		pw.append(
-				"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
-						+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
-						+ "<title>PotHub Forum Control</title>"
-						+ "<meta http-equiv='content-language' content='en-us' />"
-						+ "<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
-						+ "<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
-						+ "<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>"
-						+ "<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
-						+ "<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
-						+ "<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
-						+ "</head>" + "<body id='babout'>" + "<div id='header'>" + "<a href='adminpanel.html'>"
-						+ "<h1>Admin Panel</h1>" + "</a>" + "</div>" + "<div id='navigation'>" + "<ul>" + "<li>"
-						+ "<a href='AdminGeneral'>General</a>" + "</li>" + "<li>"
-						+ "<a href='AdminBans'>Bans & Appeals</a>" + "</li>" + "<li>"
-						+ "<a href='AdminDonations'>Donation History</a>" + "</li>" + "<li>"
-						+ "<a href='AdminForumControl'>Forum Control</a>" + "</li>" + "<li>"
-						+ "<a href='AdminSupport'>Support Tickets</a>" + "</li>" + "</ul>" + "</div>"
-						+ "<div id='wrapper'>" + "<div id='content-wrapper'>" + "<p>Search</p>"
-						+ "<input type='text' name='search'>" + "</input>" + "<div id='tableWrapper'>"
-						+ "<table class='table table-striped'>" + "<thead>" + "<tr>" + "<th>Username</th>"
-						+ "<th>Rank</th>" + "<th>Join Date</th>" + "</tr>" + "</thead>" + "<tbody>" + "<tr>"
-						+ "<td>Repenting Raphael</td>" + "<td>Normal</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Really Sorry Raynard</td>" + "<td>Admin</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Moderator</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Normal</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Really Sorry Raynard</td>" + "<td>Admin</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Moderator</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Normal</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Really Sorry Raynard</td>" + "<td>Admin</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Moderator</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Normal</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Really Sorry Raynard</td>" + "<td>Admin</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "<tr>" + "<td>Repenting Raphael</td>" + "<td>Moderator</td>"
-						+ "<td>1-1-2017 20:45<button>Promote</button>"
-
-						+ "<button>Demote</button>" + "<a href='HistoryAdminRanks'><button>History</button></a>"
-						+ "</td>" + "</tr>" + "</tbody>" + "</table>" + "</div>" + "</div>" + "<div id='fourbox'>"
-						+ "<div id='search'>"
-						+ "<p>Search Username: <div id='textboxes'><input type='text' name='search'>"
-						+ "</input></div></p>" + "</div>" + "<div id='search'>"
-						+ "<p>Join Date Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
-						+ "<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>" + "</div>"
-						+ "<div id='search'>" + "<div id='radios'>"
-						+ "<p><input type='radio' name='search'></input>  Normal</p>"
-						+ "<p><input type='radio' name='search'></input>  Moderator</p>"
-						+ "<p><input type='radio' name='search'></input>  Admin</p>" + "</div>" + "</div>" + "</div>"
-						+ "<div id='fourbox'>" + "<div id='search'>" + "<button><</button><button>></button>" + "</div>"
-						+ "<div id='search'>" + "<button id='searchButton'>Search</button>" + "</div>" + "</div>"
-						+ "</div>"
-
-						+ "<div id='footer'>"
-						+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
-						+ "<p>We like food</p>" + "<p>"
-						+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
-						+ "</p>" + "</div>" + "</body>" + "</html>");
-=======
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
@@ -136,7 +45,9 @@ public class AdminForumControl extends HttpServlet {
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
+  +"<a href='adminpanel.html'>"
   +"<h1>Admin Panel</h1>"
++"</a>"
 +"</div>"
 +"<div id='navigation'>"
 +"<ul>"
@@ -273,7 +184,6 @@ public class AdminForumControl extends HttpServlet {
 +"</div>"
 +"</body>"
 +"</html>");
->>>>>>> 01d8c50950d89bca1ca35e2665ea4a1e4c15a2e5
 	}
 
 	/**

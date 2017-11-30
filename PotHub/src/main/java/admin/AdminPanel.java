@@ -31,38 +31,6 @@ public class AdminPanel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
-<<<<<<< HEAD
-		pw.append(
-				"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
-						+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
-						+ "<title>PotHub Admin</title>" + "<meta http-equiv='content-language' content='en-us' />"
-						+ "<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
-						+ "<link rel='stylesheet' type='text/css' media='screen' href='css/adminpanelfront.css' />"
-						+ "</head>" + "<body id='babout'>" + "<div id='header'>" + "<a href='Admin'>"
-						+ "<h1> Admin Panel</h1>" + "</a>" + "</div>" + "<div id='navigation'>" + "<ul>" + "<li>"
-						+ "<a href='AdminGeneral'>General</a>" + "</li>" + "<li>"
-						+ "<a href='AdminBans'>Bans & Appeals</a>" + "</li>" + "<li>"
-						+ "<a href='AdminDonations'>Donation History</a>" + "</li>" + "<li>"
-						+ "<a href='AdminForumControl'>Forum Control</a>" + "</li>" + "<li>"
-						+ "<a href='AdminSupport'>Support Tickets</a>" + "</li>" + "</ul>" + "</div>"
-						+ "<div id='wrapper'>" + "<div id='content-wrapper'>" + "<div id='content'>"
-						+ "<h4>Recent Bans</h4>" + "<dl>" + "<dt>Wei Xuan</dt>" + "<dd>Spam</dd>" + "<dt>Matt</dt>"
-						+ "<dd>Persistent Vulgarities</dd>" + "<dt>XuanZheng</dt>" + "<dd>Inappropriate messages</dd>"
-						+ "<dt>&nbsp;</dt>" + "<dd>&nbsp;</dd>" + "<dt>&nbsp;</dt>" + "<dd>&nbsp;</dd>" + "</dl>"
-						+ "</div>" + "<div id='content'>" + "<h4>Recent Pardons</h4>" + "<dl>" + "<dt>Darren</dt>"
-						+ "<dd>Harassment</dd>" + "<dt>Xiang Jing</dt>" + "<dd>Multiple Scams</dd>" + "<dt>&nbsp;</dt>"
-						+ "<dd>&nbsp;</dd>" + "<dt>&nbsp;</dt>" + "<dd>&nbsp;</dd>" + "<dt>&nbsp;</dt>"
-						+ "<dd>&nbsp;</dd>" + "</dl>" + "</div>" + "</div>" + "<div id='sidebar-wrapper'>"
-						+ "<div id='sidebar'>" + "<h4>Numbers</h4>" + "<div id='content'>" + "<dl>"
-						+ "<dt>New Members / 24 Hours</dt><dd>100</dd>" + "<dt>New Members / 7 Days</dt><dd>500</dd>"
-						+ "<dt>Active Members / 24 Hours</dt><dd>200</dd>"
-						+ "<dt>Active Members / 7 Days</dt><dd>400</dd>" + "<dt>Total Members</dt><dd>2400</dd>"
-						+ "</dl>" + "</div>" + "</div>" + "</div>" + "<div id='footer'>"
-						+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
-						+ "<p>We like food</p>"
-						+ "<p> <a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a></p>"
-						+ "</div>" + "</div>" + "</body>" + "</html>");
-=======
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 		+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 		+ "<head>"
@@ -140,7 +108,6 @@ public class AdminPanel extends HttpServlet {
 		+ "</div>"
 		+ "</body>"
 		+ "</html>");
->>>>>>> 01d8c50950d89bca1ca35e2665ea4a1e4c15a2e5
 	}
 
 	/**
