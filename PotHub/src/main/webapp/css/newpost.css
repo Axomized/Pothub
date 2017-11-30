@@ -132,6 +132,10 @@ body
 	color: #94618e;
 }
 
+#attachingfile{
+	margin-bottom:3%;
+}
+
 /* Footer */
 
 #footer p { margin: 15px 0; }
