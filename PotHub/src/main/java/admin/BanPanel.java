@@ -222,9 +222,7 @@ public class BanPanel extends HttpServlet {
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
-  +"<a href='adminpanel.html'>"
   +"<h1>Admin Panel</h1>"
-+"</a>"
 +"</div>"
 +"<div id='navigation'>"
 	+"<ul>"
@@ -257,7 +255,7 @@ public class BanPanel extends HttpServlet {
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
         +"</tr>"+"<tr>"
             +"<td>Really Sorry Raynard</td>"
             +"<td>Being Too Cool</td>"
@@ -265,7 +263,7 @@ public class BanPanel extends HttpServlet {
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
         +"</tr>"+"<tr>"
             +"<td>Sorry Sophie</td>"
             +"<td>Being Too Cool</td>"
@@ -273,7 +271,7 @@ public class BanPanel extends HttpServlet {
             +"<td>30/11/2017 20:15</td>"
             +"<td>Evil Matt<button>Pardon</button>"
 
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read Appeal</button></a>"+"</td>"
+            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
         +"</tr>"+"<tr>"
 	        +"<td>Matt</td>"
 	        +"<td>Being Too Cool</td>"
