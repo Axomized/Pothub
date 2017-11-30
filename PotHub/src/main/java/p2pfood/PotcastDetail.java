@@ -61,7 +61,7 @@ public class PotcastDetail extends HttpServlet {
 +"</div>"
 +"<div id='foodText'>"
 +"<div id='foodTitle'>"
-+"<p>Chunk of Beef, Split 5 Ways</p>"
++"<p>Chunk of Beef, Split 11 Ways</p>"
 +"</div>"
 +"<div id='foodPrice'>"
 +"<p>$8</p>"

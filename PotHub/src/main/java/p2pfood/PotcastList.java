@@ -88,7 +88,7 @@ public class PotcastList extends HttpServlet {
 +"<div id='displayUnit'>"
 +"<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
 +"<div id='column1'>"
-+"<div class='row1 foodTitle'>Chunk of Beef, Split 5 Ways</div>"
++"<div class='row1 foodTitle'>Chunk of Beef, Split 11 Ways</div>"
 +"<div class='row1'>Matt, 1960CR</div>"
 +"</div>"
 +"<div id='column2'>"
