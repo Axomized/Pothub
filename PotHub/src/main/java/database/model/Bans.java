@@ -9,8 +9,9 @@ public class Bans {
 	String reason;
 	String admin;
 	boolean pardoned;
-	
-	public Bans(DatabaseUserModel dUM, Timestamp startDate, Timestamp endDate, String reason, String admin, boolean pardoned) {
+
+	public Bans(DatabaseUserModel dUM, Timestamp startDate, Timestamp endDate, String reason, String admin,
+			boolean pardoned) {
 		super();
 		this.iGN = dUM.getiGN();
 		this.startDate = startDate;

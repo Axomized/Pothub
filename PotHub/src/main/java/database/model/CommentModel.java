@@ -7,7 +7,7 @@ public class CommentModel {
 	int postID;
 	Timestamp date;
 	String IGN;
-	
+
 	public CommentModel(int commentID, ForumPostModel fPM, Timestamp date, DatabaseUserModel dUM) {
 		super();
 		this.commentID = commentID;

@@ -10,7 +10,7 @@ public class ReportModel {
 	Timestamp date;
 	String evidence;
 	boolean guiltyOrNot;
-	
+
 	public ReportModel(int reportID, String iGNSend, String iGNReceive, String reason, Timestamp date, String evidence,
 			boolean guiltyOrNot) {
 		super();

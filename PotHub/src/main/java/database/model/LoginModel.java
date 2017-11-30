@@ -4,7 +4,7 @@ public class LoginModel {
 	String email;
 	String password;
 	String salt;
-	
+
 	public LoginModel(DatabaseUserModel dUM, String password, String salt) {
 		super();
 		this.email = dUM.getEmail();
@@ -35,5 +35,5 @@ public class LoginModel {
 	public void setSalt(String salt) {
 		this.salt = salt;
 	}
-	
+
 }

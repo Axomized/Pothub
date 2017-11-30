@@ -8,7 +8,7 @@ public class EventModel {
 	Timestamp date;
 	String venue;
 	int max_No_People;
-	
+
 	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People) {
 		super();
 		this.eventID = eventID;

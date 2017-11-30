@@ -8,7 +8,7 @@ public class PrivateMessageModel {
 	String message;
 	Timestamp date;
 	boolean readOrNot;
-	
+
 	public PrivateMessageModel(String iGNSend, String iGNReceive, String message, Timestamp date, boolean readOrNot) {
 		super();
 		this.iGNSend = iGNSend;

@@ -7,7 +7,7 @@ public class DonationModel {
 	String iGN;
 	Timestamp donation_Date;
 	int donation_Amount;
-	
+
 	public DonationModel(int donationID, DatabaseUserModel dUM, Timestamp donation_Date, int donation_Amount) {
 		super();
 		this.donationID = donationID;

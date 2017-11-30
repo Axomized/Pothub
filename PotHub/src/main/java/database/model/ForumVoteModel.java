@@ -7,7 +7,7 @@ public class ForumVoteModel {
 	int upOrDown;
 	String iGN;
 	Timestamp date;
-	
+
 	public ForumVoteModel(ForumPostModel fPM, int upOrDown, DatabaseUserModel dUM, Timestamp date) {
 		super();
 		this.postID = fPM.getPostID();
