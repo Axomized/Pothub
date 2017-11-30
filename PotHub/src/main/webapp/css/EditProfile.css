@@ -10,6 +10,7 @@ html {
 
 /* Html Elements */
 
+
 h1, h2, h3, h4, h5, h6 { 
 	font-weight: normal; 
 	margin: 0; 
@@ -43,7 +44,13 @@ p {
 
 ul { 
 	list-style-type: none; 
-} 
+}
+
+input {
+	width: 70%;
+	height: 25px;
+	padding: 5px 5px;
+}
 
 /* Structure */
 
@@ -86,8 +93,6 @@ body {
 }
 
 #footer {
-	position: absolute;
-	bottom: 0;
 	clear: both;
 	float: left;
 	width: 100%; 
@@ -150,31 +155,15 @@ body {
 	color: #94618e;
 }
 
-.thatLine {
-	content: "";
-    display: block;
-    margin: auto;
-    width: 90%;
-    border-top: 1px solid #ccc;
-}
-
 #profilePicDiv {
 	text-align:center;
 }
 
-#displayNameDiv {
+#editProfileImgDiv {
 	margin-top: 10px;
 }
 
-#displayNameSpan {
-	font-size: 20px;
-}
-
-#editProfileBtnDiv {
-	margin-top: 10px;
-}
-
-#editProfileBtn {
+#editImgBtn {
 	height: 25px;
 	width: 50%;
 	font-weight: 600;
@@ -187,7 +176,7 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
-#editProfileBtn:hover {
+#editImgBtn:hover {
 	border: 1px solid #49274a;
 	color: #49274a;
 	background-color: #f8eee7;
@@ -228,100 +217,129 @@ body {
 	border-bottom: 2px solid #e36209 !important;
 }
 
-#aboutContentDiv {
+#changeProfileDiv {
+	margin-top: 10px;
+}
+
+#profileForm {
 	
 }
 
-#pointsDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+.sectionWrap {
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
-}
-
-#upper-PointsDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-PointsDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    padding: 10px 0px 10px 0px;
+    margin-top: 10px;
 }
 
 #usernameDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
+	width: 50%;
+	margin: auto;
+	margin-left: 33%;
 }
 
-#upper-UsernameDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
+#nameLabel {
+	display: block;
 }
 
-#lower-UsernameDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#nameInput {
+	
+}
+
+#passwordDiv {
+	width: 50%;
+	margin: auto;
+	margin-left: 33%;
+}
+
+#oldPassDiv {
+	
+}
+
+#oldPassLabel {
+	display: block;
+}
+
+#oldPassInput {
+	
+}
+
+#newPassDiv {
+	margin-top: 10px;
+}
+
+#newPassLabel {
+	display: block;
+}
+
+#newPassInput {
+	
+}
+
+#confirmPassDiv {
+	margin-top: 10px;
+}
+
+#confirmPassLabel {
+	display: block;
+}
+
+#confirmPassInput {
+	
 }
 
 #emailDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
+	width: 50%;
+	margin: auto;
+	margin-left: 33%;
 }
 
-#upper-EmailDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
+#emailLabel {
+	display: block;
 }
 
-#lower-EmailDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#emailInput {
+	
 }
 
 #bioDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
+	width: 50%;
+	margin: auto;
+	margin-left: 33%;
 }
 
-#upper-BioDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 17px;
+#bioLabel {
+	display: block;
 }
 
-#lower-BioDiv {
-	height: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+#bioText {
+	width: 70%;
+	min-height: 100px;
+	max-height: 150px;
+	padding: 5px 5px;
+}
+
+#updateBtnDiv {
+	text-align: center;
+	margin-top: 10px;
+}
+
+#updateBtn {
+	height: 25px;
+    width: 120px;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border-color: transparent;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+#updateBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
 }
 
 /* Footer */

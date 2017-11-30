@@ -4,7 +4,7 @@
 		<meta charset="ISO-8859-1">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 		<!-- Page Title -->
-		<title>Profile</title>
+		<title>Edit Profile</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
@@ -13,9 +13,9 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/Profile.js"></script>
+		<script src="../script/EditProfile.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/Profile.css" />
+		<link rel="stylesheet" type="text/css" href="../css/EditProfile.css" />
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -44,11 +44,8 @@
 						<div id="profileImgDiv">
 							<img src="../images/profile.png" height="50%" width="50%"/>
 						</div>
-						<div id="displayNameDiv">
-							<span id="displayNameSpan">[Placeholder]</span>
-						</div>
-						<div id="editProfileBtnDiv">
-							<button id="editProfileBtn" onclick="toEditProfilePage()">Edit profile</button>
+						<div id="editProfileImgDiv">
+							<button id="editImgBtn">Upload new picture</button>
 						</div>
 					</div>
 					<div id="profileContentDiv" class="col-sm-8">
@@ -57,43 +54,46 @@
 								<a href="Profile.html" id="defaultSelected">About</a>
 							</div>
 						</div>
-						<div id="aboutContentDiv">
-							<div id="pointsDiv">
-								<div id="upper-PointsDiv">
-									Points Accumulated
+						<div id="changeProfileDiv">
+							<form id="profileForm">
+								<div class="sectionWrap">
+								<div id="usernameDiv">
+									<label id="nameLabel" for="nameInput">Username</label>
+									<input type="text" id="nameInput" name="nameInput">
 								</div>
-								<div class="thatLine"></div>
-								<div id="lower-PointsDiv">
-									<span class="insideFormSpan">250 points</span>
 								</div>
-							</div>
-							<div id="usernameDiv">
-								<div id="upper-UsernameDiv">
-									Username
+								<div class="sectionWrap">
+									<div id="passwordDiv">
+										<div id="oldPassDiv">
+											<label id="oldPassLabel" for="oldPassInput">Old password</label>
+											<input type="password" id="oldPassInput" name="oldPassInput">
+										</div>
+										<div id="newPassDiv">
+											<label id="newPassLabel" for="newPassInput">New password</label>
+											<input type="password" id="newPassInput" name="newPassInput">
+										</div>
+										<div id="confirmPassDiv">
+											<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
+											<input type="password" id="confirmPassInput" name=confirmPassInput">
+										</div>
+									</div>
 								</div>
-								<div class="thatLine"></div>
-								<div id="lower-UsernameDiv">
-									<span class="insideFormSpan">[Placeholder]</span>
+								<div class="sectionWrap">
+									<div id="emailDiv">
+										<label id="emailLabel" for="emailInput">Email</label>
+										<input type="email" id="emailInput" name="emailInput">
+									</div>
 								</div>
-							</div>
-							<div id="emailDiv">
-								<div id="upper-EmailDiv">
-									Email
+								<div class="sectionWrap">
+									<div id="bioDiv">
+										<label id="bioLabel" for="bioText">Bio</label>
+										<textarea id="bioText" name="bioText" placeholder="Tell us a little about yourself"></textarea>
+									</div>
 								</div>
-								<div class="thatLine"></div>
-								<div id="lower-EmailDiv">
-									<span class="insideFormSpan">[Placeholder]</span>
+								<div id="updateBtnDiv">
+									<button id="updateBtn" name="updateBtn" value="updateBtn" onclick="checkInputsFilled()">Update profile</button>
 								</div>
-							</div>
-							<div id="bioDiv">
-								<div id="upper-BioDiv">
-									Bio
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-BioDiv">
-									<p>[Insert 150-words biography of thyself]</p>
-								</div>
-							</div>
+							</form>
 						</div>
 					</div>
 				</div>
