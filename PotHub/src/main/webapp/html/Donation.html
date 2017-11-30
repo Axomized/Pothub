@@ -12,7 +12,7 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/"></script>
+		<script src="../script/Donation.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/Donation.css">
 	</head>
@@ -46,7 +46,7 @@
 							</div>
 							<div class="thatLine"></div>
 							<div id="onBehalfCheckDiv">
-								<input type="checkbox" id="checkYes" name="checkYes" value="Yes">
+								<input type="checkbox" id="checkYes" name="checkYes" value="Yes" onclick="showBehalfName()">
 								<label id="yesLabel" for="checkYes">Yes, I accept.</label>
 								<input type="text" id="behalfName" name="behalfName" required>
 							</div>
