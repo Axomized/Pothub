@@ -7,7 +7,7 @@ public class CommentVoteModel {
 	int upOrDown;
 	String iGN;
 	Timestamp date;
-	
+
 	public CommentVoteModel(CommentModel cM, int upOrDown, DatabaseUserModel dUM, Timestamp date) {
 		super();
 		this.commentID = cM.getCommentID();

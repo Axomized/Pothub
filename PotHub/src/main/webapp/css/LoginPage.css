@@ -51,7 +51,6 @@ input{
 	border-bottom: 2px solid #49274a;
 	outline: none;
 	height: 40px;
-	color: #94618e;
 	background: transparent;
 	font-size: 16px;
 	padding-left: 20px;
@@ -63,9 +62,8 @@ input{
 }
 
 .form-input span{
-	position: absolute;
-	top: 10px;
-	left: 230px;
+	position: relative;
+	left: 15px;
 	color: #262626;
 }
 
@@ -89,6 +87,3 @@ input{
 	text-align: center;
 	display: block;
 }
-
-
-

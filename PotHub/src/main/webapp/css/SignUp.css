@@ -1,0 +1,46 @@
+@CHARSET "ISO-8859-1";
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #aaaaaa;
+	background-color: #f8eee7;
+	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
+}
+
+h1 {
+	text-align: center;
+	color: #94618e;
+	margin: 0;
+}
+
+form {
+	margin: 20px auto;
+	width: 320px;
+}
+
+input {
+	padding: 10px;
+	font-size: inherit;
+}
+
+input[type="password"],
+input[type="text"],
+input[type="email"]{
+	display: block;
+	margin-bottom: 25px;
+	width: 100%;
+	border: 2px solid #49274a;
+	background-color: #f3decb;
+}
+
+input[type="submit"]{
+	border: none;
+	outline: none;
+	height: 40px;
+	font-size: 16px;
+	background: #49274a;
+	color: #f3decb;
+	border-radius: 20px;
+	cursor: pointer;
+}

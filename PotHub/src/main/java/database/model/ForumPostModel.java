@@ -9,8 +9,9 @@ public class ForumPostModel {
 	String iGN;
 	Timestamp date;
 	int fileAttachment;
-	
-	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Timestamp date, FileTableModel fTM) {
+
+	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Timestamp date,
+			FileTableModel fTM) {
 		super();
 		this.postID = postID;
 		this.thread = thread;

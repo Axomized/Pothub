@@ -5,10 +5,10 @@ import java.sql.Timestamp;
 public class FileTableModel {
 	int fileID;
 	String fileName;
-	byte[] data; //Might set to InputStream
+	byte[] data; // Might set to InputStream
 	Timestamp fileDate;
 	double fileSize;
-	
+
 	public FileTableModel(int fileID, String fileName, byte[] data, Timestamp fileDate, double fileSize) {
 		super();
 		this.fileID = fileID;

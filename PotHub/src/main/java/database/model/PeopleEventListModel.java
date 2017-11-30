@@ -4,7 +4,7 @@ public class PeopleEventListModel {
 	int eventID;
 	String iGN;
 	boolean bofirmedOrPending;
-	
+
 	public PeopleEventListModel(EventModel eM, DatabaseUserModel dUM, boolean bofirmedOrPending) {
 		super();
 		this.eventID = eM.getEventID();
