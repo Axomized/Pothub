@@ -1,11 +1,18 @@
 @CHARSET "ISO-8859-1";
 
-body {
+html {
 	margin: 0;
 	padding: 0;
 	color: #aaaaaa;
 	background-color: #f8eee7;
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
+}
+
+body {
+	margin: 0;
+	float: left;
+	width: 100%;
+	background-color: #f8eee7;
 }
 
 h1 {
@@ -54,5 +61,25 @@ input[type="submit"]{
 }
 
 input[type="submit"]:hover {
-	color: #94618e;
+	color: #49274a;
+	background: #f8eee7;
+	border: 1px solid #49274a;
 }
+
+#footer
+{
+	clear: both;
+	float: left;
+	width: 100%;
+	color: #888888;
+	text-align: center;
+	background-color: #f3decb;
+}
+
+#footer p { margin: 15px 0; }
+
+#footer a:link { color: #888888; font-weight: bold; text-decoration:  none;}
+
+#footer a:visited { color: #666666; font-weight: bold;}
+
+#footer a:hover, #footer a:active { color: #666666;}
