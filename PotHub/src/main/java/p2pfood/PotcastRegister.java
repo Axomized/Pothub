@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/Adminreg")
+@WebServlet("/p2preg")
 public class PotcastRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -50,11 +50,6 @@ public class PotcastRegister extends HttpServlet {
     +"<li>"+"<a href='p2pmy'>My Potcasts</a>"+"</li>"
     +"<li>"+"<a href='p2pjoined'>Joined Potcasts</a>"+"</li>"
   +"</ul>"
-+"</div>"
-+"<div id='left-wrap'>"
-  +"<img height=184 width =184 src='http://www.telegraph.co.uk/content/dam/news/2016/11/27/dump-tower-twitter_trans_NvBQzQNjv4BqeY8zn44CJx5co60z9sMGTUWjmulo7wva9c-kqRbE-Zc.jpg'>"
-  +"<p>Having a good time at YOUR CURRENT ESTIMATED ADDRESS? Would food make it better?</p>"
-  +"<p>Go get something to eat!</p>"
 +"</div>"
 +"<div id='wrapper'>"
 +"<div id='secondHeader'>"

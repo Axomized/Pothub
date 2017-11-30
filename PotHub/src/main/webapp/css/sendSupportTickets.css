@@ -29,7 +29,7 @@ h4 { font-size: 20px; }
 
 h5, h6 { font-size: 17px; }
 
-ul, ol, dl, blockquote, pre
+ol, dl, blockquote, pre
 {
 	color: #555555;
 	margin: 10px 35px;
@@ -333,11 +333,17 @@ input {
 	height:150px;
 	width:1400px; 
 	border-radius:10px; 
-	background-color:#f3decb; 
 	margin-top:20px;
 	margin-bottom:20px;
-	}
-	
+}
+
+.active {
+	background-color:#f3decb; 
+}
+
+.inactive {
+	border: #94618e 1px solid;
+}
 #displayUnit div { float:left;}
 
 #thumbnailBox { height:150px; width:200px;}
@@ -352,34 +358,94 @@ input {
 
 .row3 { height:50%; width:450px; color:black; font-size:1em}
 
-.foodTitle {
-	font-size:2.5em;
+#foodText {
+	font-size:2em;
+	margin-top: 160px;
+	margin-left: 420px;
+	width:50%;
 }
 
-.formElement{
-	width:600px; 
-	padding:15px;
-	border-radius:10px; 
-	background-color:#f3decb; 
+#foodTitle {
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:5px;
+	font-size:1.5em;
+}
+
+#foodDesc {
 	margin-top:20px;
-	margin-bottom:20px;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
 }
 
-#descBox {
-	height: 270px;
-	width: 380px;
+#foodBits {
+	margin-top:20px;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
 }
 
-.formElement button {
+#foodPrice {
+	margin-top:20px;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
+	font-size:1.5em;
+}
+
+#foodBuyers {
+	margin-top:20px;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
+}
+
+#foodPicture {
+	border-radius: 10px;
+	border: 1px black solid;
+	float:left;
+}
+
+#foodAndMap {
+	width: 400px;
+}
+
+iframe {
+	float:left;
+	height:400px;
+	width:400px;
+}
+
+#foodBuyers li {
+	margin: 3px;
+}
+
+#foodBuyers ul {
+	columns: 2;
+  	-webkit-columns: 2;
+ 	-moz-columns: 2;
+ 	list-style:none;
+}
+
+button {
 	background: #94618e;
     border: none;
     color: white;
-    padding:5px;
+    padding:10px;
     text-align: center;
     text-decoration: none;
-    width:60px;
+    display: inline-block;
 }
 
-.formElement p {
-	font-size:1.5em;
+#foodDesc button {
+	margin-left:20px;
+}
+
+#bidNumberBox {
+	margin-left:20px;
+}
+
+#foodDesc input {
+	width:50px;
 }

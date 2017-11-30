@@ -113,17 +113,16 @@ body
 	width: 13%;
 	height:100%;
 	min-height: 1000px;
-	background: #f8eee7;
+	background: #f3decb;
 	text-align: center;
 }
 
-#left-wrap img{
-	padding-left: 20px;
-}
 
 #left-wrap p{
 	font-size:1.5em;
 	text-align: center;
+	width:90%;
+	margin-left:5px;
 }
 
 #secondHeader {
