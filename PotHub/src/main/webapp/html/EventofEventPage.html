@@ -12,8 +12,8 @@
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
-		<!-- My Own Script -->
-		<!-- <script src="../script/"></script> -->
+		<!-- My Script -->
+		<script src="../script/EventofEventPage.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/EventofEventCss.css" />
 	</head>
@@ -33,7 +33,7 @@
 				<li id="lhome"><a href="Forum.html">Home</a></li>
 				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
 				<li id="levent"><a href="EventPage.html">Event</a></li>
-				<li id="lpeer2peer"><a href="#03">Peer-2-Peer</a></li>
+				<li id="lpotcast"><a href="../p2plist">Potcast</a></li>
 				<li id="ldonate"><a href="Donation.html">Donate</a></li>
 			</ul>
 		</div>
@@ -48,19 +48,20 @@
 							<p>Tea Party</p>
 						</div>
 						<div class="event-header-button">
-							<button type="button" class="btn btn-success">Join</button> <!-- Servlet change the text according to status -->
+							<button type="button" class="btn btn-success" onclick="changeColor(this)">Join</button> <!-- Servlet change the text according to status -->
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="event-bottom-half">
+			<div class="row event-bottom-half">
 				<div class="col-sm-6 event-bottom-left">
 					<div class="event-bottom-left-top">
-						<div class="col-sm-3 event-desc">
+						<div class="col-sm-8 event-desc">
 							<p><b>Description</b></p><br>
-							<p>Having tea party everyday so join me everyday!</p>
+							<p class="desc">Having tea party everyday so join me everyday!</p>
 						</div>
-						<div class="col-sm-3 event-guest">
+						<div class="col-sm-4 event-guest">
+							<p><b>Guest</b></p>
 							<div class="row">
 								<div>
 									<img src='../images/crab.jpg' alt='crab picture' height='50' width='50'><br>
@@ -78,11 +79,15 @@
 						</div>
 					</div>
 					<div class="event-gallery">
+						<p><b>Gallery:</b></p>
+						<img src='../images/crab.jpg' alt='crab picture'>
+						<img src='../images/crab.jpg' alt='crab picture'>
+						<img src='../images/crab.jpg' alt='crab picture'>
 					</div>
 				</div>
 				<div class="col-sm-6 event-bottom-right">
 					<div class="event-bottom-right-top">
-						<div class="google-map">
+						<div id="map" onclick="redirectToGoogle()">
 						</div>
 						<div class="event-timing">
 							<p><b>Location</b><br>
@@ -103,6 +108,8 @@
 				<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
 			</p>
 		</div>
+		<!-- Google Maps API -->
+		<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCdPQy2tP9wHqzcF9UsBBPYFz0T0eAwWZg&callback=initMap"></script>
 		<!-- Optional Scripts for Bootstrap -->
 		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>

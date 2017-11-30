@@ -8,6 +8,10 @@ html {
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
 }
 
+p{
+	margin: 0;
+}
+
 /* Structure */
 
 body {
@@ -35,7 +39,7 @@ body {
 	clear: both;
 	float: left;
 	width: 100%;
-	margin: 10px 0;
+	margin: 0;
 }
 
 #footer {
@@ -104,6 +108,7 @@ body {
 
 /* Event Content */
 .event-header{
+	background-color: black;
 	max-height: 500px;
 	width: 100vw;
 	position: relative;
@@ -111,14 +116,15 @@ body {
 }
 
 .event-header-image{
-	width: 100%;
-	height: 100%;
+	text-align: center;
+	width: 100%;	/*	max-width: 100%;	*/
+	height: 100%;	/*	max-height: 100%;	*/
 	z-index: 1;
 }
 
 .event-header-image > img{
-	width: 100%;
-	height: 100%;
+	width: 100%; 	/*	max-width: 100%;	*/
+	height: 100%;	/*	max-height: 100%;	*/
 }
 
 .event-header-title-gradient{
@@ -159,43 +165,83 @@ body {
 .event-header-button > button{
 	width: 15vw;
 	height: 5vh;
+	font-size: 18px;
+	font-weight: bold;
 }
 
 .event-bottom-half{
 	clear: both;
 	width: 100%;
-	border: solid blue 1px;
+	font-size: 18px;
+	background-color: rgba(255,255,255,0.3);
+	margin: 0 auto;
+	border-radius: 10px;
+}
+
+.event-bottom-half p{
+	margin-top: 10px;
 }
 
 .event-bottom-left{
-	border: solid 1px yellow;
 	float: left;
+	display: flex;
+	flex-direction: column;
+}
+
+.event-bottom-left-top{
+	flex: 1;
 }
 
 .event-bottom-right{
-	border: solid 1px yellow;
 	float: right;
 }
 
 .event-desc{
 	float: left;
+	text-align: center;
+}
+
+.desc{
+	font-size: 18px;
 }
 
 .event-guest{
 	float: right;
-	border: solid 1px grey;
+	text-align: center;
+}
+
+.event-guest > div > div{
+	padding: 5px;
 }
 
 .event-gallery{
-	border: solid 1px purple;
+	clear: both;
+	text-align: center;
 }
 
-.google-map{
-	background: black;
+.event-gallery > p{
+	text-align: left;
+	margin: 0px 5px;
+}
+
+.event-gallery > img{
+	margin: 5px;
+	max-width: 50vw;
+	max-height: 20vh;
 }
 
 .event-calendar{
+	flex: 1;
 	border: solid 1px cyan;
+}
+
+/* Google Map */
+#map {
+	width: 98%;
+	height: 400px;
+	margin: 0 auto;
+	margin-top: 10px;
+	background-color: black;
 }
 
 /* Footer */
