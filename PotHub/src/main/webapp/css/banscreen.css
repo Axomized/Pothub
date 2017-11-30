@@ -146,10 +146,6 @@ body
 	background-color: #f3decb;
 }
 
-#radios {
-	padding: 10px;
-}
-
 /* Header */
 
 #header h1 { padding: 20px; }
@@ -290,6 +286,10 @@ td button:hover {
 #search {
 	margin: 10px;
 	border-top:1px solid #f3decb;
+}
+
+#search #radios input {
+	margin-left:5px;
 }
 
 #fourbox {
