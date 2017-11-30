@@ -160,6 +160,7 @@ body
 
 #reaction{
 	display:flex;
+	padding:10px;
 }
 
 .tgt{
