@@ -51,7 +51,7 @@ public class AdminLogin extends HttpServlet {
 				+ "	</head>"
 				+ "	<body>"
 				+ "		<div class='container'>"
-				+ "	<img src='images/PotHubLogo.jpg'>"
+				+ "	<img src='images/crab.gif'>"
 				+ "	<h2>Sign In</h2>"
 				+ "			<div class='form-input'>"
 				+ "				<span><i class='fa fa-envelope fa-lg' aria-hidden='true'></i></span>"

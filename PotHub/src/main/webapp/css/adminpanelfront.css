@@ -2,7 +2,7 @@ html
 {
 	margin: 0;
 	padding: 0;
-	color: #aaaaaa;
+	color: #555555;
 	background-color: #f8eee7;
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
 }
@@ -156,6 +156,10 @@ body
 #navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
 
 #navigation li { float: left; }
+
+#navigation p {
+	float: right;
+}
 
 #navigation a
 {

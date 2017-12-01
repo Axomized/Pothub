@@ -92,6 +92,8 @@ body
 	background: #f3decb;
 }
 
+#header h1 { padding: 20px; color:#49274a;}
+
 #navigation
 {
 	float: left;
@@ -161,6 +163,11 @@ body
 	float: left;
 	display: block;
 	padding: 5px 10px;
+}
+
+#navigation p {
+	float: right;
+	margin: 0;
 }
 
 #navigation a:link,

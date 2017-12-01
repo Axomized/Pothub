@@ -52,6 +52,7 @@ public class AdminPanel extends HttpServlet {
 		+"<li>"+"<a href='AdminSupport'>Support Tickets</a>"+"</li>"
 		+"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 		+"</ul>"
+		+"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
 		+ "</div>"
 		+ "<div id='wrapper'>"
  		+ "<div id='content-wrapper'>"
