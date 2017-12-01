@@ -198,6 +198,11 @@ body
 	color: #94618e;
 }
 
+#navigation p {
+	float: right;
+	margin: 0;
+}
+
 li#lhome a:hover,
 li#lhome a:active
 {
