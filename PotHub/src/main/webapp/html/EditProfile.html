@@ -23,9 +23,15 @@
 			<div id="companyTitle">
 				<h1>PotHub</h1>
 			</div>
-			<div id="profilePic">
-				<img src="../images/profile.png" height="50" width="50"/>
-				<span id="welcomeSpan">Welcome, [Placeholder]</span>
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
+					<img src="../images/profile.png" height="50" width="50"/>
+					<span id="welcomeSpan">Welcome, [Placeholder]</span>
+				</div>
+				<div id="profileDropdownDiv">
+					<a href="Profile.html">Profile</a>
+					<a href="LoginPage.html">Logout</a>
+				</div>
 			</div>
 		</div>
 		<div id="navigation">
@@ -56,42 +62,34 @@
 						</div>
 						<div id="changeProfileDiv">
 							<form id="profileForm">
-								<div class="sectionWrap">
 								<div id="usernameDiv">
 									<label id="nameLabel" for="nameInput">Username</label>
-									<input type="text" id="nameInput" name="nameInput">
+									<input type="text" id="nameInput" class="inputsForFill" name="nameInput" onkeyup="startedTyping(this)">
 								</div>
-								</div>
-								<div class="sectionWrap">
-									<div id="passwordDiv">
-										<div id="oldPassDiv">
-											<label id="oldPassLabel" for="oldPassInput">Old password</label>
-											<input type="password" id="oldPassInput" name="oldPassInput">
-										</div>
-										<div id="newPassDiv">
-											<label id="newPassLabel" for="newPassInput">New password</label>
-											<input type="password" id="newPassInput" name="newPassInput">
-										</div>
-										<div id="confirmPassDiv">
-											<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
-											<input type="password" id="confirmPassInput" name=confirmPassInput">
-										</div>
+								<div id="passwordDiv">
+									<div id="oldPassDiv">
+										<label id="oldPassLabel" for="oldPassInput">Old password</label>
+										<input type="password" id="oldPassInput" class="inputsForFill" name="oldPassInput" onkeyup="startedTyping(this)">
+									</div>
+									<div id="newPassDiv">
+										<label id="newPassLabel" for="newPassInput">New password</label>
+										<input type="password" id="newPassInput" class="inputsForFill" name="newPassInput" onkeyup="startedTyping(this)">
+									</div>
+									<div id="confirmPassDiv">
+										<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
+										<input type="password" id="confirmPassInput" class="inputsForFill" name=confirmPassInput" onkeyup="startedTyping(this)">
 									</div>
 								</div>
-								<div class="sectionWrap">
-									<div id="emailDiv">
-										<label id="emailLabel" for="emailInput">Email</label>
-										<input type="email" id="emailInput" name="emailInput">
-									</div>
+								<div id="emailDiv">
+									<label id="emailLabel" for="emailInput">Email</label>
+									<input type="email" id="emailInput" class="inputsForFill" name="emailInput" onkeyup="startedTyping(this)">
 								</div>
-								<div class="sectionWrap">
-									<div id="bioDiv">
-										<label id="bioLabel" for="bioText">Bio</label>
-										<textarea id="bioText" name="bioText" placeholder="Tell us a little about yourself"></textarea>
-									</div>
+								<div id="bioDiv">
+									<label id="bioLabel" for="bioText">Bio</label>
+									<textarea id="bioText" class="inputsForFill" name="bioText" placeholder="Tell us a little about yourself" onkeyup="startedTyping(this)"></textarea>
 								</div>
 								<div id="updateBtnDiv">
-									<button id="updateBtn" name="updateBtn" value="updateBtn" onclick="checkInputsFilled()">Update profile</button>
+									<button id="updateBtn" name="updateBtn" value="updateBtn" disabled>Update profile</button>
 								</div>
 							</form>
 						</div>

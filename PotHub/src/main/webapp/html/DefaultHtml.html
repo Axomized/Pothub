@@ -14,7 +14,7 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<!-- <script src="../script/"></script> -->
+		<script src="../script/DefaultPage.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/DefaultCss.css" />
 	</head>
@@ -24,9 +24,15 @@
 			<div id="companyTitle">
 				<h1>PotHub</h1>
 			</div>
-			<div id="profilePic">
-				<img src="../images/profile.png" alt="Profile" height="50" width="50"/>
-				<span id="welcomeSpan">Welcome, [Placeholder]</span>
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
+					<img src="../images/profile.png" height="50" width="50"/>
+					<span id="welcomeSpan">Welcome, [Placeholder]</span>
+				</div>
+				<div id="profileDropdownDiv">
+					<a href="Profile.html">Profile</a>
+					<a href="LoginPage.html">Logout</a>
+				</div>
 			</div>
 		</div>
 		<div id="navigation">

@@ -22,14 +22,14 @@
 			<div id="companyTitle">
 				<h1>PotHub</h1>
 			</div>
-			<div id="profilePicWrapDiv">
-				<div id="profilePic" onmouseover="showProfileDropdown()">
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
 					<img src="../images/profile.png" height="50" width="50"/>
 					<span id="welcomeSpan">Welcome, [Placeholder]</span>
 				</div>
 				<div id="profileDropdownDiv">
-					<a href="">Profile</a>
-					<a href="">Logout</a>
+					<a href="Profile.html">Profile</a>
+					<a href="LoginPage.html">Logout</a>
 				</div>
 			</div>
 		</div>
@@ -58,16 +58,16 @@
 							</div>
 						</div>
 						<div id="donateAmtDiv">
-							<label id="donateLabel">How much would you like to donate?</label>
+							<label id="donateLabel" for="donateAmt">How much would you like to donate?</label>
 							<input type="number" id="donateAmt" name="donateAmt" min="0" required>
 						</div>
 						<div id="inputInfoDiv">
 							<div id="nameInputDiv">
-								<label id="nameLabel">Name</label>
+								<label id="nameLabel" for="nameInput">Name</label>
 								<input type="text" id="nameInput" name="nameInput" required>
 							</div>
 							<div id="cardInputDiv">
-								<label id="cardLabel">Credit Card Number</label>
+								<label id="cardLabel" for="cardNo">Credit Card Number</label>
 								<input type="text" id="cardNo" name="cardNo" required>
 							</div>
 							<div id="dateCodeDiv">
@@ -107,7 +107,7 @@
 									</select>
 								</div>
 								<div id="codeDiv">
-									<label id="codeLabel">Security Code</label>
+									<label id="codeLabel" for="securityCode">Security Code</label>
 									<input type="text" id="securityCode" name="securityCode" required/>
 								</div>
 							</div>

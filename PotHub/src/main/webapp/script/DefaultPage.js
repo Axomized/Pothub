@@ -5,7 +5,3 @@ function showProfileDropdown() {
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
-
-function toEditProfilePage() {
-	location.href = "EditProfile.html";
-}

@@ -108,10 +108,43 @@ body {
 	padding-top: 10px;
 }
 
+#profilePicWrapDiv {
+	position: relative;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
 #profilePic {
 	padding: 10px 20px;
-	float: right;
 	text-align: center;
+}
+
+#profileDropdownDiv {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0%;
+	background-color: #f8eee7;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#profileDropdownDiv a {
+	display: block;
+	color: black;
+	font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+#profileDropdownDiv a:hover {
+	color: #f3decb;
+    font-weight: bold;
+    text-transform: uppercase;
+	background-color: #49274a;
 }
 
 #welcomeSpan {
@@ -160,6 +193,7 @@ body {
 
 #profilePicDiv {
 	text-align:center;
+	border-right: 2px solid #e36209;
 }
 
 #displayNameDiv {
@@ -208,7 +242,7 @@ body {
 }
 
 #profileNavList a {
-	padding: 10px 8px;
+	padding: 9px 8px;
 	margin-right: 10px;
 	text-decoration: none;
 	font-size: 20px;
@@ -218,7 +252,7 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #888;
+	border-bottom: 2px solid #49274a;
 }
 
 #defaultSelected {
@@ -236,15 +270,14 @@ body {
 #pointsDiv {
 	height: 80px;
     margin-top: 10px;
-    text-align: center;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
+    padding: 10px 8px;
 }
 
 #upper-PointsDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
     font-size: 17px;
 }
@@ -252,22 +285,20 @@ body {
 #lower-PointsDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 #usernameDiv {
 	height: 80px;
     margin-top: 10px;
-    text-align: center;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
+    padding: 10px 8px;
 }
 
 #upper-UsernameDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
     font-size: 17px;
 }
@@ -275,7 +306,6 @@ body {
 #lower-UsernameDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
@@ -285,12 +315,12 @@ body {
     text-align: center;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
+    padding: 10px 8px;
 }
 
 #upper-EmailDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
     font-size: 17px;
 }
@@ -298,22 +328,20 @@ body {
 #lower-EmailDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
 #bioDiv {
 	height: 80px;
     margin-top: 10px;
-    text-align: center;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
+    padding: 10px 8px;
 }
 
 #upper-BioDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
     font-size: 17px;
 }
@@ -321,7 +349,6 @@ body {
 #lower-BioDiv {
 	height: 50%;
     display: flex;
-    justify-content: center;
     align-items: center;
 }
 
