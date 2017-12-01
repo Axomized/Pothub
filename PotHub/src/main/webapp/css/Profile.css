@@ -155,7 +155,7 @@ body {
     display: block;
     margin: auto;
     width: 90%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #f8eee7;
 }
 
 #profilePicDiv {
@@ -176,7 +176,7 @@ body {
 
 #editProfileBtn {
 	height: 25px;
-	width: 50%;
+	width: 150px;
 	font-weight: 600;
     outline: none;
     color: white;
@@ -185,6 +185,7 @@ body {
     border-radius: 4px;
     border-color: transparent;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
 }
 
 #editProfileBtn:hover {

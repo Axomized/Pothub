@@ -1,3 +1,7 @@
+function showProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "block";
+}
+
 function showBehalfName() {
 	var x = document.getElementById("checkYes").checked;
 	var behalfName = document.getElementById("behalfName");

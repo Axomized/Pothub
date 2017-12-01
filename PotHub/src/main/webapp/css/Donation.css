@@ -95,10 +95,39 @@ input {
 	padding-top: 10px;
 }
 
+#profilePicWrapDiv {
+	position: relative;
+	display: inline-block;
+	float: right;
+}
+
 #profilePic {
 	padding: 10px 20px;
 	float: right;
 	text-align: center;
+	cursor: pointer;
+}
+
+#profileDropdownDiv {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0%;
+	background-color: #f8eee7;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#profileDropdownDiv a {
+	display: block;
+	color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+#profileDropdownDiv a:hover {
+	background-color: #f3decb;
 }
 
 #welcomeSpan {
@@ -179,7 +208,7 @@ body {
     display: block;
     margin: auto;
     width: 90%;
-    border-top: 1px solid #ccc;
+    border-top: 1px solid #f8eee7;
 }
 
 #onBehalfCheckDiv {
@@ -353,6 +382,7 @@ body {
 #donateBtn {
 	height: 25px;
     width: 80px;
+    font-weight: 600;
     outline: none;
     color: white;
     background-color: #49274a;
@@ -360,6 +390,7 @@ body {
     border-radius: 4px;
     border-color: transparent;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
 }
 
 #donateBtn:hover {
