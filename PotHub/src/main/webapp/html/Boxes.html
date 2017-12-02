@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+		<title>Move the red box</title>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js" integrity="sha256-KWJavOowudybFMUCd547Wvd/u8vUg/2g0uSWYU5Ae+w=" crossorigin="anonymous"></script>
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha256-nkP8cj5xaTdWK/BsZl+57ZCE/Y/i4UNtbNTpgH+6Taw=" crossorigin="anonymous"></script>
+		<style>
+			#redBox{
+				position: absolute;
+				top: 50;
+				left: 50;
+				width: 100px;
+				height: 100px;
+				background-color: red;
+			}
+		</style>
+		<!-- My Own Script -->
+		<script src="../script/Boxes.js"></script>
+	</head>
+	<body onload="connect()">
+		<span id="mouseCoor"></span>
+		<div id="redBox">
+		</div>
+	</body>
+</html>
