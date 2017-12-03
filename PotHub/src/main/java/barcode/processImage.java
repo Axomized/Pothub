@@ -2,11 +2,9 @@ package barcode;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 
 import javax.imageio.ImageIO;
 import javax.servlet.ServletException;
@@ -17,11 +15,22 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
-@WebServlet("/processImage")
-public class processImage extends HttpServlet {
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.ChecksumException;
+import com.google.zxing.FormatException;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Reader;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
+
+@WebServlet("/ProcessImage")
+public class ProcessImage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     
-    public processImage() {
+    public ProcessImage() {
         super();
     }
 
@@ -36,9 +45,24 @@ public class processImage extends HttpServlet {
 		while ((sCurrentLine = br.readLine()) != null) {
 			byte[] imageData = Base64.decodeBase64(sCurrentLine.substring(22));
 			BufferedImage img = ImageIO.read(new ByteArrayInputStream(imageData));
-			File outputfile = new File("C:/Users/Wei Xuan/Desktop/image.png");
+			
+			try {
+				LuminanceSource source = new BufferedImageLuminanceSource(img);
+				BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+				Reader reader = new MultiFormatReader();
+				Result result = reader.decode(bitmap);
+				
+				response.getWriter().append("True," + result.getText());
+			} catch (NotFoundException e) {
+				response.getWriter().append("False");
+			} catch (ChecksumException e) {
+				e.printStackTrace();
+			} catch (FormatException e) {
+				e.printStackTrace();
+			}
+
+			File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
 			ImageIO.write(img, "png", outputfile);
-			response.getWriter().append("True"); //If Barcode scanning is successful, Return true
 		}
 		
 	}

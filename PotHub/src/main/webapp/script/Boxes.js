@@ -30,6 +30,7 @@ $(function() {
 	$(document).on('mousemove', function(event) {
 		mouseTop = event.pageY;
 		mouseLeft = event.pageX;
+		document.getElementById("mouseCoor").innerHTML = "Top: " + mouseTop + ", Left: " + mouseLeft;
 	});
 	
 	$("#redBox").on('mousedown', function (e){
@@ -41,6 +42,7 @@ $(function() {
 	    $(this).parents().on('mousemove', function (e) {
 	    	if(isMouseDown){
 	    		moveBox();
+	    		
 		    	$("#redBox").offset({
 		            top: e.pageY - topOffset,
 		            left: e.pageX - leftOffset

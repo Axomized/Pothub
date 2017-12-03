@@ -5,8 +5,8 @@ var frameDiv = document.getElementById("frames");
 
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
-		if(this.responseText == "True"){
-			//onSuccessScanning(); //Success... Call Method
+		if(this.responseText.substring(0,4) == "True"){
+			onSuccessScanning(this.responseText.substring(5)); //Success... Call Method
 		}
 	}
 };
@@ -26,26 +26,27 @@ function videoError(e) {
 }
 
 
-var DailyDoseOfCarrot = setInterval(function(){ captureFrame();}, 1000);
+var DailyDoseOfCarrot = setInterval(function(){ captureFrame();}, 500);
 
 function captureFrame(){
-	if(success)
+	if(success){
 		clearInterval(DailyDoseOfCarrot);
+	}
 	else{
 		var canvas = document.createElement("canvas");
 		canvas.width = 640;
 		canvas.height = 480;
 		var ctx = canvas.getContext("2d");
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-		var dataurl = canvas.toDataURL('image/png', 1000);
+		var dataurl = canvas.toDataURL('image/png', 1);
 		frameDiv.appendChild(canvas);
-		xhttp.open("POST", "/PotHub/processImage", true);
+		xhttp.open("POST", "/PotHub/ProcessImage", true);
 		xhttp.setRequestHeader("Content-Type", "application/upload");
 		xhttp.send(dataurl);
 	}
 }
 
-function onSuccessScanning(){
+function onSuccessScanning(barcodeResult){
 	success = true;
-	alert("Welcome");
+	alert(barcodeResult);
 }
