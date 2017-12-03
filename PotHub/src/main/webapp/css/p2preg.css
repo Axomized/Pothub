@@ -92,15 +92,6 @@ body
 	background: #f3decb;
 }
 
-#navigation
-{
-	float: left;
-	width: 100%;
-	clear: both;
-	color: #f3decb;
-	background: #49274a;
-}
-
 #wrapper
 {
 	margin-left:15%
@@ -180,7 +171,8 @@ body
 {
 	float: left;
 	display: block;
-	padding: 5px 10px;
+	padding: 5px 10px; 
+	text-decoration: none;
 }
 
 #navigation a:link,
@@ -197,9 +189,13 @@ body
 	color: #94618e;
 }
 
-#navigation p {
-	float: right;
-	margin: 0;
+.navbar-nav{
+	display: inline;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
 }
 
 li#lhome a:hover,

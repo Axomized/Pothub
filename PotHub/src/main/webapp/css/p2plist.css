@@ -29,16 +29,6 @@ h4 { font-size: 20px; }
 
 h5, h6 { font-size: 17px; }
 
-ul, ol, dl, blockquote, pre
-{
-	color: #555555;
-	margin: 10px 35px;
-	padding: 10px 30px;
-	line-height: 1.6em;
-	border: 1px solid #1a1a1a;
-	background: #f8eee7;
-}
-
 p { margin: 0; }
 
 ul { list-style-type: square; }
@@ -82,23 +72,7 @@ body
 	margin: 0;
 	float: left;
 	width: 100%;
-}
-
-#header
-{
-	float: left;
-	width: 100%;
-	clear: both;
-	background: #f3decb;
-}
-
-#navigation
-{
-	float: left;
-	width: 100%;
-	clear: both;
-	color: #f3decb;
-	background: #49274a;
+	background: #f8eee7;
 }
 
 #wrapper
@@ -170,9 +144,28 @@ body
 
 /* Header */
 
-#header h1 { padding: 20px; }
+#header h1 { 
+	padding: 20px; 
+	color:#49274a;
+}
+
+#companyTitle{
+	float: left;
+}
+
+#profilePic{
+	padding: 10px 20px;
+	float: right;
+}
 
 /* Navigation */
+#navigation
+{
+	float: left;
+	width: 100%; 
+	color: #f3decb;
+	background: #49274a;
+}
 
 #navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
 
@@ -182,7 +175,8 @@ body
 {
 	float: left;
 	display: block;
-	padding: 5px 10px;
+	padding: 5px 10px; 
+	text-decoration: none;
 }
 
 #navigation a:link,
@@ -199,9 +193,13 @@ body
 	color: #94618e;
 }
 
-#navigation p {
-	float: right;
-	margin: 0;
+.navbar-nav{
+	display: inline;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
 }
 
 li#lhome a:hover,
@@ -245,6 +243,12 @@ body#babout li#labout a
 	color: #99bbdd;
 	background: #f3decb;
 }
+
+#wrapper {
+	width:80%;
+	margin-left: 4%;
+}
+
 /*Table Start*/
 #tableWrapper {
 	height: 400px; 
