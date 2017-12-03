@@ -22,9 +22,15 @@
 			<div id="companyTitle">
 				<h1>PotHub</h1>
 			</div>
-			<div id="profilePic">
-				<img src="../images/profile.png" height="50" width="50"/>
-				<span id="welcomeSpan">Welcome, [Placeholder]</span>
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
+					<img src="../images/profile.png" height="50" width="50"/>
+					<span id="welcomeSpan">Welcome, [Placeholder]</span>
+				</div>
+				<div id="profileDropdownDiv">
+					<a href="Profile.html">Profile</a>
+					<a href="LoginPage.html">Logout</a>
+				</div>
 			</div>
 		</div>
 		<div id="navigation">
@@ -32,7 +38,7 @@
 				<li id="lhome"><a href="Forum.html">Home</a></li>
 				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
 				<li id="levent"><a href="EventPage.html">Event</a></li>
-				<li id="lpeer2peer"><a href="#03">Peer-2-Peer</a></li>
+				<li id="lpotcast"><a href="#03">Potcast</a></li>
 				<li id="ldonate"><a href="Donation.html">Donate</a></li>
 			</ul>
 		</div>
@@ -52,16 +58,16 @@
 							</div>
 						</div>
 						<div id="donateAmtDiv">
-							<label id="donateLabel">How much would you like to donate?</label>
+							<label id="donateLabel" for="donateAmt">How much would you like to donate?</label>
 							<input type="number" id="donateAmt" name="donateAmt" min="0" required>
 						</div>
 						<div id="inputInfoDiv">
 							<div id="nameInputDiv">
-								<label id="nameLabel">Name</label>
+								<label id="nameLabel" for="nameInput">Name</label>
 								<input type="text" id="nameInput" name="nameInput" required>
 							</div>
 							<div id="cardInputDiv">
-								<label id="cardLabel">Credit Card Number</label>
+								<label id="cardLabel" for="cardNo">Credit Card Number</label>
 								<input type="text" id="cardNo" name="cardNo" required>
 							</div>
 							<div id="dateCodeDiv">
@@ -101,7 +107,7 @@
 									</select>
 								</div>
 								<div id="codeDiv">
-									<label id="codeLabel">Security Code</label>
+									<label id="codeLabel" for="securityCode">Security Code</label>
 									<input type="text" id="securityCode" name="securityCode" required/>
 								</div>
 							</div>

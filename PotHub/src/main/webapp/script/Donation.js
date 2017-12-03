@@ -1,3 +1,11 @@
+function showProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "block";
+}
+
+function hideProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "none";
+}
+
 function showBehalfName() {
 	var x = document.getElementById("checkYes").checked;
 	var behalfName = document.getElementById("behalfName");
