@@ -390,26 +390,26 @@ input {
 
 #displayUnit{
 	height:150px;
-	width:1400px; 
+	width:100%; 
 	border-radius:10px; 
-	background-color:#f3decb; 
 	margin-top:20px;
 	margin-bottom:20px;
-	}
-	
+	background: #f3decb;
+}
+
 #displayUnit div { float:left;}
 
-#thumbnailBox { height:150px; width:200px;}
+#thumbnailBox { height:150px; width:15%;}
 
-#column1{ height:150px; width:300px;}
+#column1{ height:150px; width:25%;}
 
-#column2{ height:150px; width:450px;}
+#column2{ height:150px; width:30%;}
 
-.row1 { height:50%; width:300px; color:black; font-size:2em}
+.row1 { height:50%; width:100%; color:black; font-size:2em}
 
-.row2 { height:50%; width:300px; color:black; font-size:2em}
+.row2 { height:50%; width:100%; color:black; font-size:2em}
 
-.row3 { height:50%; width:450px; color:black; font-size:1em}
+.row3 { height:50%; width:100%; color:black; font-size:1em}
 
 .foodTitle {
 	font-size:2.5em;
