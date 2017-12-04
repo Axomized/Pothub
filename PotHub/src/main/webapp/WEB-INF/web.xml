@@ -28,6 +28,12 @@
 		<description></description>
 		<servlet-class>event.EventofEventPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ProcessImage</servlet-name>
+		<display-name>ProcessImage</display-name>
+		<description></description>
+		<servlet-class>barcode.ProcessImage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -43,5 +49,9 @@
 	<servlet-mapping>
 		<servlet-name>EventofEventPage</servlet-name>
 		<url-pattern>/EventofEventPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ProcessImage</servlet-name>
+		<url-pattern>/ProcessImage</url-pattern>
 	</servlet-mapping>
 </web-app>
