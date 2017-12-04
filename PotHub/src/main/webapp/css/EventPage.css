@@ -104,6 +104,11 @@ body
 	background-color: #49274a;
 }
 
+#welcomeSpan {
+	display: block;
+	padding-top: 5px;
+}
+
 /* Navigation */
 
 #navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }

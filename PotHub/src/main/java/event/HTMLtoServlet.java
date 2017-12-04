@@ -10,7 +10,7 @@ import java.io.IOException;
 public class HTMLtoServlet {
 	public static void main(String[] args) throws IOException {
 		String s = "";
-		FileReader Hi = new FileReader("src/main/webapp/html/Forum.html"); // Replace
+		FileReader Hi = new FileReader("src/main/webapp/html/EventPage.html"); // Replace
 																			// this
 																			// and
 																			// you

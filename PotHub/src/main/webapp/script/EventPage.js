@@ -15,7 +15,7 @@ function hideOverlay(overlay){
 /* Profile */
 
 function redirectPage(){
-	window.location.href = "../html/EventofEventPage.html";
+	window.location.href = "EventofEventPage";
 }
 
 function showProfileDropdown() {

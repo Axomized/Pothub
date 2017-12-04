@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,9 +34,9 @@ public class EventPage extends HttpServlet {
 				+ "		<!-- Optional Script (Icons) -->"
 				+ "		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 				+ "		<!-- My Own Script -->"
-				+ "		<script src='script/EventPage.js'></script>"
+				+ "		<script src='script/EventPage.min.js'></script>"
 				+ "		<!-- My Style Sheet -->"
-				+ "		<link rel='stylesheet' type='text/css' href='https://localhost/PotHub/css/EventPage.css' />"
+				+ "		<link rel='stylesheet' type='text/css' href='css/EventPage.css' />"
 				+ "	</head>"
 				+ "	<body>"
 				+ "		<!--  Navigation Bar -->"
@@ -45,18 +44,35 @@ public class EventPage extends HttpServlet {
 				+ "			<div id='companyTitle'>"
 				+ "				<h1>PotHub</h1>"
 				+ "			</div>"
-				+ "			<div id='profilePic'>"
-				+ "				<img src='images/cat.png' alt='cat picture' height='50' width='50'>"
+				+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
+				+ "				<div id='profilePic'>"
+				+ "					<img src='images/profile.png' height='50' width='50'/>"
+				+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+				+ "				</div>"
+				+ "				<div id='profileDropdownDiv'>"
+				+ "					<a href='html/Profile.html'>Profile</a>"
+				+ "					<a href='html/LoginPage.html'>Logout</a>"
+				+ "				</div>"
 				+ "			</div>"
 				+ "		</div>"
 				+ "		<div id='navigation'>"
-				+ "			<ul>"
-				+ "				<li id='lhome'><a href='Forum.html'>Home</a></li>"
-				+ "				<li id='lprivatemessage'><a href='#01'>Private Message</a></li>"
-				+ "				<li id='levent'><a href='EventPage.html'>Event</a></li>"
-				+ "				<li id='lpeer2peer'><a href='#03'>Peer-2-Peer</a></li>"
-				+ "				<li id='ldonate'><a href='Donation.html'>Donate</a></li>"
-				+ "			</ul>"
+				+ "			<div class='container-fluid'>"
+				+ "				<ul class='nav navbar-nav'>"
+				+ "					<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
+				+ "					<li id='lprivatemessage'><a href='html/PrivateMesage.html'>Private Message</a></li>"
+				+ "					<li id='levent'><a href='html/EventPage.html'>Event</a></li>"
+				+ "					<li class='dropdown'>"
+				+ "				        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
+				+ "				        <ul class='dropdown-menu'>"
+				+ "				          <li><a href='p2plist'>Active PotCasts</a></li>"
+				+ "				          <li><a href='p2preg'>Start a PotCast</a></li>"
+				+ "				          <li><a href='p2pmy'>My PotCast</a></li>"
+				+ "				          <li><a href='p2pjoined'>Joined PotCast</a></li>"
+				+ "				        </ul>"
+				+ "				      </li>"
+				+ "					<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>"
+				+ "				</ul>"
+				+ "			</div>"
 				+ "		</div>"
 				+ "		<div class='container-fluid' id='wrapper'>"
 				+ "		  	<div class='row'>"
@@ -99,7 +115,7 @@ public class EventPage extends HttpServlet {
 				+ "								</div>"
 				+ "							</div>"
 				+ "						</div>"
-				+ "						<div class='top-container-bottom'>"
+				+ "						<div class='top-container-bottom' onclick='redirectPage()'>"
 				+ "							<div class='top-container-bottom-left'>"
 				+ "								<p>Hosting a tea party at my house</p>"
 				+ "							</div>"
@@ -162,7 +178,7 @@ public class EventPage extends HttpServlet {
 				+ "								</div>"
 				+ "							</div>"
 				+ "						</div>"
-				+ "						<div class='top-container-bottom'>"
+				+ "						<div class='top-container-bottom' onclick='redirectPage()'>"
 				+ "							<div class='top-container-bottom-left'>"
 				+ "								<p>Hosting a tea party at my house</p>"
 				+ "							</div>"
@@ -225,7 +241,7 @@ public class EventPage extends HttpServlet {
 				+ "								</div>"
 				+ "							</div>"
 				+ "						</div>"
-				+ "						<div class='top-container-bottom'>"
+				+ "						<div class='top-container-bottom' onclick='redirectPage()'>"
 				+ "							<div class='top-container-bottom-left'>"
 				+ "								<p>Hosting a tea party at my house</p>"
 				+ "							</div>"
@@ -264,9 +280,9 @@ public class EventPage extends HttpServlet {
 				+ "		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>"
 				+ "		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>"
 				+ "	</body>"
-				+ "</html>"
-
-);
+				+ "</html>");
+		
+		out.close();
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
