@@ -3,20 +3,19 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-		<!-- Favicon -->
-		<link rel="icon" href="https://localhost/PotHub/images/crab.gif" type="image/gif">
-		<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
-		<link rel="icon" href="http://localhost:8080/PotHub/images/crab.png?v=2" type="image/x-icon">
 		<!-- Page Title -->
-		<title>Default Title</title>
+		<title>Confirm Donation</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/DefaultPage.js"></script>
+		<script src="../script/ConfirmDonation.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/DefaultCss.css" />
+		<link rel="stylesheet" type="text/css" href="../css/ConfirmDonation.css" />
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -38,7 +37,7 @@
 		<div id="navigation">
 			<ul>
 				<li id="lhome"><a href="Forum.html">Home</a></li>
-				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
+				<li id="lprivatemessage"><a href="PrivateMessage.html">Private Message</a></li>
 				<li id="levent"><a href="EventPage.html">Event</a></li>
 				<li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Potcast</a>
@@ -55,6 +54,24 @@
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
+					<form id="donationPINForm">
+						<div id="confirmDonationDiv">
+							<div id="onTopDiv">
+								Enter the PIN sent to your email.
+							</div>
+							<div id="belowDiv">
+								<input type="password" id="pinInput1" maxlength=1 required onkeyup="moveToNext(this, 'pinInput1', 'pinInput2')">
+								<input type="password" id="pinInput2" maxlength=1 required onkeyup="moveToNext(this, 'pinInput1', 'pinInput3')">
+								<input type="password" id="pinInput3" maxlength=1 required onkeyup="moveToNext(this, 'pinInput2', 'pinInput4')">
+								<input type="password" id="pinInput4" maxlength=1 required onkeyup="moveToNext(this, 'pinInput3', 'pinInput5')">
+								<input type="password" id="pinInput5" maxlength=1 required onkeyup="moveToNext(this, 'pinInput4', 'pinInput6')">
+								<input type="password" id="pinInput6" maxlength=1 required onkeyup="moveToNext(this, 'pinInput5', 'pinInput6')">
+							</div>
+							<div id="buttonDiv">
+								<button id="confirmBtn" name="confirmBtn" value="confirmBtn">Confirm</button>
+							</div>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -65,9 +82,5 @@
 				<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
 			</p>
 		</div>
-		<!-- Optional Scripts for Bootstrap -->
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>
 </html>

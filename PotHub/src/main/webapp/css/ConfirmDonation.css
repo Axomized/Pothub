@@ -43,13 +43,15 @@ p {
 }
 
 ul { 
-	list-style-type: none; 
+	list-style-type: square; 
 }
 
 input {
-	width: 50%;
 	height: 25px;
+	width: 100px;
 	padding: 5px 5px;
+	text-align: center;
+	font-size: 20px;
 }
 
 /* Structure */
@@ -84,8 +86,6 @@ body {
 
 #content-wrapper {
 	clear: both;
-	width: 70%;
-	margin: auto;
 }
 
 #content {
@@ -93,6 +93,8 @@ body {
 }
 
 #footer {
+	position: absolute;
+	bottom: 0;
 	clear: both;
 	float: left;
 	width: 100%; 
@@ -161,6 +163,7 @@ body {
 
 #navigation ul { 
 	float: left; 
+	list-style-type: none; 
 	margin: 0; 
 	padding: 0; 
 	background: none; 
@@ -193,19 +196,35 @@ body {
 	background: #49274a;
 }
 
-#profilePicDiv {
-	text-align:center;
-	border-right: 2px solid #e36209;
+#donationPINForm {
+	
 }
 
-#editProfileImgDiv {
-	margin-top: 10px;
+#confirmDonationDiv {
+	width: 60%;
+    position: absolute;
+    left: 30%;
+    top: 40%;
 }
 
-#editImgBtn {
+#onTopDiv {
+	margin-bottom: 10px;
+	font-size: 17px;
+    font-weight: 600;
+}
+
+#belowDiv {
+	margin-bottom: 10px;
+}
+
+#confirmBtnDiv {
+	
+}
+
+#confirmBtn {
 	height: 25px;
-	width: 160px;
-	font-weight: 600;
+    width: 120px;
+    font-weight: 600;
     outline: none;
     color: white;
     background-color: #49274a;
@@ -216,190 +235,12 @@ body {
     text-transform: uppercase;
 }
 
-#editImgBtn:hover {
+#confirmBtn:hover {
 	border: 1px solid #49274a;
 	color: #49274a;
 	background-color: #f8eee7;
 }
 
-#profileContentDiv {
-	
-}
-
-#profileNavDiv {
-	
-}
-
-#profileNavList {
-	display: flex;
-	border-bottom: 1px solid #ccc;
-}
-
-#profileNavList a {
-	padding: 9px 8px;
-	margin-right: 10px;
-	text-decoration: none;
-	font-size: 20px;
-	font-weight: 600;
-	color: #49274a;
-}
-
-#profileNavList a:hover {
-	color: #49274a;
-	border-bottom: 2px solid #49274a;
-}
-
-#defaultSelected {
-	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
-}
-
-#changeProfileDiv {
-	margin-top: 10px;
-}
-
-#profileForm {
-	
-}
-
-#editProfileInfoDiv {
-	height: 70px;
-	padding: 10px 8px;
-    border: 2px solid #49274a;
-}
-
-#upper-EditProfileInfoDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 15px;
-    font-weight: 600;
-}
-
-#lower-EditProfileInfoDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#usernameDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#nameLabel {
-	display: block;
-}
-
-#nameInput {
-	
-}
-
-#passwordDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#oldPassDiv {
-	
-}
-
-#oldPassLabel {
-	display: block;
-}
-
-#oldPassInput {
-	
-}
-
-#newPassDiv {
-	margin-top: 10px;
-}
-
-#newPassLabel {
-	display: block;
-}
-
-#newPassInput {
-	
-}
-
-#confirmPassDiv {
-	margin-top: 10px;
-}
-
-#confirmPassLabel {
-	display: block;
-}
-
-#confirmPassInput {
-	
-}
-
-#emailDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#emailLabel {
-	display: block;
-}
-
-#emailInput {
-	
-}
-
-#bioDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#bioLabel {
-	display: block;
-}
-
-#bioText {
-	width: 50%;
-	min-height: 100px;
-	max-height: 150px;
-	padding: 5px 5px;
-}
-
-#updateBtnDiv {
-	margin-top: 10px;
-}
-
-#updateBtn {
-	height: 25px;
-    width: 120px;
-    font-weight: 600;
-    outline: none;
-    color: white;
-    background-color: #49274a;
-    cursor: not-allowed;
-    border-radius: 4px;
-    border-color: transparent;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    text-transform: uppercase;
-    float: right;
-}
-
-#updateBtn:hover {
-	border: 1px solid #49274a;
-	color: #49274a;
-	background-color: #f8eee7;
-}
 
 /* Footer */
 

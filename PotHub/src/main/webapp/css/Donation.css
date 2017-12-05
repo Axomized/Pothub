@@ -83,6 +83,11 @@ input {
 	color: #94618e;
 }
 
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
+}
+
 /* Header */
 
 #header h1 { 

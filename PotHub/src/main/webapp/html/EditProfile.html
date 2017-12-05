@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 		<!-- Page Title -->
 		<title>Edit Profile</title>
@@ -37,9 +37,17 @@
 		<div id="navigation">
 			<ul>
 				<li id="lhome"><a href="Forum.html">Home</a></li>
-				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
+				<li id="lprivatemessage"><a href="PrivateMessage.html">Private Message</a></li>
 				<li id="levent"><a href="EventPage.html">Event</a></li>
-				<li id="lpotcast"><a href="#03">Potcast</a></li>
+				<li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Potcast</a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Active PotCasts</a></li>
+			          <li><a href="#">Start a PotCast</a></li>
+			          <li><a href="#">My PotCast</a></li>
+			          <li><a href="#">Joined PotCast</a></li>
+			        </ul>
+			      </li>
 				<li id="ldonate"><a href="Donation.html">Donate</a></li>
 			</ul>
 		</div>
@@ -62,6 +70,14 @@
 						</div>
 						<div id="changeProfileDiv">
 							<form id="profileForm">
+								<div id="editProfileInfoDiv">
+									<div id="upper-EditProfileInfoDiv">
+										Edit Profile
+									</div>
+									<div id="lower-EditProfileInfoDiv">
+										<span id="editProfileInfoSpan">Change your password, email and bio.</span>
+									</div>
+								</div>
 								<div id="usernameDiv">
 									<label id="nameLabel" for="nameInput">Username</label>
 									<input type="text" id="nameInput" class="inputsForFill" name="nameInput" onkeyup="startedTyping(this)">
