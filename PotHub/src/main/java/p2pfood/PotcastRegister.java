@@ -98,8 +98,7 @@ public class PotcastRegister extends HttpServlet {
 				+ "<p>Starting Price Per Portion</p>" + "<input type='number'></input>" + "</div>"
 				+ "<div class='formElement'>" + "<p>Bid closing time</p>" + "<input type='time' class='veryShort'></input>"
 				+ "<p>Collection time</p>" + "<input type='time' class='veryShort'></input>" + "</div>"
-				+ "<div class='formElement'>" + "<p>Address</p>" + "<input type='text' class='long'></input>"
-				+ "<p>Postal Code</p>" + "<input type='text' class='short'></input>" + "</div>" + "<div class='formElement'>"
+				+ "<div class='formElement'>"
 				+ "<button>Submit</button>" + "</div>" + "</div>" + "</div>"
 				
 				+ "<div id='footer'>"

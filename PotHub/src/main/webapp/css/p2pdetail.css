@@ -92,30 +92,6 @@ body
 	background: #49274a;
 }
 
-#wrapper
-{
-	margin-left:15%
-}
-
-#left-wrap
-{
-	padding-top:20px;
-	float: left;
-	width: 13%;
-	height:100%;
-	min-height: 1000px;
-	background: #f3decb;
-	text-align: center;
-}
-
-
-#left-wrap p{
-	font-size:1.5em;
-	text-align: center;
-	width:90%;
-	margin-left:5px;
-}
-
 #secondHeader {
 	margin-top:5%;
 	margin-bottom:4%;
@@ -310,6 +286,7 @@ body#babout li#labout a
 #wrapper {
 	width:80%;
 	margin-left: 4%;
+	margin-top: 7%;
 }
 
 
@@ -435,7 +412,6 @@ input {
 
 #foodText {
 	font-size:2em;
-	margin-top: 160px;
 	margin-left: 420px;
 	width:50%;
 }
@@ -524,4 +500,17 @@ button {
 
 #foodDesc input {
 	width:50px;
+}
+
+#reportButton {
+	background: url('../images/flag.png');
+    border: none;
+    color: white;
+    padding:10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    float: left;
+    width: 30px;
+    height: 30px;
 }
