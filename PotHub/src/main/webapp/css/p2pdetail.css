@@ -461,6 +461,7 @@ input {
 
 #foodAndMap {
 	width: 400px;
+	border-radius:10px;
 }
 
 iframe {
@@ -503,7 +504,7 @@ button {
 }
 
 #reportButton {
-	background: url('../images/flag.png');
+	background: #94618e;
     border: none;
     color: white;
     padding:10px;
@@ -511,6 +512,15 @@ button {
     text-decoration: none;
     display: inline-block;
     float: left;
-    width: 30px;
     height: 30px;
+}
+
+#reportList {
+	display:none;
+	float:left;
+	list-style:none;
+	background-color:#f3decb;
+	border-radius:10px;
+	margin-top:10px;
+	width: 100%;
 }
