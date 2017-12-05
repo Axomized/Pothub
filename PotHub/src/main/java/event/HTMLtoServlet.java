@@ -23,7 +23,7 @@ public class HTMLtoServlet {
 		String str;
 		boolean Hi2 = true;
 		while ((str = in.readLine()) != null) {
-			str = str.replaceAll("\"", "\'");
+			str.replaceAll("\"", "\'");
 			if (Hi2) {
 				s += "\"" + str + "\"\n";
 				Hi2 = false;
@@ -31,9 +31,9 @@ public class HTMLtoServlet {
 				s += "+ \"" + str + "\"\n";
 			}
 		}
-		s = s.replaceAll("href=\'../css", "href=\'css");
-		s = s.replaceAll("src=\'../script", "src=\'script");
-		s = s.replaceAll("src=\'../images", "src=\'images");
+		s.replaceAll("href=\'../css", "href=\'css");
+		s.replaceAll("src=\'../script", "src=\'script");
+		s.replaceAll("src=\'../images", "src=\'images");
 		in.close();
 
 		StringSelection selection = new StringSelection(s);

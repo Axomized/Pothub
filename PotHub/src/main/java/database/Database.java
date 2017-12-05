@@ -21,15 +21,15 @@ public class Database {
 		EncryptionTesting et = new EncryptionTesting();
 		ArrayList<ShoppingLoginModel> loginModelArray = et.getArray();
 		switch (permission) {
-		case 0:
+		case 0: //Read
 			conn = DriverManager.getConnection(DB_URL, loginModelArray.get(0).getLogin(),
 					loginModelArray.get(0).getPassword());
 			break;
-		case 1:
+		case 1: //Write
 			conn = DriverManager.getConnection(DB_URL, loginModelArray.get(1).getLogin(),
 					loginModelArray.get(1).getPassword());
 			break;
-		case 2:
+		case 2: //Read&Write
 			conn = DriverManager.getConnection(DB_URL, loginModelArray.get(2).getLogin(),
 					loginModelArray.get(2).getPassword());
 			break;
@@ -44,7 +44,7 @@ public class Database {
 		return rs;
 	}
 
-	public void updateDatabaseUser(String sql, DatabaseUserModel dUM) throws SQLException {
+	public void updateDatabaseUser(String sql, DatabaseUserModel dUM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dUM.getEmail());
 		ppstmt.setString(2, dUM.getiGN());

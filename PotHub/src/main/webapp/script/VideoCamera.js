@@ -1,7 +1,7 @@
-var success = false;
+//var success = false;
 var xhttp = new XMLHttpRequest();
 var video = document.querySelector("#video");
-var frameDiv = document.getElementById("frames");
+var track;
 
 xhttp.onreadystatechange = function() {
 	if (this.readyState == 4 && this.status == 200) {
@@ -19,6 +19,7 @@ if (navigator.getUserMedia) {
 
 function handleVideo(stream) {
 	video.src = window.URL.createObjectURL(stream);
+	track = stream.getTracks()[0];
 }
 
 function videoError(e) {
@@ -29,24 +30,23 @@ function videoError(e) {
 var DailyDoseOfCarrot = setInterval(function(){ captureFrame();}, 500);
 
 function captureFrame(){
-	if(success){
-		clearInterval(DailyDoseOfCarrot);
-	}
-	else{
-		var canvas = document.createElement("canvas");
-		canvas.width = 640;
-		canvas.height = 480;
-		var ctx = canvas.getContext("2d");
-		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-		var dataurl = canvas.toDataURL('image/png', 1);
-		frameDiv.appendChild(canvas);
-		xhttp.open("POST", "/PotHub/ProcessImage", true);
-		xhttp.setRequestHeader("Content-Type", "application/upload");
-		xhttp.send(dataurl);
-	}
+	var canvas = document.createElement("canvas");
+	canvas.width = 640;
+	canvas.height = 480;
+	var ctx = canvas.getContext("2d");
+	ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+	var dataurl = canvas.toDataURL('image/png', 1);
+	xhttp.open("POST", "/PotHub/ProcessImage", true);
+	xhttp.setRequestHeader("Content-Type", "application/upload");
+	xhttp.send(dataurl);
 }
 
 function onSuccessScanning(barcodeResult){
-	success = true;
+	//success = true;
 	alert(barcodeResult);
+}
+
+function stopRecording(){
+	track.stop();
+	clearInterval(DailyDoseOfCarrot);
 }
