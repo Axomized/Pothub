@@ -55,7 +55,6 @@ public class AdminForumControl extends HttpServlet {
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donation History</a>"+"</li>"
 +"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
-+"<li>"+"<a href='AdminSupport'>Support Tickets</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
