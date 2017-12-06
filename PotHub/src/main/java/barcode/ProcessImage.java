@@ -57,8 +57,6 @@ public class ProcessImage extends HttpServlet {
 				e.printStackTrace();
 			} catch (FormatException e) {
 				e.printStackTrace();
-			}finally{
-				br.close();
 			}
 
 			File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
