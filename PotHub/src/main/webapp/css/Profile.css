@@ -86,8 +86,6 @@ body {
 }
 
 #footer {
-	position: absolute;
-	bottom: 0;
 	clear: both;
 	float: left;
 	width: 100%; 
@@ -293,27 +291,6 @@ body {
     align-items: center;
 }
 
-#usernameDiv {
-	height: 80px;
-    margin-top: 10px;
-    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-UsernameDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-UsernameDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
 #emailDiv {
 	height: 80px;
     margin-top: 10px;
@@ -355,6 +332,28 @@ body {
 	height: 50%;
     display: flex;
     align-items: center;
+}
+
+#addressMapDiv {
+	margin-top: 10px;
+    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f3decb;
+    padding: 10px 8px;
+}
+
+#addressInfoDiv {
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+
+#addressSpanDiv {
+	margin-top: 10px;
+}
+
+#map {
+	height: 200px;
+	margin-top: 10px;
 }
 
 /* Footer */

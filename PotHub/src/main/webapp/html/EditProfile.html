@@ -7,9 +7,6 @@
 		<title>Edit Profile</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
@@ -78,10 +75,6 @@
 										<span id="editProfileInfoSpan">Change your password, email and bio.</span>
 									</div>
 								</div>
-								<div id="usernameDiv">
-									<label id="nameLabel" for="nameInput">Username</label>
-									<input type="text" id="nameInput" class="inputsForFill" name="nameInput" onkeyup="startedTyping(this)">
-								</div>
 								<div id="passwordDiv">
 									<div id="oldPassDiv">
 										<label id="oldPassLabel" for="oldPassInput">Old password</label>
@@ -93,7 +86,7 @@
 									</div>
 									<div id="confirmPassDiv">
 										<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
-										<input type="password" id="confirmPassInput" class="inputsForFill" name=confirmPassInput" onkeyup="startedTyping(this)">
+										<input type="password" id="confirmPassInput" class="inputsForFill" name="confirmPassInput" onkeyup="startedTyping(this)">
 									</div>
 								</div>
 								<div id="emailDiv">
@@ -103,6 +96,10 @@
 								<div id="bioDiv">
 									<label id="bioLabel" for="bioText">Bio</label>
 									<textarea id="bioText" class="inputsForFill" name="bioText" placeholder="Tell us a little about yourself" onkeyup="startedTyping(this)"></textarea>
+								</div>
+								<div id="addressDiv">
+									<label id="addressLabel" for="addressInput">Address</label>
+									<input type="text" id="addressInput" class="inputsForFill" name="addressInput" onkeyup="startedTyping(this)">
 								</div>
 								<div id="updateBtnDiv">
 									<button id="updateBtn" name="updateBtn" value="updateBtn" disabled>Update profile</button>
@@ -120,5 +117,9 @@
 				<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
 			</p>
 		</div>
+		<!-- Alternate Bootstrap Scripts -->
+		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>
 </html>

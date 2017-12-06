@@ -40,6 +40,18 @@
 		<description></description>
 		<servlet-class>forum.Forum</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>EditProfile</servlet-name>
+		<display-name>EditProfile</display-name>
+		<description></description>
+		<servlet-class>profile.EditProfile</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ConfirmDonation</servlet-name>
+		<display-name>ConfirmDonation</display-name>
+		<description></description>
+		<servlet-class>donation.ConfirmDonation</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -63,5 +75,13 @@
 	<servlet-mapping>
 		<servlet-name>Forum</servlet-name>
 		<url-pattern>/Forum</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>EditProfile</servlet-name>
+		<url-pattern>/EditProfile</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ConfirmDonation</servlet-name>
+		<url-pattern>/ConfirmDonation</url-pattern>
 	</servlet-mapping>
 </web-app>

@@ -285,21 +285,6 @@ body {
     align-items: center;
 }
 
-#usernameDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#nameLabel {
-	display: block;
-}
-
-#nameInput {
-	
-}
-
 #passwordDiv {
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
@@ -374,6 +359,21 @@ body {
 	min-height: 100px;
 	max-height: 150px;
 	padding: 5px 5px;
+}
+
+#addressDiv {
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f3decb;
+    padding: 10px 8px;
+    margin-top: 10px;
+}
+
+#addressLabel {
+	display: block;
+}
+
+#addressInput {
+	
 }
 
 #updateBtnDiv {
