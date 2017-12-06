@@ -106,7 +106,7 @@ public class PotcastDetail extends HttpServlet {
 						+ "&zoom=17" + "&key=AIzaSyDmftQ7JHdzj22y3wlP01IH_LlTgFQ3JOE' id='foodPicture'>" + "</iframe>"
 						+ "</div>"
 						+ "<div id='foodText'>" + "<div id='foodTitle'>"
-						+ "<p>Chunk of Beef, Split 11 Ways</p>" + "</div>" + "<div id='foodPrice'>" + "<p>$8</p>"
+						+ "<p>Chunk of Beef</p>" + "</div>" + "<div id='foodPrice'>" + "<p>$8</p>"
 						+ "</div>" + "<div id='foodDesc'>"
 						+ "<p>Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef Beef </p>"
 						+ "</div>" + "<div id='foodBits'>" + "<p>9/11 Bids, closing 5pm 1-1-2018</p>" + "</div>"
