@@ -12,11 +12,11 @@ function hideOverlay(overlay){
 	imageGradient.style.display = "block";
 }
 
-/* Profile */
-
 function redirectPage(){
 	window.location.href = "EventofEventPage";
 }
+
+/* Profile */
 
 function showProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "block";
@@ -24,8 +24,4 @@ function showProfileDropdown() {
 
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
-}
-
-function toEditProfilePage() {
-	location.href = "EditProfile.html";
 }

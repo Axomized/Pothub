@@ -30,18 +30,10 @@ function changeColor(button){
 
 /* Profile */
 
-function redirectPage(){
-	window.location.href = "EventofEventPage";
-}
-
 function showProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "block";
 }
 
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
-}
-
-function toEditProfilePage() {
-	location.href = "EditProfile.html";
 }

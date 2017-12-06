@@ -60,6 +60,6 @@ function success(){
 
 function gonext(){
 	alert("creating");
-	location.href("createNewPost");
+	location.href = "createNewPost";
 	
 }

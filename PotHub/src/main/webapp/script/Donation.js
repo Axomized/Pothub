@@ -12,7 +12,7 @@ function showBehalfName() {
 	
 	/**alert(x);**/
 	
-	if (x = true) {
+	if (x == true) {
 		behalfName.style.display = "block";
 	}
 	else {
