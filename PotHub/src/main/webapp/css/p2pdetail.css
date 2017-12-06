@@ -504,15 +504,14 @@ button {
 }
 
 #reportButton {
-	background: #94618e;
+	background-color: transparent;
     border: none;
-    color: white;
+    color: #94618e;
     padding:10px;
     text-align: center;
     text-decoration: none;
     display: inline-block;
     float: left;
-    height: 30px;
 }
 
 #reportList {
@@ -523,4 +522,16 @@ button {
 	border-radius:10px;
 	margin-top:10px;
 	width: 100%;
+}
+
+button {
+	background: #94618e;
+    border: none;
+    color: white;
+    padding:5px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius:5px;
+    width:60px;
 }
