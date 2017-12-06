@@ -1,4 +1,10 @@
+function showProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "block";
+}
 
+function hideProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "none";
+}
 
 function upfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
@@ -50,4 +56,10 @@ function cancell(){
 function success(){
 	alert("Success!");
 	document.getElementById("overlay").style.display = "none";
+}
+
+function gonext(){
+	alert("creating");
+	location.href("createNewPost");
+	
 }

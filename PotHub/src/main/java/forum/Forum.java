@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/Forum")
 public class Forum extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -59,14 +57,23 @@ public class Forum extends HttpServlet {
 						+ "		<div id='companyTitle'>"
 						+ "			<h1>PotHub</h1>"
 						+ "		</div>"
-						+ "		<div id='profilePic'>"
-						+ "			<img src='images/cat.png' height='50' width='50' />"
-						+ "		</div>"
+						
+						+ "		<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
+						+ "			<div id='profilePic'>"
+						+ "				<img src='images/profile.png' height='50' width='50'/>"
+						+ "				<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+						+ "			</div>"
+						+ "			<div id='profileDropdownDiv'>"
+						+ "				<a href='html/Profile.html'>Profile</a>"
+						+ "				<a href='html/LoginPage.html'>Logout</a>"
+						+ "			</div>"
+						+ "		</div>"	
+						
 						+ "	</div>"
 						+ "	<div id='navigation'>"
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
-						+ "				<li id='lhome'><a href='Forum.html'>Home</a></li>"
+						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 						+ "				<li id='lprivatemessage'><a href='PrivateMesage.html'>Private Message</a></li>"
 						+ "				<li id='levent'><a href='EventPage.html'>Event</a></li>"
 						+ "				<li class='dropdown'>"
@@ -90,7 +97,7 @@ public class Forum extends HttpServlet {
 						+ "					Welcome Guest"
 						+ "				</p>"
 						+ "				<p style='text-align:right;'>"
-						+ "					<button style='font-size:25px; cursor:pointer;' id='creatingnew' onclick='location.href='createNewPost';' class='btn'>NEW POST</button>		"
+						+ "					<button style='font-size:25px; cursor:pointer;' id='creatingnew' onclick='gonext()' class='btn'>NEW POST</button>		"
 						+ "				</p>"
 						+ "				</div>"
 						+ "				<div id='wholecomments'>"
