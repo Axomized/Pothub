@@ -71,7 +71,7 @@ public class PotcastMy extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='html/PrivateMesage.html'>Private Message</a></li>"
+						+ "				<li id='lprivatemessage'><a href='html/PrivateMessage.html'>Private Message</a></li>"
 						+ "				<li id='levent'><a href='html/EventPage.html'>Event</a></li>"
 						+ "				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
