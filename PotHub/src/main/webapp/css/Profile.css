@@ -377,26 +377,24 @@ body {
     align-items: center;
 }
 
-#addressMapDiv {
+#addressDiv {
+	height: 80px;
 	margin-top: 10px;
     box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
 }
 
-#addressInfoDiv {
+#upper-AddressDiv {
     display: flex;
     align-items: center;
     font-size: 17px;
 }
 
-#addressSpanDiv {
-	margin-top: 10px;
-}
-
-#map {
-	height: 200px;
-	margin-top: 10px;
+#lower-AddressDiv {
+	height: 50%;
+    display: flex;
+    align-items: center;
 }
 
 /* Footer */
