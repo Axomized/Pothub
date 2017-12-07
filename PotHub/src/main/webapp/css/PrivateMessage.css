@@ -16,6 +16,7 @@ body {
 	background-color: #f8eee7;
 }
 
+
 .container{
 	width: 500px;
 	min-width: 390px;
@@ -174,12 +175,6 @@ input[type=text]:focus {
 .add_contact:hover {
 	cursor: pointer;
 }
-
-
-
-
-
-
 
 
 
