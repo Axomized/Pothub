@@ -300,3 +300,21 @@ i{
 #footer a:visited { color: #666666; font-weight: bold;}
 
 #footer a:hover, #footer a:active { color: #666666;}
+
+@media only screen and (max-width:600px) {
+	.event-title{
+		font-size: 18px;
+	}
+
+	.top-container-bottom{
+		font-size: 16px;
+	}
+
+	.top-container-bottom-right{
+		font-size: 16px;
+	}
+	
+	.bot-container{
+		font-size: 10px;
+	}
+}
