@@ -535,3 +535,18 @@ button {
     border-radius:5px;
     width:60px;
 }
+
+/* Reports */
+
+#reportOptions ul li{
+  color: #AAAAAA;
+  float: left;
+  width: 100%;
+  font-size: 1.3em;
+  padding:3px;
+  cursor: pointer;
+}
+
+#reportOptions ul li:hover{
+	color: black;
+}

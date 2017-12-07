@@ -328,6 +328,23 @@ body {
 	
 }
 
+#genderDiv {
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f3decb;
+    padding: 10px 8px;
+    margin-top: 10px;
+}
+
+#genderLabel {
+	display: block;
+}
+
+#genderSelect {
+	height: 30px;
+	width: 50%;
+	padding: 5px 5px;
+}
+
 #emailDiv {
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
