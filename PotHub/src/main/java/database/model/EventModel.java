@@ -8,14 +8,31 @@ public class EventModel {
 	Timestamp date;
 	String venue;
 	int max_No_People;
+	String postalCode;
+	String unitNo;
+	String fileList;
 
-	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People) {
-		super();
+	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People, String postalCode,
+			String unitNo) {
 		this.eventID = eventID;
 		this.iGN = dUM.getiGN();
 		this.date = date;
 		this.venue = venue;
 		this.max_No_People = max_No_People;
+		this.postalCode = postalCode;
+		this.unitNo = unitNo;
+	}
+
+	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People, String postalCode,
+			String unitNo, String fileList) {
+		this.eventID = eventID;
+		this.iGN = dUM.getiGN();
+		this.date = date;
+		this.venue = venue;
+		this.max_No_People = max_No_People;
+		this.postalCode = postalCode;
+		this.unitNo = unitNo;
+		this.fileList = fileList;
 	}
 
 	public int getEventID() {
@@ -38,6 +55,18 @@ public class EventModel {
 		return max_No_People;
 	}
 
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public String getUnitNo() {
+		return unitNo;
+	}
+
+	public String getFileList() {
+		return fileList;
+	}
+
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}
@@ -56,5 +85,17 @@ public class EventModel {
 
 	public void setMax_No_People(int max_No_People) {
 		this.max_No_People = max_No_People;
+	}
+
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
+	}
+
+	public void setFileList(String fileList) {
+		this.fileList = fileList;
 	}
 }

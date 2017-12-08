@@ -1,38 +1,60 @@
 package database.model;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+
 public class PeopleEventListModel {
 	int eventID;
-	String iGN;
-	boolean bofirmedOrPending;
-
-	public PeopleEventListModel(EventModel eM, DatabaseUserModel dUM, boolean bofirmedOrPending) {
-		super();
+	String invitationPending;
+	String invitationConfirm;
+	
+	public PeopleEventListModel(EventModel eM, String invitationPending, String invitationConfirm) {
 		this.eventID = eM.getEventID();
-		this.iGN = dUM.getiGN();
-		this.bofirmedOrPending = bofirmedOrPending;
+		this.invitationPending = invitationPending;
+		this.invitationConfirm = invitationConfirm;
 	}
 
 	public int getEventID() {
 		return eventID;
 	}
 
-	public String getiGN() {
-		return iGN;
+	public ArrayList<String> getInvitationPending() {
+		ArrayList<String> als = new ArrayList<String>();
+		Scanner sc = new Scanner(invitationPending);
+		sc.useDelimiter("_");
+		while(sc.hasNext()) {
+			als.add(sc.next());
+		}
+		sc.close();
+		return als;
 	}
 
-	public boolean isBofirmedOrPending() {
-		return bofirmedOrPending;
+	public ArrayList<String> getInvitationConfirm() {
+		ArrayList<String> als = new ArrayList<String>();
+		Scanner sc = new Scanner(invitationConfirm);
+		sc.useDelimiter("_");
+		while(sc.hasNext()) {
+			als.add(sc.next());
+		}
+		sc.close();
+		return als;
 	}
 
 	public void setEventID(int eventID) {
 		this.eventID = eventID;
 	}
 
-	public void setiGN(String iGN) {
-		this.iGN = iGN;
+	public void setInvitationPending(ArrayList<String> invitationPending) {
+		String line = "";
+		for(String s: invitationPending)
+			line += s;
+		this.invitationPending = line;
 	}
 
-	public void setBofirmedOrPending(boolean bofirmedOrPending) {
-		this.bofirmedOrPending = bofirmedOrPending;
+	public void setInvitationConfirm(ArrayList<String> invitationConfirm) {
+		String line = "";
+		for(String s: invitationConfirm)
+			line += s;
+		this.invitationPending = line;
 	}
 }

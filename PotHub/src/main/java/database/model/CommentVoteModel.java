@@ -4,24 +4,17 @@ import java.sql.Timestamp;
 
 public class CommentVoteModel {
 	int commentID;
-	int upOrDown;
 	String iGN;
 	Timestamp date;
 
-	public CommentVoteModel(CommentModel cM, int upOrDown, DatabaseUserModel dUM, Timestamp date) {
-		super();
+	public CommentVoteModel(CommentModel cM, DatabaseUserModel dUM, Timestamp date) {
 		this.commentID = cM.getCommentID();
-		this.upOrDown = upOrDown;
 		this.iGN = dUM.getiGN();
 		this.date = date;
 	}
 
 	public int getCommentID() {
 		return commentID;
-	}
-
-	public int getUpOrDown() {
-		return upOrDown;
 	}
 
 	public String getiGN() {
@@ -34,10 +27,6 @@ public class CommentVoteModel {
 
 	public void setCommentID(int commentID) {
 		this.commentID = commentID;
-	}
-
-	public void setUpOrDown(int upOrDown) {
-		this.upOrDown = upOrDown;
 	}
 
 	public void setiGN(String iGN) {

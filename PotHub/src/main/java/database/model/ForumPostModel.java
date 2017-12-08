@@ -8,17 +8,48 @@ public class ForumPostModel {
 	int upvotes;
 	String iGN;
 	Timestamp date;
+	int picture;
+	String description;
 	int fileAttachment;
-
-	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Timestamp date,
-			FileTableModel fTM) {
-		super();
+	
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, String description) {
 		this.postID = postID;
 		this.thread = thread;
 		this.upvotes = upvotes;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.date = date;
+		this.description = description;
+	}
+
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, String description, FileTableModel fTM) {
+		this.postID = postID;
+		this.thread = thread;
+		this.upvotes = upvotes;
+		this.iGN = iGN;
+		this.date = date;
+		this.description = description;
 		this.fileAttachment = fTM.getFileID();
+	}
+
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, FileTableModel fTM, String description) {
+		this.postID = postID;
+		this.thread = thread;
+		this.upvotes = upvotes;
+		this.iGN = iGN;
+		this.date = date;
+		this.picture = fTM.getFileID();
+		this.description = description;
+	}
+
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, FileTableModel fTM, String description, FileTableModel fTM2) {
+		this.postID = postID;
+		this.thread = thread;
+		this.upvotes = upvotes;
+		this.iGN = iGN;
+		this.date = date;
+		this.picture = fTM.getFileID();
+		this.description = description;
+		this.fileAttachment = fTM2.getFileID();
 	}
 
 	public int getPostID() {
@@ -41,8 +72,16 @@ public class ForumPostModel {
 		return date;
 	}
 
+	public int getPicture() {
+		return picture;
+	}
+
 	public int getFileAttachment() {
 		return fileAttachment;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public void setPostID(int postID) {
@@ -65,7 +104,15 @@ public class ForumPostModel {
 		this.date = date;
 	}
 
+	public void setPicture(int picture) {
+		this.picture = picture;
+	}
+
 	public void setFileAttachment(int fileAttachment) {
 		this.fileAttachment = fileAttachment;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 }

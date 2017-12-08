@@ -3,19 +3,24 @@ package database.model;
 import java.sql.Timestamp;
 
 public class PrivateMessageModel {
+	int messageID;
 	String iGNSend;
 	String iGNReceive;
 	String message;
 	Timestamp date;
 	boolean readOrNot;
 
-	public PrivateMessageModel(String iGNSend, String iGNReceive, String message, Timestamp date, boolean readOrNot) {
-		super();
+	public PrivateMessageModel(int messageID, String iGNSend, String iGNReceive, String message, Timestamp date, boolean readOrNot) {
+		this.messageID = messageID;
 		this.iGNSend = iGNSend;
 		this.iGNReceive = iGNReceive;
 		this.message = message;
 		this.date = date;
 		this.readOrNot = readOrNot;
+	}
+
+	public int getMessageID() {
+		return messageID;
 	}
 
 	public String getiGNSend() {
@@ -36,6 +41,10 @@ public class PrivateMessageModel {
 
 	public boolean isReadOrNot() {
 		return readOrNot;
+	}
+
+	public void setMessageID(int messageID) {
+		this.messageID = messageID;
 	}
 
 	public void setiGNSend(String iGNSend) {

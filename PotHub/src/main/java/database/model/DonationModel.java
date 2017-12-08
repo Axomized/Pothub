@@ -7,13 +7,14 @@ public class DonationModel {
 	String iGN;
 	Timestamp donation_Date;
 	int donation_Amount;
+	String onBehalf;
 
-	public DonationModel(int donationID, DatabaseUserModel dUM, Timestamp donation_Date, int donation_Amount) {
-		super();
+	public DonationModel(int donationID, DatabaseUserModel dUM, Timestamp donation_Date, int donation_Amount, String onBehalf) {
 		this.donationID = donationID;
 		this.iGN = dUM.getiGN();
 		this.donation_Date = donation_Date;
 		this.donation_Amount = donation_Amount;
+		this.onBehalf = onBehalf;
 	}
 
 	public int getDonationID() {
@@ -46,5 +47,13 @@ public class DonationModel {
 
 	public void setDonation_Amount(int donation_Amount) {
 		this.donation_Amount = donation_Amount;
+	}
+
+	public String getOnBehalf() {
+		return onBehalf;
+	}
+
+	public void setOnBehalf(String onBehalf) {
+		this.onBehalf = onBehalf;
 	}
 }

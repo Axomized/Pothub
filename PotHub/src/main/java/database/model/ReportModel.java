@@ -6,18 +6,18 @@ public class ReportModel {
 	int reportID;
 	String iGNSend;
 	String iGNReceive;
-	String reason;
+	String evidenceType;
 	Timestamp date;
-	String evidence;
+	int evidence;
 	boolean guiltyOrNot;
 
-	public ReportModel(int reportID, String iGNSend, String iGNReceive, String reason, Timestamp date, String evidence,
+	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Timestamp date, int evidence,
 			boolean guiltyOrNot) {
 		super();
 		this.reportID = reportID;
 		this.iGNSend = iGNSend;
 		this.iGNReceive = iGNReceive;
-		this.reason = reason;
+		this.evidenceType = evidenceType;
 		this.date = date;
 		this.evidence = evidence;
 		this.guiltyOrNot = guiltyOrNot;
@@ -35,15 +35,15 @@ public class ReportModel {
 		return iGNReceive;
 	}
 
-	public String getReason() {
-		return reason;
+	public String getEvidenceType() {
+		return evidenceType;
 	}
 
 	public Timestamp getDate() {
 		return date;
 	}
 
-	public String getEvidence() {
+	public int getEvidence() {
 		return evidence;
 	}
 
@@ -63,15 +63,15 @@ public class ReportModel {
 		this.iGNReceive = iGNReceive;
 	}
 
-	public void setReason(String reason) {
-		this.reason = reason;
+	public void setEvidenceType(String evidenceType) {
+		this.evidenceType = evidenceType;
 	}
 
 	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
-	public void setEvidence(String evidence) {
+	public void setEvidence(int evidence) {
 		this.evidence = evidence;
 	}
 
