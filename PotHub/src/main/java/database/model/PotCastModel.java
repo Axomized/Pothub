@@ -2,8 +2,8 @@ package database.model;
 
 import java.sql.Timestamp;
 
-public class PotCastModel {
-	int potCastID;
+public class PotcastModel {
+	int potcastID;
 	String description;
 	int maxBids;
 	Timestamp bidStopTime;
@@ -14,9 +14,9 @@ public class PotCastModel {
 	int startingCR;
 	int picture;
 	
-	public PotCastModel(int potCastID, String description, int maxBids, Timestamp bidStopTime, Timestamp pickupTime,
+	public PotcastModel(int potcastID, String description, int maxBids, Timestamp bidStopTime, Timestamp pickupTime,
 			int minBid, String address, String postalCode, int startingCR, FileTableModel fTM) {
-		this.potCastID = potCastID;
+		this.potcastID = potcastID;
 		this.description = description;
 		this.maxBids = maxBids;
 		this.bidStopTime = bidStopTime;
@@ -28,8 +28,8 @@ public class PotCastModel {
 		this.picture = fTM.getFileID();
 	}
 
-	public int getPotCastID() {
-		return potCastID;
+	public int getPotcastID() {
+		return potcastID;
 	}
 
 	public String getDescription() {
@@ -68,8 +68,8 @@ public class PotCastModel {
 		return picture;
 	}
 
-	public void setPotCastID(int potCastID) {
-		this.potCastID = potCastID;
+	public void setPotcastID(int potcastID) {
+		this.potcastID = potcastID;
 	}
 
 	public void setDescription(String description) {

@@ -1,26 +1,20 @@
 package database.model;
 
-public class PotCastBidModel {
-	int potCastID;
+public class PotcastBidModel {
+	int potcastID;
 	String iGN;
 	double bidAmount;
 	String rating;
 	
-	public PotCastBidModel(int potCastID, String iGN, double bidAmount) {
-		this.potCastID = potCastID;
-		this.iGN = iGN;
-		this.bidAmount = bidAmount;
-	}
-
-	public PotCastBidModel(PotCastModel pCM, DatabaseUserModel dUM, double bidAmount, String rating) {
-		this.potCastID = pCM.getPotCastID();
+	public PotcastBidModel(PotcastModel pCM, DatabaseUserModel dUM, double bidAmount, String rating) {
+		this.potcastID = pCM.getPotcastID();
 		this.iGN = dUM.getiGN();
 		this.bidAmount = bidAmount;
 		this.rating = rating;
 	}
 
-	public int getPotCastID() {
-		return potCastID;
+	public int getPotcastID() {
+		return potcastID;
 	}
 
 	public String getiGN() {
@@ -35,8 +29,8 @@ public class PotCastBidModel {
 		return rating;
 	}
 
-	public void setPotCastID(int potCastID) {
-		this.potCastID = potCastID;
+	public void setPotcastID(int potcastID) {
+		this.potcastID = potcastID;
 	}
 
 	public void setiGN(String iGN) {
