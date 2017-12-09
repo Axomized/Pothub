@@ -7,6 +7,7 @@ public class DatabaseUserModel {
 	String iGN;
 	String contact_No;
 	char gender;
+	String bio;
 	String address;
 	int profilePic;
 	Timestamp lastLogin;
@@ -16,59 +17,14 @@ public class DatabaseUserModel {
 	double totalDonation;
 	boolean isPriviledged;
 	
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String address,
-			Timestamp joinDate, int cookingRank, int points, double totalDonation, boolean isPriviledged) {
-		this.email = email;
-		this.iGN = iGN;
-		this.contact_No = contact_No;
-		this.gender = gender;
-		this.address = address;
-		this.joinDate = joinDate;
-		this.cookingRank = cookingRank;
-		this.points = points;
-		this.totalDonation = totalDonation;
-		this.isPriviledged = isPriviledged;
-	}
-
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String address, int profilePic,
-			Timestamp joinDate, int cookingRank, int points, double totalDonation, boolean isPriviledged) {
-		this.email = email;
-		this.iGN = iGN;
-		this.contact_No = contact_No;
-		this.gender = gender;
-		this.address = address;
-		this.profilePic = profilePic;
-		this.joinDate = joinDate;
-		this.cookingRank = cookingRank;
-		this.points = points;
-		this.totalDonation = totalDonation;
-		this.isPriviledged = isPriviledged;
-	}
-
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String address,
-			Timestamp lastLogin, Timestamp joinDate, int cookingRank, int points, double totalDonation,
+	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address,
+			int profilePic, Timestamp lastLogin, Timestamp joinDate, int cookingRank, int points, double totalDonation,
 			boolean isPriviledged) {
 		this.email = email;
 		this.iGN = iGN;
 		this.contact_No = contact_No;
 		this.gender = gender;
-		this.address = address;
-		this.lastLogin = lastLogin;
-		this.joinDate = joinDate;
-		this.cookingRank = cookingRank;
-		this.points = points;
-		this.totalDonation = totalDonation;
-		this.isPriviledged = isPriviledged;
-	}
-
-
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String address, int profilePic,
-			Timestamp lastLogin, Timestamp joinDate, int cookingRank, int points, double totalDonation,
-			boolean isPriviledged) {
-		this.email = email;
-		this.iGN = iGN;
-		this.contact_No = contact_No;
-		this.gender = gender;
+		this.bio = bio;
 		this.address = address;
 		this.profilePic = profilePic;
 		this.lastLogin = lastLogin;
@@ -93,6 +49,10 @@ public class DatabaseUserModel {
 
 	public char getGender() {
 		return gender;
+	}
+
+	public String getBio() {
+		return bio;
 	}
 
 	public String getAddress() {
@@ -141,6 +101,10 @@ public class DatabaseUserModel {
 
 	public void setGender(char gender) {
 		this.gender = gender;
+	}
+
+	public void setBio(String bio) {
+		this.bio = bio;
 	}
 
 	public void setAddress(String address) {

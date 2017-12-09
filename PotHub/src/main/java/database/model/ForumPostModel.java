@@ -12,35 +12,6 @@ public class ForumPostModel {
 	String description;
 	int fileAttachment;
 	
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, String description) {
-		this.postID = postID;
-		this.thread = thread;
-		this.upvotes = upvotes;
-		this.iGN = iGN;
-		this.date = date;
-		this.description = description;
-	}
-
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, String description, FileTableModel fTM) {
-		this.postID = postID;
-		this.thread = thread;
-		this.upvotes = upvotes;
-		this.iGN = iGN;
-		this.date = date;
-		this.description = description;
-		this.fileAttachment = fTM.getFileID();
-	}
-
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, FileTableModel fTM, String description) {
-		this.postID = postID;
-		this.thread = thread;
-		this.upvotes = upvotes;
-		this.iGN = iGN;
-		this.date = date;
-		this.picture = fTM.getFileID();
-		this.description = description;
-	}
-
 	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, FileTableModel fTM, String description, FileTableModel fTM2) {
 		this.postID = postID;
 		this.thread = thread;

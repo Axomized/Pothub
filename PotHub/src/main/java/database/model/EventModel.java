@@ -1,37 +1,28 @@
 package database.model;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class EventModel {
 	int eventID;
 	String iGN;
 	Timestamp date;
+	String postalCode;
 	String venue;
 	int max_No_People;
-	String postalCode;
-	String unitNo;
+	String guest;
 	String fileList;
-
-	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People, String postalCode,
-			String unitNo) {
+	
+	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String postalCode, String venue, int max_No_People,
+			String guest, String fileList) {
 		this.eventID = eventID;
 		this.iGN = dUM.getiGN();
 		this.date = date;
+		this.postalCode = postalCode;
 		this.venue = venue;
 		this.max_No_People = max_No_People;
-		this.postalCode = postalCode;
-		this.unitNo = unitNo;
-	}
-
-	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String venue, int max_No_People, String postalCode,
-			String unitNo, String fileList) {
-		this.eventID = eventID;
-		this.iGN = dUM.getiGN();
-		this.date = date;
-		this.venue = venue;
-		this.max_No_People = max_No_People;
-		this.postalCode = postalCode;
-		this.unitNo = unitNo;
+		this.guest = guest;
 		this.fileList = fileList;
 	}
 
@@ -47,6 +38,10 @@ public class EventModel {
 		return date;
 	}
 
+	public String getPostalCode() {
+		return postalCode;
+	}
+
 	public String getVenue() {
 		return venue;
 	}
@@ -55,12 +50,15 @@ public class EventModel {
 		return max_No_People;
 	}
 
-	public String getPostalCode() {
-		return postalCode;
-	}
-
-	public String getUnitNo() {
-		return unitNo;
+	public ArrayList<String> getGuest() {
+		ArrayList<String> als = new ArrayList<String>();
+		Scanner sc = new Scanner(guest);
+		sc.useDelimiter("_");
+		while(sc.hasNext()) {
+			als.add(sc.next());
+		}
+		sc.close();
+		return als;
 	}
 
 	public String getFileList() {
@@ -79,6 +77,10 @@ public class EventModel {
 		this.date = date;
 	}
 
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
 	public void setVenue(String venue) {
 		this.venue = venue;
 	}
@@ -87,12 +89,11 @@ public class EventModel {
 		this.max_No_People = max_No_People;
 	}
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
-	}
-
-	public void setUnitNo(String unitNo) {
-		this.unitNo = unitNo;
+	public void setGuest(ArrayList<String> guest) {
+		String line = "";
+		for(String s: guest)
+			line += s;
+		this.guest = line;
 	}
 
 	public void setFileList(String fileList) {

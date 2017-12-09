@@ -8,10 +8,8 @@ public class AppealModel {
 	String message;
 	boolean approval;
 	Timestamp dateApproved;
-
-	public AppealModel(DatabaseUserModel dUM, Timestamp receiveDate, String message, boolean approval,
-			Timestamp dateApproved) {
-		super();
+	
+	public AppealModel(DatabaseUserModel dUM, Timestamp receiveDate, String message, boolean approval, Timestamp dateApproved) {
 		this.iGN = dUM.getiGN();
 		this.receiveDate = receiveDate;
 		this.message = message;

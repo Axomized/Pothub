@@ -9,20 +9,12 @@ public class CommentModel {
 	String IGN;
 	int comment1;
 
-	public CommentModel(int commentID, ForumPostModel fPM, Timestamp date, String iGN) {
+	public CommentModel(int commentID, int postID, Timestamp date, DatabaseUserModel dUM, int comment1) {
 		this.commentID = commentID;
-		this.postID = fPM.getPostID();
-		this.date = date;
-		IGN = iGN;
-	}
-
-	public CommentModel(int commentID, ForumPostModel fPM, Timestamp date, DatabaseUserModel dUM, CommentModel cM) {
-		this.commentID = commentID;
-		this.postID = fPM.getPostID();
+		this.postID = postID;
 		this.date = date;
 		IGN = dUM.getiGN();
-		this.comment1 = cM.getCommentID();
-		
+		this.comment1 = comment1;
 	}
 
 	public int getCommentID() {

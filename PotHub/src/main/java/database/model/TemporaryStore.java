@@ -5,16 +5,6 @@ public class TemporaryStore {
 	double temporaryAmount;
 	String temporaryPIN;
 	
-	public TemporaryStore(String iGN, double temporaryAmount) {
-		this.iGN = iGN;
-		this.temporaryAmount = temporaryAmount;
-	}
-
-	public TemporaryStore(String iGN, String temporaryPIN) {
-		this.iGN = iGN;
-		this.temporaryPIN = temporaryPIN;
-	}
-
 	public TemporaryStore(DatabaseUserModel dUM, double temporaryAmount, String temporaryPIN) {
 		this.iGN = dUM.getiGN();
 		this.temporaryAmount = temporaryAmount;
