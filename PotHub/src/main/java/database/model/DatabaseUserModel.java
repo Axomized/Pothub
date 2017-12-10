@@ -8,7 +8,8 @@ public class DatabaseUserModel {
 	String contact_No;
 	char gender;
 	String bio;
-	String address;
+	String postalCode;
+	String unitNo;
 	int profilePic;
 	Timestamp lastLogin;
 	Timestamp joinDate;
@@ -17,7 +18,7 @@ public class DatabaseUserModel {
 	double totalDonation;
 	boolean isPriviledged;
 	
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address,
+	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String postalCode, String unitNo,
 			int profilePic, Timestamp lastLogin, Timestamp joinDate, int cookingRank, int points, double totalDonation,
 			boolean isPriviledged) {
 		this.email = email;
@@ -25,7 +26,8 @@ public class DatabaseUserModel {
 		this.contact_No = contact_No;
 		this.gender = gender;
 		this.bio = bio;
-		this.address = address;
+		this.postalCode = postalCode;
+		this.unitNo = unitNo;
 		this.profilePic = profilePic;
 		this.lastLogin = lastLogin;
 		this.joinDate = joinDate;
@@ -55,8 +57,12 @@ public class DatabaseUserModel {
 		return bio;
 	}
 
-	public String getAddress() {
-		return address;
+	public String getPostalCode() {
+		return postalCode;
+	}
+
+	public String getUnitNo() {
+		return unitNo;
 	}
 
 	public int getProfilePic() {
@@ -107,8 +113,12 @@ public class DatabaseUserModel {
 		this.bio = bio;
 	}
 
-	public void setAddress(String address) {
-		this.address = address;
+	public void setPostalCode(String postalCode) {
+		this.postalCode = postalCode;
+	}
+
+	public void setUnitNo(String unitNo) {
+		this.unitNo = unitNo;
 	}
 
 	public void setProfilePic(int profilePic) {

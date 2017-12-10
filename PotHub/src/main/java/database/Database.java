@@ -1,19 +1,23 @@
 package database;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+
 import database.model.DatabaseUserModel;
+import database.model.FileTableModel;
 import database.model.ShoppingLoginModel;
 
 public class Database {
 	final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
-	// final String
-	// DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
 
 	Connection conn = null;
 
@@ -47,16 +51,21 @@ public class Database {
 	public void updateDatabaseUser(String sql, DatabaseUserModel dUM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dUM.getEmail());
-		ppstmt.setString(2, dUM.getiGN());
-		ppstmt.setString(3, dUM.getContact_No());
-		ppstmt.setString(4, String.valueOf(dUM.getGender()));
-		ppstmt.setString(5, dUM.getAddress());
-		ppstmt.setTimestamp(6, dUM.getLastLogin());
-		ppstmt.setTimestamp(7, dUM.getJoinDate());
+		
 
 		executeUpdate(ppstmt);
 	}
 
+	private void updateFileTable(String sql, FileTableModel fTM) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement(sql);
+		ppstmt.setString(1, fTM.getFileName());
+		ppstmt.setBytes(2, fTM.getData());
+		ppstmt.setDate(3, new Date(fTM.getFileDate().getTime()));
+		ppstmt.setFloat(4, (float)fTM.getFileSize());
+
+		executeUpdate(ppstmt);
+	}
+	
 	private void executeUpdate(PreparedStatement ppstmt) throws SQLException {
 		int count = ppstmt.executeUpdate();
 		if (count == 0) {
@@ -64,6 +73,17 @@ public class Database {
 		} else {
 			System.out.println("!!! Update successful !!!\n");
 		}
+	}
+	
+	public void insertFileToFileTable(File file) throws FileNotFoundException, SQLException {
+		String fileName = file.getName();
+		byte[] dataByte = new byte[(int)file.length()];
+		Timestamp fileDate = new Timestamp(file.lastModified());
+		float fileSize = file.length();
+		FileTableModel fTM = new FileTableModel(0, fileName, dataByte, fileDate, fileSize);
+		
+		String sql = "INSERT INTO FileTable(FileName, Data, FileDate, FileSize) VALUES (?,?,?,?);";
+		updateFileTable(sql, fTM);
 	}
 
 	/*

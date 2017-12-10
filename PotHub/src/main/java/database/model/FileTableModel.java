@@ -10,7 +10,6 @@ public class FileTableModel {
 	double fileSize;
 
 	public FileTableModel(int fileID, String fileName, byte[] data, Timestamp fileDate, double fileSize) {
-		super();
 		this.fileID = fileID;
 		this.fileName = fileName;
 		this.data = data;

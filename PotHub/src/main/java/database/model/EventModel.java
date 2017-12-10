@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class EventModel {
 	int eventID;
 	String iGN;
+	int thumbnail;
+	String description;
 	Timestamp date;
 	String postalCode;
 	String venue;
@@ -14,10 +16,12 @@ public class EventModel {
 	String guest;
 	String fileList;
 	
-	public EventModel(int eventID, DatabaseUserModel dUM, Timestamp date, String postalCode, String venue, int max_No_People,
+	public EventModel(int eventID, DatabaseUserModel dUM, FileTableModel fTM, String description, Timestamp date, String postalCode, String venue, int max_No_People,
 			String guest, String fileList) {
 		this.eventID = eventID;
 		this.iGN = dUM.getiGN();
+		this.thumbnail = fTM.getFileID();
+		this.description = description;
 		this.date = date;
 		this.postalCode = postalCode;
 		this.venue = venue;
@@ -32,6 +36,14 @@ public class EventModel {
 
 	public String getiGN() {
 		return iGN;
+	}
+
+	public int getThumbnail() {
+		return thumbnail;
+	}
+
+	public String getDescription() {
+		return description;
 	}
 
 	public Timestamp getDate() {
@@ -61,8 +73,15 @@ public class EventModel {
 		return als;
 	}
 
-	public String getFileList() {
-		return fileList;
+	public ArrayList<String> getFileList() {
+		ArrayList<String> als = new ArrayList<String>();
+		Scanner sc = new Scanner(fileList);
+		sc.useDelimiter("_");
+		while(sc.hasNext()) {
+			als.add(sc.next());
+		}
+		sc.close();
+		return als;
 	}
 
 	public void setEventID(int eventID) {
@@ -71,6 +90,14 @@ public class EventModel {
 
 	public void setiGN(String iGN) {
 		this.iGN = iGN;
+	}
+
+	public void setThumbnail(int thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public void setDate(Timestamp date) {
@@ -96,7 +123,10 @@ public class EventModel {
 		this.guest = line;
 	}
 
-	public void setFileList(String fileList) {
-		this.fileList = fileList;
+	public void setFileList(ArrayList<String> fileList) {
+		String line = "";
+		for(String s: fileList)
+			line += s;
+		this.fileList = line;
 	}
 }
