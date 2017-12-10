@@ -95,7 +95,6 @@
 										<option selected disabled hidden="true">Choose your gender</option>
 										<option value="Male">Male</option>
 										<option value="Female">Female</option>
-										<option value="Others">Others</option>
 									</select>
 								</div>
 								<div id="emailDiv">
@@ -104,11 +103,17 @@
 								</div>
 								<div id="bioDiv">
 									<label id="bioLabel" for="bioText">Bio</label>
-									<textarea id="bioText" class="inputsForFill" name="bioText" placeholder="Tell us a little about yourself" onkeyup="startedTyping(this)"></textarea>
+									<textarea id="bioText" class="inputsForFill" name="bioText" onkeyup="startedTyping(this)"></textarea>
 								</div>
 								<div id="addressDiv">
-									<label id="addressLabel" for="addressInput">Address</label>
-									<input type="text" id="addressInput" class="inputsForFill" name="addressInput" placeholder="Blk, street-name, unit-number and postal code" onkeyup="startedTyping(this)">
+									<div id="postalCodeDiv">
+										<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
+										<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" onkeyup="startedTyping(this)">
+									</div>
+									<div id="unitNoDiv">
+										<label id="unitNoLabel" for="unitNoInput">Unit Number</label>
+										<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" onkeyup="startedTyping(this)">
+									</div>
 								</div>
 								<div id="updateBtnDiv">
 									<button id="updateBtn" name="updateBtn" value="updateBtn" disabled>Update profile</button>

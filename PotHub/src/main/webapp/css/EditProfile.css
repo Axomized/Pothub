@@ -394,11 +394,27 @@ body {
     margin-top: 10px;
 }
 
-#addressLabel {
+#postalCodeDiv {
+	
+}
+
+#postalCodeLabel {
 	display: block;
 }
 
-#addressInput {
+#postalCodeInput {
+	
+}
+
+#unitNoDiv {
+	margin-top: 10px;
+}
+
+#unitNoLabel {
+	display: block;	
+}
+
+#unitNoInput {
 	
 }
 
