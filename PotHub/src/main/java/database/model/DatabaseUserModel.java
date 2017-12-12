@@ -1,6 +1,7 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 public class DatabaseUserModel {
 	String email;
@@ -8,25 +9,25 @@ public class DatabaseUserModel {
 	String contact_No;
 	char gender;
 	String bio;
-	String postalCode;
+	String address;
 	String unitNo;
 	int profilePic;
-	Timestamp lastLogin;
-	Timestamp joinDate;
+	Date lastLogin;
+	Date joinDate;
 	int cookingRank;
 	int points;
-	double totalDonation;
+	BigDecimal totalDonation;
 	boolean isPriviledged;
 	
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String postalCode, String unitNo,
-			int profilePic, Timestamp lastLogin, Timestamp joinDate, int cookingRank, int points, double totalDonation,
+	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo,
+			int profilePic, Date lastLogin, Date joinDate, int cookingRank, int points, BigDecimal totalDonation,
 			boolean isPriviledged) {
 		this.email = email;
 		this.iGN = iGN;
 		this.contact_No = contact_No;
 		this.gender = gender;
 		this.bio = bio;
-		this.postalCode = postalCode;
+		this.address = address;
 		this.unitNo = unitNo;
 		this.profilePic = profilePic;
 		this.lastLogin = lastLogin;
@@ -57,8 +58,8 @@ public class DatabaseUserModel {
 		return bio;
 	}
 
-	public String getPostalCode() {
-		return postalCode;
+	public String getaddress() {
+		return address;
 	}
 
 	public String getUnitNo() {
@@ -69,11 +70,11 @@ public class DatabaseUserModel {
 		return profilePic;
 	}
 
-	public Timestamp getLastLogin() {
+	public Date getLastLogin() {
 		return lastLogin;
 	}
 
-	public Timestamp getJoinDate() {
+	public Date getJoinDate() {
 		return joinDate;
 	}
 
@@ -85,7 +86,7 @@ public class DatabaseUserModel {
 		return points;
 	}
 
-	public double getTotalDonation() {
+	public BigDecimal getTotalDonation() {
 		return totalDonation;
 	}
 
@@ -113,8 +114,8 @@ public class DatabaseUserModel {
 		this.bio = bio;
 	}
 
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setaddress(String address) {
+		this.address = address;
 	}
 
 	public void setUnitNo(String unitNo) {
@@ -125,11 +126,11 @@ public class DatabaseUserModel {
 		this.profilePic = profilePic;
 	}
 
-	public void setLastLogin(Timestamp lastLogin) {
+	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
 	}
 
-	public void setJoinDate(Timestamp joinDate) {
+	public void setJoinDate(Date joinDate) {
 		this.joinDate = joinDate;
 	}
 
@@ -141,7 +142,7 @@ public class DatabaseUserModel {
 		this.points = points;
 	}
 
-	public void setTotalDonation(double totalDonation) {
+	public void setTotalDonation(BigDecimal totalDonation) {
 		this.totalDonation = totalDonation;
 	}
 

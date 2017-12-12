@@ -1,24 +1,26 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EventModel {
 	int eventID;
+	String eventName;
 	String iGN;
 	int thumbnail;
 	String description;
-	Timestamp date;
+	Date date;
 	String postalCode;
 	String venue;
 	int max_No_People;
 	String guest;
 	String fileList;
 	
-	public EventModel(int eventID, DatabaseUserModel dUM, FileTableModel fTM, String description, Timestamp date, String postalCode, String venue, int max_No_People,
+	public EventModel(int eventID, String eventName, DatabaseUserModel dUM, FileTableModel fTM, String description, Date date, String postalCode, String venue, int max_No_People,
 			String guest, String fileList) {
 		this.eventID = eventID;
+		this.eventName = eventName;
 		this.iGN = dUM.getiGN();
 		this.thumbnail = fTM.getFileID();
 		this.description = description;
@@ -33,6 +35,10 @@ public class EventModel {
 	public int getEventID() {
 		return eventID;
 	}
+	
+	public String getEventName() {
+		return eventName;
+	}
 
 	public String getiGN() {
 		return iGN;
@@ -46,7 +52,7 @@ public class EventModel {
 		return description;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -88,6 +94,10 @@ public class EventModel {
 		this.eventID = eventID;
 	}
 
+	public void setEventName(String eventName) {
+		this.eventName = eventName;
+	}
+	
 	public void setiGN(String iGN) {
 		this.iGN = iGN;
 	}
@@ -100,7 +110,7 @@ public class EventModel {
 		this.description = description;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

@@ -1,16 +1,16 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
-public class Bans {
+public class BansModel {
 	String iGN;
-	Timestamp startDate;
-	Timestamp endDate;
+	Date startDate;
+	Date endDate;
 	String reason;
 	String admin;
 	boolean pardoned;
 
-	public Bans(DatabaseUserModel dUM, Timestamp startDate, Timestamp endDate, String reason, String admin,
+	public BansModel(DatabaseUserModel dUM, Date startDate, Date endDate, String reason, String admin,
 			boolean pardoned) {
 		super();
 		this.iGN = dUM.getiGN();
@@ -25,11 +25,11 @@ public class Bans {
 		return iGN;
 	}
 
-	public Timestamp getStartDate() {
+	public Date getStartDate() {
 		return startDate;
 	}
 
-	public Timestamp getEndDate() {
+	public Date getEndDate() {
 		return endDate;
 	}
 
@@ -49,11 +49,11 @@ public class Bans {
 		this.iGN = iGN;
 	}
 
-	public void setStartDate(Timestamp startDate) {
+	public void setStartDate(Date startDate) {
 		this.startDate = startDate;
 	}
 
-	public void setEndDate(Timestamp endDate) {
+	public void setEndDate(Date endDate) {
 		this.endDate = endDate;
 	}
 

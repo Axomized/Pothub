@@ -1,15 +1,16 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.math.BigDecimal;
+import java.sql.Date;
 
 public class DonationModel {
 	int donationID;
 	String iGN;
-	Timestamp donation_Date;
-	int donation_Amount;
+	Date donation_Date;
+	BigDecimal donation_Amount;
 	String onBehalf;
 
-	public DonationModel(int donationID, DatabaseUserModel dUM, Timestamp donation_Date, int donation_Amount, String onBehalf) {
+	public DonationModel(int donationID, DatabaseUserModel dUM, Date donation_Date, BigDecimal donation_Amount, String onBehalf) {
 		this.donationID = donationID;
 		this.iGN = dUM.getiGN();
 		this.donation_Date = donation_Date;
@@ -25,11 +26,11 @@ public class DonationModel {
 		return iGN;
 	}
 
-	public Timestamp getDonation_Date() {
+	public Date getDonation_Date() {
 		return donation_Date;
 	}
 
-	public int getDonation_Amount() {
+	public BigDecimal getDonation_Amount() {
 		return donation_Amount;
 	}
 
@@ -41,11 +42,11 @@ public class DonationModel {
 		this.iGN = iGN;
 	}
 
-	public void setDonation_Date(Timestamp donation_Date) {
+	public void setDonation_Date(Date donation_Date) {
 		this.donation_Date = donation_Date;
 	}
 
-	public void setDonation_Amount(int donation_Amount) {
+	public void setDonation_Amount(BigDecimal donation_Amount) {
 		this.donation_Amount = donation_Amount;
 	}
 

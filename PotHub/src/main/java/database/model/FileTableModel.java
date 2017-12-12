@@ -1,15 +1,15 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class FileTableModel {
 	int fileID;
 	String fileName;
 	byte[] data; // Might set to InputStream
-	Timestamp fileDate;
+	Date fileDate;
 	double fileSize;
 
-	public FileTableModel(int fileID, String fileName, byte[] data, Timestamp fileDate, double fileSize) {
+	public FileTableModel(int fileID, String fileName, byte[] data, Date fileDate, double fileSize) {
 		this.fileID = fileID;
 		this.fileName = fileName;
 		this.data = data;
@@ -29,7 +29,7 @@ public class FileTableModel {
 		return data;
 	}
 
-	public Timestamp getFileDate() {
+	public Date getFileDate() {
 		return fileDate;
 	}
 
@@ -49,7 +49,7 @@ public class FileTableModel {
 		this.data = data;
 	}
 
-	public void setFileDate(Timestamp fileDate) {
+	public void setFileDate(Date fileDate) {
 		this.fileDate = fileDate;
 	}
 

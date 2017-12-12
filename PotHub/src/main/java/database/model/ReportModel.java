@@ -1,17 +1,17 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class ReportModel {
 	int reportID;
 	String iGNSend;
 	String iGNReceive;
 	String evidenceType;
-	Timestamp date;
+	Date date;
 	int evidence;
 	boolean guiltyOrNot;
 
-	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Timestamp date, int evidence,
+	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence,
 			boolean guiltyOrNot) {
 		super();
 		this.reportID = reportID;
@@ -39,7 +39,7 @@ public class ReportModel {
 		return evidenceType;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -67,7 +67,7 @@ public class ReportModel {
 		this.evidenceType = evidenceType;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

@@ -1,15 +1,15 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class AppealModel {
 	String iGN;
-	Timestamp receiveDate;
+	Date receiveDate;
 	String message;
 	boolean approval;
-	Timestamp dateApproved;
+	Date dateApproved;
 	
-	public AppealModel(DatabaseUserModel dUM, Timestamp receiveDate, String message, boolean approval, Timestamp dateApproved) {
+	public AppealModel(DatabaseUserModel dUM, Date receiveDate, String message, boolean approval, Date dateApproved) {
 		this.iGN = dUM.getiGN();
 		this.receiveDate = receiveDate;
 		this.message = message;
@@ -21,7 +21,7 @@ public class AppealModel {
 		return iGN;
 	}
 
-	public Timestamp getReceiveDate() {
+	public Date getReceiveDate() {
 		return receiveDate;
 	}
 
@@ -33,7 +33,7 @@ public class AppealModel {
 		return approval;
 	}
 
-	public Timestamp getDateApproved() {
+	public Date getDateApproved() {
 		return dateApproved;
 	}
 
@@ -41,7 +41,7 @@ public class AppealModel {
 		this.iGN = iGN;
 	}
 
-	public void setReceiveDate(Timestamp receiveDate) {
+	public void setReceiveDate(Date receiveDate) {
 		this.receiveDate = receiveDate;
 	}
 
@@ -53,7 +53,7 @@ public class AppealModel {
 		this.approval = approval;
 	}
 
-	public void setDateApproved(Timestamp dateApproved) {
+	public void setDateApproved(Date dateApproved) {
 		this.dateApproved = dateApproved;
 	}
 }

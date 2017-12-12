@@ -1,13 +1,13 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class ForumVoteModel {
 	int postID;
 	String iGN;
-	Timestamp date;
+	Date date;
 
-	public ForumVoteModel(ForumPostModel fPM, DatabaseUserModel dUM, Timestamp date) {
+	public ForumVoteModel(ForumPostModel fPM, DatabaseUserModel dUM, Date date) {
 		this.postID = fPM.getPostID();
 		this.iGN = dUM.getiGN();
 		this.date = date;
@@ -21,7 +21,7 @@ public class ForumVoteModel {
 		return iGN;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -33,7 +33,7 @@ public class ForumVoteModel {
 		this.iGN = iGN;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 }

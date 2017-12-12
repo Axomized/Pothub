@@ -1,17 +1,17 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class LogsModel {
 	int logID;
 	String iGN;
-	Timestamp logDate;
+	Date logDate;
 	String iPAddress;
 	String logType;
 	String logActivity;
 	boolean isSuspicious;
 	
-	public LogsModel(int logID, String iGN, Timestamp logDate, String iPAddress, String logType, String logActivity,
+	public LogsModel(int logID, String iGN, Date logDate, String iPAddress, String logType, String logActivity,
 			boolean isSuspicious) {
 		this.logID = logID;
 		this.iGN = iGN;
@@ -30,7 +30,7 @@ public class LogsModel {
 		return iGN;
 	}
 
-	public Timestamp getLogDate() {
+	public Date getLogDate() {
 		return logDate;
 	}
 
@@ -58,7 +58,7 @@ public class LogsModel {
 		this.iGN = iGN;
 	}
 
-	public void setLogDate(Timestamp logDate) {
+	public void setLogDate(Date logDate) {
 		this.logDate = logDate;
 	}
 

@@ -1,12 +1,14 @@
 package database.model;
 
+import java.math.BigDecimal;
+
 public class TemporaryStore {
 	String iGN;
-	double temporaryAmount;
+	BigDecimal temporaryAmount;
 	String temporaryPIN;
 	String temporaryStore;
 	
-	public TemporaryStore(DatabaseUserModel dUM, double temporaryAmount, String temporaryPIN, String temporaryStore) {
+	public TemporaryStore(DatabaseUserModel dUM, BigDecimal temporaryAmount, String temporaryPIN, String temporaryStore) {
 		this.iGN = dUM.getiGN();
 		this.temporaryAmount = temporaryAmount;
 		this.temporaryPIN = temporaryPIN;
@@ -17,7 +19,7 @@ public class TemporaryStore {
 		return iGN;
 	}
 
-	public double getTemporaryAmount() {
+	public BigDecimal getTemporaryAmount() {
 		return temporaryAmount;
 	}
 
@@ -33,7 +35,7 @@ public class TemporaryStore {
 		this.iGN = iGN;
 	}
 
-	public void setTemporaryAmount(double temporaryAmount) {
+	public void setTemporaryAmount(BigDecimal temporaryAmount) {
 		this.temporaryAmount = temporaryAmount;
 	}
 

@@ -1,35 +1,37 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class PotcastModel {
 	int potcastID;
+	String title;
 	String description;
 	int maxBids;
-	Timestamp bidStopTime;
-	Timestamp pickupTime;
+	Date bidStopTime;
+	Date pickupTime;
 	int minBid;
-	String address;
-	String postalCode;
 	int startingCR;
 	int picture;
 	
-	public PotcastModel(int potcastID, String description, int maxBids, Timestamp bidStopTime, Timestamp pickupTime,
-			int minBid, String address, String postalCode, int startingCR, FileTableModel fTM) {
+	public PotcastModel(int potcastID, String title, String description, int maxBids, Date bidStopTime,
+			Date pickupTime, int minBid, int startingCR, FileTableModel fTM) {
 		this.potcastID = potcastID;
+		this.title = title;
 		this.description = description;
 		this.maxBids = maxBids;
 		this.bidStopTime = bidStopTime;
 		this.pickupTime = pickupTime;
 		this.minBid = minBid;
-		this.address = address;
-		this.postalCode = postalCode;
 		this.startingCR = startingCR;
 		this.picture = fTM.getFileID();
 	}
 
 	public int getPotcastID() {
 		return potcastID;
+	}
+
+	public String getTitle() {
+		return title;
 	}
 
 	public String getDescription() {
@@ -40,24 +42,16 @@ public class PotcastModel {
 		return maxBids;
 	}
 
-	public Timestamp getBidStopTime() {
+	public Date getBidStopTime() {
 		return bidStopTime;
 	}
 
-	public Timestamp getPickupTime() {
+	public Date getPickupTime() {
 		return pickupTime;
 	}
 
 	public int getMinBid() {
 		return minBid;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public String getPostalCode() {
-		return postalCode;
 	}
 
 	public int getStartingCR() {
@@ -72,6 +66,10 @@ public class PotcastModel {
 		this.potcastID = potcastID;
 	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
 	public void setDescription(String description) {
 		this.description = description;
 	}
@@ -80,24 +78,16 @@ public class PotcastModel {
 		this.maxBids = maxBids;
 	}
 
-	public void setBidStopTime(Timestamp bidStopTime) {
+	public void setBidStopTime(Date bidStopTime) {
 		this.bidStopTime = bidStopTime;
 	}
 
-	public void setPickupTime(Timestamp pickupTime) {
+	public void setPickupTime(Date pickupTime) {
 		this.pickupTime = pickupTime;
 	}
 
 	public void setMinBid(int minBid) {
 		this.minBid = minBid;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
 	}
 
 	public void setStartingCR(int startingCR) {

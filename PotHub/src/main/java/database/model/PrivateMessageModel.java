@@ -1,16 +1,16 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class PrivateMessageModel {
 	int messageID;
 	String iGNSend;
 	String iGNReceive;
 	String message;
-	Timestamp date;
+	Date date;
 	boolean readOrNot;
 
-	public PrivateMessageModel(int messageID, String iGNSend, String iGNReceive, String message, Timestamp date, boolean readOrNot) {
+	public PrivateMessageModel(int messageID, String iGNSend, String iGNReceive, String message, Date date, boolean readOrNot) {
 		this.messageID = messageID;
 		this.iGNSend = iGNSend;
 		this.iGNReceive = iGNReceive;
@@ -35,7 +35,7 @@ public class PrivateMessageModel {
 		return message;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -59,7 +59,7 @@ public class PrivateMessageModel {
 		this.message = message;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 

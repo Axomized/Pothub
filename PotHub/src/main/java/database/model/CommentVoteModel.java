@@ -1,14 +1,14 @@
 package database.model;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class CommentVoteModel {
 	int commentID;
 	String iGN;
-	Timestamp date;
+	Date date;
 
-	public CommentVoteModel(CommentModel cM, DatabaseUserModel dUM, Timestamp date) {
-		this.commentID = cM.getCommentID();
+	public CommentVoteModel(int commentID, DatabaseUserModel dUM, Date date) {
+		this.commentID = commentID;
 		this.iGN = dUM.getiGN();
 		this.date = date;
 	}
@@ -21,7 +21,7 @@ public class CommentVoteModel {
 		return iGN;
 	}
 
-	public Timestamp getDate() {
+	public Date getDate() {
 		return date;
 	}
 
@@ -33,7 +33,7 @@ public class CommentVoteModel {
 		this.iGN = iGN;
 	}
 
-	public void setDate(Timestamp date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 }

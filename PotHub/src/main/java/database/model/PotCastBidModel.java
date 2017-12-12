@@ -1,12 +1,14 @@
 package database.model;
 
+import java.math.BigDecimal;
+
 public class PotcastBidModel {
 	int potcastID;
 	String iGN;
-	double bidAmount;
+	BigDecimal bidAmount;
 	String rating;
 	
-	public PotcastBidModel(PotcastModel pCM, DatabaseUserModel dUM, double bidAmount, String rating) {
+	public PotcastBidModel(PotcastModel pCM, DatabaseUserModel dUM, BigDecimal bidAmount, String rating) {
 		this.potcastID = pCM.getPotcastID();
 		this.iGN = dUM.getiGN();
 		this.bidAmount = bidAmount;
@@ -21,7 +23,7 @@ public class PotcastBidModel {
 		return iGN;
 	}
 
-	public double getBidAmount() {
+	public BigDecimal getBidAmount() {
 		return bidAmount;
 	}
 
@@ -37,7 +39,7 @@ public class PotcastBidModel {
 		this.iGN = iGN;
 	}
 
-	public void setBidAmount(double bidAmount) {
+	public void setBidAmount(BigDecimal bidAmount) {
 		this.bidAmount = bidAmount;
 	}
 
