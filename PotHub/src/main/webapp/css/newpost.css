@@ -63,7 +63,7 @@ body
 #content-wrapper
 {
 	clear: both;
-	width: 60%;
+	width: 100%;
 }
 
 #content
@@ -99,11 +99,49 @@ body
 	text-align: center;
 }
 
+#profilePicWrapDiv {
+	position: relative;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+#profilePic {
+	padding: 10px 20px;
+	text-align: center;
+}
+
+#profileDropdownDiv {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0%;
+	background-color: #f8eee7;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#profileDropdownDiv a {
+	display: block;
+	color: black;
+	font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+#profileDropdownDiv a:hover {
+	color: #f3decb;
+    font-weight: bold;
+    text-transform: uppercase;
+	background-color: #49274a;
+}
+
 #welcomeSpan {
 	display: block;
 	padding-top: 5px;
 }
-
 /* Navigation */
 
 #navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
