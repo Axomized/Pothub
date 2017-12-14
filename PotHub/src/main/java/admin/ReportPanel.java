@@ -2,6 +2,8 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.Database;
+import database.model.ReportModel;
+
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminReports")
+@WebServlet("/HistoryAdminReports")
 public class ReportPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +40,7 @@ public class ReportPanel extends HttpServlet {
 + "<!-- Favicon -->"
 + "<link rel='icon' href='images/crab.gif' type='image/gif'>"
 + "<link rel='icon' href='images/crab.png' type='image/x-icon'>"
-+"<title>PotHub Reports</title>"
++"<title>Report History</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
@@ -66,7 +71,7 @@ public class ReportPanel extends HttpServlet {
         +"<tr>"
             +"<th>Reporter</th>"
             +"<th>Reported</th>"
-            +"<th>Evidence Type</th>"
+            +"<th>Type</th>"
             +"<th>Date In</th>"
             +"<th>Verdict</th>"
         +"</tr>"
@@ -78,266 +83,43 @@ public class ReportPanel extends HttpServlet {
             +"<td>Comment</td>"
             +"<td>30/11/2017 20:15</td>"
             +"<td>Innocent<button>Convict</button>"
-
             +"<a href='HistoryAdminReports'><button>History</button></a></td>"
-        +"</tr>"+"<tr>"
-            +"<td>Really Sorry Raynard</td>"
-            +"<td>Michael Hockenberries</td>"
-            +"<td>Comment</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Convicted<button>Innocent</button>"
-
-            +"<a href='HistoryAdminReports'><button>History</button></a></td>"
-        +"</tr>"+"<tr>"
-            +"<td>Sorry Sophie</td>"
-            +"<td>Michael Hockenberries</td>"
-            +"<td>Comment</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-            +"<a href='HistoryAdminReports'><button>History</button></a></td>"
-        +"</tr>"+"<tr>"
-	        +"<td>Matt</td>"
-	        +"<td>Michael Hockenberries</td>"
-	        +"<td>Comment</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-	        +"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Matt</td>"
-	        +"<td>Michael Hockenberries</td>"
-	        +"<td>Comment</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-	        +"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-		    +"<td>Matt</td>"
-		    +"<td>Michael Hockenberries</td>"
-		    +"<td>Comment</td>"
-		    +"<td>30/11/2017 20:15</td>"
-		    +"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-		    +"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-		    +"<td>Matt</td>"
-		    +"<td>Michael Hockenberries</td>"
-		    +"<td>Comment</td>"
-		    +"<td>30/11/2017 20:15</td>"
-		    +"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-		    +"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Michael Hockenberries</td>"
-			+"<td>Comment</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Undecided<button>Innocent</button><button>Convict</button>"
-
-			+"<a href='HistoryAdminReports'><button>History</button></a>"+"</td>"
-		 +"</tr>"
-    +"</tbody>"
+        +"</tr>");
+		
+		Database db;
+		try {
+			db = new Database(0);
+			ArrayList<ReportModel> reports = db.getReportModel("SELECT * FROM Reports;");
+			
+			for(ReportModel rep:reports){
+				pw.append("<tr>");
+				pw.append("<td>"+rep.getiGNSend()+"</td>");
+				pw.append("<td>"+rep.getiGNReceive()+"</td>");
+				pw.append("<td>"+rep.getEvidenceType()+"</td>");
+				pw.append("<td>"+rep.getDate()+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>");
+				
+				if(rep.isGuiltyOrNot()){
+					pw.append("<button>Convict</button>");
+				}
+				else{
+					pw.append("<button>Pardon</button>");
+				}
+				pw.append("</td>");
+				pw.append("</tr>");
+			}
+			if(reports.size()<10){
+				for(int i = 0; i < (10-reports.size());i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		
+    pw.append("</tbody>"
 +"</table>"
 +"</div>"
    +"<div id='fourbox'>"

@@ -2,12 +2,18 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.AppealModel;
+import database.model.BansModel;
 
 /**
  * Servlet implementation class Forum
@@ -70,276 +76,49 @@ public class BanPanel extends HttpServlet {
             +"<th>Ban Reason</th>"
             +"<th>Ban Date</th>"
             +"<th>Ban End</th>"
-            +"<th>Ban By</th>"
+            +"<th>Banned by</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-        +"<tr>"
-            +"<td>Repenting Raphael</td>"
-            +"<td>Saying bad word</td>"
-            +"<td>30/10/2017 20:15</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Evil Matt<button>Pardon</button>"
-
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
-        +"</tr>"+"<tr>"
-            +"<td>Really Sorry Raynard</td>"
-            +"<td>Being Too Cool</td>"
-            +"<td>30/10/2017 20:15</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Evil Matt<button>Pardon</button>"
-
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
-        +"</tr>"+"<tr>"
-            +"<td>Sorry Sophie</td>"
-            +"<td>Being Too Cool</td>"
-            +"<td>30/10/2017 20:15</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Evil Matt<button>Pardon</button>"
-
-            +"<a href='HistoryAdminBans'><button>History</button></a>"+"<a href='AppealView'><button>Read</button></a>"+"</td>"
-        +"</tr>"+"<tr>"
-	        +"<td>Matt</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt<button>Pardon</button>"
-
-	        +"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Matt</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt<button>Pardon</button>"
-
-	        +"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-		    +"<td>Matt</td>"
-		    +"<td>Being Too Cool</td>"
-		    +"<td>30/10/2017 20:15</td>"
-		    +"<td>30/11/2017 20:15</td>"
-		    +"<td>Evil Matt<button>Pardon</button>"
-
-		    +"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-		    +"<td>Matt</td>"
-		    +"<td>Being Too Cool</td>"
-		    +"<td>30/10/2017 20:15</td>"
-		    +"<td>30/11/2017 20:15</td>"
-		    +"<td>Evil Matt<button>Pardon</button>"
-
-		    +"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"+"<tr>"
-			+"<td>Matt</td>"
-			+"<td>Being Too Cool</td>"
-			+"<td>30/10/2017 20:15</td>"
-			+"<td>30/11/2017 20:15</td>"
-			+"<td>Evil Matt<button>Pardon</button>"
-
-			+"<a href='HistoryAdminBans'><button>History</button></a>"+"</td>"
-		 +"</tr>"
-    +"</tbody>"
+    +"<tbody>");
+        
+		Database db;
+		try {
+			int counter = 0;
+			db = new Database(0);
+			ArrayList<BansModel> bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+			ArrayList<AppealModel> appeals = db.getAppealModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+			for(BansModel ban:bans){
+				pw.append("<tr>");
+				pw.append("<td>"+ban.getiGN()+"</td>");
+				pw.append("<td>"+ban.getReason()+"</td>");
+				pw.append("<td>"+ban.getStartDate()+"</td>");
+				pw.append("<td>"+ban.getEndDate()+"</td>");
+				pw.append("<td>"+ban.getAdmin()+"<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
+				
+				System.out.println(appeals.get(counter).getMessage());
+				if(appeals.get(counter).getMessage()!=null){
+					pw.append("<button>Pardon</button>");
+					pw.append("<a href='AppealView?user="+ban.getiGN()+"'><button>Read</button></a>");
+				}
+				
+				pw.append("</td>");
+				pw.append("</tr>");
+				counter++;
+			}
+			if(bans.size()<10){
+				for(int i = 0; i < (10-bans.size());i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		
+pw.append("</tbody>"
 +"</table>"
 +"</div>"
    +"<div id='fourbox'>"

@@ -486,6 +486,25 @@ public class Database {
 
 		executeUpdate(ppstmt);
 	}
+	
+	//Reports
+	//Appeal
+	public ArrayList<ReportModel> getReportModel(String sqlline) throws SQLException {
+		ArrayList<ReportModel> rptm = new ArrayList<ReportModel>();
+		ResultSet rs = getResultSet(sqlline);
+		while(rs.next()) {
+			int reportID = rs.getInt("ReportID");
+			String ignSend = rs.getString("IGNSend");
+			String ignRec = rs.getString("IGNRecieve");
+			String evidenceType = rs.getString("EvidenceType");
+			Date date = rs.getDate("Date");
+			int evidence = rs.getInt("Evidence");
+			boolean guiltyOrNot = rs.getBoolean("GuiltyOrNot");
+			
+			rptm.add(new ReportModel(reportID, ignSend, ignRec, evidenceType, date, evidence, guiltyOrNot));
+		}
+		return rptm;
+	}
 	/*
 	public static void main(String[] arg0) throws SQLException, FileNotFoundException {
 		Database db = new Database(0);
