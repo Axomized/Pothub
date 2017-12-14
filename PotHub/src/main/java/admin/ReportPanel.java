@@ -17,7 +17,7 @@ import database.model.ReportModel;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/HistoryAdminReports")
+@WebServlet("/AdminReports")
 public class ReportPanel extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -76,20 +76,13 @@ public class ReportPanel extends HttpServlet {
             +"<th>Verdict</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-        +"<tr>"
-            +"<td>Dewy</td>"
-            +"<td>Phoebe</td>"
-            +"<td>Comment</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Innocent<button>Convict</button>"
-            +"<a href='HistoryAdminReports'><button>History</button></a></td>"
-        +"</tr>");
+    +"<tbody>");
 		
 		Database db;
+		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			ArrayList<ReportModel> reports = db.getReportModel("SELECT * FROM Reports;");
+			reports = db.getReportModel("SELECT * FROM Reports;");
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
@@ -118,6 +111,12 @@ public class ReportPanel extends HttpServlet {
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} 
+		
+		if(reports.size()<10){
+			for(int i = 0; i < (10-reports.size());i++){
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			}
+		}
 		
     pw.append("</tbody>"
 +"</table>"

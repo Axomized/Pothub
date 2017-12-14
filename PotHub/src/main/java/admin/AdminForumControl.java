@@ -2,12 +2,17 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.DatabaseUserModel;
 
 /**
  * Servlet implementation class Forum
@@ -48,9 +53,7 @@ public class AdminForumControl extends HttpServlet {
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
-  +"<a href='adminpanel.html'>"
   +"<h1>Admin Panel</h1>"
-+"</a>"
 +"</div>"
 + "<div id='navigation'>"
 +"<ul>"
@@ -73,84 +76,41 @@ public class AdminForumControl extends HttpServlet {
             +"<th>Join Date</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-        +"<tr>"
-        +"<td>Repenting Raphael</td>"
-        +"<td>Normal</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-    +"</tr>"+"<tr>"
-        +"<td>Really Sorry Raynard</td>"
-        +"<td>Admin</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"+"<tr>"
-	    +"<td>Repenting Raphael</td>"
-	    +"<td>Moderator</td>"
-	    +"<td>1-1-2017 20:45<button>Promote</button>"
-
-	    +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"
-        +"<tr>"
-        +"<td>Repenting Raphael</td>"
-        +"<td>Normal</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-    +"</tr>"+"<tr>"
-        +"<td>Really Sorry Raynard</td>"
-        +"<td>Admin</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"+"<tr>"
-	    +"<td>Repenting Raphael</td>"
-	    +"<td>Moderator</td>"
-	    +"<td>1-1-2017 20:45<button>Promote</button>"
-
-	    +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"
-	+"<tr>"
-        +"<td>Repenting Raphael</td>"
-        +"<td>Normal</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-    +"</tr>"+"<tr>"
-        +"<td>Really Sorry Raynard</td>"
-        +"<td>Admin</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"+"<tr>"
-	    +"<td>Repenting Raphael</td>"
-	    +"<td>Moderator</td>"
-	    +"<td>1-1-2017 20:45<button>Promote</button>"
-
-	    +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"
-        +"<tr>"
-        +"<td>Repenting Raphael</td>"
-        +"<td>Normal</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-    +"</tr>"+"<tr>"
-        +"<td>Really Sorry Raynard</td>"
-        +"<td>Admin</td>"
-        +"<td>1-1-2017 20:45<button>Promote</button>"
-
-        +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"+"<tr>"
-	    +"<td>Repenting Raphael</td>"
-	    +"<td>Moderator</td>"
-	    +"<td>1-1-2017 20:45<button>Promote</button>"
-
-	    +"<button>Demote</button>"+"<a href='HistoryAdminRanks'><button>History</button></a>"+"</td>"
-	+"</tr>"
-+"</tbody>"
+    +"<tbody>");
+		
+		Database db;
+		ArrayList<DatabaseUserModel> dbus = new ArrayList<DatabaseUserModel>();
+		try {
+			db = new Database(0);
+			dbus = db.getDatabaseUser("SELECT * FROM DatabaseUser;");
+			
+			for(DatabaseUserModel dbu:dbus){
+				pw.append("<tr>");
+				pw.append("<td>"+dbu.getiGN()+"</td>");
+				pw.append("<td>Normal</td>");
+				pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>");
+				
+				pw.append("</td>");
+				pw.append("</tr>");
+				
+				if(dbus.size()<10){
+					for(int i = 0; i < (10-dbus.size());i++){
+					pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		if(dbus.size()==0){
+			for(int i = 0; i < 10;i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+		}
+		
+pw.append("</tbody>"
 +"</table>"
 +"</div>"
 +"</div>"

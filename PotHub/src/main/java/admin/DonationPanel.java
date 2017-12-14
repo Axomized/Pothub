@@ -79,9 +79,10 @@ public class DonationPanel extends HttpServlet {
     +"</thead>"
     +"<tbody>");
 		Database db;
+		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
 		try {
 			db = new Database(0);
-			ArrayList<DonationModel> donations = db.getDonationModel("SELECT * FROM Donations INNER JOIN DatabaseUser ON Donations.IGN = DatabaseUser.IGN;");
+			donations = db.getDonationModel("SELECT * FROM Donations INNER JOIN DatabaseUser ON Donations.IGN = DatabaseUser.IGN;");
 			
 			for(DonationModel dono:donations){
 				pw.append("<tr>");
@@ -102,9 +103,13 @@ public class DonationPanel extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		if(donations.size()==0){
+			for(int i = 0; i < 10;i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+		}
 pw.append("</tbody>"
 +"</table>"
 +"</div>"

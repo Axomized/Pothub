@@ -2,6 +2,8 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,10 +11,13 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.Database;
+import database.model.ReportModel;
+
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminReports")
+@WebServlet("/HistoryAdminReports")
 public class ReportHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -29,13 +34,17 @@ public class ReportHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
+		String subjectUser = "user";
+		if(request.getParameter("user") != null){
+			subjectUser=request.getParameter("user");
+		}
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
 + "<!-- Favicon -->"
 + "<link rel='icon' href='images/crab.gif' type='image/gif'>"
 + "<link rel='icon' href='images/crab.png' type='image/x-icon'>"
-+"<title>PotHub Reports</title>"
++"<title>"+subjectUser+"'s Reports</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
@@ -71,17 +80,48 @@ public class ReportHistory extends HttpServlet {
             +"<th>Verdict</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-        +"<tr>"
-            +"<td>Dewy</td>"
-            +"<td>Potcast</td>"
-            +"<td>Not food</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Innocent<button>Convict</button>"
-            +"<a href='HistoryAdminReports'><button>Go to</button></a></td>"
-        +"</tr>");
+    +"<tbody>");
             
-		
+		Database db;
+		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
+		try {
+			db = new Database(0);
+			reports = db.getReportModel("SELECT * FROM Reports WHERE IGNReceive = "+subjectUser+";");
+			
+			for(ReportModel rep:reports){
+				pw.append("<tr>");
+				pw.append("<td>"+rep.getiGNSend()+"</td>");
+				pw.append("<td>"+rep.getEvidenceType()+"</td>");
+				pw.append("<td>Bad Stuff</td>");
+				pw.append("<td>"+rep.getDate());
+				pw.append("<td>"+rep.isGuiltyOrNot()+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>");
+				
+				if(rep.isGuiltyOrNot()){
+					pw.append("<button>Convict</button>");
+				}
+				else{
+					pw.append("<button>Pardon</button>");
+				}
+				
+				pw.append("</td>");
+				pw.append("</tr>");
+				
+				if(reports.size()<10){
+					for(int i = 0; i < (10-reports.size());i++){
+					pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+					}
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		if(reports.size()==0){
+			for(int i = 0; i < 10;i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+		}
 		
 pw.append("</tbody>"
 +"</table>"

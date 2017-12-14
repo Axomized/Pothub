@@ -82,10 +82,11 @@ public class BanPanel extends HttpServlet {
     +"<tbody>");
         
 		Database db;
+		ArrayList<BansModel> bans = new ArrayList<BansModel>();
 		try {
 			int counter = 0;
 			db = new Database(0);
-			ArrayList<BansModel> bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+			bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
 			ArrayList<AppealModel> appeals = db.getAppealModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
 			for(BansModel ban:bans){
 				pw.append("<tr>");
@@ -98,7 +99,7 @@ public class BanPanel extends HttpServlet {
 				System.out.println(appeals.get(counter).getMessage());
 				if(appeals.get(counter).getMessage()!=null){
 					pw.append("<button>Pardon</button>");
-					pw.append("<a href='AppealView?user="+ban.getiGN()+"'><button>Read</button></a>");
+					pw.append("<a href='AppealView?user="+ban.getiGN()+"&appealID=TODO'><button>Read</button></a>");
 				}
 				
 				pw.append("</td>");
@@ -107,7 +108,12 @@ public class BanPanel extends HttpServlet {
 			}
 			if(bans.size()<10){
 				for(int i = 0; i < (10-bans.size());i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td></tr>");
 				}
 			}
 			
@@ -117,6 +123,11 @@ public class BanPanel extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+		if(bans.size()==0){
+			for(int i = 0; i < 10;i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+		}
 		
 pw.append("</tbody>"
 +"</table>"
