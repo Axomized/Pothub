@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import database.model.*;
 
 public class Database {
-	final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
-	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
+	final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
 
 	Connection conn = null;
 
-	public Database(int permission) throws SQLException, FileNotFoundException {
+	public Database(int permission) throws SQLException, FileNotFoundException, ClassNotFoundException {
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		EncryptionTesting et = new EncryptionTesting();
 		ArrayList<ShoppingLoginModel> loginModelArray = et.getArray();
 		switch (permission) {
