@@ -7,8 +7,8 @@ public class ForumVoteModel {
 	String iGN;
 	Date date;
 
-	public ForumVoteModel(ForumPostModel fPM, DatabaseUserModel dUM, Date date) {
-		this.postID = fPM.getPostID();
+	public ForumVoteModel(int postID, DatabaseUserModel dUM, Date date) {
+		this.postID = postID;
 		this.iGN = dUM.getiGN();
 		this.date = date;
 	}

@@ -10,17 +10,17 @@ public class ForumPostModel {
 	Date date;
 	int picture;
 	String description;
-	int fileAttachment;
+	String fileAttachment;
 	
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Date date, FileTableModel fTM, String description, FileTableModel fTM2) {
+	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Date date, FileTableModel fTM, String description, String fileAttachment) {
 		this.postID = postID;
 		this.thread = thread;
 		this.upvotes = upvotes;
-		this.iGN = iGN;
+		this.iGN = dUM.getiGN();
 		this.date = date;
 		this.picture = fTM.getFileID();
 		this.description = description;
-		this.fileAttachment = fTM2.getFileID();
+		this.fileAttachment = fileAttachment;
 	}
 
 	public int getPostID() {
@@ -47,7 +47,7 @@ public class ForumPostModel {
 		return picture;
 	}
 
-	public int getFileAttachment() {
+	public String getFileAttachment() {
 		return fileAttachment;
 	}
 
@@ -79,7 +79,7 @@ public class ForumPostModel {
 		this.picture = picture;
 	}
 
-	public void setFileAttachment(int fileAttachment) {
+	public void setFileAttachment(String fileAttachment) {
 		this.fileAttachment = fileAttachment;
 	}
 

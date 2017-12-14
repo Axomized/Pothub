@@ -68,7 +68,15 @@ public class EventModel {
 		return max_No_People;
 	}
 
-	public ArrayList<String> getGuest() {
+	public String getGuest() {
+		return guest;
+	}
+
+	public String getFileList() {
+		return fileList;
+	}
+	
+	public ArrayList<String> getGuestArray() {
 		ArrayList<String> als = new ArrayList<String>();
 		Scanner sc = new Scanner(guest);
 		sc.useDelimiter("_");
@@ -79,7 +87,7 @@ public class EventModel {
 		return als;
 	}
 
-	public ArrayList<String> getFileList() {
+	public ArrayList<String> getFileListArray() {
 		ArrayList<String> als = new ArrayList<String>();
 		Scanner sc = new Scanner(fileList);
 		sc.useDelimiter("_");
@@ -126,14 +134,22 @@ public class EventModel {
 		this.max_No_People = max_No_People;
 	}
 
-	public void setGuest(ArrayList<String> guest) {
+	public void setGuest(String guest) {
+		this.guest = guest;
+	}
+
+	public void setFileList(String fileList) {
+		this.fileList = fileList;
+	}
+	
+	public void setGuestArray(ArrayList<String> guest) {
 		String line = "";
 		for(String s: guest)
 			line += s;
 		this.guest = line;
 	}
 
-	public void setFileList(ArrayList<String> fileList) {
+	public void setFileListArray(ArrayList<String> fileList) {
 		String line = "";
 		for(String s: fileList)
 			line += s;
