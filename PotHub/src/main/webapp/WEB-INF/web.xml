@@ -52,6 +52,24 @@
 		<description></description>
 		<servlet-class>donation.ConfirmDonation</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Donation</servlet-name>
+		<display-name>Donation</display-name>
+		<description></description>
+		<servlet-class>donation.Donation</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Logs</servlet-name>
+		<display-name>Logs</display-name>
+		<description></description>
+		<servlet-class>logs.Logs</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Profile</servlet-name>
+		<display-name>Profile</display-name>
+		<description></description>
+		<servlet-class>profile.Profile</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -83,5 +101,17 @@
 	<servlet-mapping>
 		<servlet-name>ConfirmDonation</servlet-name>
 		<url-pattern>/ConfirmDonation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Donation</servlet-name>
+		<url-pattern>/Donation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Logs</servlet-name>
+		<url-pattern>/Logs</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Profile</servlet-name>
+		<url-pattern>/Profile</url-pattern>
 	</servlet-mapping>
 </web-app>

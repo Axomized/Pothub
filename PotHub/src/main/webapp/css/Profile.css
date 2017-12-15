@@ -291,6 +291,27 @@ body {
     align-items: center;
 }
 
+#cookingRankDiv {
+	height: 80px;
+    margin-top: 10px;
+    box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f3decb;
+    padding: 10px 8px;
+}
+
+#upper-RankDiv {
+	height: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 17px;
+}
+
+#lower-RankDiv {
+	height: 50%;
+    display: flex;
+    align-items: center;
+}
+
 #genderDiv {
 	height: 80px;
     margin-top: 10px;

@@ -2,12 +2,17 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.DonationModel;
 
 /**
  * Servlet implementation class Forum
@@ -72,224 +77,44 @@ public class DonationPanel extends HttpServlet {
             +"<th>Receipient</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Xuan Zheng</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/09/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Xuan Zheng</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/09/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Xuan Zheng</td>"
-        +"<td>30/10/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-        +"<td>Rich Guy</td>"
-        +"<td>30/09/2017 20:15</td>"
-        +"<td>$25</td>"
-        +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-	 +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Matt <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Xuan Zheng</td>"
-     +"<td>30/10/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Wei Xuan's Sister <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-        +"<tr>"
-     +"<td>Rich Guy</td>"
-     +"<td>30/09/2017 20:15</td>"
-     +"<td>$25</td>"
-     +"<td>Rich Guy <a href='HistoryAdminDonations'><button>History</button></a></td>"
-	 +"</tr>"
-+"</tbody>"
+    +"<tbody>");
+		Database db;
+		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
+		try {
+			db = new Database(0);
+			donations = db.getDonationModel("SELECT * FROM Donation INNER JOIN DatabaseUser ON Donation.IGN = DatabaseUser.IGN;");
+			
+			for(DonationModel dono:donations){
+				pw.append("<tr>");
+				pw.append("<td>"+dono.getiGN()+"</td>");
+				pw.append("<td>"+dono.getDonation_Date()+"</td>");
+				pw.append("<td>"+dono.getDonation_Amount()+"</td>");
+				if(dono.getOnBehalf()!=null){
+					pw.append("<td>"+dono.getOnBehalf()+"<a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+				}
+				else{
+					pw.append("<td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+				}
+				pw.append("</td>");
+				pw.append("</tr>");
+			}
+			if(donations.size()<10){
+				for(int i = 0; i < (10-donations.size());i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} 
+		if(donations.size()==0){
+			for(int i = 0; i < 10;i++){
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				}
+		}
+pw.append("</tbody>"
 +"</table>"
 +"</div>"
 +"<div id='fourbox'>"

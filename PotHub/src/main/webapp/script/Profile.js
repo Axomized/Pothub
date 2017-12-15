@@ -19,5 +19,5 @@ function hideProfileDropdown() {
 }
 
 function toEditProfilePage() {
-	location.href = "EditProfile.html";
+	location.href = "EditProfile";
 }

@@ -2,12 +2,18 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.AppealModel;
 
 /**
  * Servlet implementation class Forum
@@ -30,6 +36,8 @@ public class AppealView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String subjectUser = request.getParameter("user");
+		String appealID = request.getParameter("appealID");
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -37,7 +45,7 @@ public class AppealView extends HttpServlet {
 + "<!-- Favicon -->"
 + "<link rel='icon' href='images/crab.gif' type='image/gif'>"
 + "<link rel='icon' href='images/crab.png' type='image/x-icon'>"
-+"<title>PotHub Appeal</title>"
++"<title>"+subjectUser+"'s Appeal</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
@@ -62,12 +70,26 @@ public class AppealView extends HttpServlet {
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
-  +"<h1>Showing Appeal 000004 from Repenting Raphael</h1>"
-  +"<p id='appealBlock'>Hi I'm very very sorry I said WTF, the F stands for flip so it isn't bad pls unban me"
+  +"<h1>Showing Appeal "+appealID+" from "+subjectUser+"</h1>");
+		Database db;
+		String reason = "reason";
+		Date date = new Date(0);
+  			try {
+				db = new Database(0);
+
+			ArrayList<AppealModel> appeals = db.getAppealModel("SELECT * FROM Appeals WHERE ID = "+ appealID +";");
+			reason = appeals.get(0).getMessage();
+			date = appeals.get(0).getReceiveDate();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+pw.append("<p id='appealBlock'>Hi I'm very very sorry I said WTF, the F stands for flip so it isn't bad pls unban me"
   + "</p>"
-  +"<p id='appealBlock'>Sent on 30/10/2017 20:15"
+  +"<p id='appealBlock'>Sent on "+ date
   + "</p>"
-  +"<p id='appealBlock'>Initially banned for: Saying bad word"
+  +"<p id='appealBlock'>Initially banned for: " + reason
   +"</p>"
   +"<div id='appealBlock'>"
   +"<button>Approve</button><button>Deny</button>"
