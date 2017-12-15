@@ -10,10 +10,10 @@ public class BansModel {
 	String admin;
 	boolean pardoned;
 
-	public BansModel(DatabaseUserModel dUM, Date startDate, Date endDate, String reason, String admin,
+	public BansModel(String iGN, Date startDate, Date endDate, String reason, String admin,
 			boolean pardoned) {
 		super();
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.startDate = startDate;
 		this.endDate = endDate;
 		this.reason = reason;

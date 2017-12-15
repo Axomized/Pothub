@@ -9,8 +9,8 @@ public class AppealModel {
 	boolean approval;
 	Date dateApproved;
 	
-	public AppealModel(DatabaseUserModel dUM, Date receiveDate, String message, boolean approval, Date dateApproved) {
-		this.iGN = dUM.getiGN();
+	public AppealModel(String iGN, Date receiveDate, String message, boolean approval, Date dateApproved) {
+		this.iGN = iGN;
 		this.receiveDate = receiveDate;
 		this.message = message;
 		this.approval = approval;

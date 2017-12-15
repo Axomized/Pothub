@@ -98,35 +98,6 @@ public class Database {
 	}
 	
 	//Appeal
-	public ArrayList<AppealModel> getAppealModel(String sqlline) throws SQLException {
-		ArrayList<AppealModel> alam = new ArrayList<AppealModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			Date receiveDate	= rs.getDate("ReceiveDate");
-			String message		= rs.getString("Message");
-			boolean approval	= rs.getBoolean("Approval");
-			Date dateApproved	= rs.getDate("DateApproved");
-			alam.add(new AppealModel(dUM, receiveDate, message, approval, dateApproved));
-		}
-		return alam;
-	}
-	
 	public void updateAppeal(String sql, AppealModel aM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setDate(1, aM.getReceiveDate());
@@ -138,36 +109,6 @@ public class Database {
 	}
 	
 	//Bans
-	public ArrayList<BansModel> getBansModel(String sqlline) throws SQLException {
-		ArrayList<BansModel> albm = new ArrayList<BansModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			Date startDate		= rs.getDate("StartDate");
-			Date endDate		= rs.getDate("EndDate");
-			String reason		= rs.getString("Reason");
-			String admin		= rs.getString("Admin");
-			boolean pardoned 	= rs.getBoolean("Pardoned");
-			albm.add(new BansModel(dUM, startDate, endDate, reason, admin, pardoned));
-		}
-		return albm;
-	}
-	
 	public void updateBans(String sql, BansModel bM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setDate(1, bM.getStartDate());
@@ -180,36 +121,6 @@ public class Database {
 	}
 	
 	//CommentModel
-	public ArrayList<CommentModel> getCommentModel(String sqlline) throws SQLException {
-		ArrayList<CommentModel> alcm = new ArrayList<CommentModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int commentID		= rs.getInt("CommentID");
-			int postID			= rs.getInt("PostID");
-			Date date			= rs.getDate("Date");
-			int comment1 		= rs.getInt("Comment1");
-			String description 	= rs.getString("Description");
-			alcm.add(new CommentModel(commentID, postID, date, dUM, comment1, description));
-		}
-		return alcm;
-	}
-	
 	public void updateComment(String sql, CommentModel cM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setInt(1, cM.getPostID());
@@ -222,34 +133,6 @@ public class Database {
 	}
 	
 	//CommentVoteModel
-	public ArrayList<CommentVoteModel> getCommentVoteModel(String sqlline) throws SQLException {
-		ArrayList<CommentVoteModel> alcvm = new ArrayList<CommentVoteModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int commentID 	= rs.getInt("CommentID");
-			Date date		= rs.getDate("Date");
-			
-			alcvm.add(new CommentVoteModel(commentID, dUM, date));
-		}
-		return alcvm;
-	}
-	
 	public void updateCommentVote(String sql, CommentVoteModel cVM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, cVM.getiGN());
@@ -259,36 +142,6 @@ public class Database {
 	}
 	
 	//DonationModel
-	public ArrayList<DonationModel> getDonationModel(String sqlline) throws SQLException {
-		ArrayList<DonationModel> aldm = new ArrayList<DonationModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int donationID				= rs.getInt("DonationID");
-			Date donation_Date			= rs.getDate("Donation_Date");
-			BigDecimal donation_Amount	= rs.getBigDecimal("Donation_Amount");
-			String onBehalf				= rs.getString("OnBehalf");
-			
-			aldm.add(new DonationModel(donationID, dUM, donation_Date, donation_Amount, onBehalf));
-		}
-		return aldm;
-	}
-	
 	public void updateDonation(String sql, DonationModel dM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dM.getiGN());
@@ -304,32 +157,10 @@ public class Database {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
 		ResultSet rs = getResultSet(sqlline);
 		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int fileID			= rs.getInt("FileID");
-			String fileName		= rs.getString("FileName");
-			byte[] data			= rs.getBytes("Data");
-			Date fileDate		= rs.getDate("FileDate");
-			double fileSize		= rs.getDouble("FileSize");
-			FileTableModel fTM = new FileTableModel(fileID, fileName, data, fileDate, fileSize);
-			
-			
 			int eventID			= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
+			String iGN 			= rs.getString("IGN");
+			int thumbnail		= rs.getInt("Thumbnail");
 			String description	= rs.getString("Description");
 			Date date			= rs.getDate("Date");
 			String postalCode	= rs.getString("PostalCode");
@@ -338,7 +169,7 @@ public class Database {
 			String guest		= rs.getString("Guest");
 			String fileList		= rs.getString("FileList");
 			
-			alem.add(new EventModel(eventID, eventName, dUM, fTM, description, date, postalCode, venue, max_No_People, guest, fileList));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, max_No_People, guest, fileList));
 		}
 		return alem;
 	}
@@ -360,20 +191,6 @@ public class Database {
 	}
 	
 	//FileTable
-	public ArrayList<FileTableModel> getFileTableModel(String sqlline) throws SQLException {
-		ArrayList<FileTableModel> alftm = new ArrayList<FileTableModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			int fileID			= rs.getInt("FileID");
-			String fileName		= rs.getString("FileName");
-			byte[] data			= rs.getBytes("Data");
-			Date fileDate		= rs.getDate("FileDate");
-			double fileSize		= rs.getDouble("FileSize");
-			alftm.add(new FileTableModel(fileID, fileName, data, fileDate, fileSize));
-		}
-		return alftm;
-	}
-	
 	public void updateFileTable(String sql, FileTableModel fTM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fTM.getFileName());
@@ -385,33 +202,6 @@ public class Database {
 	}
 	
 	//FoodPreferences
-	public ArrayList<FoodPreferences> getFoodPreferences(String sqlline) throws SQLException {
-		ArrayList<FoodPreferences> alfp = new ArrayList<FoodPreferences>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			String foodPref = rs.getString("FoodPref");
-			
-			alfp.add(new FoodPreferences(dUM, foodPref));
-		}
-		return alfp;
-	}
-	
 	public void updateFoodPreferences(String sql, FoodPreferences fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fP.getiGN());
@@ -421,45 +211,6 @@ public class Database {
 	}
 	
 	//ForumPostModel
-	public ArrayList<ForumPostModel> getForumPostModel(String sqlline) throws SQLException {
-		ArrayList<ForumPostModel> alfpm = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet(sqlline);
-		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int fileID			= rs.getInt("FileID");
-			String fileName		= rs.getString("FileName");
-			byte[] data			= rs.getBytes("Data");
-			Date fileDate		= rs.getDate("FileDate");
-			double fileSize		= rs.getDouble("FileSize");
-			FileTableModel fTM = new FileTableModel(fileID, fileName, data, fileDate, fileSize);
-			
-			int postID				= rs.getInt("PostID");
-			String thread			= rs.getString("Thread");
-			int upvotes				= rs.getInt("Upvotes");
-			Date date				= rs.getDate("Date");
-			String description		= rs.getString("Description");
-			String fileAttachment	= rs.getString("FileAttachment");
-			
-			alfpm.add(new ForumPostModel(postID, thread, upvotes, dUM, date, fTM, description, fileAttachment));
-		}
-		return alfpm;
-	}
-	
 	public void updateForumPost(String sql, ForumPostModel fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fP.getThread());
@@ -474,10 +225,6 @@ public class Database {
 	}
 	
 	//ForumVoteModel
-	public ArrayList<ForumVoteModel> getForumVoteModel(String sqlline) throws SQLException {
-		return null;
-	}
-	
 	public void updateForumVote(String sql, ForumVoteModel fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setInt(1, fP.getPostID());

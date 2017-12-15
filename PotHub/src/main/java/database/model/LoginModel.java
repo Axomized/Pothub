@@ -5,8 +5,8 @@ public class LoginModel {
 	String password;
 	String salt;
 
-	public LoginModel(DatabaseUserModel dUM, String password, String salt) {
-		this.email = dUM.getEmail();
+	public LoginModel(String email, String password, String salt) {
+		this.email = email;
 		this.password = password;
 		this.salt = salt;
 	}

@@ -7,9 +7,9 @@ public class CommentVoteModel {
 	String iGN;
 	Date date;
 
-	public CommentVoteModel(int commentID, DatabaseUserModel dUM, Date date) {
+	public CommentVoteModel(int commentID, String iGN, Date date) {
 		this.commentID = commentID;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.date = date;
 	}
 
