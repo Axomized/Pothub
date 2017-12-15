@@ -86,7 +86,7 @@ public class ReportHistory extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getReportModel("SELECT * FROM Reports WHERE IGNReceive = "+subjectUser+";");
+			reports = db.getReportModel("SELECT * FROM Report WHERE IGNReceive = "+subjectUser+";");
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");

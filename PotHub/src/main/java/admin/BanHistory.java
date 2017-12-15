@@ -2,12 +2,19 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.AppealModel;
+import database.model.BansModel;
 
 /**
  * Servlet implementation class Forum
@@ -30,6 +37,10 @@ public class BanHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		String userSubject = "User";
+		if(request.getParameter("user")!=null){
+			userSubject = request.getParameter("user");
+		}
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -37,7 +48,7 @@ public class BanHistory extends HttpServlet {
 + "<!-- Favicon -->"
 + "<link rel='icon' href='images/crab.gif' type='image/gif'>"
 + "<link rel='icon' href='images/crab.png' type='image/x-icon'>"
-+"<title>PotHub Ban History</title>"
++"<title>"+userSubject+"'s Ban History</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
@@ -62,71 +73,89 @@ public class BanHistory extends HttpServlet {
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
-  +"<h1>Showing Ban History for: USERNAME</h1>"
+  +"<h1>Showing Ban History for: "+userSubject+"</h1>"
     + "<div id='tableWrapper'>"
     +"<table class='table table-striped'>"
     +"<thead>"
         +"<tr>"
             +"<th>Type</th>"
             +"<th>Ban Reason</th>"
-            +"<th>Ban Date</th>"
-            +"<th>Ban End</th>"
+            +"<th>Date In</th>"
+            +"<th>Date Out</th>"
             +"<th>Ban By</th>"
         +"</tr>"
 		    +"</thead>"
-		    +"<tbody>"
-			+"<tr>"
-		    +"<td>Denied Appeal</td>"
-		    +"<td>Being Too Lame</td>"
-		    +"<td>30/1/2018 20:15</td>"
-		    +"<td>30/6/2017 20:15</td>"
-		    +"<td>Evil Matt</td>"
-		+"</tr>"+"<tr>"
-		    +"<td>Active Ban</td>"
-		    +"<td>Being Too Lame</td>"
-		    +"<td>30/1/2018 20:15</td>"
-		    +"<td>30/6/2017 20:15</td>"
-		    +"<td>Evil Matt</td>"
-		+"</tr>"
-    	+"<tr>"
-            +"<td>Pardon</td>"
-            +"<td>Being Too Cool</td>"
-            +"<td>30/10/2017 20:15</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Evil Matt</td>"
-        +"</tr>"+"<tr>"
-            +"<td>Appeal</td>"
-            +"<td>Being Too Cool</td>"
-            +"<td>30/10/2017 20:15</td>"
-            +"<td>30/11/2017 20:15</td>"
-            +"<td>Evil Matt</td>"
-        +"</tr>"+"<tr>"
-	        +"<td>Inactive Ban</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt</td>"
-	    +"</tr>"
-        +"<tr>"
-	        +"<td>Pardon</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Appeal</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Inactive Ban</td>"
-	        +"<td>Being Too Cool</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	        +"<td>30/11/2017 20:15</td>"
-	        +"<td>Evil Matt</td>"
-	    +"</tr>"
-    +"</tbody>"
+		    +"<tbody>");
+		    
+Database db;
+ArrayList<BansModel> bans = new ArrayList<BansModel>();
+ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
+try {
+	db = new Database(0);
+	bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN WHERE Bans.IGN='"+userSubject+"';");
+	appeals = db.getAppealModel("SELECT * FROM Appeal INNER JOIN DatabaseUser ON Appeal.IGN = DatabaseUser.IGN WHERE Appeal.IGN='"+userSubject+"';");
+	for(BansModel ban:bans){
+		pw.append("<tr>");
+		if(ban.getEndDate().compareTo(new Date(System.currentTimeMillis()))>0){
+			pw.append("<td>Expired Ban</td>");
+		}
+		else{
+			pw.append("<td>Active Ban</td>");
+		}
+		pw.append("<td>"+ban.getReason()+"</td>");
+		pw.append("<td>"+ban.getStartDate()+"</td>");
+		pw.append("<td>"+ban.getEndDate()+"</td>");
+		pw.append("<td>"+ban.getAdmin()+"</td>");
+		
+		pw.append("</td>");
+		pw.append("</tr>");
+	}
+	for(AppealModel apl:appeals){
+		pw.append("<tr>");
+		if(apl.isApproval()){
+			pw.append("<td>Approved Appeal</td>");
+		}
+		else{
+			pw.append("<td>Denied Appeal</td>");
+		}
+		pw.append("<td>"+apl.getMessage()+"</td>");
+		pw.append("<td>"+apl.getReceiveDate()+"</td>");
+		if(apl.getDateApproved()!=null){
+		pw.append("<td>"+apl.getDateApproved()+"</td>");
+		}
+		else{
+			pw.append("<td>&nbsp;</td>");
+		}
+		pw.append("<td>&nbsp;</td>");
+		
+		pw.append("</td>");
+		pw.append("</tr>");
+	}
+	if((bans.size()+appeals.size())<10){
+		for(int i = 0; i < (10-(bans.size()+appeals.size()));i++){
+		pw.append("<tr>"
+				+ "<td>&nbsp;</td>"
+				+ "<td>&nbsp;</td>"
+				+ "<td>&nbsp;</td>"
+				+ "<td>&nbsp;</td>"
+				+ "<td>&nbsp;</td></tr>");
+		}
+	}
+	
+} catch (SQLException e) {
+	e.printStackTrace();
+} catch (ClassNotFoundException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} 
+if((bans.size()+appeals.size())==0){
+	for(int i = 0; i < 10;i++){
+		pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+		}
+}
+
+    
+    pw.append("</tbody>"
 +"</table>"
 +"</div>"
    +"<div id='fourbox'>"

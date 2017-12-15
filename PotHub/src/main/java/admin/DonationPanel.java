@@ -82,21 +82,25 @@ public class DonationPanel extends HttpServlet {
 		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
 		try {
 			db = new Database(0);
-			donations = db.getDonationModel("SELECT * FROM Donations INNER JOIN DatabaseUser ON Donations.IGN = DatabaseUser.IGN;");
+			donations = db.getDonationModel("SELECT * FROM Donation INNER JOIN DatabaseUser ON Donation.IGN = DatabaseUser.IGN;");
 			
 			for(DonationModel dono:donations){
 				pw.append("<tr>");
 				pw.append("<td>"+dono.getiGN()+"</td>");
 				pw.append("<td>"+dono.getDonation_Date()+"</td>");
 				pw.append("<td>"+dono.getDonation_Amount()+"</td>");
-				pw.append("<td>"+dono.getOnBehalf()+"<a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
-				
+				if(dono.getOnBehalf()!=null){
+					pw.append("<td>"+dono.getOnBehalf()+"<a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+				}
+				else{
+					pw.append("<td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+				}
 				pw.append("</td>");
 				pw.append("</tr>");
 			}
 			if(donations.size()<10){
 				for(int i = 0; i < (10-donations.size());i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 			}
 			

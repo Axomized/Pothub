@@ -14,8 +14,9 @@ import database.model.*;
 
 public class Database {
 	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
-	final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
-
+	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	final String DB_URL="jdbc:sqlserver://172.27.176.130:3306;databaseName=PotHub;";
+	
 	Connection conn = null;
 
 	public Database(int permission) throws SQLException, FileNotFoundException, ClassNotFoundException {
@@ -142,8 +143,8 @@ public class Database {
 		ArrayList<BansModel> albm = new ArrayList<BansModel>();
 		ResultSet rs = getResultSet(sqlline);
 		while(rs.next()) {
-			String email 				= rs.getString("Email");
 			String iGN					= rs.getString("IGN");
+			String email 				= rs.getString("Email");
 			String contact_No			= rs.getString("Contact_No");
 			char gender					= rs.getString("Gender").charAt(0);
 			String bio					= rs.getString("Bio");
@@ -495,7 +496,7 @@ public class Database {
 		while(rs.next()) {
 			int reportID = rs.getInt("ReportID");
 			String ignSend = rs.getString("IGNSend");
-			String ignRec = rs.getString("IGNRecieve");
+			String ignRec = rs.getString("IGNReceive");
 			String evidenceType = rs.getString("EvidenceType");
 			Date date = rs.getDate("Date");
 			int evidence = rs.getInt("Evidence");

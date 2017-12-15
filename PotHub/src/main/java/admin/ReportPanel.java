@@ -82,20 +82,24 @@ public class ReportPanel extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getReportModel("SELECT * FROM Reports;");
+			reports = db.getReportModel("SELECT * FROM Report;");
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
 				pw.append("<td>"+rep.getiGNSend()+"</td>");
 				pw.append("<td>"+rep.getiGNReceive()+"</td>");
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
-				pw.append("<td>"+rep.getDate()+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>");
+				pw.append("<td>"+rep.getDate()+"</td>");
 				
 				if(rep.isGuiltyOrNot()){
-					pw.append("<button>Convict</button>");
+					pw.append("<td>Guilty"
+					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+					+"<button>Convict</button></td>");
 				}
 				else{
-					pw.append("<button>Pardon</button>");
+					pw.append("<td>Innocent"
+					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+					+"<button>Pardon</button></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
