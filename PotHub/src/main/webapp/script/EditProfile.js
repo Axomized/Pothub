@@ -19,7 +19,14 @@ function startedTyping(inputsForFilled) {
 
 function checkFile() {
 	if (document.getElementById("profilePicFile").value != null) {
-		alert("File chosen");
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+	}
+}
+
+function checkSelect() {
+	var genderSelect = document.getElementById("genderSelect");
+	if (genderSelect.options[genderSelect.selectedIndex].value != "") {
 		document.getElementById("updateBtn").disabled = false;
 		document.getElementById("updateBtn").style.cursor = "pointer";
 	}
