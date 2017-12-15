@@ -16,7 +16,6 @@ import database.model.DatabaseUserModel;
 
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String IGN;
 	private static String email;
 	private static String contactNo;
 	private static char gender;
@@ -33,7 +32,6 @@ public class EditProfile extends HttpServlet {
 			Database db = new Database(0);
 			ArrayList<DatabaseUserModel> userList = db.getDatabaseUser("SELECT * FROM DatabaseUser WHERE IGN = 'GordonRamsey'");
 			for (DatabaseUserModel user : userList) {
-				IGN = user.getiGN();
 				email = user.getEmail();
 				contactNo = user.getContact_No();
 				gender = user.getGender();
@@ -91,10 +89,10 @@ public class EditProfile extends HttpServlet {
 				+ "				<li class='dropdown'>"
 				+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 				+ "			        <ul class='dropdown-menu'>"
-				+ "			          <li><a href='#'>Active PotCasts</a></li>"
-				+ "			          <li><a href='#'>Start a PotCast</a></li>"
-				+ "			          <li><a href='#'>My PotCast</a></li>"
-				+ "			          <li><a href='#'>Joined PotCast</a></li>"
+				+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+				+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+				+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+				+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 				+ "			        </ul>"
 				+ "			      </li>"
 				+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -157,6 +155,11 @@ public class EditProfile extends HttpServlet {
 				+ "									<label id='emailLabel' for='emailInput'>Email</label>"
 				//+ "									<input type='email' id='emailInput' class='inputsForFill' name='emailInput' onkeyup='startedTyping(this)'>"
 				+ "									<input type='email' id='emailInput' class='inputsForFill' name='emailInput' onkeyup='startedTyping(this)' value='" + email + "'>"
+				+ "								</div>"
+				+ "								<div id='contactNoDiv'>"
+				+ "									<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
+				//+ "									<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' onkeyup='startedTyping(this)'>"
+				+ "									<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' onkeyup='startedTyping(this)' value='" + contactNo + "'>"
 				+ "								</div>"
 				+ "								<div id='bioDiv'>"
 				+ "									<label id='bioLabel' for='bioText'>Bio</label>"

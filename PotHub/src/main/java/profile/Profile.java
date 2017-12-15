@@ -15,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import database.model.DatabaseUserModel;
 
-@WebServlet("/Profile")
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static String IGN;
@@ -95,10 +94,10 @@ public class Profile extends HttpServlet {
 				+ "				<li class='dropdown'>"
 				+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 				+ "			        <ul class='dropdown-menu'>"
-				+ "			          <li><a href='#'>Active PotCasts</a></li>"
-				+ "			          <li><a href='#'>Start a PotCast</a></li>"
-				+ "			          <li><a href='#'>My PotCast</a></li>"
-				+ "			          <li><a href='#'>Joined PotCast</a></li>"
+				+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+				+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+				+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+				+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 				+ "			        </ul>"
 				+ "			      </li>"
 				+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"

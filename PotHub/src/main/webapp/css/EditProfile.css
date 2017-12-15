@@ -384,6 +384,21 @@ body {
 	
 }
 
+#contactNoDiv {
+	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
+    background-color: #f3decb;
+    padding: 10px 8px;
+    margin-top: 10px;
+}
+
+#contactNoLabel {
+	display: block;
+}
+
+#contactNoInput {
+	
+}
+
 #bioDiv {
 	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
