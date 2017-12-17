@@ -202,7 +202,6 @@ body {
 	width: 60%;
 	min-width: 20em;
 	margin: auto;
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 	background-color: #f3decb;
 }
 
@@ -235,8 +234,6 @@ body {
 }
 
 #yesLabel {
-	/*padding-left: 5px;*/
-	/*padding-right: 10px;*/
 	margin-bottom: 0;
 	cursor: pointer;
 }
@@ -260,7 +257,6 @@ body {
 	margin-right: auto;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 	background-color: #f3decb;
 }
 
@@ -284,7 +280,6 @@ body {
 	margin-right: auto;
 	padding: 10px 0px 10px 0px;
 	text-align: center;
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
 	background-color: #f3decb;
 }
 

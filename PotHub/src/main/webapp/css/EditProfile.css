@@ -307,7 +307,6 @@ body {
 }
 
 #passwordDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -350,7 +349,6 @@ body {
 }
 
 #genderDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -370,7 +368,6 @@ body {
 }
 
 #emailDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -385,7 +382,6 @@ body {
 }
 
 #contactNoDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -400,7 +396,6 @@ body {
 }
 
 #bioDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -421,7 +416,6 @@ body {
 }
 
 #addressDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;

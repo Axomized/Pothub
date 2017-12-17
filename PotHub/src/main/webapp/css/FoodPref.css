@@ -190,6 +190,7 @@ body {
 	content: "";
     display: block;
     margin: auto;
+    width: 90%;
     border-top: 1px solid #f8eee7;
 }
 
@@ -204,30 +205,6 @@ body {
 
 #displayNameSpan {
 	font-size: 20px;
-}
-
-#editProfileBtnDiv {
-	margin-top: 10px;
-}
-
-#editProfileBtn {
-	height: 25px;
-	width: 150px;
-	font-weight: 600;
-    outline: none;
-    color: white;
-    background-color: #49274a;
-    cursor: pointer;
-    border-radius: 4px;
-    border-color: transparent;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
-    text-transform: uppercase;
-}
-
-#editProfileBtn:hover {
-	border: 1px solid #49274a;
-	color: #49274a;
-	background-color: #f8eee7;
 }
 
 #profileContentDiv {
@@ -266,148 +243,61 @@ body {
 }
 
 #aboutContentDiv {
-	
+	height: 420px;
 }
 
-#pointsDiv {
-	height: 80px;
-    margin-top: 10px;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-PointsDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-PointsDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#cookingRankDiv {
-	height: 80px;
-    margin-top: 10px;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-RankDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-RankDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#genderDiv {
-	height: 80px;
-    margin-top: 10px;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-GenderDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-GenderDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#emailDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-EmailDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-EmailDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#contactDiv {
-	height: 80px;
-    margin-top: 10px;
-    text-align: center;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-ContactDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-ContactDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#bioDiv {
-	height: 80px;
-    margin-top: 10px;
-    background-color: #f3decb;
-    padding: 10px 8px;
-}
-
-#upper-BioDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-    font-size: 17px;
-}
-
-#lower-BioDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
-}
-
-#addressDiv {
-	height: 80px;
+#buttonsDiv {
 	margin-top: 10px;
-    background-color: #f3decb;
-    padding: 10px 8px;
+	text-align: center;
 }
 
-#upper-AddressDiv {
-    display: flex;
-    align-items: center;
-    font-size: 17px;
+.editBtn {
+	height: 25px;
+	width: 160px;
+	font-weight: 600;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border-color: transparent;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
 }
 
-#lower-AddressDiv {
-	height: 50%;
-    display: flex;
-    align-items: center;
+.editBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
+}
+
+#foodPrefDiv {
+	padding: 9px 8px;
+	border-bottom: 1px solid #ccc;
+}
+
+#foodPrefSpan {
+	font-size: 17px;
+	font-weight: 600;
+}
+
+#foodListDiv {
+	display: flex;
+	text-align: center;
+	flex-wrap: wrap;
+	margin: 0;
+}
+
+.foodDiv {
+	padding: 9px 8px;
+}
+
+.foodChosenSpan {
+	display: block;
+	padding: 9px 8px;
+	font-size: 15px;
+	font-weight: 600;
+	background-color: #f3decb;
 }
 
 /* Footer */
