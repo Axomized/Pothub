@@ -4,8 +4,8 @@ public class FoodPreferences {
 	String iGN;
 	String foodPref;
 	
-	public FoodPreferences(DatabaseUserModel dUM, String foodPref) {
-		this.iGN = dUM.getiGN();
+	public FoodPreferences(String iGN, String foodPref) {
+		this.iGN = iGN;
 		this.foodPref = foodPref;
 	}
 	

@@ -10,11 +10,11 @@ public class CommentModel {
 	int comment1;
 	String description;
 
-	public CommentModel(int commentID, int postID, Date date, DatabaseUserModel dUM, int comment1, String description) {
+	public CommentModel(int commentID, int postID, Date date, String iGN, int comment1, String description) {
 		this.commentID = commentID;
 		this.postID = postID;
 		this.date = date;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.comment1 = comment1;
 		this.description = description;
 	}

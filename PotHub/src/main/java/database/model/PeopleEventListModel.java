@@ -8,8 +8,8 @@ public class PeopleEventListModel {
 	String invitationPending;
 	String invitationConfirm;
 	
-	public PeopleEventListModel(EventModel eM, String invitationPending, String invitationConfirm) {
-		this.eventID = eM.getEventID();
+	public PeopleEventListModel(int eventID, String invitationPending, String invitationConfirm) {
+		this.eventID = eventID;
 		this.invitationPending = invitationPending;
 		this.invitationConfirm = invitationConfirm;
 	}

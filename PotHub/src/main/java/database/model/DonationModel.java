@@ -10,9 +10,9 @@ public class DonationModel {
 	BigDecimal donation_Amount;
 	String onBehalf;
 
-	public DonationModel(int donationID, DatabaseUserModel dUM, Date donation_Date, BigDecimal donation_Amount, String onBehalf) {
+	public DonationModel(int donationID, String iGN, Date donation_Date, BigDecimal donation_Amount, String onBehalf) {
 		this.donationID = donationID;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.donation_Date = donation_Date;
 		this.donation_Amount = donation_Amount;
 		this.onBehalf = onBehalf;

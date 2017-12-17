@@ -18,10 +18,11 @@ public class DatabaseUserModel {
 	int points;
 	BigDecimal totalDonation;
 	boolean isPriviledged;
+	int userPermission;
 	
 	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo,
 			int profilePic, Date lastLogin, Date joinDate, int cookingRank, int points, BigDecimal totalDonation,
-			boolean isPriviledged) {
+			boolean isPriviledged, int userPermission) {
 		this.email = email;
 		this.iGN = iGN;
 		this.contact_No = contact_No;
@@ -36,6 +37,7 @@ public class DatabaseUserModel {
 		this.points = points;
 		this.totalDonation = totalDonation;
 		this.isPriviledged = isPriviledged;
+		this.userPermission = userPermission;
 	}
 
 	public String getEmail() {
@@ -58,7 +60,7 @@ public class DatabaseUserModel {
 		return bio;
 	}
 
-	public String getaddress() {
+	public String getAddress() {
 		return address;
 	}
 
@@ -94,6 +96,10 @@ public class DatabaseUserModel {
 		return isPriviledged;
 	}
 
+	public int getUserPermission() {
+		return userPermission;
+	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
@@ -114,7 +120,7 @@ public class DatabaseUserModel {
 		this.bio = bio;
 	}
 
-	public void setaddress(String address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 
@@ -148,5 +154,9 @@ public class DatabaseUserModel {
 
 	public void setPriviledged(boolean isPriviledged) {
 		this.isPriviledged = isPriviledged;
+	}
+
+	public void setUserPermission(int userPermission) {
+		this.userPermission = userPermission;
 	}
 }

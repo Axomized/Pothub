@@ -50,23 +50,27 @@
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
-				<div id="content" class="row">
-					<div id="profilePicDiv" class="col-sm-4">
-						<div id="profileImgDiv">
-							<img src="../images/profile.png" height="50%" width="50%"/>
-						</div>
-						<div id="editProfileImgDiv">
-							<button id="editImgBtn">Upload new picture</button>
-						</div>
-					</div>
-					<div id="profileContentDiv" class="col-sm-8">
-						<div id="profileNavDiv">
-							<div id="profileNavList">
-								<a href="Profile.html">About</a>
+				<form id="profileForm">
+					<div id="content" class="row">
+						<div id="profilePicDiv" class="col-sm-4">
+							<div id="profileImgDiv">
+								<img src="../images/profile.png" height="50%" width="50%"/>
+							</div>
+							<div id="editProfileImgDiv">
+								<label id="profilePicLabel" for="profilePicFile">
+									<input type="file" id="profilePicFile" name="profilePicFile" accept="image/*" onchange="checkFile()">
+									<span id="profilePicSpan">Upload new picture</span>
+								</label>
 							</div>
 						</div>
-						<div id="changeProfileDiv">
-							<form id="profileForm">
+						<div id="profileContentDiv" class="col-sm-8">
+							<div id="profileNavDiv">
+								<div id="profileNavList">
+									<a href="Profile.html" id="defaultSelected">About</a>
+									<a href="FoodPref.html">Food Preferences</a>
+								</div>
+							</div>
+							<div id="changeProfileDiv">
 								<div id="editProfileInfoDiv">
 									<div id="upper-EditProfileInfoDiv">
 										Edit Profile
@@ -91,15 +95,19 @@
 								</div>
 								<div id="genderDiv">
 									<label id="genderLabel" for="genderSelect">Gender</label>
-									<select id="genderSelect" name="genderSelect">
-										<option selected disabled hidden="true">Choose your gender</option>
-										<option value="Male">Male</option>
-										<option value="Female">Female</option>
+									<select id="genderSelect" class="custom-select" name="genderSelect" onchange="checkSelect()">
+										<option value="" selected disabled hidden="true">Choose your gender</option>
+										<option value="M">M</option>
+										<option value="F">F</option>
 									</select>
 								</div>
 								<div id="emailDiv">
 									<label id="emailLabel" for="emailInput">Email</label>
 									<input type="email" id="emailInput" class="inputsForFill" name="emailInput" onkeyup="startedTyping(this)">
+								</div>
+								<div id="contactNoDiv">
+									<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
+									<input type="text" id="contactNoInput" class="inputsForFill" name="contacNoInput" onkeyup="startedTyping(this)">
 								</div>
 								<div id="bioDiv">
 									<label id="bioLabel" for="bioText">Bio</label>
@@ -118,10 +126,10 @@
 								<div id="updateBtnDiv">
 									<button id="updateBtn" name="updateBtn" value="updateBtn" disabled>Update profile</button>
 								</div>
-							</form>
+							</div>
 						</div>
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 		<div id="footer">

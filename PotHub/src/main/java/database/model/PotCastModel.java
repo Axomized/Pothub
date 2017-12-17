@@ -14,7 +14,7 @@ public class PotcastModel {
 	int picture;
 	
 	public PotcastModel(int potcastID, String title, String description, int maxBids, Date bidStopTime,
-			Date pickupTime, int minBid, int startingCR, FileTableModel fTM) {
+			Date pickupTime, int minBid, int startingCR, int picture) {
 		this.potcastID = potcastID;
 		this.title = title;
 		this.description = description;
@@ -23,7 +23,7 @@ public class PotcastModel {
 		this.pickupTime = pickupTime;
 		this.minBid = minBid;
 		this.startingCR = startingCR;
-		this.picture = fTM.getFileID();
+		this.picture = picture;
 	}
 
 	public int getPotcastID() {

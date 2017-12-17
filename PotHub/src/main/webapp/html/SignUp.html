@@ -14,24 +14,24 @@
 	<!-- Optional theme -->
 	<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 	<!-- My Own Script -->
-	<!-- <script src="../script/"></script> -->
+	<script src="../script/SignUp.js"></script>
 	<!-- My Style Sheet -->
 	<link rel="stylesheet" type="text/css" href="../css/SignUp.css" />
 </head>
 <body>
 	<h1>Create Your Account</h1>
 	<form>
-		<input type="text" placeholder="Name">
-		<input type="email" placeholder="Enter your email">
-		<input type="text" placeholder="Enter your phone number">
-		<input type="password" placeholder="Create a password">
-		<input type="password" placeholder="Confirm your password">
-		<input type="text" placeholder="Enter your address">
+		<input type="text" id="name" placeholder="Name">
+		<input type="email" id="email" placeholder="Enter your email">
+		<input type="text" id="contact" placeholder="Enter your phone number">
+		<input type="password" id="password" placeholder="Create a password">
+		<input type="password" id="password2" placeholder="Confirm your password">
+		<input type="text" id="address" placeholder="Enter your address">
 		<select>
   			<option value="male">Male</option>
   			<option value="female">Female</option>
   		</select>
-		<input type="submit" name="submit" value="SUBMIT">
+		<input type="submit" name="submit" value="SUBMIT" onclick="SaveSignUpInput();">
 	</form>
 	<div id="footer">
   		<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>

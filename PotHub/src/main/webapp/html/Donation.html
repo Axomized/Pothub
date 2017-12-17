@@ -58,8 +58,11 @@
 							</div>
 							<div class="thatLine"></div>
 							<div id="onBehalfCheckDiv">
-								<input type="checkbox" id="checkYes" name="checkYes" value="Yes" onclick="showBehalfName()">
-								<label id="yesLabel" for="checkYes">Yes, I accept.</label>
+								<label id="yesLabel" class="custom-control custom-checkbox" for="checkYes">
+									<input type="checkbox" id="checkYes" class="custom-control-input" name="checkYes" value="Yes" onclick="showBehalfName()">
+									<span class="custom-control-indicator"></span>
+  									<span class="custom-control-description">Yes</span>
+								</label>
 								<input type="text" id="behalfName" name="behalfName" required>
 							</div>
 						</div>
@@ -74,13 +77,18 @@
 							</div>
 							<div id="cardInputDiv">
 								<label id="cardLabel" for="cardNo">Credit Card Number</label>
-								<input type="text" id="cardNo" name="cardNo" required>
+								<div id="inputCardDiv">
+									<input type="text" id="cardNo" name="cardNo" required onkeyup="checkCardType()">
+									<i id="visaIcon" class="fa fa-cc-visa cardIcon" aria-hidden="true"></i>
+									<i id="mastercardIcon" class="fa fa-cc-mastercard cardIcon" aria-hidden="true"></i>
+									<i id="amexIcon" class="fa fa-cc-amex cardIcon" aria-hidden="true"></i>
+								</div>
 							</div>
 							<div id="dateCodeDiv">
 								<div id="dateDiv">
 									<label id="expiryDateLabel">Expiration</label>
-									<select id="selectMonth" name="selectMonth" required>
-										<option selected disabled hidden="true">MM</option>
+									<select id="selectMonth" class="custom-select" name="selectMonth" required>
+										<option value="" selected disabled hidden="true">MM</option>
 										<option value="1">1</option>
 										<option value="2">2</option>
 										<option value="3">3</option>
@@ -94,8 +102,8 @@
 										<option value="11">11</option>
 										<option value="12">12</option>
 									</select>
-									<select id="selectYear" name="selectYear" required>
-										<option selected disabled hidden="true">YY</option>
+									<select id="selectYear" class="custom-select" name="selectYear" required>
+										<option value="" selected disabled hidden="true">YYYY</option>
 										<option value="2017">2017</option>
 										<option value="2018">2018</option>
 										<option value="2019">2019</option>

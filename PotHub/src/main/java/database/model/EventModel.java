@@ -17,12 +17,12 @@ public class EventModel {
 	String guest;
 	String fileList;
 	
-	public EventModel(int eventID, String eventName, DatabaseUserModel dUM, FileTableModel fTM, String description, Date date, String postalCode, String venue, int max_No_People,
+	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Date date, String postalCode, String venue, int max_No_People,
 			String guest, String fileList) {
 		this.eventID = eventID;
 		this.eventName = eventName;
-		this.iGN = dUM.getiGN();
-		this.thumbnail = fTM.getFileID();
+		this.iGN = iGN;
+		this.thumbnail = thumbnail;
 		this.description = description;
 		this.date = date;
 		this.postalCode = postalCode;
@@ -78,12 +78,14 @@ public class EventModel {
 	
 	public ArrayList<String> getGuestArray() {
 		ArrayList<String> als = new ArrayList<String>();
-		Scanner sc = new Scanner(guest);
-		sc.useDelimiter("_");
-		while(sc.hasNext()) {
-			als.add(sc.next());
+		if(guest != null) {
+			Scanner sc = new Scanner(guest);
+			sc.useDelimiter("_");
+			while(sc.hasNext()) {
+				als.add(sc.next());
+			}
+			sc.close();
 		}
-		sc.close();
 		return als;
 	}
 

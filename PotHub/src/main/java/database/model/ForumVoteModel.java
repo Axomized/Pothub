@@ -7,9 +7,9 @@ public class ForumVoteModel {
 	String iGN;
 	Date date;
 
-	public ForumVoteModel(int postID, DatabaseUserModel dUM, Date date) {
+	public ForumVoteModel(int postID, String iGN, Date date) {
 		this.postID = postID;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.date = date;
 	}
 

@@ -16,3 +16,18 @@ function startedTyping(inputsForFilled) {
 		document.getElementById("updateBtn").style.cursor = "not-allowed";
 	}
 }
+
+function checkFile() {
+	if (document.getElementById("profilePicFile").value != null) {
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+	}
+}
+
+function checkSelect() {
+	var genderSelect = document.getElementById("genderSelect");
+	if (genderSelect.options[genderSelect.selectedIndex].value != "") {
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+	}
+}

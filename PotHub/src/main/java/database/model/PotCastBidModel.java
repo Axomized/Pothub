@@ -8,9 +8,9 @@ public class PotcastBidModel {
 	BigDecimal bidAmount;
 	String rating;
 	
-	public PotcastBidModel(PotcastModel pCM, DatabaseUserModel dUM, BigDecimal bidAmount, String rating) {
-		this.potcastID = pCM.getPotcastID();
-		this.iGN = dUM.getiGN();
+	public PotcastBidModel(int potcastID, String iGN, BigDecimal bidAmount, String rating) {
+		this.potcastID = potcastID;
+		this.iGN = iGN;
 		this.bidAmount = bidAmount;
 		this.rating = rating;
 	}

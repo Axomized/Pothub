@@ -3,18 +3,24 @@ package database.model;
 import java.sql.Date;
 
 public class AppealModel {
+	int appealID;
 	String iGN;
 	Date receiveDate;
 	String message;
 	boolean approval;
 	Date dateApproved;
 	
-	public AppealModel(DatabaseUserModel dUM, Date receiveDate, String message, boolean approval, Date dateApproved) {
-		this.iGN = dUM.getiGN();
+	public AppealModel(int appealID, String iGN, Date receiveDate, String message, boolean approval, Date dateApproved) {
+		this.appealID = appealID;
+		this.iGN = iGN;
 		this.receiveDate = receiveDate;
 		this.message = message;
 		this.approval = approval;
 		this.dateApproved = dateApproved;
+	}
+
+	public int getAppealID() {
+		return appealID;
 	}
 
 	public String getiGN() {
@@ -35,6 +41,10 @@ public class AppealModel {
 
 	public Date getDateApproved() {
 		return dateApproved;
+	}
+
+	public void setAppealID(int appealID) {
+		this.appealID = appealID;
 	}
 
 	public void setiGN(String iGN) {

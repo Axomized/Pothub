@@ -4,15 +4,15 @@
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 		<!-- Page Title -->
-		<title>Profile</title>
+		<title>Food Preferences</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/Profile.js"></script>
+		<script src="../script/FoodPref.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/Profile.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/FoodPref.css"/>
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -58,79 +58,25 @@
 						<div id="displayNameDiv">
 							<span id="displayNameSpan">Placeholder</span>
 						</div>
-						<div id="editProfileBtnDiv">
-							<button id="editProfileBtn" onclick="toEditProfilePage()">Edit profile</button>
-						</div>
 					</div>
 					<div id="profileContentDiv" class="col-sm-8">
 						<div id="profileNavDiv">
 							<div id="profileNavList">
-								<a href="Profile.html" id="defaultSelected">About</a>
-								<a href="FoodPref.html">Food Preferences</a>
+								<a href="Profile.html">About</a>
+								<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
 							</div>
 						</div>
 						<div id="aboutContentDiv">
-							<div id="pointsDiv">
-								<div id="upper-PointsDiv">
-									Points Accumulated
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-PointsDiv">
-									<span id="pointsSpan">250 points</span>
-								</div>
+							<div id="buttonsDiv">
+								<button id="addBtn" class="editBtn" onclick="toAddFoodPref()">Add</button>
+								<button id="removeBtn" class="editBtn">Remove</button>
 							</div>
-							<div id="cookingRankDiv">
-								<div id="upper-RankDiv">
-									Cooking Rank
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-RankDiv">
-									<span id="rankSpan">5000</span>
-								</div>
+							<div id="foodPrefDiv">
+								<span id="foodPrefSpan">Blacklist of Food</span>
 							</div>
-							<div id="genderDiv">
-								<div id="upper-GenderDiv">
-									Gender
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-GenderDiv">
-									<span id="genderSpan">M</span>
-								</div>
-							</div>
-							<div id="emailDiv">
-								<div id="upper-EmailDiv">
-									Email
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-EmailDiv">
-									<span id="emailSpan">Insert email of thyself</span>
-								</div>
-							</div>
-							<div id="contactDiv">
-								<div id="upper-ContactDiv">
-									Contact
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-ContactDiv">
-									<span id="contactSpan">Insert contact of thyself</span>
-								</div>
-							</div>
-							<div id="bioDiv">
-								<div id="upper-BioDiv">
-									Bio
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-BioDiv">
-									<p>Insert 150-words biography of thyself</p>
-								</div>
-							</div>
-							<div id="addressDiv">
-								<div id="upper-AddressDiv">
-									Address
-								</div>
-								<div class="thatLine"></div>
-								<div id="lower-AddressDiv">
-									<span id="addressSpan">Insert address of thyself</span>
+							<div id="foodListDiv" class="row">
+								<div class="foodDiv col-sm-2">
+									<span class="foodChosenSpan">Beef</span>
 								</div>
 							</div>
 						</div>

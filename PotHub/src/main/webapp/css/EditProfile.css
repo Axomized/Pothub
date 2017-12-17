@@ -202,10 +202,17 @@ body {
 }
 
 #editProfileImgDiv {
+	position: relative;
 	margin-top: 10px;
 }
 
-#editImgBtn {
+#profilePicLabel:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
+}
+
+#profilePicLabel {
 	height: 25px;
 	width: 160px;
 	font-weight: 600;
@@ -219,10 +226,21 @@ body {
     text-transform: uppercase;
 }
 
-#editImgBtn:hover {
-	border: 1px solid #49274a;
-	color: #49274a;
-	background-color: #f8eee7;
+#profilePicFile {
+	width: 100%;
+	border: none;
+	border-radius: 0px;
+	box-shadow: none;
+	outline: none;
+	display: none;
+}
+
+#profilePicSpan {
+	height: 100%;
+	width: 100%;
+	justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 #profileContentDiv {
@@ -289,7 +307,6 @@ body {
 }
 
 #passwordDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -332,7 +349,6 @@ body {
 }
 
 #genderDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -352,7 +368,6 @@ body {
 }
 
 #emailDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -366,8 +381,21 @@ body {
 	
 }
 
+#contactNoDiv {
+    background-color: #f3decb;
+    padding: 10px 8px;
+    margin-top: 10px;
+}
+
+#contactNoLabel {
+	display: block;
+}
+
+#contactNoInput {
+	
+}
+
 #bioDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
@@ -388,7 +416,6 @@ body {
 }
 
 #addressDiv {
-	box-shadow: 0 1px 8px 0 rgba(0,0,0,0.2);
     background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
