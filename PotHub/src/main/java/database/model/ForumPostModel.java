@@ -12,13 +12,13 @@ public class ForumPostModel {
 	String description;
 	String fileAttachment;
 	
-	public ForumPostModel(int postID, String thread, int upvotes, DatabaseUserModel dUM, Date date, FileTableModel fTM, String description, String fileAttachment) {
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Date date, int picture, String description, String fileAttachment) {
 		this.postID = postID;
 		this.thread = thread;
 		this.upvotes = upvotes;
-		this.iGN = dUM.getiGN();
+		this.iGN = iGN;
 		this.date = date;
-		this.picture = fTM.getFileID();
+		this.picture = picture;
 		this.description = description;
 		this.fileAttachment = fileAttachment;
 	}

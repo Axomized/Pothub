@@ -11,10 +11,10 @@ public class EncryptionTesting {
 	private ArrayList<ShoppingLoginModel> clearTextArray = new ArrayList<ShoppingLoginModel>();
 
 	public EncryptionTesting() throws FileNotFoundException {
-		ArrayList<String> scannerArray = new ArrayList<String>();
+		ArrayList<String> scannerArray = new ArrayList<String>(); 
 		AES aes = null;
 
-		File file = new File("src/main/java/database/TomatoFactoryPlans.txt");
+		File file = new File("C:/Users/Lim Xuan Zheng/Documents/GitHub/PotHub/PotHub/src/main/java/database/TomatoFactoryPlans.txt");
 		Scanner sc = new Scanner(file);
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();

@@ -13,12 +13,14 @@ import java.util.ArrayList;
 import database.model.*;
 
 public class Database {
-	final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
+	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
 	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	final String DB_URL="jdbc:sqlserver://172.27.176.130:3306;databaseName=PotHub;";
 
 	Connection conn = null;
 
-	public Database(int permission) throws SQLException, FileNotFoundException {
+	public Database(int permission) throws SQLException, FileNotFoundException, ClassNotFoundException {
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 		EncryptionTesting et = new EncryptionTesting();
 		ArrayList<ShoppingLoginModel> loginModelArray = et.getArray();
 		switch (permission) {
@@ -424,37 +426,16 @@ public class Database {
 		ArrayList<ForumPostModel> alfpm = new ArrayList<ForumPostModel>();
 		ResultSet rs = getResultSet(sqlline);
 		while(rs.next()) {
-			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
-			String contact_No			= rs.getString("Contact_No");
-			char gender					= rs.getString("Gender").charAt(0);
-			String bio					= rs.getString("Bio");
-			String address				= rs.getString("Address");
-			String unitNo				= rs.getString("UnitNo");
-			int profilePic				= rs.getInt("ProfilePic");
-			Date lastLogin				= rs.getDate("LastLogin");
-			Date joinDate				= rs.getDate("JoinDate");
-			int cookingRank				= rs.getInt("CookingRank");
-			int points					= rs.getInt("Points");
-			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
-			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			DatabaseUserModel dUM = new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged);
-			
-			int fileID			= rs.getInt("FileID");
-			String fileName		= rs.getString("FileName");
-			byte[] data			= rs.getBytes("Data");
-			Date fileDate		= rs.getDate("FileDate");
-			double fileSize		= rs.getDouble("FileSize");
-			FileTableModel fTM = new FileTableModel(fileID, fileName, data, fileDate, fileSize);
-			
 			int postID				= rs.getInt("PostID");
 			String thread			= rs.getString("Thread");
 			int upvotes				= rs.getInt("Upvotes");
+			String iGN				= rs.getString("IGN");
 			Date date				= rs.getDate("Date");
+			int picture				= rs.getInt("Picture");
 			String description		= rs.getString("Description");
 			String fileAttachment	= rs.getString("FileAttachment");
 			
-			alfpm.add(new ForumPostModel(postID, thread, upvotes, dUM, date, fTM, description, fileAttachment));
+			alfpm.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment));
 		}
 		return alfpm;
 	}
