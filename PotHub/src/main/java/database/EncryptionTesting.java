@@ -14,7 +14,7 @@ public class EncryptionTesting {
 		ArrayList<String> scannerArray = new ArrayList<String>(); 
 		AES aes = null;
 
-		File file = new File("C:/Users/Lim Xuan Zheng/Documents/GitHub/PotHub/PotHub/src/main/java/database/TomatoFactoryPlans.txt");
+		File file = new File(System.getProperty("user.home") + "/Documents/GitHub/PotHub/PotHub/src/main/java/database/TomatoFactoryPlans.txt");
 		Scanner sc = new Scanner(file);
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();
