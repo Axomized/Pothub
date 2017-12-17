@@ -9,17 +9,18 @@ public class ReportModel {
 	String evidenceType;
 	Date date;
 	int evidence;
+	String reason;
 	boolean guiltyOrNot;
-
+	
 	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence,
-			boolean guiltyOrNot) {
-		super();
+			String reason, boolean guiltyOrNot) {
 		this.reportID = reportID;
 		this.iGNSend = iGNSend;
 		this.iGNReceive = iGNReceive;
 		this.evidenceType = evidenceType;
 		this.date = date;
 		this.evidence = evidence;
+		this.reason = reason;
 		this.guiltyOrNot = guiltyOrNot;
 	}
 
@@ -45,6 +46,10 @@ public class ReportModel {
 
 	public int getEvidence() {
 		return evidence;
+	}
+
+	public String getReason() {
+		return reason;
 	}
 
 	public boolean isGuiltyOrNot() {
@@ -73,6 +78,10 @@ public class ReportModel {
 
 	public void setEvidence(int evidence) {
 		this.evidence = evidence;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
 	}
 
 	public void setGuiltyOrNot(boolean guiltyOrNot) {

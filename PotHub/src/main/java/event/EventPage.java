@@ -85,7 +85,7 @@ public class EventPage extends HttpServlet {
 					+ "		  	<div class='row'>");
 			
 				try {
-					for(EventModel eM:db.getEventModel("SELECT * FROM Event;")) {
+					for(EventModel eM:db.getEventModelForEventPage()) {
 						out.println( 	"<div class='col-sm-4 content'>"
 						+ "					<div class='top-container'>"
 						+ "						<div class='top-container-image-container'>"

@@ -54,9 +54,9 @@ public class Database {
 	}
 
 	//DatabaseUser
-	public ArrayList<DatabaseUserModel> getDatabaseUser(String sqlline) throws SQLException {
+	public ArrayList<DatabaseUserModel> getDatabaseUser() throws SQLException {
 		ArrayList<DatabaseUserModel> aldum = new ArrayList<DatabaseUserModel>();
-		ResultSet rs = getResultSet(sqlline);
+		ResultSet rs = getResultSet("SELECT * FROM DatabaseUser");
 		while(rs.next()) {
 			String email 				= rs.getString("Email");
 			String iGN					= rs.getString("IGN");
@@ -72,7 +72,8 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged));
+			int userPermission			= rs.getInt("UserPermission");
+			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission));
 		}
 		return aldum;
 	}
@@ -84,7 +85,7 @@ public class Database {
 		ppstmt.setString(3, dUM.getContact_No());
 		ppstmt.setString(4, String.valueOf(dUM.getGender()));
 		ppstmt.setString(5, dUM.getBio());
-		ppstmt.setString(6, dUM.getaddress());
+		ppstmt.setString(6, dUM.getAddress());
 		ppstmt.setString(7, dUM.getUnitNo());
 		ppstmt.setInt(8, dUM.getProfilePic());
 		ppstmt.setDate(9, new Date(dUM.getLastLogin().getTime()));
@@ -93,6 +94,7 @@ public class Database {
 		ppstmt.setInt(12, dUM.getPoints());
 		ppstmt.setBigDecimal(13, dUM.getTotalDonation());
 		ppstmt.setBoolean(14, dUM.isPriviledged());
+		ppstmt.setInt(15, dUM.getUserPermission());
 
 		executeUpdate(ppstmt);
 	}
@@ -153,11 +155,10 @@ public class Database {
 	}
 	
 	//EventModel
-	public ArrayList<EventModel> getEventModel(String sqlline) throws SQLException {
+	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
-		ResultSet rs = getResultSet(sqlline);
+		ResultSet rs = getResultSet("SELECT EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Guest FROM Event;");
 		while(rs.next()) {
-			int eventID			= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
 			String iGN 			= rs.getString("IGN");
 			int thumbnail		= rs.getInt("Thumbnail");
@@ -165,11 +166,9 @@ public class Database {
 			Date date			= rs.getDate("Date");
 			String postalCode	= rs.getString("PostalCode");
 			String venue		= rs.getString("Venue");
-			int max_No_People	= rs.getInt("Max_No_People");
 			String guest		= rs.getString("Guest");
-			String fileList		= rs.getString("FileList");
 			
-			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, max_No_People, guest, fileList));
+			alem.add(new EventModel(0, eventName, iGN, thumbnail, description, date, postalCode, venue, 0, guest, null));
 		}
 		return alem;
 	}
