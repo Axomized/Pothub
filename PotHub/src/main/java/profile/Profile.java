@@ -32,14 +32,14 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
-			ArrayList<DatabaseUserModel> userList = db.getDatabaseUser("SELECT * FROM DatabaseUser WHERE IGN = 'GordonRamsey'");
+			ArrayList<DatabaseUserModel> userList = db.getDatabaseUser();
 			for (DatabaseUserModel user : userList) {
 				IGN = user.getiGN();
 				email = user.getEmail();
 				contactNo = user.getContact_No();
 				gender = user.getGender();
 				bio = user.getBio();
-				address = "Singapore " + user.getaddress() + ", " + user.getUnitNo();
+				address = "Singapore " + user.getAddress() + ", " + user.getUnitNo();
 				points = user.getPoints();
 				cookingRank = user.getCookingRank();
 			}
@@ -206,7 +206,7 @@ public class Profile extends HttpServlet {
 				+ "				<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 				+ "			</p>"
 				+ "		</div>"
-				+ "		<!-- Alternate Bootstrap Scripts -->"
+				+ "		<!-- Optional Bootstrap Scripts -->"
 				+ "		<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>"
 				+ "		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>"
 				+ "		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"

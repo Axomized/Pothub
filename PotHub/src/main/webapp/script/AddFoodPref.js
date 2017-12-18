@@ -6,22 +6,25 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
+function toRemoveFoodPref() {
+	location.href = "RemoveFoodPref.html";
+}
+
 function addOthers() {
 	var addBtnDiv = document.getElementById("addBtnDiv");
 	if (addBtnDiv.childElementCount < 2) {
 		var otherInput = document.createElement("input");
 		otherInput.setAttribute("type", "text");
 		otherInput.placeholder = "Please enter a food"
-		otherInput.style.marginLeft = "5px";
-		otherInput.style.marginRight = "5px";
-		
-		addBtnDiv.appendChild(otherInput);
+		otherInput.style.marginRight = "10px";
+		otherInput.style.width = "160px";
 		
 		var otherBtn = document.createElement("button");
 		otherBtn.className = "editBtn";
 		otherBtn.textContent = "Add";
+		otherBtn.style.marginRight = "10px";
 		otherBtn.onclick = function () {
-			if(otherInput.value.length != 0) {
+			if(otherInput.value.length != 0 && otherInput.value.match(/^[a-zA-Z\s]*$/)) {
 				var otherFoodDiv = document.getElementById("otherFoodDiv");
 				
 				var otherDiv = document.createElement("div");
@@ -35,6 +38,7 @@ function addOthers() {
 				foodCheck.className = "custom-control-input";
 				foodCheck.name = "foodChosen";
 				foodCheck.value = otherInput.value;
+				foodCheck.checked = true;
 				
 				var spanIndicator = document.createElement("span");
 				spanIndicator.className = "custom-control-indicator";
@@ -51,7 +55,21 @@ function addOthers() {
 				
 				otherInput.value = "";
 			}
+			else {
+				otherInput.value = "";
+			}
 		}
+		var doneBtn = document.createElement("button");
+		doneBtn.className = "editBtn";
+		doneBtn.textContent = "Done";
+		doneBtn.onclick = function() {
+			addBtnDiv.removeChild(otherInput);
+			addBtnDiv.removeChild(otherBtn);
+			addBtnDiv.removeChild(doneBtn);
+			$("html, body").animate({ scrollTop: document.body.scrollHeight }, 1000);
+		}
+		addBtnDiv.appendChild(otherInput);
 		addBtnDiv.appendChild(otherBtn);
+		addBtnDiv.appendChild(doneBtn);
 	}
 }

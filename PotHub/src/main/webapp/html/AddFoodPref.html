@@ -58,6 +58,9 @@
 						<div id="displayNameDiv">
 							<span id="displayNameSpan">Placeholder</span>
 						</div>
+						<div id="removeBtnDiv" class="buttonsDiv">
+							<button id="removeBtn" class="editBtn" onclick="toRemoveFoodPref()">Remove food</button>
+						</div>
 					</div>
 					<div id="profileContentDiv" class="col-sm-8">
 						<div id="profileNavDiv">
@@ -67,22 +70,17 @@
 							</div>
 						</div>
 						<div id="aboutContentDiv">
-							<div id="removeBtnDiv" class="buttonsDiv">
-								<button id="removeBtn" class="editBtn">I want to remove</button>
+							<div id="prefHeaderDiv">
+								<span id="prefHeaderSpan">Add Food Preferences</span>
 							</div>
 							<div id="prefInfoDiv">
-								Please only select food you CANNOT eat due to allergies, religion or etc.
+								<p>Please only add food you CANNOT eat due to allergies, religion or etc.</p>
+								<p>Can't find your food in the list? Add other food.</p>
 							</div>
 							<div id="addBtnDiv" class="buttonsDiv">
 								<button id="addBtn" class="editBtn" onclick="addOthers()">Add other food</button>
 							</div>
-							<div id="prefHeaderDiv">
-								<span id="prefHeaderSpan">Add Food Preferences</span>
-							</div>
 							<form id="addFoodForm">
-								<div class="buttonsDiv">
-									<button id="saveBtn" class="editBtn">Save changes</button>
-								</div>
 								<div class="foodPrefDiv">
 									<span class="foodPrefSpan">Meat</span>
 								</div>
@@ -335,6 +333,9 @@
 								<div id="otherFoodDiv" class="foodListDiv row">
 									
 								</div>
+								<div class="buttonsDiv">
+									<button id="saveBtn" class="editBtn">Save changes</button>
+								</div>
 							</form>
 						</div>
 					</div>
@@ -348,8 +349,9 @@
 				<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
 			</p>
 		</div>
-		<!-- Alternate Bootstrap Scripts -->
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<!-- Optional Bootstrap Scripts -->
+		<!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script> -->
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>

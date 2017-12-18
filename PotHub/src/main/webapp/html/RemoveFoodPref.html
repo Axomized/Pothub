@@ -10,9 +10,9 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/FoodPref.js"></script>
+		<script src="../script/RemoveFoodPref.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/FoodPref.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/RemoveFoodPref.css"/>
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -58,9 +58,8 @@
 						<div id="displayNameDiv">
 							<span id="displayNameSpan">Placeholder</span>
 						</div>
-						<div id="buttonsDiv">
+						<div id="addBtnDiv" class="buttonsDiv">
 							<button id="addBtn" class="editBtn" onclick="toAddFoodPref()">Add food</button>
-							<button id="removeBtn" class="editBtn" onclick="toRemoveFoodPref()">Remove food</button>
 						</div>
 					</div>
 					<div id="profileContentDiv" class="col-sm-8">
@@ -71,14 +70,29 @@
 							</div>
 						</div>
 						<div id="aboutContentDiv">
-							<div id="foodPrefDiv">
-								<span id="foodPrefSpan">Blacklist of Food</span>
+							<div id="prefHeaderDiv">
+								<span id="prefHeaderSpan">Remove Food Preferences</span>
 							</div>
-							<div id="foodListDiv" class="row">
-								<div class="foodDiv col-sm-3">
-									<span class="foodChosenSpan">Beef</span>
+							<div id="prefInfoDiv">
+								<p>You may choose to remove any food from the blacklist you've made.</p>
+							</div>
+							<form id="removeFoodForm">
+								<div id="foodPrefDiv">
+									<span id="foodPrefSpan">Blacklist of Food</span>
 								</div>
-							</div>
+								<div id="foodListDiv" class="row">
+									<div class="foodDiv col-sm-3">
+										<label class="custom-control custom-checkbox foodLabel">
+											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
+											<span class="custom-control-indicator"></span>
+	  										<span class="custom-control-description">Beef</span>
+										</label>
+									</div>
+								</div>
+								<div class="buttonsDiv">
+									<button id="saveBtn" class="editBtn">Save changes</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</div>
