@@ -9,7 +9,3 @@ function hideProfileDropdown() {
 function toAddFoodPref() {
 	location.href = "AddFoodPref.html";
 }
-
-function toRemoveFoodPref() {
-	location.href = "RemoveFoodPref.html";
-}
