@@ -8,7 +8,7 @@
 	<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
 	<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 	<!-- Page Title -->
-	<title>Sign Up Page</title>
+	<title>Registration Page</title>
 	<!-- Latest compiled and CSS -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 	<!-- Optional theme -->
@@ -20,18 +20,18 @@
 </head>
 <body>
 	<h1>Create Your Account</h1>
-	<form>
-		<input type="text" id="name" placeholder="Name">
-		<input type="email" id="email" placeholder="Enter your email">
-		<input type="text" id="contact" placeholder="Enter your phone number">
-		<input type="password" id="password" placeholder="Create a password">
-		<input type="password" id="password2" placeholder="Confirm your password">
-		<input type="text" id="address" placeholder="Enter your address">
+	<form name="Registration" action="Registration" method="POST">
+		<input type="email" name="email" placeholder="Enter your email">
+		<input type="password" name="password" placeholder="Create a password">
+		<input type="password" name="password2" placeholder="Confirm your password">
+		<input type="text" name="name" placeholder="Enter your name">
+		<input type="text" name="contact" placeholder="Enter your phone number">
+		<input type="text" name="address" placeholder="Enter your address">
 		<select>
   			<option value="male">Male</option>
   			<option value="female">Female</option>
   		</select>
-		<input type="submit" name="submit" value="SUBMIT" onclick="SaveSignUpInput();">
+		<input type="submit" name="submit" value="SUBMIT">
 	</form>
 	<div id="footer">
   		<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>

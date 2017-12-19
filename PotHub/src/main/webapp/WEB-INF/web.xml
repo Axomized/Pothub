@@ -70,6 +70,12 @@
 		<description></description>
 		<servlet-class>profile.Profile</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>Registration</servlet-name>
+		<display-name>Registration</display-name>
+		<description></description>
+		<servlet-class>login.Registration</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -113,5 +119,9 @@
 	<servlet-mapping>
 		<servlet-name>Profile</servlet-name>
 		<url-pattern>/Profile</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Registration</servlet-name>
+		<url-pattern>/Registration</url-pattern>
 	</servlet-mapping>
 </web-app>
