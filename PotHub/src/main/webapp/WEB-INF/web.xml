@@ -64,6 +64,12 @@
 		<description></description>
 		<servlet-class>login.Registration</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>GoogleGeocoding</servlet-name>
+		<display-name>GoogleGeocoding</display-name>
+		<description></description>
+		<servlet-class>event.geocoding.GoogleGeocoding</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -103,5 +109,9 @@
 	<servlet-mapping>
 		<servlet-name>Registration</servlet-name>
 		<url-pattern>/Registration</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GoogleGeocoding</servlet-name>
+		<url-pattern>/GoogleGeocoding</url-pattern>
 	</servlet-mapping>
 </web-app>
