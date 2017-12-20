@@ -92,8 +92,8 @@ ArrayList<BansModel> bans = new ArrayList<BansModel>();
 ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
 try {
 	db = new Database(0);
-	bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN WHERE Bans.IGN='"+userSubject+"';");
-	appeals = db.getAppealModel("SELECT * FROM Appeal INNER JOIN DatabaseUser ON Appeal.IGN = DatabaseUser.IGN WHERE Appeal.IGN='"+userSubject+"';");
+	bans = db.getBansModel();
+	appeals = db.getAppeal();
 	for(BansModel ban:bans){
 		pw.append("<tr>");
 		if(ban.getEndDate().compareTo(new Date(System.currentTimeMillis()))>0){

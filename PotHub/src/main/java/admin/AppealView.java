@@ -77,7 +77,7 @@ public class AppealView extends HttpServlet {
   			try {
 				db = new Database(0);
 
-			ArrayList<AppealModel> appeals = db.getAppealModel();
+			ArrayList<AppealModel> appeals = db.getAppeal();
 			reason = appeals.get(0).getMessage();
 			date = appeals.get(0).getReceiveDate();
 			} catch (ClassNotFoundException e) {
