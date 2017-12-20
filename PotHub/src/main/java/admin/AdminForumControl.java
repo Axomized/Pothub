@@ -87,7 +87,17 @@ public class AdminForumControl extends HttpServlet {
 			for(DatabaseUserModel dbu:dbus){
 				pw.append("<tr>");
 				pw.append("<td>"+dbu.getiGN()+"</td>");
-				pw.append("<td>Normal</td>");
+				
+				if(dbu.getUserPermission()==2){
+					pw.append("<td>Admin</td>");
+				}
+				else if(dbu.getUserPermission()==1){
+					pw.append("<td>Moderator</td>");
+				}
+				else{
+					pw.append("<td>Normal</td>");
+				}
+				
 				pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>");
 				
 				pw.append("</td>");
