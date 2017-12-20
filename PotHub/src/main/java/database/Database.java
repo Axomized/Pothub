@@ -100,6 +100,21 @@ public class Database {
 	}
 	
 	//Appeal
+	public ArrayList<AppealModel> getAppeal() throws SQLException{
+		ArrayList<AppealModel> appeals = new ArrayList<AppealModel>();
+		ResultSet rs = getResultSet("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+		while(rs.next()) {
+			int appealID				= rs.getInt("appealID");
+			String iGN					= rs.getString("IGN");
+			Date receiveDate			= rs.getDate("receiveDate");
+			String message				= rs.getString("message");
+			boolean approval			= rs.getBoolean("approval");
+			Date dateApproved			= rs.getDate("dateApproved");
+			
+			appeals.add(new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved));
+		}
+		return appeals;
+	}
 	public void updateAppeal(String sql, AppealModel aM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setDate(1, aM.getReceiveDate());
@@ -120,6 +135,45 @@ public class Database {
 		ppstmt.setBoolean(5, bM.isPardoned());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public ArrayList<BansModel> getBansModel() throws SQLException {
+		ArrayList<BansModel> bannedppl = new ArrayList<BansModel>();
+		ResultSet rs = getResultSet(""
+				+ "SELECT IGN, startDate, endDate, reason, admin, pardoned "
+				+ "FROM Bans");
+		while(rs.next()) {
+			String iGN					= rs.getString("IGN");
+			Date startDate				= rs.getDate("startDate");
+			Date endDate				= rs.getDate("endDate");
+			String reason				= rs.getString("reason");
+			String admin				= rs.getString("admin");
+			boolean pardoned			= rs.getBoolean("pardoned");
+			bannedppl.add(new BansModel(iGN, startDate, endDate, reason, admin, pardoned));
+		}
+		return bannedppl;
+	}
+	
+	//Report
+	public ArrayList<ReportModel> getManyReports() throws SQLException{
+			ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
+			ResultSet rs = getResultSet(""
+					+ "SELECT reportID, IGNSend, IGNReceive, evidenceType, Date, Evidence, reason, guiltyOrNot "
+					+ "FROM Report;");
+			while(rs.next()) {
+				int reportID = 				rs.getInt("reportID");
+				String iGNSend = 			rs.getString("IGNSend");
+				String iGNReceive = 		rs.getString("IGNReceive");
+				String evidenceType = 		rs.getString("evidenceType");
+				Date date =					rs.getDate("Date");
+				int evidence = 				rs.getInt("Evidence");
+				String reason = 			rs.getString("reason");
+				boolean guiltyOrNot = 		rs.getBoolean("guiltyOrNot");
+				
+				reports.add(new ReportModel(reportID, iGNSend, iGNReceive, evidenceType, date, evidence,
+						reason, guiltyOrNot));
+			}
+			return reports;
 	}
 	
 	//CommentModel
@@ -152,6 +206,21 @@ public class Database {
 		ppstmt.setString(4, dM.getOnBehalf());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public ArrayList<DonationModel> getDonationModel() throws SQLException{
+		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
+		ResultSet rs = getResultSet("SELECT donationID, IGN, donation_date, donation_amount, onBehalf FROM Donation;");
+		while(rs.next()) {
+			int donationID				= rs.getInt("DonationID");
+			String iGN					= rs.getString("IGN");
+			Date donationDate			= rs.getDate("donation_Date");
+			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
+			String onBehalf				= rs.getString("onBehalf");
+			
+			donations.add(new DonationModel(donationID, iGN, donationDate, donationAmount, onBehalf));
+		}
+		return donations;
 	}
 	
 	//EventModel

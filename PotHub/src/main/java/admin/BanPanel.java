@@ -86,8 +86,8 @@ public class BanPanel extends HttpServlet {
 		try {
 			int counter = 0;
 			db = new Database(0);
-			bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
-			ArrayList<AppealModel> appeals = db.getAppealModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+			bans = db.getBansModel();
+			ArrayList<AppealModel> appeals = db.getAppeal();
 			for(BansModel ban:bans){
 				pw.append("<tr>");
 				pw.append("<td>"+ban.getiGN()+"</td>");
@@ -96,7 +96,6 @@ public class BanPanel extends HttpServlet {
 				pw.append("<td>"+ban.getEndDate()+"</td>");
 				pw.append("<td>"+ban.getAdmin()+"<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
 				
-				System.out.println(appeals.get(counter).getMessage());
 				if(appeals.get(counter).getMessage()!=null){
 					pw.append("<button>Pardon</button>");
 					pw.append("<a href='AppealView?user="+ban.getiGN()+"&appealID=TODO'><button>Read</button></a>");

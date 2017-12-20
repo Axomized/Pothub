@@ -82,7 +82,7 @@ public class DonationPanel extends HttpServlet {
 		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
 		try {
 			db = new Database(0);
-			donations = db.getDonationModel("SELECT * FROM Donation INNER JOIN DatabaseUser ON Donation.IGN = DatabaseUser.IGN;");
+			donations = db.getDonationModel();
 			
 			for(DonationModel dono:donations){
 				pw.append("<tr>");

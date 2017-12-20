@@ -82,7 +82,7 @@ public class AdminForumControl extends HttpServlet {
 		ArrayList<DatabaseUserModel> dbus = new ArrayList<DatabaseUserModel>();
 		try {
 			db = new Database(0);
-			dbus = db.getDatabaseUser("SELECT * FROM DatabaseUser;");
+			dbus = db.getDatabaseUser();
 			
 			for(DatabaseUserModel dbu:dbus){
 				pw.append("<tr>");

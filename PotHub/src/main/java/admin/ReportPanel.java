@@ -82,7 +82,7 @@ public class ReportPanel extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getReportModel("SELECT * FROM Report;");
+			reports = db.getManyReports();
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
