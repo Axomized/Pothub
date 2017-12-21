@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import adminSearch.BansSearchObject;
+import adminSearch.DonationSearchObject;
 import database.model.*;
 
 public class Database {
@@ -211,7 +212,8 @@ public class Database {
 	
 	public ArrayList<DonationModel> getDonationModel() throws SQLException{
 		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
-		ResultSet rs = getResultSet("SELECT donationID, IGN, donation_date, donation_amount, onBehalf FROM Donation;");
+		DonationSearchObject dm = new DonationSearchObject();
+		ResultSet rs = getResultSet(dm.getExecutableSQL());
 		while(rs.next()) {
 			int donationID				= rs.getInt("DonationID");
 			String iGN					= rs.getString("IGN");
