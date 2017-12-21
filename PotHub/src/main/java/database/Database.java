@@ -10,6 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import adminSearch.BansSearchObject;
 import database.model.*;
 
 public class Database {
@@ -102,7 +103,7 @@ public class Database {
 	//Appeal
 	public ArrayList<AppealModel> getAppeal() throws SQLException{
 		ArrayList<AppealModel> appeals = new ArrayList<AppealModel>();
-		ResultSet rs = getResultSet("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+		ResultSet rs = getResultSet("SELECT * FROM Bans LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
 		while(rs.next()) {
 			int appealID				= rs.getInt("appealID");
 			String iGN					= rs.getString("IGN");
@@ -139,9 +140,9 @@ public class Database {
 	
 	public ArrayList<BansModel> getBansModel() throws SQLException {
 		ArrayList<BansModel> bannedppl = new ArrayList<BansModel>();
-		ResultSet rs = getResultSet(""
-				+ "SELECT IGN, startDate, endDate, reason, admin, pardoned "
-				+ "FROM Bans");
+		BansSearchObject bso = new BansSearchObject();
+		
+		ResultSet rs = getResultSet(bso.getExecutableSQL());
 		while(rs.next()) {
 			String iGN					= rs.getString("IGN");
 			Date startDate				= rs.getDate("startDate");
