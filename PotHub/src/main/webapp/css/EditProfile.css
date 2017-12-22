@@ -252,7 +252,7 @@ body {
 }
 
 #profileNavList {
-	display: flex;
+	padding: 9px 0px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -287,7 +287,6 @@ body {
 }
 
 #editProfileInfoDiv {
-	height: 70px;
 	padding: 10px 8px;
     border: 2px solid #49274a;
 }

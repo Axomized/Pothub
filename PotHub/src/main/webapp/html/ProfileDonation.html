@@ -10,9 +10,9 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/RemoveFoodPref.js"></script>
+		<script src="../script/ProfileDonation.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/RemoveFoodPref.css"/>
+		<link rel="stylesheet" type="text/css" href="../css/ProfileDonation.css"/>
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -55,44 +55,104 @@
 						<div id="profileImgDiv">
 							<img src="../images/profile.png" height="50%" width="50%"/>
 						</div>
-						<div id="addBtnDiv" class="buttonsDiv">
-							<button id="addBtn" class="editBtn" onclick="toAddFoodPref()">Add food</button>
-						</div>
 					</div>
 					<div id="profileContentDiv" class="col-sm-8">
 						<div id="profileNavDiv">
 							<div id="profileNavList">
 								<a href="Profile.html">About</a>
-								<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
-								<a href="ProfileDonation.html">Donation History</a>
+								<a href="FoodPref.html">Food Preferences</a>
+								<a href="ProfileDonation.html" id="defaultSelected">Donation History</a>
 							</div>
 						</div>
 						<div id="aboutContentDiv">
-							<div id="prefHeaderDiv">
-								<span id="prefHeaderSpan">Remove Food Preferences</span>
+							<div id="tableWrap">
+								<table id="donationTable" class="table table-striped">
+									<thead>
+										<tr>
+											<th>Date</th>
+											<th>Amount</th>
+											<th>On Behalf</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+										<tr>
+											<td>22/12/2017</td>
+											<td>$10</td>
+											<td>NIL</td>
+										</tr>
+									</tbody>
+								</table>
 							</div>
-							<div id="prefInfoDiv">
-								<p>You may choose to remove any food from the blacklist you've made.</p>
-							</div>
-							<form id="removeFoodForm">
-								<div id="prefListDiv">
-									<div id="foodPrefDiv">
-										<span id="foodPrefSpan">Blacklist of Food</span>
-									</div>
-									<div id="foodListDiv" class="row">
-										<div class="foodDiv col-sm-3">
-											<label class="custom-control custom-checkbox foodLabel">
-												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
-												<span class="custom-control-indicator"></span>
-		  										<span class="custom-control-description">Beef</span>
-											</label>
-										</div>
-									</div>
-								</div>
-								<div class="buttonsDiv">
-									<button id="saveBtn" class="editBtn">Save changes</button>
-								</div>
-							</form>
 						</div>
 					</div>
 				</div>

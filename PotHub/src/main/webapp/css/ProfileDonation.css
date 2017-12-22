@@ -42,22 +42,8 @@ p {
 }
 
 ul { 
-	list-style-type: square; 
-}
-
-th, td {
-	padding: 16px !important;
-}
-
-input {
-	height: 25px;
-	padding: 5px 5px;
-}
-
-input[type=date] {
-	-webkit-appearance: textfield;
-	padding: 2px 5px;
-}
+	list-style-type: none; 
+} 
 
 /* Structure */
 
@@ -91,7 +77,8 @@ body {
 
 #content-wrapper {
 	clear: both;
-	/*width: 60%;*/
+	width: 70%;
+	margin: auto;
 }
 
 #content {
@@ -116,13 +103,57 @@ body {
 
 #companyTitle {
 	float: left;
+	padding-top: 10px;
+}
+
+#profilePicWrapDiv {
+	position: relative;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+#profilePic {
+	padding: 10px 20px;
+	text-align: center;
+}
+
+#profileDropdownDiv {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0%;
+	background-color: #f8eee7;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#profileDropdownDiv a {
+	display: block;
+	color: black;
+	font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+#profileDropdownDiv a:hover {
+	color: #f3decb;
+    font-weight: bold;
+    text-transform: uppercase;
+	background-color: #49274a;
+}
+
+#welcomeSpan {
+	display: block;
+	padding-top: 5px;
 }
 
 /* Navigation */
 
 #navigation ul { 
 	float: left; 
-	list-style-type: none; 
 	margin: 0; 
 	padding: 0; 
 	background: none; 
@@ -150,75 +181,65 @@ body {
 	color: #94618e;
 }
 
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
+}
+
+#profilePicDiv {
+	text-align:center;
+	border-right: 2px solid #e36209;
+}
+
+#profileContentDiv {
+	
+}
+
+#profileNavDiv {
+	
+}
+
+#profileNavList {
+	padding: 9px 0px;
+	border-bottom: 1px solid #ccc;
+}
+
+#profileNavList a {
+	padding: 9px 8px;
+	margin-right: 10px;
+	text-decoration: none;
+	font-size: 20px;
+	font-weight: 600;
+	color: #49274a;
+}
+
+#profileNavList a:hover {
+	color: #49274a;
+	border-bottom: 2px solid #49274a;
+}
+
+#defaultSelected {
+	border-bottom: 2px solid #e36209;
+}
+
+#defaultSelected:hover {
+	border-bottom: 2px solid #e36209 !important;
+}
+
+#aboutContentDiv {
+	
+}
+
 #tableWrap {
 	max-height: 400px;
-	width: 70%;
-	margin: auto;
 	overflow: auto;
 	margin-top: 10px;
 	margin-bottom: 20px;
 }
 
-#logsTable {
+#donationTable {
 	height: 100%;
 	margin-bottom: 0;
-}
-
-#filterDiv {
-	width: 70%;
-	margin: auto;
-	margin-top: 20px;
-}
-
-#searchDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#searchInput {
-	width: 90%;
-	display: block;
-}
-
-#selectDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#selectFilter {
-	height: 25px;
-	width: 90%;
-	display: block;
-}
-
-#beforeDateDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#beforeDateInput {
-	width: 90%;
-	display: block;
-}
-
-#duringDateDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#duringDateInput {
-	width: 90%;
-	display: block;
-}
-
-#afterDateDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#afterDateInput {
-	width: 90%;
-	display: block;
 }
 
 ::-webkit-scrollbar {

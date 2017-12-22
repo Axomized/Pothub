@@ -21,7 +21,7 @@ function showBehalfName() {
 }
 
 var visaRegex = new RegExp("^4");
-var mastercardRegex = new RegExp("^5[1-5]|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720");
+var mastercardRegex = new RegExp("^5[1-5]|^222[1-9]|^22[3-9][0-9]|^2[3-6][0-9]{2}|^27[01][0-9]|^2720");
 var amexRegex = new RegExp("^3[47]");
 
 function checkCardType() {

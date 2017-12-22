@@ -10,7 +10,7 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/"></script>
+		<script src="../script/Logs.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/Logs.css">
 	</head>
@@ -42,8 +42,9 @@
 						</div>
 						<div id="selectDiv">
 							<label id="filterLabel">Filter by:</label>
-							<select id="selectFilter" name="selectFilter">
+							<select id="selectFilter" name="selectFilter" onchange="filterText()">
 								<option selected disabled hidden="true">Type</option>
+								<option value="All">All</option>
 								<option value="Login">Login</option>
 								<option value="Forum">Forum</option>
 								<option value="Event">Event</option>
@@ -66,7 +67,7 @@
 					</div>
 					<div id="tableWrap">
 						<table id="logsTable" class="table table-striped">
-							<thead id="tableHead">
+							<thead>
 								<tr>
 									<th>Date</th>
 									<th>IP Address</th>
@@ -177,7 +178,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Event</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>
@@ -185,7 +186,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Forum</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>
@@ -193,7 +194,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Forum</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>

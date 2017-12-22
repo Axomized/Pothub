@@ -3,7 +3,9 @@ package profile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -24,9 +26,16 @@ public class Profile extends HttpServlet {
 	private static String address;
 	private static int points;
 	private static int cookingRank;
+	private static String joinedDate;
 
 	public Profile() {
 		super();
+	}
+	
+	private String convertDate(Date date) {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		String convertedDate = sdf.format(date);
+		return convertedDate;
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -42,6 +51,7 @@ public class Profile extends HttpServlet {
 				address = "Singapore " + user.getAddress() + ", " + user.getUnitNo();
 				points = user.getPoints();
 				cookingRank = user.getCookingRank();
+				joinedDate = convertDate(user.getJoinDate());
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -80,26 +90,26 @@ public class Profile extends HttpServlet {
 				+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
 				+ "				</div>"
 				+ "				<div id='profileDropdownDiv'>"
-				+ "					<a href='Profile'>Profile</a>"
+				+ "					<a href='Profile.html'>Profile</a>"
 				+ "					<a href='LoginPage.html'>Logout</a>"
 				+ "				</div>"
 				+ "			</div>"
 				+ "		</div>"
 				+ "		<div id='navigation'>"
 				+ "			<ul>"
-				+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
+				+ "				<li id='lhome'><a href='Forum.html'>Home</a></li>"
 				+ "				<li id='lprivatemessage'><a href='PrivateMessage.html'>Private Message</a></li>"
-				+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+				+ "				<li id='levent'><a href='EventPage.html'>Event</a></li>"
 				+ "				<li class='dropdown'>"
 				+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 				+ "			        <ul class='dropdown-menu'>"
-				+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
-				+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
-				+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
-				+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
+				+ "			          <li><a href='#'>Active PotCasts</a></li>"
+				+ "			          <li><a href='#'>Start a PotCast</a></li>"
+				+ "			          <li><a href='#'>My PotCast</a></li>"
+				+ "			          <li><a href='#'>Joined PotCast</a></li>"
 				+ "			        </ul>"
 				+ "			      </li>"
-				+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
+				+ "				<li id='ldonate'><a href='Donation.html'>Donate</a></li>"
 				+ "			</ul>"
 				+ "		</div>"
 				+ "		<div id='wrapper'>"
@@ -110,8 +120,13 @@ public class Profile extends HttpServlet {
 				+ "							<img src='images/profile.png' height='50%' width='50%'/>"
 				+ "						</div>"
 				+ "						<div id='displayNameDiv'>"
-				//+ "							<span id='displayNameSpan'>Placeholder</span>"
-				+ "							<span id='displayNameSpan'>" + IGN + "</span>"
+				+ "							<span id='displayNameSpan'>Placeholder</span>"
+				+ "						</div>"
+				+ "						<div id='joinedDiv'>"
+				+ "							<span id='joinedSpan'>Joined on 31/12/2016</span>"
+				+ "						</div>"
+				+ "						<div id='privilegedDiv'>"
+				+ "							<span id='privilegedSpan'>Privileged</span>"
 				+ "						</div>"
 				+ "						<div id='editProfileBtnDiv'>"
 				+ "							<button id='editProfileBtn' onclick='toEditProfilePage()'>Edit profile</button>"
@@ -120,7 +135,9 @@ public class Profile extends HttpServlet {
 				+ "					<div id='profileContentDiv' class='col-sm-8'>"
 				+ "						<div id='profileNavDiv'>"
 				+ "							<div id='profileNavList'>"
-				+ "								<a href='Profile' id='defaultSelected'>About</a>"
+				+ "								<a href='Profile.html' id='defaultSelected'>About</a>"
+				+ "								<a href='FoodPref.html'>Food Preferences</a>"
+				+ "								<a href='ProfileDonation.html'>Donation History</a>"
 				+ "							</div>"
 				+ "						</div>"
 				+ "						<div id='aboutContentDiv'>"
@@ -130,8 +147,7 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-PointsDiv'>"
-				//+ "									<span id='pointsSpan'>250 points</span>"
-				+ "									<span id='pointsSpan'>" + points + "</span>"
+				+ "									<span id='pointsSpan'>250 points</span>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='cookingRankDiv'>"
@@ -140,8 +156,16 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-RankDiv'>"
-				//+ "									<span id='rankSpan'>5000</span>"
-				+ "									<span id='rankSpan'>" + cookingRank + "</span>"
+				+ "									<span id='rankSpan'>5000</span>"
+				+ "								</div>"
+				+ "							</div>"
+				+ "							<div id='totalAmtDiv'>"
+				+ "								<div id='upper-TotalAmtDiv'>"
+				+ "									Total Amount Donated"
+				+ "								</div>"
+				+ "								<div class='thatLine'></div>"
+				+ "								<div id='lower-TotalAmtDiv'>"
+				+ "									$500"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='genderDiv'>"
@@ -150,8 +174,7 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-GenderDiv'>"
-				//+ "									<span id='genderSpan'>M</span>"
-				+ "									<span id='genderSpan'>" + gender + "</span>"
+				+ "									<span id='genderSpan'>M</span>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='emailDiv'>"
@@ -160,8 +183,7 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-EmailDiv'>"
-				//+ "									<span id='emailSpan'>Insert email of thyself</span>"
-				+ "									<span id='emailSpan'>" + email + "</span>"
+				+ "									<span id='emailSpan'>Insert email of thyself</span>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='contactDiv'>"
@@ -170,8 +192,7 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-ContactDiv'>"
-				//+ "									<span id='contactSpan'>Insert contact of thyself</span>"
-				+ "									<span id='contactSpan'>" + contactNo + "</span>"
+				+ "									<span id='contactSpan'>Insert contact of thyself</span>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='bioDiv'>"
@@ -180,8 +201,7 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-BioDiv'>"
-				//+ "									<p>Insert 150-words biography of thyself</p>"
-				+ "									<p>" + bio + "</p>"
+				+ "									<p>Insert 150-words biography of thyself</p>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='addressDiv'>"
@@ -190,8 +210,14 @@ public class Profile extends HttpServlet {
 				+ "								</div>"
 				+ "								<div class='thatLine'></div>"
 				+ "								<div id='lower-AddressDiv'>"
-				//+ "									<span id='addressSpan'>Insert address of thyself</span>"
-				+ "									<span id='addressSpan'>" + address + "</span>"
+				+ "									<div id='postalCodeDiv'>"
+				+ "										<span id='psSpan'>Postal Code</span>"
+				+ "										<span id='postalCodeSpan'>Insert postal code of thyself</span>"
+				+ "									</div>"
+				+ "									<div id='unitNoDiv'>"
+				+ "										<span id='unSpan'>Unit Number</span>"
+				+ "										<span id='unitNoSpan'>Insert unit number of thyself</span>"
+				+ "									</div>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "						</div>"

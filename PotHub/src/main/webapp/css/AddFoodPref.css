@@ -194,25 +194,9 @@ body {
 	background: #49274a;
 }
 
-.thatLine {
-	content: "";
-    display: block;
-    margin: auto;
-    width: 90%;
-    border-top: 1px solid #f8eee7;
-}
-
 #profilePicDiv {
 	text-align:center;
 	border-right: 2px solid #e36209;
-}
-
-#displayNameDiv {
-	margin-top: 10px;
-}
-
-#displayNameSpan {
-	font-size: 20px;
 }
 
 #profileContentDiv {
@@ -224,7 +208,7 @@ body {
 }
 
 #profileNavList {
-	display: flex;
+	padding: 9px 0px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -256,8 +240,7 @@ body {
 
 #removeBtnDiv {
 	text-align: center;
-    padding: 9px 8px;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 #prefHeaderDiv {
