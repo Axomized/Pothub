@@ -3,24 +3,24 @@ package adminSearch;
 import java.math.BigDecimal;
 import java.sql.Date;
 
-public class DonationSearchObject implements SearchObject{
+public class ForumControlSearchObject implements SearchObject{
 	
 	private int searchStart;
 	private int searchEnd;
 	
 	//SQL Between
+	private int donationID;
+	private String iGN;
 	private Date donationDateOpen;
+	private Date donationDateClose;
 	private BigDecimal donationAmountOpen;
+	private BigDecimal donationAmountClose;
 	private String onBehalf;
 	
-	//SQL And
-	private Date donationDateClose;
-	private BigDecimal donationAmountClose;
+	//SQL Is
+	private boolean pardoned;
 	
-	//SQL Like
-	private String iGN;
-	
-	public DonationSearchObject(){
+	public ForumControlSearchObject(){
 		long maxTime = (long)21459168 * (long)1000000;
 		
 		donationDateOpen = new Date(0);
@@ -54,7 +54,7 @@ public class DonationSearchObject implements SearchObject{
 		if(onBehalf!=null && onBehalf.length()>0 ){
 			queryToBuild += " AND admin like '%" + onBehalf + "%'";
 		}
-
+		
 		queryToBuild+=";";
 		
 		System.out.println(queryToBuild);
@@ -81,6 +81,14 @@ public class DonationSearchObject implements SearchObject{
 
 	public void setSearchEnd(int searchEnd) {
 		this.searchEnd = searchEnd;
+	}
+
+	public int getDonationID() {
+		return donationID;
+	}
+
+	public void setDonationID(int donationID) {
+		this.donationID = donationID;
 	}
 
 	public String getiGN() {
@@ -130,4 +138,13 @@ public class DonationSearchObject implements SearchObject{
 	public void setOnBehalf(String onBehalf) {
 		this.onBehalf = onBehalf;
 	}
+
+	public boolean isPardoned() {
+		return pardoned;
+	}
+
+	public void setPardoned(boolean pardoned) {
+		this.pardoned = pardoned;
+	}
+
 }

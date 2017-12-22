@@ -64,6 +64,16 @@ public class BansSearchObject implements SearchObject{
 			queryToBuild += " AND reason like '%" + reason + "%'";
 		}
 		
+		try{
+		if(pardoned){
+			queryToBuild += " AND pardoned = true";
+		}
+		else{
+			queryToBuild += " AND pardoned = false";
+		}
+		}catch(NullPointerException n){
+			
+		}
 		queryToBuild+=";";
 		
 		System.out.println(queryToBuild);
