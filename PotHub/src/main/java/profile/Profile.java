@@ -3,6 +3,7 @@ package profile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -24,9 +25,11 @@ public class Profile extends HttpServlet {
 	private static char gender;
 	private static String bio;
 	private static String address;
-	private static int points;
+	private static String unitNo;
+	private static String joinDate;
 	private static int cookingRank;
-	private static String joinedDate;
+	private static int points;
+	private static BigDecimal totalDonation;
 
 	public Profile() {
 		super();
@@ -41,17 +44,19 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
-			ArrayList<DatabaseUserModel> userList = db.getDatabaseUser();
+			ArrayList<DatabaseUserModel> userList = db.getUserProfile("Placeholder from Session Attribute");
 			for (DatabaseUserModel user : userList) {
 				IGN = user.getiGN();
 				email = user.getEmail();
 				contactNo = user.getContact_No();
 				gender = user.getGender();
 				bio = user.getBio();
-				address = "Singapore " + user.getAddress() + ", " + user.getUnitNo();
-				points = user.getPoints();
+				address = user.getAddress();
+				unitNo = user.getUnitNo();
+				joinDate = convertDate(user.getJoinDate());
 				cookingRank = user.getCookingRank();
-				joinedDate = convertDate(user.getJoinDate());
+				points = user.getPoints();
+				totalDonation = user.getTotalDonation();
 			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

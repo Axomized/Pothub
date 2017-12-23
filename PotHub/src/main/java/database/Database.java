@@ -82,6 +82,30 @@ public class Database {
 		return aldum;
 	}
 	
+	//Get user's profile information
+	public ArrayList<DatabaseUserModel> getUserProfile(String name) throws SQLException {
+		ArrayList<DatabaseUserModel> userList = new ArrayList<DatabaseUserModel>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN =?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String email 				= rs.getString("Email");
+			String iGN					= rs.getString("IGN");
+			String contact_No			= rs.getString("Contact_No");
+			char gender					= rs.getString("Gender").charAt(0);
+			String bio					= rs.getString("Bio");
+			String address				= rs.getString("Address");
+			String unitNo				= rs.getString("UnitNo");
+			Date joinDate				= rs.getDate("JoinDate");
+			int cookingRank				= rs.getInt("CookingRank");
+			int points					= rs.getInt("Points");
+			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
+			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
+			userList.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, joinDate, cookingRank, points, totalDonation, isPriviledged));
+		}
+		return userList;
+	}
+	
 	public ArrayList<DatabaseUserModel> getDatabaseUserRanks() throws SQLException {
 		ArrayList<DatabaseUserModel> aldum = new ArrayList<DatabaseUserModel>();
 		RankSearchObject rso = new RankSearchObject();
@@ -234,6 +258,22 @@ public class Database {
 		ppstmt.setString(4, dM.getOnBehalf());
 
 		executeUpdate(ppstmt);
+	}
+	
+	//Get user's donation history
+	public ArrayList<DonationModel> getUserDonation(String name) throws SQLException {
+		ArrayList<DonationModel> donationList = new ArrayList<DonationModel>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN =?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			Date donationDate			= rs.getDate("donation_Date");
+			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
+			String onBehalf				= rs.getString("onBehalf");
+			
+			donationList.add(new DonationModel(donationDate, donationAmount, onBehalf));
+		}
+		return donationList;
 	}
 	
 	public ArrayList<DonationModel> getDonationModel() throws SQLException{

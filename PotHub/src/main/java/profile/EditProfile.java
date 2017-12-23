@@ -30,7 +30,7 @@ public class EditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
-			ArrayList<DatabaseUserModel> userList = db.getDatabaseUser();
+			ArrayList<DatabaseUserModel> userList = db.getUserProfile("Placeholder from Session Attribute");
 			for (DatabaseUserModel user : userList) {
 				email = user.getEmail();
 				contactNo = user.getContact_No();
@@ -143,6 +143,7 @@ public class EditProfile extends HttpServlet {
 				+ "										<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
 				+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' onkeyup='startedTyping(this)'>"
 				+ "									</div>"
+				+ "									<div id='errorMsg'>Password must have at least 8 characters</div>"	
 				+ "								</div>"
 				+ "								<div id='genderDiv'>"
 				+ "									<label id='genderLabel' for='genderSelect'>Gender</label>"

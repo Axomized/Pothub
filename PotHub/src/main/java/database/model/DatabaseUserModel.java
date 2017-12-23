@@ -39,6 +39,22 @@ public class DatabaseUserModel {
 		this.isPriviledged = isPriviledged;
 		this.userPermission = userPermission;
 	}
+	
+	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo, 
+			Date joinDate, int cookingRank, int points, BigDecimal totalDonation, boolean isPriviledged) {
+		this.email = email;
+		this.iGN = iGN;
+		this.contact_No = contact_No;
+		this.gender = gender;
+		this.bio = bio;
+		this.address = address;
+		this.unitNo = unitNo;
+		this.joinDate = joinDate;
+		this.cookingRank = cookingRank;
+		this.points = points;
+		this.totalDonation = totalDonation;
+		this.isPriviledged = isPriviledged;
+	}
 
 	public String getEmail() {
 		return email;

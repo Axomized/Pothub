@@ -17,6 +17,12 @@ public class DonationModel {
 		this.donation_Amount = donation_Amount;
 		this.onBehalf = onBehalf;
 	}
+	
+	public DonationModel(Date donation_Date, BigDecimal donation_Amount, String onBehalf) {
+		this.donation_Date = donation_Date;
+		this.donation_Amount = donation_Amount;
+		this.onBehalf = onBehalf;
+	}
 
 	public int getDonationID() {
 		return donationID;
