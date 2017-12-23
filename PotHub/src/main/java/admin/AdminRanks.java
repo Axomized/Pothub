@@ -18,13 +18,13 @@ import database.model.DatabaseUserModel;
  * Servlet implementation class Forum
  */
 @WebServlet("/AdminForumControl")
-public class AdminForumControl extends HttpServlet {
+public class AdminRanks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public AdminForumControl() {
+	public AdminRanks() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -82,7 +82,7 @@ public class AdminForumControl extends HttpServlet {
 		ArrayList<DatabaseUserModel> dbus = new ArrayList<DatabaseUserModel>();
 		try {
 			db = new Database(0);
-			dbus = db.getDatabaseUser();
+			dbus = db.getDatabaseUserRanks();
 			
 			for(DatabaseUserModel dbu:dbus){
 				pw.append("<tr>");
@@ -103,17 +103,17 @@ public class AdminForumControl extends HttpServlet {
 				pw.append("</td>");
 				pw.append("</tr>");
 				
-				if(dbus.size()<10){
-					for(int i = 0; i < (10-dbus.size());i++){
-					pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
-					}
-				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} 
+		if(dbus.size()<10){
+			for(int i = 0; i < (10-dbus.size());i++){
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			}
+		}
 		if(dbus.size()==0){
 			for(int i = 0; i < 10;i++){
 				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");

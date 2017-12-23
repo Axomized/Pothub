@@ -63,6 +63,10 @@ public class DonationSearchObject implements SearchObject{
 
 	@Override
 	public void setLimits(int start, int end) {
+		if(start<0||start>Integer.MAX_VALUE||end<0||end>Integer.MAX_VALUE){
+			this.searchStart=start;
+			this.searchEnd=end;
+		}
 		this.searchStart=start;
 		this.searchEnd=end;
 	}
@@ -88,7 +92,7 @@ public class DonationSearchObject implements SearchObject{
 	}
 
 	public void setiGN(String iGN) {
-		this.iGN = iGN;
+		this.iGN = SearchSanitizer.sanitise(iGN);
 	}
 
 	public Date getDonationDateOpen() {
@@ -128,6 +132,6 @@ public class DonationSearchObject implements SearchObject{
 	}
 
 	public void setOnBehalf(String onBehalf) {
-		this.onBehalf = onBehalf;
+		this.onBehalf = SearchSanitizer.sanitise(onBehalf);
 	}
 }

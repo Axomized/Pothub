@@ -12,6 +12,8 @@ import java.util.ArrayList;
 
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
+import adminSearch.RankSearchObject;
+import adminSearch.ReportSearchObject;
 import database.model.*;
 
 public class Database {
@@ -74,6 +76,31 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
+			int userPermission			= rs.getInt("UserPermission");
+			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission));
+		}
+		return aldum;
+	}
+	
+	public ArrayList<DatabaseUserModel> getDatabaseUserRanks() throws SQLException {
+		ArrayList<DatabaseUserModel> aldum = new ArrayList<DatabaseUserModel>();
+		RankSearchObject rso = new RankSearchObject();
+		ResultSet rs = getResultSet(rso.getExecutableSQL());
+		while(rs.next()) {
+			String email 				= null;
+			String iGN					= rs.getString("IGN");
+			String contact_No			= null;
+			char gender					= ' ';
+			String bio					= null;
+			String address				= null;
+			String unitNo				= null;
+			int profilePic				= 0;
+			Date lastLogin				= null;
+			Date joinDate				= rs.getDate("JoinDate");
+			int cookingRank				= 0;
+			int points					= 0;
+			BigDecimal totalDonation	= BigDecimal.valueOf(0);
+			boolean isPriviledged		= false;
 			int userPermission			= rs.getInt("UserPermission");
 			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission));
 		}
@@ -159,9 +186,8 @@ public class Database {
 	//Report
 	public ArrayList<ReportModel> getManyReports() throws SQLException{
 			ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
-			ResultSet rs = getResultSet(""
-					+ "SELECT reportID, IGNSend, IGNReceive, evidenceType, Date, Evidence, reason, guiltyOrNot "
-					+ "FROM Report;");
+			ReportSearchObject rso = new ReportSearchObject();
+			ResultSet rs = getResultSet(rso.getExecutableSQL());
 			while(rs.next()) {
 				int reportID = 				rs.getInt("reportID");
 				String iGNSend = 			rs.getString("IGNSend");

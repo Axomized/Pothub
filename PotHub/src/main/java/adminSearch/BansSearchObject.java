@@ -21,7 +21,7 @@ public class BansSearchObject implements SearchObject{
 	private String admin;
 	
 	//SQL Is
-	private boolean pardoned;
+	private int pardoned;
 	
 	public BansSearchObject(){
 		long maxTime = (long)21459168 * (long)1000000;
@@ -31,6 +31,7 @@ public class BansSearchObject implements SearchObject{
 		this.startDateClose = new Date(currentTime);
 		this.endDateOpen = new Date(0);
 		this.endDateClose = new Date(maxTime);
+		this.pardoned = 2;
 	}
 
 	@Override
@@ -64,16 +65,13 @@ public class BansSearchObject implements SearchObject{
 			queryToBuild += " AND reason like '%" + reason + "%'";
 		}
 		
-		try{
-		if(pardoned){
-			queryToBuild += " AND pardoned = true";
+		if(pardoned==1){
+			queryToBuild += " AND pardoned = 'true'";
 		}
-		else{
-			queryToBuild += " AND pardoned = false";
+		else if(pardoned==0){
+			queryToBuild += " AND pardoned = 'false'";
 		}
-		}catch(NullPointerException n){
-			
-		}
+		
 		queryToBuild+=";";
 		
 		System.out.println(queryToBuild);
@@ -82,6 +80,10 @@ public class BansSearchObject implements SearchObject{
 
 	@Override
 	public void setLimits(int start, int end) {
+		if(start<0||start>Integer.MAX_VALUE||end<0||end>Integer.MAX_VALUE){
+			this.searchStart=start;
+			this.searchEnd=end;
+		}
 		this.searchStart=start;
 		this.searchEnd=end;
 	}
@@ -158,11 +160,11 @@ public class BansSearchObject implements SearchObject{
 		this.admin = SearchSanitizer.sanitise(admin);
 	}
 
-	public boolean isPardoned() {
+	public int isPardoned() {
 		return pardoned;
 	}
 
-	public void setPardoned(boolean pardoned) {
+	public void setPardoned(int pardoned) {
 		this.pardoned = pardoned;
 	}
 

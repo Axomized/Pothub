@@ -18,13 +18,13 @@ import database.model.ReportModel;
  * Servlet implementation class Forum
  */
 @WebServlet("/AdminReports")
-public class ReportPanel extends HttpServlet {
+public class AdminReports extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ReportPanel() {
+	public AdminReports() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
