@@ -35,13 +35,18 @@ public class GoogleGeocoding extends HttpServlet {
 			String sCurrentLine;
 			while ((sCurrentLine = br.readLine()) != null) {
 				String line = sCurrentLine;
-				if(line.length() > 6) {
-					response.getWriter().append(geocoding(line));
-				}else {
-					response.getWriter().append(reverseGeocoding(line));
+				if(line.length() >= 6) {
+					try {
+						Integer.parseInt(line);
+						response.getWriter().append("Geocode" + geocoding(line));
+					}catch(NumberFormatException e) {
+						response.getWriter().append("Reverse" + reverseGeocoding(line));
+					}
 				}
 			}
-		}catch (ApiException | InterruptedException e) {
+		} catch (ApiException e) {
+			e.printStackTrace();
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
 	} 
@@ -56,7 +61,7 @@ public class GoogleGeocoding extends HttpServlet {
 		latlng.lng = Double.parseDouble(gson.toJson(results[0].geometry.location.lng));
 	
 		GeocodingResult[] results1 =  GeocodingApi.reverseGeocode(context, latlng).await();
-		return gson.toJson(results1[0].formattedAddress);
+		return gson.toJson(results1[0].formattedAddress).replaceAll("\"", "");
 	}
 
 	private String reverseGeocoding(String address) throws ApiException, InterruptedException, IOException{
@@ -69,6 +74,15 @@ public class GoogleGeocoding extends HttpServlet {
 		latlng.lng = Double.parseDouble(gson.toJson(results[0].geometry.location.lng));
 	
 		GeocodingResult[] results1 =  GeocodingApi.reverseGeocode(context, latlng).await();
-		return gson.toJson(results1[0].addressComponents[5].longName);
+		for(int i = 0; i < results1[0].addressComponents.length; i++){
+		    String searchedResult = gson.toJson(results1[0].addressComponents[i].types[0]);
+		    searchedResult = searchedResult.replaceAll("\"", "");
+		    System.out.println(searchedResult);
+		    if(searchedResult.equals("POSTAL_CODE")) {
+		    	String postalCode = gson.toJson(results1[0].addressComponents[i].longName).replaceAll("\"", "");
+		    	return postalCode;
+		    }
+		}
+		return "";
 	}
 }

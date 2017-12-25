@@ -82,6 +82,17 @@ public class Database {
 		return aldum;
 	}
 	
+	//Get list of User's IGN
+	public ArrayList<String> getDatabaseUserIGN() throws SQLException {
+		ArrayList<String> aldum = new ArrayList<String>();
+		ResultSet rs = getResultSet("SELECT IGN FROM DatabaseUser");
+		while(rs.next()) {
+			String iGN					= rs.getString("IGN");
+			aldum.add(iGN);
+		}
+		return aldum;
+	}
+	
 	//Get user's profile information
 	public ArrayList<DatabaseUserModel> getUserProfile(String name) throws SQLException {
 		ArrayList<DatabaseUserModel> userList = new ArrayList<DatabaseUserModel>();

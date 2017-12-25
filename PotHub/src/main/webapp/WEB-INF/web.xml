@@ -82,6 +82,18 @@
 		<description></description>
 		<servlet-class>event.geocoding.GoogleGeocoding</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>CreateEventPage</servlet-name>
+		<display-name>CreateEventPage</display-name>
+		<description></description>
+		<servlet-class>event.CreateEventPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>MyEventPage</servlet-name>
+		<display-name>MyEventPage</display-name>
+		<description></description>
+		<servlet-class>event.MyEventPage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -133,5 +145,13 @@
 	<servlet-mapping>
 		<servlet-name>GoogleGeocoding</servlet-name>
 		<url-pattern>/GoogleGeocoding</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>CreateEventPage</servlet-name>
+		<url-pattern>/CreateEventPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>MyEventPage</servlet-name>
+		<url-pattern>/MyEventPage</url-pattern>
 	</servlet-mapping>
 </web-app>

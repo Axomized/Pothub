@@ -8,7 +8,7 @@
 		<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
 		<link rel="icon" href="http://localhost:8080/PotHub/images/crab.png?v=2" type="image/x-icon">
 		<!-- Page Title -->
-		<title>Default Title</title>
+		<title>My Events</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional Script -->
@@ -40,7 +40,13 @@
 			<ul>
 				<li id="lhome"><a href="Forum.html">Home</a></li>
 				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
-				<li id="levent"><a href="EventPage.html">Event</a></li>
+				<li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Event</a>
+			        <ul class="dropdown-menu">
+			          <li><a href="/EventPage">Events</a></li>
+			          <li><a href="/MyEventPage">My Events</a></li>
+			        </ul>
+			    </li>
 				<li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Potcast</a>
 			        <ul class="dropdown-menu">
@@ -49,11 +55,30 @@
 			          <li><a href="#">My PotCast</a></li>
 			          <li><a href="#">Joined PotCast</a></li>
 			        </ul>
-			      </li>
+			     </li>
 				<li id="ldonate"><a href="Donation.html">Donate</a></li>
 			</ul>
 		</div>
 		<div id="wrapper">
+			<button class="btn btn-success" id="createButton">Create Event</button>
+			<div id="popup-container">
+				<div id="popup">
+					<div id="popup-title">
+						<p><b>Ways to get privilege</b>
+					</div>
+					<div id="popup-icons" class="row">
+						<div class="col-sm-6">
+							<p><b>Being active on Forums</b></p>
+							<img src="../images/forumIcon.png" alt="Forum Icon" width="100px" height=" 100px;">
+						</div>
+						<div class="col-sm-6">
+							<p><b>Donating to fund the website</b></p>
+							<img src="../images/donationIcon.png" alt="Donation Icon" width="100px" height=" 100px;">
+						</div>
+					</div>
+					<i class="fa fa-times-circle-o fa-2x" aria-hidden="true" id="closeBtn"></i>
+				</div>
+			</div>
 			<div class="content">
 				<img src="../images/crab.jpg" alt="crab picture">
 				<div class="row front-container">
@@ -145,7 +170,6 @@
 			</p>
 		</div>
 		<!-- Optional Scripts for Bootstrap -->
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>
