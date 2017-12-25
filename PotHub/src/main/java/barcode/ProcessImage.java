@@ -59,8 +59,8 @@ public class ProcessImage extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
-			ImageIO.write(img, "png", outputfile);
+			//File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
+			//ImageIO.write(img, "png", outputfile);
 		}
 		
 	}
