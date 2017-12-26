@@ -94,6 +94,12 @@
 		<description></description>
 		<servlet-class>event.MyEventPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>gettting</servlet-name>
+		<display-name>gettting</display-name>
+		<description></description>
+		<servlet-class>forum.gettting</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -153,5 +159,9 @@
 	<servlet-mapping>
 		<servlet-name>MyEventPage</servlet-name>
 		<url-pattern>/MyEventPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>gettting</servlet-name>
+		<url-pattern>/gettting</url-pattern>
 	</servlet-mapping>
 </web-app>

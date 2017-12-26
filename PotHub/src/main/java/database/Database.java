@@ -303,6 +303,25 @@ public class Database {
 		return donations;
 	}
 	
+	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
+		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
+		while(rs.next()) {
+			int postID = rs.getInt("PostID");
+			String thread = rs.getString("Thread");
+			int upvotes = rs.getInt("Upvotes");
+			String iGN = rs.getString("IGN");
+			Date date = rs.getDate("Date");
+			int picture = rs.getInt("Picture");
+			String description = rs.getString("Description");
+			String fileAttachment = rs.getString("FileAttachment");
+			
+			
+			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment));
+		}
+		return forums;
+	}
+	
 	//EventModel
 	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
