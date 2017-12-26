@@ -8,6 +8,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import adminSearch.BansSearchObject;
@@ -311,7 +312,7 @@ public class Database {
 			String thread = rs.getString("Thread");
 			int upvotes = rs.getInt("Upvotes");
 			String iGN = rs.getString("IGN");
-			Date date = rs.getDate("Date");
+			Timestamp date = rs.getTimestamp("Date");
 			int picture = rs.getInt("Picture");
 			String description = rs.getString("Description");
 			String fileAttachment = rs.getString("FileAttachment");
