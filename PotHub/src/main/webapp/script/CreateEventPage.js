@@ -47,29 +47,47 @@ function addToLeft(text){
 }
 
 function validateForm() {
-    var eventName = document.getElementById("eventName");
-    var postalCode = document.getElementById("postalInput");
-    var address = document.getElementById("Address");
-    var additionalAddress = document.getElementById("AdditionalAddress");
-    var guestName = document.getElementById("GuestName");
-    var galleryUpload = document.getElementById("guest-container-right-container");
-    
-    if(eventName.value.length > 255){
-    }else{return false}
-    
-    if(postalCode.value.length < 6 && postalCode.value.length >= 1){
-    }else{return false}	
-    
-    if((additionalAddress.value.length + address.value.length) < 255){
-    }else{return false}	
-    
-    if(guestName.childElementCount < 50){
-    }else{alert("Upload only <10 photos");return false}	
-    
-    if($("#upload").files.length < 10){
-    }else{return false}	
-    
-    return true;
+	var eventName = document.getElementById("eventName");
+	var postalCode = document.getElementById("postalInput");
+	var address = document.getElementById("mainAddress");
+	var additionalAddress = document.getElementById("additionalAddress");
+	var guestName = document.getElementById("guestNameList");
+	var galleryUpload = $("#upload");
+
+	if(eventName.value.length < 255){
+		
+	}else{
+		alert("Event Name: Failed");
+		return false;
+	}
+
+	if(postalCode.value.length <= 6 && postalCode.value.length >= 1){
+		
+	}else{
+		alert("Postal Code: Failed");
+		return false;
+	}	
+
+	if(additionalAddress.value.length + address.value.length < 255){
+		
+	}else{
+		alert("Address Name: Failed");
+		return false;
+	}	
+
+	if(guestName.childElementCount < 50){
+		
+	}else{
+		alert("Guest Name List: Failed");
+		return false;
+	}	
+
+	if(galleryUpload.files.length < 10){
+		
+	}else{
+		alert("Upload only <10 photos");
+		return false;
+	}	
 }
 
 $(function(){
@@ -85,24 +103,56 @@ $(function(){
 					}else{
 						$("#guestNameList").val($("#guestNameList").val() + "," + $(this).text());
 					}
-					
+
 				});
 			}
 		});
 	});
-	
+
 	$("#postalInput").keyup(function(){
-		var line = $("#postalInput").val()
-		xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
-		xhttp.send(line);
-	})
-	
+		var line = $("#postalInput").val();
+		if(line == ""){
+			$("#mainAddress").prop('readonly', false);
+		}else if(line.length > 0){
+			$("#mainAddress").prop('readonly', true);
+			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.send(line);
+		}
+	});
+
+	$("#postalInput").change(function(){
+		var line = $("#postalInput").val();
+		if(line == ""){
+			$("#mainAddress").prop('readonly', false);
+		}else if(line.length > 0){
+			$("#mainAddress").prop('readonly', true);
+			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.send(line);
+		}
+	});
+
 	$("#mainAddress").keyup(function(){
-		var line = $("#mainAddress").val()
-		xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
-		xhttp.send(line);
-	})
-	
+		var line = $("#mainAddress").val();
+		if(line == ""){
+			$("#postalInput").prop('readonly', false);
+		}else if(line.length > 0){
+			$("#postalInput").prop('readonly', true);
+			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.send(line);
+		}
+	});
+
+	$("#mainAddress").change(function(){
+		var line = $("#mainAddress").val();
+		if(line == ""){
+			$("#postalInput").prop('readonly', false);
+		}else if(line.length > 0){
+			$("#postalInput").prop('readonly', true);
+			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.send(line);
+		}
+	});
+
 	$('#fileUpload').change(function(){
 		var input = this;
 		var url = $(this).val();
@@ -116,11 +166,11 @@ $(function(){
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
-		$('#fileNum').val("");
+		$('#fileNum').removeAttr('value');
 		open = true;
 		showDefault();
 	});
-	
+
 	$('#upload').change(function(){
 		var input = this;
 		var url = $(this).val();
@@ -133,17 +183,17 @@ $(function(){
 				reader.onload = function (e) {
 					$('#gallery').append(
 							"<div class='removableImage' style='position:relative;'>" +
-								"<img src='" + e.target.result + "' alt='User's pictures' height='100px' width='200px' onclick='removeImg(this)' >" +
-								"<div style='position:absolute;top:0;left:0;width:200px;height:100px;z-index:1;background-color:rgba(155,155,155,0.5);display:none'></div>" +
-							"</div>");
-					
+							"<img src='" + e.target.result + "' alt='User's pictures' height='100px' width='200px' onclick='removeImg(this)' >" +
+							"<div style='position:absolute;top:0;left:0;width:200px;height:100px;z-index:1;background-color:rgba(155,155,155,0.5);display:none'></div>" +
+					"</div>");
+
 					$('.removableImage').mouseenter(function(){
 						$(this).children("div").css("display", "block");
 						$('.removableImage').click(function(){
 							$(this).remove();
 						})
 					});
-					
+
 					$('.removableImage').mouseleave(function(){
 						$(this).children("div").css("display", "none");
 					});
@@ -155,5 +205,5 @@ $(function(){
 		showDefault();
 	});
 
-	
+
 });

@@ -8,8 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.tomcat.util.codec.binary.Base64;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.maps.GeoApiContext;
@@ -77,7 +75,6 @@ public class GoogleGeocoding extends HttpServlet {
 		for(int i = 0; i < results1[0].addressComponents.length; i++){
 		    String searchedResult = gson.toJson(results1[0].addressComponents[i].types[0]);
 		    searchedResult = searchedResult.replaceAll("\"", "");
-		    System.out.println(searchedResult);
 		    if(searchedResult.equals("POSTAL_CODE")) {
 		    	String postalCode = gson.toJson(results1[0].addressComponents[i].longName).replaceAll("\"", "");
 		    	return postalCode;

@@ -1,7 +1,9 @@
 package database;
 
 import java.io.FileNotFoundException;
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,13 +11,28 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
-import database.model.*;
+import database.model.AppealModel;
+import database.model.BansModel;
+import database.model.CommentModel;
+import database.model.CommentVoteModel;
+import database.model.DatabaseUserModel;
+import database.model.DonationModel;
+import database.model.EventModel;
+import database.model.FileTableModel;
+import database.model.FoodPreferences;
+import database.model.ForumPostModel;
+import database.model.ForumVoteModel;
+import database.model.ReportModel;
+import database.model.ShoppingLoginModel;
 
 public class Database {
 	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
@@ -304,25 +321,6 @@ public class Database {
 		return donations;
 	}
 	
-	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
-		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
-		while(rs.next()) {
-			int postID = rs.getInt("PostID");
-			String thread = rs.getString("Thread");
-			int upvotes = rs.getInt("Upvotes");
-			String iGN = rs.getString("IGN");
-			Timestamp date = rs.getTimestamp("Date");
-			int picture = rs.getInt("Picture");
-			String description = rs.getString("Description");
-			String fileAttachment = rs.getString("FileAttachment");
-			
-			
-			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment));
-		}
-		return forums;
-	}
-	
 	//EventModel
 	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
@@ -332,14 +330,32 @@ public class Database {
 			String iGN 			= rs.getString("IGN");
 			int thumbnail		= rs.getInt("Thumbnail");
 			String description	= rs.getString("Description");
-			Date date			= rs.getDate("Date");
+			Timestamp date			= rs.getTimestamp("Date");
 			String postalCode	= rs.getString("PostalCode");
 			String venue		= rs.getString("Venue");
 			String guest		= rs.getString("Guest");
 			
-			alem.add(new EventModel(0, eventName, iGN, thumbnail, description, date, postalCode, venue, 0, guest, null));
+			alem.add(new EventModel(0, eventName, iGN, thumbnail, description, date, postalCode, venue, true, 0, guest, null));
 		}
 		return alem;
+	}
+	
+	//CreateEvent
+	public void insertCreateEvent(EventModel eM) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Event(EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, AutoAccept, Max_No_People, Guest, FileList) VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+		ppstmt.setString(1, eM.getEventName());
+		ppstmt.setString(2, eM.getiGN());
+		ppstmt.setInt(3, eM.getThumbnail());
+		ppstmt.setString(4, eM.getDescription());
+		ppstmt.setTimestamp(5, eM.getDate());
+		ppstmt.setString(6, eM.getPostalCode());
+		ppstmt.setString(7, eM.getVenue());
+		ppstmt.setBoolean(8, eM.isAutoAccept());
+		ppstmt.setInt(9, eM.getMax_No_People());
+		ppstmt.setString(10, eM.getGuest());
+		ppstmt.setString(11, eM.getFileList());
+
+		executeUpdate(ppstmt);
 	}
 	
 	public void updateEvent(String sql, EventModel eM) throws SQLException { 
@@ -348,7 +364,7 @@ public class Database {
 		ppstmt.setString(2, eM.getiGN());
 		ppstmt.setInt(3, eM.getThumbnail());
 		ppstmt.setString(4, eM.getDescription());
-		ppstmt.setDate(5, eM.getDate());
+		ppstmt.setTimestamp(5, eM.getDate());
 		ppstmt.setString(6, eM.getPostalCode());
 		ppstmt.setString(7, eM.getVenue());
 		ppstmt.setInt(8, eM.getMax_No_People());
@@ -363,10 +379,30 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fTM.getFileName());
 		ppstmt.setBytes(2, fTM.getData());
-		ppstmt.setDate(3, new Date(fTM.getFileDate().getTime()));
-		ppstmt.setFloat(4, (float)fTM.getFileSize());
+		ppstmt.setFloat(3, (float)fTM.getFileSize());
 
 		executeUpdate(ppstmt);
+	}
+	
+	//Insert into FileTable
+	public void insertFileTable(FileTableModel fTM) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
+		ppstmt.setString(1, fTM.getFileName());
+		ppstmt.setBytes(2, fTM.getData());
+		ppstmt.setFloat(3, (float)fTM.getFileSize());
+
+		executeUpdate(ppstmt);
+	}
+	
+	//Get FileTable FileID
+	public String getFileTableID(String fileName) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT FileID FROM FileTable WHERE FileName = ?;");
+		ppstmt.setString(1, fileName);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		rs.next();
+		String fileID	= rs.getString("FileID");
+		return fileID;
 	}
 	
 	//FoodPreferences
@@ -392,6 +428,25 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
+	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
+		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
+		while(rs.next()) {
+			int postID = rs.getInt("PostID");
+			String thread = rs.getString("Thread");
+			int upvotes = rs.getInt("Upvotes");
+			String iGN = rs.getString("IGN");
+			Timestamp date = rs.getTimestamp("Date");
+			int picture = rs.getInt("Picture");
+			String description = rs.getString("Description");
+			String fileAttachment = rs.getString("FileAttachment");
+			
+			
+			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment));
+		}
+		return forums;
+	}
+	
 	//ForumVoteModel
 	public void updateForumVote(String sql, ForumVoteModel fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
@@ -401,13 +456,10 @@ public class Database {
 
 		executeUpdate(ppstmt);
 	}
+	
 	/*
-	public static void main(String[] arg0) throws SQLException, FileNotFoundException {
-		Database db = new Database(0);
-		String sqlline = "SELECT * FROM CommentVote INNER JOIN DatabaseUser ON DatabaseUser.IGN = CommentVote.IGN;";
-		ArrayList<CommentVoteModel> alam = db.getCommentVoteModel(sqlline);
-		for(CommentVoteModel dum:alam)
-			System.out.println(dum.getiGN());
+	public static void main(String[] arg0) throws ParseException, UnsupportedEncodingException {
+		
 	}
 	*/
 	/*

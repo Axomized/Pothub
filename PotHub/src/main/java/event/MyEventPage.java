@@ -46,7 +46,7 @@ public class MyEventPage extends HttpServlet {
 				+ "			</div>"
 				+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 				+ "				<div id='profilePic'>"
-				+ "					<img src='images/profile.png' height='50' width='50'/>"
+				+ "					<img src='images/profile.png' alt='ProfielPicture' height='50' width='50'/>"
 				+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
 				+ "				</div>"
 				+ "				<div id='profileDropdownDiv'>"

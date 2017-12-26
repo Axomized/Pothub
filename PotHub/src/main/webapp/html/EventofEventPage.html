@@ -25,7 +25,7 @@
 			</div>
 			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
 				<div id="profilePic">
-					<img src="../images/profile.png" height="50" width="50"/>
+					<img src="../images/profile.png" alt="ProfilePicture" height="50" width="50"/>
 					<span id="welcomeSpan">Welcome, [Placeholder]</span>
 				</div>
 				<div id="profileDropdownDiv">
@@ -39,7 +39,13 @@
 				<ul class="nav navbar-nav">
 					<li id="lhome"><a href="Forum.html">Home</a></li>
 					<li id="lprivatemessage"><a href="PrivateMesage.html">Private Message</a></li>
-					<li id="levent"><a href="EventPage.html">Event</a></li>
+					<li class="dropdown">
+			        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Event</a>
+				        <ul class="dropdown-menu">
+				        	<li><a href="/EventPage">Events</a></li>
+				        	<li><a href="/MyEventPage">My Events</a></li>
+				        </ul>
+			    	</li>
 					<li class="dropdown">
 				        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Podcast</a>
 				        <ul class="dropdown-menu">

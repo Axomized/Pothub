@@ -1,6 +1,7 @@
 @CHARSET "ISO-8859-1";
 html
 {
+	overflow-wrap: break-word;
 	margin: 0;
 	padding: 0;
 	color: #aaaaaa;

@@ -1,6 +1,7 @@
 package database.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,14 +11,15 @@ public class EventModel {
 	String iGN;
 	int thumbnail;
 	String description;
-	Date date;
+	Timestamp date;
 	String postalCode;
 	String venue;
+	boolean autoAccept;
 	int max_No_People;
 	String guest;
 	String fileList;
 	
-	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Date date, String postalCode, String venue, int max_No_People,
+	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Timestamp date, String postalCode, String venue, boolean autoAccept, int max_No_People,
 			String guest, String fileList) {
 		this.eventID = eventID;
 		this.eventName = eventName;
@@ -27,9 +29,13 @@ public class EventModel {
 		this.date = date;
 		this.postalCode = postalCode;
 		this.venue = venue;
+		this.autoAccept = autoAccept;
 		this.max_No_People = max_No_People;
 		this.guest = guest;
 		this.fileList = fileList;
+	}
+
+	public EventModel() {
 	}
 
 	public int getEventID() {
@@ -52,7 +58,7 @@ public class EventModel {
 		return description;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
@@ -62,6 +68,10 @@ public class EventModel {
 
 	public String getVenue() {
 		return venue;
+	}
+
+	public boolean isAutoAccept() {
+		return autoAccept;
 	}
 
 	public int getMax_No_People() {
@@ -120,7 +130,7 @@ public class EventModel {
 		this.description = description;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 
@@ -130,6 +140,10 @@ public class EventModel {
 
 	public void setVenue(String venue) {
 		this.venue = venue;
+	}
+	
+	public void setAutoAccept(boolean autoAccept) {
+		this.autoAccept = autoAccept;
 	}
 
 	public void setMax_No_People(int max_No_People) {
