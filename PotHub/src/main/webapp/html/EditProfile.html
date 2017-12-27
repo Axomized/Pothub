@@ -50,7 +50,7 @@
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
-				<form id="profileForm">
+				<form id="profileForm" autocomplete="off" enctype="multipart/form-data" method="post">
 					<div id="content" class="row">
 						<div id="profilePicDiv" class="col-sm-4">
 							<div id="profileImgDiv">
@@ -83,15 +83,15 @@
 								<div id="passwordDiv">
 									<div id="oldPassDiv">
 										<label id="oldPassLabel" for="oldPassInput">Old password</label>
-										<input type="password" id="oldPassInput" class="inputsForFill" name="oldPassInput" onkeyup="startedTyping(this)">
+										<input type="password" id="oldPassInput" class="inputsForFill" name="oldPassInput" oninput="startedTyping(this)">
 									</div>
 									<div id="newPassDiv">
 										<label id="newPassLabel" for="newPassInput">New password</label>
-										<input type="password" id="newPassInput" class="inputsForFill" name="newPassInput" onkeyup="startedTyping(this)">
+										<input type="password" id="newPassInput" class="inputsForFill" name="newPassInput" oninput="startedTyping(this)">
 									</div>
 									<div id="confirmPassDiv">
 										<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
-										<input type="password" id="confirmPassInput" class="inputsForFill" name="confirmPassInput" onkeyup="startedTyping(this)">
+										<input type="password" id="confirmPassInput" class="inputsForFill" name="confirmPassInput" oninput="startedTyping(this)">
 									</div>
 									<div id="errorMsg">Password must have at least 8 characters</div>
 								</div>
@@ -105,28 +105,28 @@
 								</div>
 								<div id="emailDiv">
 									<label id="emailLabel" for="emailInput">Email</label>
-									<input type="email" id="emailInput" class="inputsForFill" name="emailInput" onkeyup="startedTyping(this)">
+									<input type="email" id="emailInput" class="inputsForFill" name="emailInput" oninput="startedTyping(this)">
 								</div>
 								<div id="contactNoDiv">
 									<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
-									<input type="text" id="contactNoInput" class="inputsForFill" name="contacNoInput" onkeyup="startedTyping(this)">
+									<input type="text" id="contactNoInput" class="inputsForFill" name="contacNoInput" oninput="startedTyping(this)">
 								</div>
 								<div id="bioDiv">
 									<label id="bioLabel" for="bioText">Bio</label>
-									<textarea id="bioText" class="inputsForFill" name="bioText" onkeyup="startedTyping(this)"></textarea>
+									<textarea id="bioText" class="inputsForFill" name="bioText" oninput="startedTyping(this)"></textarea>
 								</div>
 								<div id="addressDiv">
 									<div id="postalCodeDiv">
 										<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
-										<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" onkeyup="startedTyping(this)">
+										<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" oninput="startedTyping(this)">
 									</div>
 									<div id="unitNoDiv">
 										<label id="unitNoLabel" for="unitNoInput">Unit Number</label>
-										<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" onkeyup="startedTyping(this)">
+										<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" oninput="startedTyping(this)">
 									</div>
 								</div>
 								<div id="updateBtnDiv">
-									<button id="updateBtn" name="updateBtn" value="updateBtn" disabled>Update profile</button>
+									<input type="submit" id="updateBtn" name="updateBtn" value="Update profile" disabled>
 								</div>
 							</div>
 						</div>

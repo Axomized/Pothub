@@ -2,6 +2,10 @@ package donation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.SecureRandom;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -70,7 +74,7 @@ public class Donation extends HttpServlet {
 				+ "		<div id='wrapper'>"
 				+ "			<div id='content-wrapper'>"
 				+ "				<div id='content'>"
-				+ "					<form id='donateForm'>"
+				+ "					<form id='donateForm' autocomplete='off' method='post'>"
 				+ "						<div id='onBehalfDiv'>"
 				+ "							<div id='askDiv'>"
 				+ "								Are you donating on behalf of someone? Check the box if yes, ignore if no."
@@ -82,7 +86,7 @@ public class Donation extends HttpServlet {
 				+ "									<span class='custom-control-indicator'></span>"
 				+ "  									<span class='custom-control-description'>Yes</span>"
 				+ "								</label>"
-				+ "								<input type='text' id='behalfName' name='behalfName' required>"
+				+ "								<input type='text' id='behalfName' name='behalfName'>"
 				+ "							</div>"
 				+ "						</div>"
 				+ "						<div id='donateAmtDiv'>"
@@ -97,10 +101,14 @@ public class Donation extends HttpServlet {
 				+ "							<div id='cardInputDiv'>"
 				+ "								<label id='cardLabel' for='cardNo'>Credit Card Number</label>"
 				+ "								<div id='inputCardDiv'>"
-				+ "									<input type='text' id='cardNo' name='cardNo' required onkeyup='checkCardType()'>"
-				+ "									<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
-				+ "									<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
-				+ "									<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
+				+ "									<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>"
+				+ "									<div id='cardIconDiv'>"
+				+ "										<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
+				+ "										<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
+				+ "										<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
+				+ "										<i id='dinersIcon' class='fa fa-cc-diners-club cardIcon' aria-hidden='true'></i>"
+				+ "										<i id='jcbIcon' class='fa fa-cc-jcb cardIcon' aria-hidden='true'></i>"
+				+ "									</div>"
 				+ "								</div>"
 				+ "							</div>"
 				+ "							<div id='dateCodeDiv'>"
@@ -141,13 +149,13 @@ public class Donation extends HttpServlet {
 				+ "								</div>"
 				+ "								<div id='codeDiv'>"
 				+ "									<label id='codeLabel' for='securityCode'>Security Code</label>"
-				+ "									<input type='text' id='securityCode' name='securityCode' required/>"
+				+ "									<input type='text' id='securityCode' name='securityCode' maxlength='4' required/>"
 				+ "								</div>"
 				+ "							</div>"
-				+ "							<div id='errorMsg'>Invalid credit card</div>"
+				+ "							<div id='errorMsg'>Invalid credit card number</div>"
 				+ "							<div class='thatLine'></div>"
 				+ "							<div id='buttonDiv'>"
-				+ "								<button id='donateBtn' name='donateBtn' value='donateBtn'>Donate</button>"
+				+ "								<input type='submit' id='donateBtn' name='donateBtn' value='Donate'>"
 				+ "							</div>"
 				+ "						</div>"
 				+ "					</form>"
@@ -170,7 +178,69 @@ public class Donation extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String behalfName = request.getParameter("behalfName");
+		String donateAmt = request.getParameter("donateAmt");
+		String ccName = request.getParameter("nameInput");
+		String ccNumber = request.getParameter("cardNo");
+		String ccMonth = request.getParameter("selectMonth");
+		String ccYear = request.getParameter("selectYear");
+		String securityCode = request.getParameter("securityCode");
+		ValidateCard vc = new ValidateCard();
+		SendEmail se = new SendEmail();
+		String errorMessage = "";
+		
+		if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
+			if (!behalfName.equals(null) || !behalfName.equals("")) {
+				if (vc.validateCCNo(ccNumber)) {
+					if (vc.validateCode(ccNumber, securityCode)) {
+						se.sendEmail("", generatePIN());
+						//Insert new row in TempStore table
+					}
+					else {
+						errorMessage = "Invalid security code";
+					}
+				}
+				else {
+					errorMessage = "Invalid credit card number";
+				}
+			}
+			else {
+				if (vc.validateCCNo(ccNumber)) {
+					if (vc.validateCode(ccNumber, securityCode)) {
+						se.sendEmail("", generatePIN());
+						//Insert new row in TempStore table
+					}
+					else {
+						errorMessage = "Invalid security code";
+					}
+				}
+				else {
+					errorMessage = "Invalid credit card number";
+				}
+			}
+		}
+		else {
+			errorMessage = "Please fill in all required inputs";
+		}
+		System.out.println(errorMessage);
+	}
+	
+	private String generatePIN() {
+		SecureRandom random = new SecureRandom();
+		int num = random.nextInt(1000000);
+		return String.valueOf(num);
+	}
+	
+	private boolean validateInputString(String donateAmt, String ccName, String ccNumber, String ccMonth, String ccYear, String securityCode) {
+		boolean isNotNull = false;
+		
+		List<String> stringList = Arrays.asList(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode);
+		for (String s : stringList) {
+			if (!s.equals(null) || !s.equals("")) {
+				isNotNull = true;
+			}
+		}
+		return isNotNull;
 	}
 
 }

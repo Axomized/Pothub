@@ -43,7 +43,11 @@ p {
 
 ul { 
 	list-style-type: none; 
-} 
+}
+
+th, td {
+	padding: 16px !important;
+}
 
 /* Structure */
 
@@ -238,7 +242,6 @@ body {
 }
 
 #donationTable {
-	height: 100%;
 	margin-bottom: 0;
 }
 

@@ -51,7 +51,7 @@
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
-					<form id="donateForm">
+					<form id="donateForm" autocomplete="off" method="post">
 						<div id="onBehalfDiv">
 							<div id="askDiv">
 								Are you donating on behalf of someone? Check the box if yes, ignore if no.
@@ -63,7 +63,7 @@
 									<span class="custom-control-indicator"></span>
   									<span class="custom-control-description">Yes</span>
 								</label>
-								<input type="text" id="behalfName" name="behalfName" required>
+								<input type="text" id="behalfName" name="behalfName">
 							</div>
 						</div>
 						<div id="donateAmtDiv">
@@ -78,10 +78,14 @@
 							<div id="cardInputDiv">
 								<label id="cardLabel" for="cardNo">Credit Card Number</label>
 								<div id="inputCardDiv">
-									<input type="text" id="cardNo" name="cardNo" required onkeyup="checkCardType()">
-									<i id="visaIcon" class="fa fa-cc-visa cardIcon" aria-hidden="true"></i>
-									<i id="mastercardIcon" class="fa fa-cc-mastercard cardIcon" aria-hidden="true"></i>
-									<i id="amexIcon" class="fa fa-cc-amex cardIcon" aria-hidden="true"></i>
+									<input type="text" id="cardNo" name="cardNo" maxlength="19" oninput="checkCardType()" required>
+									<div id="cardIconDiv">
+										<i id="visaIcon" class="fa fa-cc-visa cardIcon" aria-hidden="true"></i>
+										<i id="mastercardIcon" class="fa fa-cc-mastercard cardIcon" aria-hidden="true"></i>
+										<i id="amexIcon" class="fa fa-cc-amex cardIcon" aria-hidden="true"></i>
+										<i id="dinersIcon" class="fa fa-cc-diners-club cardIcon" aria-hidden="true"></i>
+										<i id="jcbIcon" class="fa fa-cc-jcb cardIcon" aria-hidden="true"></i>
+									</div>
 								</div>
 							</div>
 							<div id="dateCodeDiv">
@@ -122,13 +126,13 @@
 								</div>
 								<div id="codeDiv">
 									<label id="codeLabel" for="securityCode">Security Code</label>
-									<input type="text" id="securityCode" name="securityCode" required/>
+									<input type="text" id="securityCode" name="securityCode" maxlength="4" required/>
 								</div>
 							</div>
-							<div id="errorMsg">Invalid credit card</div>
+							<div id="errorMsg">Invalid credit card number</div>
 							<div class="thatLine"></div>
 							<div id="buttonDiv">
-								<button id="donateBtn" name="donateBtn" value="donateBtn">Donate</button>
+								<input type="submit" id="donateBtn" name="donateBtn" value="Donate" onclick="overrideAutoFill()">
 							</div>
 						</div>
 					</form>
