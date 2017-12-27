@@ -1,6 +1,7 @@
 package database.model;
 
-import java.sql.Date;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -86,10 +87,10 @@ public class EventModel {
 		return fileList;
 	}
 	
-	public ArrayList<String> getGuestArray() {
+	public ArrayList<String> getGuestArray() throws UnsupportedEncodingException {
 		ArrayList<String> als = new ArrayList<String>();
 		if(guest != null) {
-			Scanner sc = new Scanner(guest);
+			Scanner sc = new Scanner(decodeString(guest));
 			sc.useDelimiter("_");
 			while(sc.hasNext()) {
 				als.add(sc.next());
@@ -170,5 +171,9 @@ public class EventModel {
 		for(String s: fileList)
 			line += s;
 		this.fileList = line;
+	}
+	
+	private String decodeString(String line) throws UnsupportedEncodingException {
+		return URLDecoder.decode(line, "UTF-8");
 	}
 }

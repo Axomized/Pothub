@@ -5,7 +5,6 @@ import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -246,7 +245,7 @@ public class CreateEventPage extends HttpServlet {
 			String postalCode = encodeString(request.getParameter("PostalCode"));
 			eM.setPostalCode(postalCode);
 			
-			String address = encodeString(request.getParameter("Address") + " " + request.getParameter("AdditionalAddress"));
+			String address = encodeString(request.getParameter("Address") + ", " + request.getParameter("AdditionalAddress"));
 			eM.setVenue(address);
 			
 			String eventDesc = encodeString(request.getParameter("EventDesc"));

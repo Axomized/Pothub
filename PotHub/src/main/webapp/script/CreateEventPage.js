@@ -101,7 +101,7 @@ $(function(){
 					if(index == 0){
 						$("#guestNameList").val($(this).text());
 					}else{
-						$("#guestNameList").val($("#guestNameList").val() + "," + $(this).text());
+						$("#guestNameList").val($("#guestNameList").val() + "_" + $(this).text());
 					}
 
 				});

@@ -1,9 +1,12 @@
 package database;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
-import java.net.URLEncoder;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -11,10 +14,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
+
+import org.apache.commons.compress.utils.IOUtils;
 
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
@@ -31,6 +33,7 @@ import database.model.FileTableModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.PeopleEventListModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
 
@@ -112,8 +115,7 @@ public class Database {
 	}
 	
 	//Get user's profile information
-	public ArrayList<DatabaseUserModel> getUserProfile(String name) throws SQLException {
-		ArrayList<DatabaseUserModel> userList = new ArrayList<DatabaseUserModel>();
+	public DatabaseUserModel getUserProfile(String name) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN =?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
@@ -130,9 +132,10 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			userList.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, joinDate, cookingRank, points, totalDonation, isPriviledged));
+			
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
-		return userList;
+		return null;
 	}
 	
 	public ArrayList<DatabaseUserModel> getDatabaseUserRanks() throws SQLException {
@@ -322,22 +325,49 @@ public class Database {
 	}
 	
 	//EventModel
-	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException {
+	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
-		ResultSet rs = getResultSet("SELECT EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Guest FROM Event;");
+		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest FROM Event;");
 		while(rs.next()) {
+			int eventID		= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
 			String iGN 			= rs.getString("IGN");
 			int thumbnail		= rs.getInt("Thumbnail");
 			String description	= rs.getString("Description");
-			Timestamp date			= rs.getTimestamp("Date");
+			Timestamp date		= rs.getTimestamp("Date");
 			String postalCode	= rs.getString("PostalCode");
 			String venue		= rs.getString("Venue");
+			int max_No_People	= rs.getInt("Max_No_People");
 			String guest		= rs.getString("Guest");
 			
-			alem.add(new EventModel(0, eventName, iGN, thumbnail, description, date, postalCode, venue, true, 0, guest, null));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null));
 		}
 		return alem;
+	}
+	
+	//Get guest's profile picture
+	public FileTableModel getUserProfilePic(String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ProfilePic FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, iGN);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int profilePic = rs.getInt("ProfilePic");
+			if(profilePic == 0) {
+				break;
+			}
+			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT * FROM FileTable WHERE FileID = ?;");
+			ppstmt2.setInt(1, profilePic);
+			ResultSet rs2 = ppstmt2.executeQuery();
+			while(rs2.next()) {
+				int fileID		= rs2.getInt("FileID");
+				String fileName = rs2.getString("FileName");
+				byte[] data 	= rs2.getBytes("Data");
+				float fileSize	= rs2.getFloat("FileSize");
+				
+				return new FileTableModel(fileID, fileName, data, fileSize);
+			}
+		}
+		return null;
 	}
 	
 	//CreateEvent
@@ -405,6 +435,40 @@ public class Database {
 		return fileID;
 	}
 	
+	//Get FileTable by fileName
+	public FileTableModel getFileTableByFileName(String name) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM FileTable WHERE FileName = ?;");
+		ppstmt.setString(1, name);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int fileID	= rs.getInt("FileID");
+			String fileName	= rs.getString("FileName");
+			byte[] data	= rs.getBytes("Data");
+			float fileSize	= rs.getFloat("FileSize");
+			
+			return new FileTableModel(fileID, fileName, data, fileSize);
+		}
+		return null;
+	}
+	
+	//Get FileTable by fileID
+	public FileTableModel getFileTableByFileID(int iD) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM FileTable WHERE FileID = ?;");
+		ppstmt.setInt(1, iD);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int fileID	= rs.getInt("FileID");
+			String fileName	= rs.getString("FileName");
+			byte[] data	= rs.getBytes("Data");
+			float fileSize	= rs.getFloat("FileSize");
+			
+			return new FileTableModel(fileID, fileName, data, fileSize);
+		}
+		return null;
+	}
+	
 	//FoodPreferences
 	public void updateFoodPreferences(String sql, FoodPreferences fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
@@ -420,7 +484,7 @@ public class Database {
 		ppstmt.setString(1, fP.getThread());
 		ppstmt.setInt(2, fP.getUpvotes());
 		ppstmt.setString(3, fP.getiGN());
-		ppstmt.setDate(4, fP.getDate());
+		ppstmt.setTimestamp(4, fP.getDate());
 		ppstmt.setInt(5, fP.getPicture());
 		ppstmt.setString(6, fP.getDescription());
 		ppstmt.setString(7, fP.getFileAttachment());
@@ -457,9 +521,67 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
-	/*
-	public static void main(String[] arg0) throws ParseException, UnsupportedEncodingException {
+	//PeopleEventListModel
+	public void updatePeopleEventList(String sql, PeopleEventListModel pELM) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement(sql);
+		ppstmt.setInt(1, pELM.getEventID());
+		ppstmt.setString(2, pELM.getInvitationPending());
+		ppstmt.setString(3, pELM.getInvitationConfirm());
+
+		executeUpdate(ppstmt);
+	}
+	
+	//Get number of people pending
+	public ArrayList<String> getPeopleEventListPending(int eventID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT InvitationPending FROM PeopleEventList WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
 		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			PeopleEventListModel pELM = new PeopleEventListModel(0, null, null);
+			pELM.setInvitationPending(rs.getString("InvitationPending"));
+			
+			return pELM.getInvitationPendingArray();
+		}
+		return new ArrayList<String>();
+	}
+	
+	//Get number of people confirmed
+	public ArrayList<String> getPeopleEventListConfirm(int eventID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT InvitationConfirm FROM PeopleEventList WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
+		ResultSet rs = ppstmt.executeQuery();
+		
+		while(rs.next()) {
+			PeopleEventListModel pELM = new PeopleEventListModel(0, null, null);
+			pELM.setInvitationConfirm(rs.getString("InvitationConfirm"));
+			
+			return pELM.getInvitationConfirmArray();
+		}
+		return new ArrayList<String>();
+	}
+	
+	public void close() throws SQLException {
+		conn.close();
+	}
+	/*
+	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException{
+		Database db = new Database(2);
+		File file = new File("C:\\Users\\Wei Xuan\\Desktop\\mountain.jpeg");
+		InputStream in = new FileInputStream(file);
+		String fileName = file.getName();
+		byte[] fileData = IOUtils.toByteArray(in);
+		float fileSize = file.length();
+		
+		System.out.println(fileName);
+		System.out.println(fileData);
+		System.out.println(fileSize);
+		
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
+		ps.setString(1, fileName);
+		ps.setBytes(2, fileData);
+		ps.setFloat(3, fileSize);
+		db.executeUpdate(ps);
 	}
 	*/
 	/*

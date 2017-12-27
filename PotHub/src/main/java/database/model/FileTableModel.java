@@ -1,7 +1,5 @@
 package database.model;
 
-import java.sql.Date;
-
 public class FileTableModel {
 	int fileID;
 	String fileName;
