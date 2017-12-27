@@ -190,7 +190,7 @@ public class Donation extends HttpServlet {
 		String errorMessage = "";
 		
 		if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-			if (!behalfName.equals(null) || !behalfName.equals("")) {
+			if (!(behalfName.isEmpty()) || !(behalfName == "")) {
 				if (vc.validateCCNo(ccNumber)) {
 					if (vc.validateCode(ccNumber, securityCode)) {
 						se.sendEmail("", generatePIN());
@@ -207,7 +207,7 @@ public class Donation extends HttpServlet {
 			else {
 				if (vc.validateCCNo(ccNumber)) {
 					if (vc.validateCode(ccNumber, securityCode)) {
-						se.sendEmail("", generatePIN());
+						se.sendEmail("wongweixuan3@gmail.com", generatePIN());
 						//Insert new row in TempStore table
 					}
 					else {

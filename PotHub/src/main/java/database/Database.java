@@ -114,9 +114,9 @@ public class Database {
 		return aldum;
 	}
 	
-	//Get user's profile information
+	//For profile page - user's profile information
 	public DatabaseUserModel getUserProfile(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN =?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN =?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
@@ -127,15 +127,47 @@ public class Database {
 			String bio					= rs.getString("Bio");
 			String address				= rs.getString("Address");
 			String unitNo				= rs.getString("UnitNo");
+			int profilePic				= rs.getInt("ProfilePic");
 			Date joinDate				= rs.getDate("JoinDate");
 			int cookingRank				= rs.getInt("CookingRank");
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
 			
-			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, joinDate, cookingRank, points, totalDonation, isPriviledged);
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
 		return null;
+	}
+	
+	//For profile page - user's donation history
+	public DonationModel getUserDonation(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN =?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			Date donationDate			= rs.getDate("donation_Date");
+			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
+			String onBehalf				= rs.getString("onBehalf");
+			
+			return new DonationModel(donationDate, donationAmount, onBehalf);
+		}
+		return null;
+	}
+	
+	//For event page
+	public DatabaseUserModel getProfileForEvent(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ProfilePic, CookingRank, Points FROM DatabaseUser WHERE IGN =?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int profilePic				= rs.getInt("ProfilePic");
+			int cookingRank				= rs.getInt("CookingRank");
+			int points					= rs.getInt("Points");
+			
+			return new DatabaseUserModel(profilePic, cookingRank, points);
+		}
+		return null;
+		
 	}
 	
 	public ArrayList<DatabaseUserModel> getDatabaseUserRanks() throws SQLException {
@@ -290,22 +322,6 @@ public class Database {
 		ppstmt.setString(4, dM.getOnBehalf());
 
 		executeUpdate(ppstmt);
-	}
-	
-	//Get user's donation history
-	public ArrayList<DonationModel> getUserDonation(String name) throws SQLException {
-		ArrayList<DonationModel> donationList = new ArrayList<DonationModel>();
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN =?");
-		ppstmt.setString(1, name);
-		ResultSet rs = ppstmt.executeQuery();
-		while(rs.next()) {
-			Date donationDate			= rs.getDate("donation_Date");
-			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
-			String onBehalf				= rs.getString("onBehalf");
-			
-			donationList.add(new DonationModel(donationDate, donationAmount, onBehalf));
-		}
-		return donationList;
 	}
 	
 	public ArrayList<DonationModel> getDonationModel() throws SQLException{

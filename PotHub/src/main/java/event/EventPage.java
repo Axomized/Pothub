@@ -218,8 +218,8 @@ public class EventPage extends HttpServlet {
 				sb.append("							<p>By <span style='font-weight:bold;color:green;'>" + iGN + "</span></p>");
 				sb.append("						</div>");
 				sb.append("						<div class='bot-container-right'>");
-				sb.append("							<p><i class='fa fa-heart-o fa-fw' aria-hidden='true'></i>" + db.getUserProfile(iGN).getPoints() + "</p>");
-				sb.append("							<p><i class='fa fa-star-o fa-fw' aria-hidden='true'></i>" + db.getUserProfile(iGN).getCookingRank() + "</p>");
+				sb.append("							<p><i class='fa fa-heart-o fa-fw' aria-hidden='true'></i>" + db.getProfileForEvent(iGN).getPoints() + "</p>");
+				sb.append("							<p><i class='fa fa-star-o fa-fw' aria-hidden='true'></i>" + db.getProfileForEvent(iGN).getCookingRank() + "</p>");
 				sb.append("						</div>");
 				sb.append("					</div>");
 				sb.append("				</div>"	);

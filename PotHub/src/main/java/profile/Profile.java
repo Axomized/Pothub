@@ -19,17 +19,17 @@ import database.model.DatabaseUserModel;
 
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String IGN;
-	private static String email;
-	private static String contactNo;
-	private static char gender;
-	private static String bio;
-	private static String address;
-	private static String unitNo;
-	private static String joinDate;
-	private static int cookingRank;
-	private static int points;
-	private static BigDecimal totalDonation;
+	//private static String IGN;
+	//private static String email;
+	//private static String contactNo;
+	//private static char gender;
+	//private static String bio;
+	//private static String address;
+	//private static String unitNo;
+	//private static String joinDate;
+	//private static int cookingRank;
+	//private static int points;
+	//private static BigDecimal totalDonation;
 
 	public Profile() {
 		super();
@@ -44,20 +44,8 @@ public class Profile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
-			ArrayList<DatabaseUserModel> userList = db.getUserProfile("Placeholder from Session Attribute");
-			for (DatabaseUserModel user : userList) {
-				IGN = user.getiGN();
-				email = user.getEmail();
-				contactNo = user.getContact_No();
-				gender = user.getGender();
-				bio = user.getBio();
-				address = user.getAddress();
-				unitNo = user.getUnitNo();
-				joinDate = convertDate(user.getJoinDate());
-				cookingRank = user.getCookingRank();
-				points = user.getPoints();
-				totalDonation = user.getTotalDonation();
-			}
+			DatabaseUserModel currentUser = db.getUserProfile("GordonRamsey");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {

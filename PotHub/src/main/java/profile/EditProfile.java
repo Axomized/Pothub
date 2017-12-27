@@ -16,12 +16,12 @@ import database.model.DatabaseUserModel;
 
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private static String email;
-	private static String contactNo;
-	private static char gender;
-	private static String bio;
-	private static String address;
-	private static String unitNo;
+	//private static String email;
+	//private static String contactNo;
+	//private static char gender;
+	//private static String bio;
+	//private static String address;
+	//private static String unitNo;
        
     public EditProfile() {
         super();
@@ -30,15 +30,8 @@ public class EditProfile extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
-			ArrayList<DatabaseUserModel> userList = db.getUserProfile("Placeholder from Session Attribute");
-			for (DatabaseUserModel user : userList) {
-				email = user.getEmail();
-				contactNo = user.getContact_No();
-				gender = user.getGender();
-				bio = user.getBio();
-				address = user.getAddress();
-				unitNo = user.getUnitNo();
-			}
+			DatabaseUserModel currentUser = db.getUserProfile("Placeholder from Session Attribute");
+			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
