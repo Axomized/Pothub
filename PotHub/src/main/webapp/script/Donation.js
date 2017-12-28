@@ -62,8 +62,3 @@ function checkCardType() {
 		document.getElementById("jcbIcon").style.display = "none";
 	}
 }
-
-function overrideAutoFill() {
-	var cardNoInput = document.getElementById("cardNo");
-	cardNoInput.value = cardNoInput.value += " ";
-}

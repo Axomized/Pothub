@@ -2,13 +2,13 @@ package database.model;
 
 import java.math.BigDecimal;
 
-public class TemporaryStore {
+public class TemporaryStoreModel {
 	String iGN;
 	BigDecimal temporaryAmount;
 	String temporaryPIN;
 	String temporaryStore;
 	
-	public TemporaryStore(DatabaseUserModel dUM, BigDecimal temporaryAmount, String temporaryPIN, String temporaryStore) {
+	public TemporaryStoreModel(DatabaseUserModel dUM, BigDecimal temporaryAmount, String temporaryPIN, String temporaryStore) {
 		this.iGN = dUM.getiGN();
 		this.temporaryAmount = temporaryAmount;
 		this.temporaryPIN = temporaryPIN;

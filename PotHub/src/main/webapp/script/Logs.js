@@ -9,7 +9,7 @@ function hideProfileDropdown() {
 function filterText() {  
 	var rex = new RegExp($("#selectFilter").val());
 	if(rex =="/All/") {
-		clearFilter()
+		$("tbody > tr").show();
 	}
 	else {
 		$("tbody > tr").hide();
@@ -17,8 +17,4 @@ function filterText() {
 		return rex.test($(this).text());
 		}).show();
 	}
-}
-
-function clearFilter() {
-	$("tbody > tr").show();
 }

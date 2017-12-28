@@ -33,6 +33,7 @@ import database.model.FileTableModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.LogsModel;
 import database.model.PeopleEventListModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
@@ -116,10 +117,10 @@ public class Database {
 	
 	//For profile page - user's profile information
 	public DatabaseUserModel getUserProfile(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN =?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			String email 				= rs.getString("Email");
 			String iGN					= rs.getString("IGN");
 			String contact_No			= rs.getString("Contact_No");
@@ -133,7 +134,6 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			
 			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
 		return null;
@@ -141,17 +141,56 @@ public class Database {
 	
 	//For profile page - user's donation history
 	public DonationModel getUserDonation(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN =?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
-		while(rs.next()) {
+		while (rs.next()) {
 			Date donationDate			= rs.getDate("donation_Date");
 			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
 			String onBehalf				= rs.getString("onBehalf");
-			
 			return new DonationModel(donationDate, donationAmount, onBehalf);
 		}
 		return null;
+	}
+	
+	//For donation page
+	public void insertDonation(DonationModel dm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, DonationDate, DonationAmount, OnBehalf) VALUES(?,?,?,?);");
+		ppstmt.setString(1, dm.getiGN());
+		ppstmt.setDate(2, dm.getDonation_Date());
+		ppstmt.setBigDecimal(3, dm.getDonation_Amount());
+		ppstmt.setString(4, dm.getOnBehalf());
+		ppstmt.executeUpdate();
+	}
+	
+	//For logs page
+	public ArrayList<LogsModel> getLogs() throws SQLException {
+		ArrayList<LogsModel> logsList = new ArrayList<LogsModel>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM Logs;");
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			int logID 				= rs.getInt("LogID");
+			String iGN 				= rs.getString("IGN");
+			Date logDate		 	= rs.getDate("LogDate");
+			String iPAddress 		= rs.getString("IPAddress");
+			String logType 			= rs.getString("LogType");
+			String logActivity 		= rs.getString("LogActivity");
+			boolean isSuspicious 	= rs.getBoolean("IsSuspicious");
+			logsList.add(new LogsModel(logID, iGN, logDate, iPAddress, logType, logActivity, isSuspicious));
+		}
+		return logsList;
+	}
+	
+	//For logs page
+	public void insertLogs(LogsModel lm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Logs(IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspcious) VALUES(?,?,?,?,?,?);");
+		ppstmt.setString(1, lm.getiGN());
+		ppstmt.setDate(2, lm.getLogDate());
+		ppstmt.setString(3, lm.getiPAddress());
+		ppstmt.setString(4, lm.getLogType());
+		ppstmt.setString(5, lm.getLogActivity());
+		ppstmt.setBoolean(6, lm.isSuspicious());
+		ppstmt.executeUpdate();
 	}
 	
 	//For event page

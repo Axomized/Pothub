@@ -63,7 +63,15 @@
 									<span class="custom-control-indicator"></span>
   									<span class="custom-control-description">Yes</span>
 								</label>
-								<input type="text" id="behalfName" name="behalfName">
+								<input type="text" id="behalfName" name="behalfName" list="behalfNameList">
+								<datalist id="behalfNameList">
+									<option value="Apples"></option>
+									<option value="Oranges"></option>
+									<option value="Pear"></option>
+									<option value="Banana"></option>
+									<option value="Mango"></option>
+									<option value="Grape"></option>
+								</datalist>
 							</div>
 						</div>
 						<div id="donateAmtDiv">
@@ -132,7 +140,7 @@
 							<div id="errorMsg">Invalid credit card number</div>
 							<div class="thatLine"></div>
 							<div id="buttonDiv">
-								<input type="submit" id="donateBtn" name="donateBtn" value="Donate" onclick="overrideAutoFill()">
+								<input type="submit" id="donateBtn" name="donateBtn" value="Donate">
 							</div>
 						</div>
 					</form>
