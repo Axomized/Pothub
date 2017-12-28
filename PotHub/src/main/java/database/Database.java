@@ -400,8 +400,29 @@ public class Database {
 		return alem;
 	}
 	
+	//For EventofEventPage
+	public EventModel getEventofEventPage(String nameOfEvent) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ps = conn.prepareStatement("SELECT EventName, Thumbnail, Description, Date, PostalCode, Venue, Guest, FileList FROM Event WHERE EventName = ?;");
+		ps.setString(1, nameOfEvent);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String eventName	= rs.getString("EventName");
+			int thumbnail		= rs.getInt("Thumbnail");
+			String description	= rs.getString("Description");
+			Timestamp date		= rs.getTimestamp("Date");
+			String postalCode	= rs.getString("PostalCode");
+			String venue		= rs.getString("Venue");
+			String guest		= rs.getString("Guest");
+			String fileList		= rs.getString("FileList");
+			
+			return new EventModel(0, eventName, null, thumbnail, description, date, postalCode, venue, true, 0, guest, fileList);
+		}
+		return null;
+	}
+		
 	//Get guest's profile picture
-	public FileTableModel getUserProfilePic(String iGN) throws SQLException {
+	public String getUserProfilePic(String iGN) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT ProfilePic FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, iGN);
 		ResultSet rs = ppstmt.executeQuery();
@@ -410,16 +431,13 @@ public class Database {
 			if(profilePic == 0) {
 				break;
 			}
-			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT * FROM FileTable WHERE FileID = ?;");
+			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT FileName FROM FileTable WHERE FileID = ?;");
 			ppstmt2.setInt(1, profilePic);
 			ResultSet rs2 = ppstmt2.executeQuery();
 			while(rs2.next()) {
-				int fileID		= rs2.getInt("FileID");
 				String fileName = rs2.getString("FileName");
-				byte[] data 	= rs2.getBytes("Data");
-				float fileSize	= rs2.getFloat("FileSize");
 				
-				return new FileTableModel(fileID, fileName, data, fileSize);
+				return fileName;
 			}
 		}
 		return null;
@@ -524,6 +542,20 @@ public class Database {
 		return null;
 	}
 	
+	//Get FileName by FileID
+	public String getFileNameByFileID(int iD) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT FileName FROM FileTable WHERE FileID = ?;");
+		ppstmt.setInt(1, iD);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String fileName	= rs.getString("FileName");
+			
+			return fileName;
+		}
+		return null;
+	}
+		
 	//FoodPreferences
 	public void updateFoodPreferences(String sql, FoodPreferences fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
