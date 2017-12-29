@@ -12,19 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
-import database.model.DonationModel;
+import database.model.AppealModel;
+import database.model.BansModel;
 
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminDonations")
-public class DonationPanel extends HttpServlet {
+@WebServlet("/AdminBans")
+public class AdminBans extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public DonationPanel() {
+	public AdminBans() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -42,7 +43,7 @@ public class DonationPanel extends HttpServlet {
 + "<!-- Favicon -->"
 + "<link rel='icon' href='images/crab.gif' type='image/gif'>"
 + "<link rel='icon' href='images/crab.png' type='image/x-icon'>"
-+"<title>PotHub Donations</title>"
++"<title>PotHub Bans</title>"
 +"<meta http-equiv='content-language' content='en-us' />"
 +"<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 +"<link rel='stylesheet' type='text/css' media='screen' href='css/banscreen.css' />"
@@ -60,7 +61,7 @@ public class DonationPanel extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -72,80 +73,93 @@ public class DonationPanel extends HttpServlet {
     +"<thead>"
         +"<tr>"
             +"<th>Username</th>"
-            +"<th>Date</th>"
-            +"<th>Amount</th>"
-            +"<th>Receipient</th>"
+            +"<th>Ban Reason</th>"
+            +"<th>Ban Date</th>"
+            +"<th>Ban End</th>"
+            +"<th>Banned by</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
+        
 		Database db;
-		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
+		ArrayList<BansModel> bans = new ArrayList<BansModel>();
 		try {
+			int counter = 0;
 			db = new Database(0);
-			donations = db.getDonationModel();
-			
-			for(DonationModel dono:donations){
+			bans = db.getBansModel();
+			ArrayList<AppealModel> appeals = db.getAppeal();
+			for(BansModel ban:bans){
 				pw.append("<tr>");
-				pw.append("<td>"+dono.getiGN()+"</td>");
-				pw.append("<td>"+dono.getDonation_Date()+"</td>");
-				pw.append("<td>"+dono.getDonation_Amount()+"</td>");
-				if(dono.getOnBehalf()!=null){
-					pw.append("<td>"+dono.getOnBehalf()+"<a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+				pw.append("<td>"+ban.getiGN()+"</td>");
+				pw.append("<td>"+ban.getReason()+"</td>");
+				pw.append("<td>"+ban.getStartDate()+"</td>");
+				pw.append("<td>"+ban.getEndDate()+"</td>");
+				pw.append("<td>"+ban.getAdmin()+"<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
+				
+				if(appeals.get(counter).getMessage()!=null){
+					pw.append("<button>Pardon</button>");
+					pw.append("<a href='AppealView?user="+ban.getiGN()+"&appealID=TODO'><button>Read</button></a>");
 				}
-				else{
-					pw.append("<td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
-				}
+				
 				pw.append("</td>");
 				pw.append("</tr>");
+				counter++;
 			}
-			if(donations.size()<10){
-				for(int i = 0; i < (10-donations.size());i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			if(bans.size()<10){
+				for(int i = 0; i < (10-bans.size());i++){
+				pw.append("<tr>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td></tr>");
 				}
 			}
 			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
-		if(donations.size()==0){
+		if(bans.size()==0){
 			for(int i = 0; i < 10;i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 		}
+		
 pw.append("</tbody>"
 +"</table>"
 +"</div>"
-+"<div id='fourbox'>"
++"<form>"
+   +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Search Username: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Username: <div id='textboxes'><input type='text' name='username'>"+"</input></div></p>"
 	+"</div>"
 	+"<div id='search'>"
-	+"<p>Search Recipient: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Ban By: <div id='textboxes'><input type='text' name='admin'>"+"</input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
-	+"<p>Donation Date Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
+	+"<p>Ban Start Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
 	+"<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>"
 	+"</div>"
-+"</div>"
-+"<div id='fourbox'>"
+   +"</div>"
+   +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Amount between $ <div id='textboxes'><input type='number' name='search'>"+"</input></div></p>"
-	+"<p>And $ <div id='textboxes'><input type='number' name='search'>"+"</input></div></p>"
+	+"<p>Search Reasons: <div id='textboxes'><input type='text' name='reason'>"+"</input></div></p>"
 	+"</div>"
-+"</div>"
-+"<div id='fourbox'>"
-+"<div id='search'>"
-+"<button><</button><button>></button>"
-+"</div>"
-+"<div id='search'>"
-+"<button id='searchButton'>Search</button>"
-+"</div>"
-+"</div>"
-+"</div>"
-+"</div>"
-  +"</div>"
+	+ "<div id='search'>"
+	+"<p>Ban End Between<div id='textboxes'><input type='date' name='banEnd1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='date' name='banEnd2'></input></div></p>"
+	+"</div>"
+   +"</div>"
+   +"<div id='fourbox'>"
+   +"<div id='search'>"
+   +"<button id='searchButton' type='submit'>Search</button>"
+   +"</div>"
+   +"</div>"
+   +"</div>"
+   +"</form>"
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"

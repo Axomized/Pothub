@@ -17,7 +17,7 @@ import database.model.DatabaseUserModel;
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminForumControl")
+@WebServlet("/AdminRanks")
 public class AdminRanks extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -60,7 +60,7 @@ public class AdminRanks extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -124,9 +124,10 @@ pw.append("</tbody>"
 +"</table>"
 +"</div>"
 +"</div>"
++"<form method='get'>"
 +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Search Username: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Username: <div id='textboxes'><input type='text' name='username'>"+"</input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
 	+"<p>Join Date Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
@@ -135,20 +136,18 @@ pw.append("</tbody>"
 	+"<div id='search'>"
 	+"<div id='radios'>"
 	+"<p>Role: </p>"
-	+"<input type='radio' name='search'></input>  Normal"
-	+"<input type='radio' name='search'></input>  Moderator"
-	+"<input type='radio' name='search'></input>  Admin"
+	+"<input type='radio' name='role' value='0'></input>  Normal"
+	+"<input type='radio' name='role' value='1'></input>  Moderator"
+	+"<input type='radio' name='role' value='2'></input>  Admin"
 	+"</div>"
 	+"</div>"
 +"</div>"
 +"<div id='fourbox'>"
 +"<div id='search'>"
-+"<button><</button><button>></button>"
-+"</div>"
-+"<div id='search'>"
-+"<button id='searchButton'>Search</button>"
++"<button id='searchButton' type='submit'>Search</button>"
 +"</div>"
 +"</div>"
++"</form>"
   +"</div>"
 
 +"<div id='footer'>"
