@@ -1,10 +1,6 @@
 package database;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -15,8 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
-import org.apache.commons.compress.utils.IOUtils;
 
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
@@ -141,14 +135,14 @@ public class Database {
 	
 	//For profile page - user's donation history
 	public DonationModel getUserDonation(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
-			Date donationDate			= rs.getDate("donation_Date");
-			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
-			String onBehalf				= rs.getString("onBehalf");
-			return new DonationModel(donationDate, donationAmount, onBehalf);
+			Timestamp donation_Date		= rs.getTimestamp("Donation_Date");
+			BigDecimal donation_Amount	= rs.getBigDecimal("Donation_Amount");
+			String onBehalf				= rs.getString("OnBehalf");
+			return new DonationModel(donation_Date, donation_Amount, onBehalf);
 		}
 		return null;
 	}
@@ -157,7 +151,7 @@ public class Database {
 	public void insertDonation(DonationModel dm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, DonationDate, DonationAmount, OnBehalf) VALUES(?,?,?,?);");
 		ppstmt.setString(1, dm.getiGN());
-		ppstmt.setDate(2, dm.getDonation_Date());
+		ppstmt.setTimestamp(2, dm.getDonation_Date());
 		ppstmt.setBigDecimal(3, dm.getDonation_Amount());
 		ppstmt.setString(4, dm.getOnBehalf());
 		ppstmt.executeUpdate();
@@ -166,17 +160,16 @@ public class Database {
 	//For logs page
 	public ArrayList<LogsModel> getLogs() throws SQLException {
 		ArrayList<LogsModel> logsList = new ArrayList<LogsModel>();
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM Logs;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspicious FROM Logs;");
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
-			int logID 				= rs.getInt("LogID");
 			String iGN 				= rs.getString("IGN");
-			Date logDate		 	= rs.getDate("LogDate");
+			Timestamp logDate		= rs.getTimestamp("LogDate");
 			String iPAddress 		= rs.getString("IPAddress");
 			String logType 			= rs.getString("LogType");
 			String logActivity 		= rs.getString("LogActivity");
 			boolean isSuspicious 	= rs.getBoolean("IsSuspicious");
-			logsList.add(new LogsModel(logID, iGN, logDate, iPAddress, logType, logActivity, isSuspicious));
+			logsList.add(new LogsModel(iGN, logDate, iPAddress, logType, logActivity, isSuspicious));
 		}
 		return logsList;
 	}
@@ -185,7 +178,7 @@ public class Database {
 	public void insertLogs(LogsModel lm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Logs(IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspcious) VALUES(?,?,?,?,?,?);");
 		ppstmt.setString(1, lm.getiGN());
-		ppstmt.setDate(2, lm.getLogDate());
+		ppstmt.setTimestamp(2, lm.getLogDate());
 		ppstmt.setString(3, lm.getiPAddress());
 		ppstmt.setString(4, lm.getLogType());
 		ppstmt.setString(5, lm.getLogActivity());
@@ -355,7 +348,7 @@ public class Database {
 	public void updateDonation(String sql, DonationModel dM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dM.getiGN());
-		ppstmt.setDate(2, dM.getDonation_Date());
+		ppstmt.setTimestamp(2, dM.getDonation_Date());
 		ppstmt.setBigDecimal(3, dM.getDonation_Amount());
 		ppstmt.setString(4, dM.getOnBehalf());
 
@@ -369,7 +362,7 @@ public class Database {
 		while(rs.next()) {
 			int donationID				= rs.getInt("DonationID");
 			String iGN					= rs.getString("IGN");
-			Date donationDate			= rs.getDate("donation_Date");
+			Timestamp donationDate		= rs.getTimestamp("donation_Date");
 			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
 			String onBehalf				= rs.getString("onBehalf");
 			

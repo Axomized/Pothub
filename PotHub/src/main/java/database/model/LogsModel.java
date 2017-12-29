@@ -1,19 +1,31 @@
 package database.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 
 public class LogsModel {
 	int logID;
 	String iGN;
-	Date logDate;
+	Timestamp logDate;
 	String iPAddress;
 	String logType;
 	String logActivity;
 	boolean isSuspicious;
 	
-	public LogsModel(int logID, String iGN, Date logDate, String iPAddress, String logType, String logActivity,
-			boolean isSuspicious) {
+	public LogsModel(int logID, String iGN, Timestamp logDate, String iPAddress, String logType, String logActivity, boolean isSuspicious) {
 		this.logID = logID;
+		this.iGN = iGN;
+		this.logDate = logDate;
+		this.iPAddress = iPAddress;
+		this.logType = logType;
+		this.logActivity = logActivity;
+		this.isSuspicious = isSuspicious;
+	}
+	
+	public LogsModel(String iGN, Timestamp logDate, String iPAddress, String logType, String logActivity, boolean isSuspicious) {
 		this.iGN = iGN;
 		this.logDate = logDate;
 		this.iPAddress = iPAddress;
@@ -30,7 +42,7 @@ public class LogsModel {
 		return iGN;
 	}
 
-	public Date getLogDate() {
+	public Timestamp getLogDate() {
 		return logDate;
 	}
 
@@ -58,7 +70,7 @@ public class LogsModel {
 		this.iGN = iGN;
 	}
 
-	public void setLogDate(Date logDate) {
+	public void setLogDate(Timestamp logDate) {
 		this.logDate = logDate;
 	}
 
@@ -76,5 +88,12 @@ public class LogsModel {
 
 	public void setSuspicious(boolean isSuspicious) {
 		this.isSuspicious = isSuspicious;
+	}
+	
+	public String converTimestamp(Timestamp timestamp) {
+		Instant instant = timestamp.toInstant();
+		DateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
+		String dateString = format.format(Date.from(instant));
+		return dateString;
 	}
 }

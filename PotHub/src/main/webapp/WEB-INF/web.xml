@@ -65,6 +65,12 @@
 		<servlet-class>donation.ConfirmDonation</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>Logs</servlet-name>
+		<display-name>Logs</display-name>
+		<description></description>
+		<servlet-class>logs.Logs</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>testinfo</servlet-name>
 		<display-name>testinfo</display-name>
 		<description></description>
@@ -145,6 +151,10 @@
 	<servlet-mapping>
 		<servlet-name>ConfirmDonation</servlet-name>
 		<url-pattern>/ConfirmDonation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Logs</servlet-name>
+		<url-pattern>/Logs</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>testinfo</servlet-name>
