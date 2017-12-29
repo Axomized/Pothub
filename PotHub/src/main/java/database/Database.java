@@ -209,9 +209,8 @@ public class Database {
 		
 	}
 	
-	public ArrayList<DatabaseUserModel> getDatabaseUserRanks() throws SQLException {
+	public ArrayList<DatabaseUserModel> getDatabaseUserRanks(RankSearchObject rso) throws SQLException {
 		ArrayList<DatabaseUserModel> aldum = new ArrayList<DatabaseUserModel>();
-		RankSearchObject rso = new RankSearchObject();
 		ResultSet rs = getResultSet(rso.getExecutableSQL());
 		while(rs.next()) {
 			String email 				= null;

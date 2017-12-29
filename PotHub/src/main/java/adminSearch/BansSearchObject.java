@@ -4,14 +4,10 @@ import java.sql.Date;
 
 public class BansSearchObject implements SearchObject{
 	//SQL Between
-	private int searchStart = 0;
-	
 	private Date startDateOpen;
 	private Date endDateOpen;
 	
 	//SQL And
-	private int searchEnd = 19;
-	
 	private Date startDateClose;
 	private Date endDateClose;
 	
@@ -37,7 +33,7 @@ public class BansSearchObject implements SearchObject{
 	@Override
 	public String getExecutableSQL() {
 		String queryToBuild=
-				"SELECT IGN, startDate, endDate, reason, admin, pardoned "
+				"SELECT TOP "+MAXRETURNS+" IGN, startDate, endDate, reason, admin, pardoned "
 				+ "FROM Bans ";
 		
 		queryToBuild +=
@@ -78,24 +74,6 @@ public class BansSearchObject implements SearchObject{
 		return queryToBuild;
 	}
 
-	@Override
-	public void setLimits(int start, int end) {
-		if(start<0||start>Integer.MAX_VALUE||end<0||end>Integer.MAX_VALUE){
-			this.searchStart=start;
-			this.searchEnd=end;
-		}
-		this.searchStart=start;
-		this.searchEnd=end;
-	}
-
-	public int getSearchStart() {
-		return searchStart;
-	}
-
-	public void setSearchStart(int searchStart) {
-		this.searchStart = searchStart;
-	}
-
 	public Date getStartDateOpen() {
 		return startDateOpen;
 	}
@@ -110,14 +88,6 @@ public class BansSearchObject implements SearchObject{
 
 	public void setEndDateOpen(Date endDateOpen) {
 		this.endDateOpen = endDateOpen;
-	}
-
-	public int getSearchEnd() {
-		return searchEnd;
-	}
-
-	public void setSearchEnd(int searchEnd) {
-		this.searchEnd = searchEnd;
 	}
 
 	public Date getStartDateClose() {

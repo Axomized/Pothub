@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.RankSearchObject;
 import database.Database;
 import database.model.DatabaseUserModel;
 
@@ -19,6 +21,11 @@ import database.model.DatabaseUserModel;
  */
 @WebServlet("/AdminRanks")
 public class AdminRanks extends HttpServlet {
+	String username;
+	Date joinDate1;
+	Date joinDate2;
+	int role;
+	
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -35,6 +42,21 @@ public class AdminRanks extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		RankSearchObject rso = new RankSearchObject();
+		
+		if(request.getParameter("username")!=null){
+			rso.setiGN(request.getParameter("username"));
+		}
+		if(!request.getParameter("joinDate1").equals("")){
+			rso.setJoinDateOpen(Date.valueOf(request.getParameter("joinDate1")));
+		}
+		if(!request.getParameter("joinDate2").equals("")){
+		rso.setJoinDateClose(Date.valueOf(request.getParameter("joinDate2")));
+		}
+		if(request.getParameter("role")!=null){
+			rso.setPermissionLevel(Integer.parseInt(request.getParameter("role")));
+		}
+		
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -82,7 +104,7 @@ public class AdminRanks extends HttpServlet {
 		ArrayList<DatabaseUserModel> dbus = new ArrayList<DatabaseUserModel>();
 		try {
 			db = new Database(0);
-			dbus = db.getDatabaseUserRanks();
+			dbus = db.getDatabaseUserRanks(rso);
 			
 			for(DatabaseUserModel dbu:dbus){
 				pw.append("<tr>");
@@ -130,8 +152,8 @@ pw.append("</tbody>"
 	+"<p>Search Username: <div id='textboxes'><input type='text' name='username'>"+"</input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
-	+"<p>Join Date Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
-	+"<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>"
+	+"<p>Join Date Between<div id='textboxes'><input type='date' name='joinDate1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='date' name='joinDate2'></input></div></p>"
 	+"</div>"
 	+"<div id='search'>"
 	+"<div id='radios'>"

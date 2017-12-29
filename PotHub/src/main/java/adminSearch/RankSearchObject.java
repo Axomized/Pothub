@@ -8,7 +8,7 @@ public class RankSearchObject implements SearchObject{
 	private int searchEnd;
 	
 	//SQL Between
-	private int permissionLevel;
+	private int permissionLevel=-1;
 	private String iGN;
 	private Date joinDateOpen;
 	private Date joinDateClose;
@@ -17,10 +17,7 @@ public class RankSearchObject implements SearchObject{
 	
 	public RankSearchObject(){
 		long maxTime = (long)21459168 * (long)1000000;
-		
-		permissionLevel = 0;
-		searchStart = 0;
-		searchEnd = 19;
+
 		joinDateOpen = new Date(0);
 		joinDateClose = new Date(maxTime);
 	}
@@ -28,7 +25,7 @@ public class RankSearchObject implements SearchObject{
 	@Override
 	public String getExecutableSQL() {
 		String queryToBuild=
-				"SELECT TOP "+searchEnd+" IGN, joinDate, userPermission  "
+				"SELECT TOP "+MAXRETURNS+" IGN, joinDate, userPermission  "
 				+"FROM DatabaseUser ";
 		
 		queryToBuild +=
@@ -42,23 +39,14 @@ public class RankSearchObject implements SearchObject{
 		if(iGN!=null && iGN.length()>0){
 			queryToBuild += " AND IGN like '%" + iGN + "%'";
 		}
-		
+
+		if(permissionLevel!=-1){
 		queryToBuild += " AND userPermission=" + permissionLevel;
+		}
 		
 		queryToBuild+=";";
-		
 		System.out.println(queryToBuild);
 		return queryToBuild;
-	}
-
-	@Override
-	public void setLimits(int start, int end) {
-		if(start<0||start>Integer.MAX_VALUE||end<0||end>Integer.MAX_VALUE){
-			this.searchStart=start;
-			this.searchEnd=end;
-		}
-		this.searchStart=start;
-		this.searchEnd=end;
 	}
 
 	public int getSearchStart() {
@@ -85,19 +73,27 @@ public class RankSearchObject implements SearchObject{
 		this.iGN = SearchSanitizer.sanitise(iGN);
 	}
 
-	public Date getDonationDateOpen() {
+	public Date getJoinDateOpen() {
 		return joinDateOpen;
 	}
 
-	public void setDonationDateOpen(Date donationDateOpen) {
+	public void setJoinDateOpen(Date donationDateOpen) {
 		this.joinDateOpen = donationDateOpen;
 	}
-
-	public Date getDonationDateClose() {
+	
+	public Date getJoinDateClose() {
 		return joinDateClose;
 	}
 
-	public void setDonationDateClose(Date donationDateClose) {
-		this.joinDateClose = donationDateClose;
+	public void setJoinDateClose(Date donationDateOpen) {
+		this.joinDateClose = donationDateOpen;
+	}
+	
+	public int getPermissionLevel() {
+		return permissionLevel;
+	}
+
+	public void setPermissionLevel(int permissionLevel) {
+		this.permissionLevel = permissionLevel;
 	}
 }

@@ -4,10 +4,6 @@ import java.math.BigDecimal;
 import java.sql.Date;
 
 public class DonationSearchObject implements SearchObject{
-	
-	private int searchStart;
-	private int searchEnd;
-	
 	//SQL Between
 	private Date donationDateOpen;
 	private BigDecimal donationAmountOpen;
@@ -32,7 +28,7 @@ public class DonationSearchObject implements SearchObject{
 	@Override
 	public String getExecutableSQL() {
 		String queryToBuild=
-				"SELECT donationID, IGN, donation_date, donation_amount, onBehalf "
+				"SELECT TOP "+MAXRETURNS+" donationID, IGN, donation_date, donation_amount, onBehalf "
 				+"FROM Donation ";
 		
 		queryToBuild +=
@@ -59,32 +55,6 @@ public class DonationSearchObject implements SearchObject{
 		
 		System.out.println(queryToBuild);
 		return queryToBuild;
-	}
-
-	@Override
-	public void setLimits(int start, int end) {
-		if(start<0||start>Integer.MAX_VALUE||end<0||end>Integer.MAX_VALUE){
-			this.searchStart=start;
-			this.searchEnd=end;
-		}
-		this.searchStart=start;
-		this.searchEnd=end;
-	}
-
-	public int getSearchStart() {
-		return searchStart;
-	}
-
-	public void setSearchStart(int searchStart) {
-		this.searchStart = searchStart;
-	}
-
-	public int getSearchEnd() {
-		return searchEnd;
-	}
-
-	public void setSearchEnd(int searchEnd) {
-		this.searchEnd = searchEnd;
 	}
 
 	public String getiGN() {
