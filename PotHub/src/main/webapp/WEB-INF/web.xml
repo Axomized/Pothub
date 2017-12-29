@@ -120,7 +120,7 @@
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>EventofEventPage</servlet-name>
-		<url-pattern>/EventofEventPage</url-pattern>
+		<url-pattern>/EventofEventPage/*</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ProcessImage</servlet-name>

@@ -6,13 +6,13 @@ public class TemporaryStoreModel {
 	String iGN;
 	BigDecimal temporaryAmount;
 	String temporaryPIN;
-	String temporaryStore;
+	String temporaryOnBehalf;
 	
-	public TemporaryStoreModel(DatabaseUserModel dUM, BigDecimal temporaryAmount, String temporaryPIN, String temporaryStore) {
-		this.iGN = dUM.getiGN();
+	public TemporaryStoreModel(String iGN, BigDecimal temporaryAmount, String temporaryPIN, String TemporaryOnBehalf) {
+		this.iGN = iGN;
 		this.temporaryAmount = temporaryAmount;
 		this.temporaryPIN = temporaryPIN;
-		this.temporaryStore = temporaryStore;
+		this.temporaryOnBehalf = TemporaryOnBehalf;
 	}
 
 	public String getiGN() {
@@ -27,8 +27,8 @@ public class TemporaryStoreModel {
 		return temporaryPIN;
 	}
 
-	public String getTemporaryStore() {
-		return temporaryStore;
+	public String getTemporaryOnBehalf() {
+		return temporaryOnBehalf;
 	}
 
 	public void setiGN(String iGN) {
@@ -43,7 +43,7 @@ public class TemporaryStoreModel {
 		this.temporaryPIN = temporaryPIN;
 	}
 
-	public void setTemporaryStore(String temporaryStore) {
-		this.temporaryStore = temporaryStore;
+	public void setTemporaryOnBehalf(String temporaryOnBehalf) {
+		this.temporaryOnBehalf = temporaryOnBehalf;
 	}
 }

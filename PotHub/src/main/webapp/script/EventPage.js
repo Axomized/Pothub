@@ -1,20 +1,18 @@
-function showOverlay(imageGradient){
-	var imageGradientParent = imageGradient.parentElement;
-	imageGradient.style.display = "none";
-	var overlay = imageGradientParent.getElementsByTagName('div')[3];
-	overlay.style.display = "block";
+function redirectPage(eventName){
+	window.location.href = "EventofEventPage/" + eventName;
 }
 
-function hideOverlay(overlay){
-	var overlayParent = overlay.parentElement;
-	overlay.style.display = "none";
-	var imageGradient = overlayParent.getElementsByTagName('div')[1];
-	imageGradient.style.display = "block";
-}
-
-function redirectPage(){
-	window.location.href = "EventofEventPage";
-}
+$(function(){
+	$(".top-container-image-gradient").mouseenter(function(){
+		$(this).hide();
+		$(this).next().show();
+	});
+	
+	$(".overlay").mouseleave(function(){
+		$(this).hide();
+		$(this).prev().show();
+	});
+});
 
 /* Profile */
 

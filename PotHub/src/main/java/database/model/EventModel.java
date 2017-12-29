@@ -100,15 +100,19 @@ public class EventModel {
 		return als;
 	}
 
-	public ArrayList<String> getFileListArray() {
-		ArrayList<String> als = new ArrayList<String>();
-		Scanner sc = new Scanner(fileList);
-		sc.useDelimiter("_");
-		while(sc.hasNext()) {
-			als.add(sc.next());
+	public ArrayList<Integer> getFileListArray() {
+		try {
+			ArrayList<Integer> als = new ArrayList<Integer>();
+			Scanner sc = new Scanner(fileList);
+			sc.useDelimiter("_");
+			while(sc.hasNext()) {
+				als.add(Integer.parseInt(sc.next()));
+			}
+			sc.close();
+			return als;
+		}catch(NullPointerException e) {
+			return new ArrayList<Integer>();
 		}
-		sc.close();
-		return als;
 	}
 
 	public void setEventID(int eventID) {

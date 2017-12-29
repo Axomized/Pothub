@@ -2,9 +2,9 @@ package event;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.EventModel;
-import database.model.FileTableModel;
 
 public class EventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -82,8 +81,8 @@ public class EventPage extends HttpServlet {
 			sb.append("					<li class='dropdown'>");
 			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
-			sb.append("			        		<li><a href='/EventPage'>Events</a></li>");
-			sb.append("			        		<li><a href='/MyEventPage'>My Events</a></li>");
+			sb.append("				        	<li><a href='/PotHub/EventPage'>Events</a></li>");
+			sb.append("				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
 			sb.append("			        	</ul>");
 			sb.append("			    	</li>");
 			sb.append("					<li class='dropdown'>");
@@ -114,7 +113,7 @@ public class EventPage extends HttpServlet {
 			sb.append("			</p>");
 			sb.append("		</div>");
 			sb.append("		<!-- Some required javascript -->");
-			sb.append("		<script src='https://code.jquery.com/jquery-3.2.1.slim.min.js' integrity='sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN' crossorigin='anonymous'></script>");
+			sb.append("		<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>");
 			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>");
 			sb.append("	</body>");
@@ -133,14 +132,14 @@ public class EventPage extends HttpServlet {
     
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html");
-		ServletOutputStream sout = response.getOutputStream();
-		sout.write(header);
+		ServletOutputStream out = response.getOutputStream();
+		out.write(header);
 		try {
 			for(EventModel eM:eMAL) {
 				int eventID = eM.getEventID();
 				String iGN = eM.getiGN();
+				String[] parts = decodeString(eM.getVenue()).split("\\`");
 				
-				byte[] body;
 				StringBuffer sb = new StringBuffer();
 				sb.append("				<div class='col-sm-4 content'>");
 				sb.append("					<div class='top-container'>");
@@ -148,12 +147,12 @@ public class EventPage extends HttpServlet {
 				sb.append("							<div class='top-container-image'> ");
 				sb.append("								<img src='/PotHub/Image/" + db.getFileTableByFileID(eM.getThumbnail()).getFileName() + "' alt='crab picture'>");
 				sb.append("							</div>");
-				sb.append("							<div class='top-container-image-gradient' onmouseenter='showOverlay(this)'>");
+				sb.append("							<div class='top-container-image-gradient'>");
 				sb.append("								<div class='event-title'>");
 				sb.append("									<p>" + decodeString(eM.getEventName()) + "</p>");
 				sb.append("								</div>");
 				sb.append("							</div>");
-				sb.append("							<div class='overlay' onmouseleave='hideOverlay(this)'>");
+				sb.append("							<div class='overlay'>");
 				sb.append("								<div class='event-layout-title'>");
 				sb.append("									<p>" + decodeString(eM.getEventName()) + "</p>");
 				sb.append("									<hr>");
@@ -164,7 +163,7 @@ public class EventPage extends HttpServlet {
 				sb.append("								</div>");
 				sb.append("								<div class='event-layout-location'>");
 				sb.append("									<p><b>Location</b></p>");
-				sb.append("									<p>" + decodeString(eM.getVenue()) + "</p>");
+				sb.append("									<p>" + parts[0] + ", " + parts[1] + "</p>");
 				sb.append("								</div>");
 				
 				if(!eM.getGuestArray().isEmpty()) {
@@ -176,14 +175,14 @@ public class EventPage extends HttpServlet {
 					for(String s:eM.getGuestArray()) {
 						sb.append("							<div class='event-layout-guest-guest'>");
 						
-						FileTableModel fTM = db.getUserProfilePic(s);
-						if(fTM != null) {
-							sb.append("							<img src='/PotHub/Image/" + decodeString(fTM.getFileName()) + "' alt='Guest Profile Picture' height='50' width='50'><br>");
+						String fileName = db.getUserProfilePic(s);
+						if(fileName != null) {
+							sb.append("							<img src='/PotHub/Image/" + decodeString(fileName) + "' alt='Guest Profile Picture' height='50' width='50'><br>");
 						}else {
 							sb.append("							<img src='images/cat.png' alt='Guest Profile Picture' height='50' width='50'><br>");
 						}
 						
-						sb.append("								<p>" + s + "</p>");
+						sb.append("								<p>" + decodeString(s) + "</p>");
 						sb.append("							</div>");
 					}
 					
@@ -192,7 +191,7 @@ public class EventPage extends HttpServlet {
 					
 				sb.append("							</div>");
 				sb.append("						</div>");
-				sb.append("						<div class='top-container-bottom' onclick='redirectPage()'>");
+				sb.append("						<div class='top-container-bottom' onclick='redirectPage(\"" + encodeString(eM.getEventName()) + "\")'>");
 				sb.append("							<div class='top-container-bottom-left'>");
 				sb.append("								<p>" + decodeString(eM.getDescription()) + "</p>");
 				sb.append("							</div>");
@@ -206,9 +205,9 @@ public class EventPage extends HttpServlet {
 				sb.append("					<div class='bot-container'>");
 				sb.append("						<div class='bot-container-image'>");
 				
-				FileTableModel ignProfilePic = db.getUserProfilePic(iGN);
-				if(ignProfilePic != null) {
-					sb.append("						<img src='/PotHub/Image/" + ignProfilePic.getFileName() + "' alt='User\'s Profile Picture'>");
+				String fileName = db.getUserProfilePic(iGN);
+				if(fileName != null) {
+					sb.append("						<img src='/PotHub/Image/" + decodeString(fileName) + "' alt='User\'s Profile Picture'>");
 				}else {
 					sb.append("						<img src='images/cat.png' alt='cat picture'>");
 				}
@@ -224,13 +223,14 @@ public class EventPage extends HttpServlet {
 				sb.append("					</div>");
 				sb.append("				</div>"	);
 				
-				sout.write(sb.toString().getBytes());
+				out.write(sb.toString().getBytes());
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 			
-		sout.write(footer);
+		out.write(footer);
+		out.close();
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
@@ -240,12 +240,15 @@ public class EventPage extends HttpServlet {
 		try {
 			db.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 	private String decodeString(String line) throws UnsupportedEncodingException {
 		return URLDecoder.decode(line, "UTF-8");
+	}
+	
+	private String encodeString(String line) throws UnsupportedEncodingException {
+		return URLEncoder.encode(line, "UTF-8");
 	}
 }

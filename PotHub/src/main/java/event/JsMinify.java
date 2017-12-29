@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class JsMinify {
 	public static void main(String[] args) throws IOException {
-		String fileName = "EventPage"; //Replace file name
+		String fileName = "MyEventPage"; //Replace file name
 		FileReader reader = new FileReader("src/main/webapp/script/" + fileName + ".js");
 		
 		BufferedReader in = new BufferedReader(reader);
