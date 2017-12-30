@@ -14,12 +14,15 @@ public class ReportSearchObject implements SearchObject{
 	private Date dateInClose;
 	
 	//SQL And
+	private int guiltyOrNot;
 	
 	public ReportSearchObject(){
 		long maxTime = (long)21459168 * (long)1000000;
 
 		dateInOpen = new Date(0);
 		dateInClose = new Date(maxTime);
+		
+		guiltyOrNot = -1;
 	}
 
 	@Override
@@ -43,14 +46,17 @@ public class ReportSearchObject implements SearchObject{
 		if(iGNReceive!=null && iGNReceive.length()>0){
 			queryToBuild += " AND IGNReceive like '%" + iGNReceive + "%'";
 		}
-		
+
 		if(evidenceType!=null && evidenceType.length()>0){
 			queryToBuild += " AND evidenceType = '" + evidenceType + "'";
 		}
 		
+		if(guiltyOrNot!=-1){
+			queryToBuild += " AND guiltyOrNot = " + guiltyOrNot;
+		}
+		
 		queryToBuild+=";";
 		
-		System.out.println(queryToBuild);
 		return queryToBuild;
 	}
 
@@ -62,11 +68,43 @@ public class ReportSearchObject implements SearchObject{
 		this.iGNSend = SearchSanitizer.sanitise(iGNSend);
 	}
 
+	public String getiGNReceive() {
+		return iGNReceive;
+	}
+
+	public void setiGNReceive(String iGNReceive) {
+		this.iGNReceive = SearchSanitizer.sanitise(iGNReceive);
+	}
+
 	public Date getDateInClose() {
 		return dateInClose;
 	}
 
-	public void setDonationDateClose(Date dateInClose) {
+	public void setDateInClose(Date dateInClose) {
 		this.dateInClose = dateInClose;
+	}
+	
+	public Date getDateInOpen() {
+		return dateInClose;
+	}
+
+	public void setDateInOpen(Date dateInOpen) {
+		this.dateInOpen = dateInOpen;
+	}
+	
+	public int getGuiltyOrNot(){
+		return this.guiltyOrNot;
+	}
+	
+	public void setGuiltyOrNot(int guiltyOrNot){
+		this.guiltyOrNot = guiltyOrNot;
+	}
+	
+	public String getEvidenceType(){
+		return this.evidenceType;
+	}
+	
+	public void setEvidenceType(String evidenceType){
+		this.evidenceType = evidenceType;
 	}
 }

@@ -51,7 +51,7 @@ public class AdminRanks extends HttpServlet {
 			rso.setJoinDateOpen(Date.valueOf(request.getParameter("joinDate1")));
 		}
 		if(!request.getParameter("joinDate2").equals("")){
-		rso.setJoinDateClose(Date.valueOf(request.getParameter("joinDate2")));
+			rso.setJoinDateClose(Date.valueOf(request.getParameter("joinDate2")));
 		}
 		if(request.getParameter("role")!=null){
 			rso.setPermissionLevel(Integer.parseInt(request.getParameter("role")));

@@ -303,9 +303,8 @@ public class Database {
 	}
 	
 	//Report
-	public ArrayList<ReportModel> getManyReports() throws SQLException{
+	public ArrayList<ReportModel> getManyReports(ReportSearchObject rso) throws SQLException{
 			ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
-			ReportSearchObject rso = new ReportSearchObject();
 			ResultSet rs = getResultSet(rso.getExecutableSQL());
 			while(rs.next()) {
 				int reportID = 				rs.getInt("reportID");
@@ -315,7 +314,7 @@ public class Database {
 				Date date =					rs.getDate("Date");
 				int evidence = 				rs.getInt("Evidence");
 				String reason = 			rs.getString("reason");
-				boolean guiltyOrNot = 		rs.getBoolean("guiltyOrNot");
+				int guiltyOrNot = 		rs.getInt("guiltyOrNot");
 				
 				reports.add(new ReportModel(reportID, iGNSend, iGNReceive, evidenceType, date, evidence,
 						reason, guiltyOrNot));
@@ -643,6 +642,7 @@ public class Database {
 	public void close() throws SQLException {
 		conn.close();
 	}
+	
 	/*
 	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException{
 		Database db = new Database(2);

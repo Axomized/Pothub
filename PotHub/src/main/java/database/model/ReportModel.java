@@ -10,10 +10,10 @@ public class ReportModel {
 	Date date;
 	int evidence;
 	String reason;
-	boolean guiltyOrNot;
+	int guiltyOrNot;
 	
 	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence,
-			String reason, boolean guiltyOrNot) {
+			String reason, int guiltyOrNot) {
 		this.reportID = reportID;
 		this.iGNSend = iGNSend;
 		this.iGNReceive = iGNReceive;
@@ -52,7 +52,7 @@ public class ReportModel {
 		return reason;
 	}
 
-	public boolean isGuiltyOrNot() {
+	public int isGuiltyOrNot() {
 		return guiltyOrNot;
 	}
 
@@ -84,7 +84,7 @@ public class ReportModel {
 		this.reason = reason;
 	}
 
-	public void setGuiltyOrNot(boolean guiltyOrNot) {
+	public void setGuiltyOrNot(int guiltyOrNot) {
 		this.guiltyOrNot = guiltyOrNot;
 	}
 }

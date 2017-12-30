@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.ReportSearchObject;
 import database.Database;
 import database.model.ReportModel;
 
@@ -34,6 +36,27 @@ public class AdminReports extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
+		
+		ReportSearchObject rso = new ReportSearchObject();
+		
+		if(request.getParameter("reporter")!=null){
+			rso.setiGNSend(request.getParameter("reporter"));
+		}
+		if(request.getParameter("reported")!=null){
+			rso.setiGNReceive(request.getParameter("reported"));
+		}
+		if(request.getParameter("dateIn1")!=null && request.getParameter("dateIn1").length()>0){
+			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn1")));
+		}
+		if(request.getParameter("dateIn2")!=null && request.getParameter("dateIn2").length()>0){
+			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn2")));
+		}
+		if(request.getParameter("verdict")!=null){
+			rso.setGuiltyOrNot(Integer.parseInt(request.getParameter("verdict")));
+		}
+		if(request.getParameter("evidenceType")!=null && request.getParameter("evidenceType").length()>0){
+			rso.setEvidenceType(request.getParameter("evidenceType"));
+		}
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
@@ -82,7 +105,7 @@ public class AdminReports extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getManyReports();
+			reports = db.getManyReports(rso);
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
@@ -91,15 +114,20 @@ public class AdminReports extends HttpServlet {
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
 				pw.append("<td>"+rep.getDate()+"</td>");
 				
-				if(rep.isGuiltyOrNot()){
+				if(rep.isGuiltyOrNot()==2){
 					pw.append("<td>Guilty"
 					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
 					+"<button>Convict</button></td>");
 				}
-				else{
+				else if(rep.isGuiltyOrNot()==1){
 					pw.append("<td>Innocent"
 					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
 					+"<button>Pardon</button></td>");
+				}
+				else{
+					pw.append("<td>Undecided"
+							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+							+"<button>Pardon</button><button>Convict</button></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
@@ -148,11 +176,12 @@ public class AdminReports extends HttpServlet {
 	+"</div>"
 	+"</div>"
 	+"<div id='search'>"
-	+"<p>Evidence type: <select>"
+	+"<p>Evidence type: "
+	+"<select name='evidenceType'>"
 	+"<option value=''></option>"
+   	+"<option value='Forum'>Forum Post</option>"
    	+"<option value='Comment'>Comment</option>"
    	+"<option value='Message'>Message</option>"
-   	+"<option value='Forum'>Forum Post</option>"
    	+"<option value='Potcast'>Potcast</option>"
    	+"</select>"
    	+"</div></p>"
