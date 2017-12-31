@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.ReportSearchObject;
 import database.Database;
 import database.model.ReportModel;
 
@@ -86,20 +87,20 @@ public class ReportHistory extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getManyReports();
+			reports = db.getManyReports(new ReportSearchObject());
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
 				pw.append("<td>"+rep.getiGNSend()+"</td>");
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
-				pw.append("<td>Bad Stuff</td>");
+				pw.append("<td>"+rep.getReason()+"</td>");
 				pw.append("<td>"+rep.getDate());
 				pw.append("<td>"+rep.isGuiltyOrNot()+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>");
 				
-				if(rep.isGuiltyOrNot()){
+				if(rep.isGuiltyOrNot()==1||rep.isGuiltyOrNot()==2){
 					pw.append("<button>Convict</button>");
 				}
-				else{
+				if(rep.isGuiltyOrNot()==0||rep.isGuiltyOrNot()==1){
 					pw.append("<button>Pardon</button>");
 				}
 				

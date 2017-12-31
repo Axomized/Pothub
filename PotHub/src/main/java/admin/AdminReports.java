@@ -46,7 +46,7 @@ public class AdminReports extends HttpServlet {
 			rso.setiGNReceive(request.getParameter("reported"));
 		}
 		if(request.getParameter("dateIn1")!=null && request.getParameter("dateIn1").length()>0){
-			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn1")));
+			rso.setDateInOpen(Date.valueOf(request.getParameter("dateIn1")));
 		}
 		if(request.getParameter("dateIn2")!=null && request.getParameter("dateIn2").length()>0){
 			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn2")));

@@ -2,6 +2,8 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.DonationSearchObject;
 import database.Database;
 import database.model.DonationModel;
 
@@ -35,6 +38,26 @@ public class AdminDonations extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		DonationSearchObject dm = new DonationSearchObject();
+		
+		if(request.getParameter("donor")!=null){
+			dm.setiGN(request.getParameter("donor"));
+		}
+		if(request.getParameter("recipient")!=null){
+			dm.setOnBehalf(request.getParameter("recipient"));
+		}
+		if(request.getParameter("donationDate1")!=null && request.getParameter("donationDate1").length()>0){
+			dm.setDonationDateOpen(Date.valueOf(request.getParameter("donationDate1")));
+		}
+		if(request.getParameter("donationDate2")!=null && request.getParameter("donationDate2").length()>0){
+			dm.setDonationDateClose(Date.valueOf(request.getParameter("donationDate2")));
+		}
+		if(request.getParameter("amount1").length()>0){
+			dm.setDonationAmountOpen(BigDecimal.valueOf(Double.valueOf(request.getParameter("amount1"))));
+		}
+		if(request.getParameter("amount1").length()>0){
+			dm.setDonationAmountClose(BigDecimal.valueOf(Double.valueOf(request.getParameter("amount2"))));
+		}
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -82,7 +105,7 @@ public class AdminDonations extends HttpServlet {
 		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
 		try {
 			db = new Database(0);
-			donations = db.getDonationModel();
+			donations = db.getDonationModel(dm);
 			
 			for(DonationModel dono:donations){
 				pw.append("<tr>");

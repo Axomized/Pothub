@@ -81,6 +81,18 @@ public class BansSearchObject implements SearchObject{
 	public void setStartDateOpen(Date startDateOpen) {
 		this.startDateOpen = startDateOpen;
 	}
+	
+	public Date getStartDateClose() {
+		return startDateClose;
+	}
+	
+	public void setStartDateClose(Date startDateClose) {
+		this.startDateClose = startDateClose;
+	}
+
+	public Date getEndDateClose() {
+		return endDateClose;
+	}
 
 	public Date getEndDateOpen() {
 		return endDateOpen;
@@ -88,18 +100,6 @@ public class BansSearchObject implements SearchObject{
 
 	public void setEndDateOpen(Date endDateOpen) {
 		this.endDateOpen = endDateOpen;
-	}
-
-	public Date getStartDateClose() {
-		return startDateClose;
-	}
-
-	public void setStartDateClose(Date startDateClose) {
-		this.startDateClose = startDateClose;
-	}
-
-	public Date getEndDateClose() {
-		return endDateClose;
 	}
 
 	public void setEndDateClose(Date endDateClose) {

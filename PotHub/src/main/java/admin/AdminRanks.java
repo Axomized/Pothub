@@ -21,10 +21,6 @@ import database.model.DatabaseUserModel;
  */
 @WebServlet("/AdminRanks")
 public class AdminRanks extends HttpServlet {
-	String username;
-	Date joinDate1;
-	Date joinDate2;
-	int role;
 	
 	private static final long serialVersionUID = 1L;
 
@@ -47,10 +43,10 @@ public class AdminRanks extends HttpServlet {
 		if(request.getParameter("username")!=null){
 			rso.setiGN(request.getParameter("username"));
 		}
-		if(!request.getParameter("joinDate1").equals("")){
+		if(request.getParameter("joinDate1")!=null && request.getParameter("joinDate1").length()>0){
 			rso.setJoinDateOpen(Date.valueOf(request.getParameter("joinDate1")));
 		}
-		if(!request.getParameter("joinDate2").equals("")){
+		if(request.getParameter("joinDate2")!=null && request.getParameter("joinDate2").length()>0){
 			rso.setJoinDateClose(Date.valueOf(request.getParameter("joinDate2")));
 		}
 		if(request.getParameter("role")!=null){

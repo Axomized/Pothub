@@ -285,10 +285,9 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
-	public ArrayList<BansModel> getBansModel() throws SQLException {
+	public ArrayList<BansModel> getBansModel(BansSearchObject bso) throws SQLException {
 		ArrayList<BansModel> bannedppl = new ArrayList<BansModel>();
-		BansSearchObject bso = new BansSearchObject();
-		
+
 		ResultSet rs = getResultSet(bso.getExecutableSQL());
 		while(rs.next()) {
 			String iGN					= rs.getString("IGN");
@@ -354,9 +353,8 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
-	public ArrayList<DonationModel> getDonationModel() throws SQLException{
+	public ArrayList<DonationModel> getDonationModel(DonationSearchObject dm) throws SQLException{
 		ArrayList<DonationModel> donations = new ArrayList<DonationModel>();
-		DonationSearchObject dm = new DonationSearchObject();
 		ResultSet rs = getResultSet(dm.getExecutableSQL());
 		while(rs.next()) {
 			int donationID				= rs.getInt("DonationID");

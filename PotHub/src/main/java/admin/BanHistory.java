@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.BansSearchObject;
 import database.Database;
 import database.model.AppealModel;
 import database.model.BansModel;
@@ -37,6 +38,7 @@ public class BanHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		BansSearchObject bso = new BansSearchObject();
 		String userSubject = "User";
 		if(request.getParameter("user")!=null){
 			userSubject = request.getParameter("user");
@@ -92,7 +94,7 @@ ArrayList<BansModel> bans = new ArrayList<BansModel>();
 ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
 try {
 	db = new Database(0);
-	bans = db.getBansModel();
+	bans = db.getBansModel(bso);
 	appeals = db.getAppeal();
 	for(BansModel ban:bans){
 		pw.append("<tr>");

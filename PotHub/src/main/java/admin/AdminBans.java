@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.BansSearchObject;
 import database.Database;
 import database.model.AppealModel;
 import database.model.BansModel;
@@ -36,6 +38,29 @@ public class AdminBans extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		BansSearchObject bso = new BansSearchObject();
+		
+		if(request.getParameter("username")!=null){
+			bso.setiGN(request.getParameter("username"));
+		}
+		if(request.getParameter("admin")!=null){
+			bso.setAdmin(request.getParameter("admin"));
+		}
+		if(request.getParameter("banStart1")!=null && request.getParameter("banStart1").length()>0){
+			bso.setStartDateOpen(Date.valueOf(request.getParameter("banStart1")));
+		}
+		if(request.getParameter("banStart2")!=null && request.getParameter("banStart2").length()>0){
+			bso.setStartDateClose(Date.valueOf(request.getParameter("banStart2")));
+		}
+		if(request.getParameter("banEnd1")!=null && request.getParameter("banEnd1").length()>0){
+			bso.setEndDateOpen(Date.valueOf(request.getParameter("banEnd1")));
+		}
+		if(request.getParameter("banEnd2")!=null && request.getParameter("banEnd2").length()>0){
+			bso.setEndDateClose(Date.valueOf(request.getParameter("banEnd2")));
+		}
+		if(request.getParameter("reason")!=null && request.getParameter("reason").length()>0){
+			bso.setReason(request.getParameter("reason"));
+		}
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -86,7 +111,7 @@ public class AdminBans extends HttpServlet {
 		try {
 			int counter = 0;
 			db = new Database(0);
-			bans = db.getBansModel();
+			bans = db.getBansModel(bso);
 			ArrayList<AppealModel> appeals = db.getAppeal();
 			for(BansModel ban:bans){
 				pw.append("<tr>");
