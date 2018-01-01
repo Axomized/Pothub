@@ -55,7 +55,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.gif' type='image/gif'>");
 			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.png?v=2' type='image/x-icon'>");
 			sb.append("		<!-- Page Title -->");
-			sb.append("		<title>" + eM.getEventName() + "</title>");
+			sb.append("		<title>" + decodeString(eM.getEventName()) + "</title>");
 			sb.append("		<!-- Latest compiled and CSS -->");
 			sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 			sb.append("		<!-- Optional theme -->");

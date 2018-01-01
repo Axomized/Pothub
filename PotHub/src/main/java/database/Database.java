@@ -432,6 +432,27 @@ public class Database {
 		return null;
 	}
 	
+	//For MyEvent
+	public ArrayList<EventModel> getEventModelForMyEventPage() throws SQLException, UnsupportedEncodingException {
+		ArrayList<EventModel> alem = new ArrayList<EventModel>();
+		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest FROM Event ORDER BY Date DESC;");
+		while(rs.next()) {
+			int eventID		= rs.getInt("EventID");
+			String eventName	= rs.getString("EventName");
+			String iGN 			= rs.getString("IGN");
+			int thumbnail		= rs.getInt("Thumbnail");
+			String description	= rs.getString("Description");
+			Timestamp date		= rs.getTimestamp("Date");
+			String postalCode	= rs.getString("PostalCode");
+			String venue		= rs.getString("Venue");
+			int max_No_People	= rs.getInt("Max_No_People");
+			String guest		= rs.getString("Guest");
+			
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null));
+		}
+		return alem;
+	}
+	
 	//CreateEvent
 	public void insertCreateEvent(EventModel eM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Event(EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, AutoAccept, Max_No_People, Guest, FileList) VALUES (?,?,?,?,?,?,?,?,?,?,?);");

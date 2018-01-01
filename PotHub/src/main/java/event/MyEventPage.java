@@ -61,7 +61,7 @@ public class MyEventPage extends HttpServlet {
 		sb.append("		<!-- My Style Sheet -->");
 		sb.append("		<link rel='stylesheet' type='text/css' href='css/MyEventPage.css' />");
 		sb.append("	</head>");
-		sb.append("	<body>");
+		sb.append("	<body onload='getTime()'>");
 		sb.append("		<!--  Navigation Bar -->");
 		sb.append("		<div id='header'>");
 		sb.append("			<div id='companyTitle'>");
@@ -85,8 +85,8 @@ public class MyEventPage extends HttpServlet {
 		sb.append("				<li class='dropdown'>");
 		sb.append("		        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 		sb.append("			        <ul class='dropdown-menu'>");
-		sb.append("			        	<li><a href='/EventPage'>Events</a></li>");
-		sb.append("			        	<li><a href='/MyEventPage'>My Events</a></li>");
+		sb.append("			        	<li><a href='/PotHub/EventPage'>Events</a></li>");
+		sb.append("			        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
 		sb.append("			        </ul>");
 		sb.append("		    	</li>");
 		sb.append("				<li class='dropdown'>");
@@ -125,7 +125,7 @@ public class MyEventPage extends HttpServlet {
 		
 		ArrayList<EventModel> eMAL;
 		try {
-			eMAL = db.getEventModelForEventPage();
+			eMAL = db.getEventModelForMyEventPage();
 		
 			for(EventModel eM:eMAL) {
 				String eventName = eM.getEventName();
@@ -141,7 +141,7 @@ public class MyEventPage extends HttpServlet {
 				sb.append("					<p>" + decodeString(eM.getEventName()) + "</p>");
 				sb.append("				</div>");
 				sb.append("				<div class='timeleft'>");
-				sb.append("					<p onload='getTime(this, " + eM.getDate().getTime() + ")'></p>");
+				sb.append("					<p class='time'>" + eM.getDate().getTime() + "</p>");
 				sb.append("				</div>");
 				sb.append("			</div>");
 				sb.append("			<div class='row back-container' onclick='redirectPage(\"" + encodeString(eventName) + "\")'>");

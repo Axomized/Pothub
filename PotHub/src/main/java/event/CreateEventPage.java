@@ -56,7 +56,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 		sb.append("		<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.css' integrity='sha256-P1wC4IE9L+kzf2qwueaK/jdj186d/Q05Q8ITF9vr9Ok=' crossorigin='anonymous' />");
 		sb.append("		<!-- My Own Script -->");
-		sb.append("		<script src='script/CreateEventPage.js' defer></script>");
+		sb.append("		<script src='script/CreateEventPage.min.js' defer></script>");
 		sb.append("		<!-- My Style Sheet -->");
 		sb.append("		<link rel='stylesheet' type='text/css' href='css/CreateEventPage.css' />");
 		sb.append("	</head>");
@@ -199,6 +199,9 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("		<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>");
 		sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>");
 		sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>");
+		sb.append("		<!-- Optional theme -->");
+		sb.append("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
+		sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.js' integrity='sha256-7Ls/OujunW6k7kudzvNDAt82EKc/TPTfyKxIE5YkBzg=' crossorigin='anonymous'></script>");
 		sb.append("	</body>");
 		sb.append("</html>");
 		footer = sb.toString().getBytes();
