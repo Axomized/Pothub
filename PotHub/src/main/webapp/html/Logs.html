@@ -35,36 +35,46 @@
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
-					<div id="filterDiv">
-						<div id="searchDiv">
-							<label id="searchLabel">Search:</label>
-							<input type="text" id ="searchInput" name="searchInput">
+					<form id="searchForm" autocomplete="off" method="get">
+						<div id="filterDiv">
+							<div id="nameDiv" class="searchDiv">
+								<label id="nameLabel" for="nameInput">Search by name:</label>
+								<input type="text" id ="nameInput" class="searchInput" name="nameInput">
+							</div>
+							<div id="typeDiv" class="searchDiv">
+								<label id="typeLabel" for="selectType">Search by type:</label>
+								<select id="selectType" class="searchSelect" name="selectType">
+									<option selected value="All">All</option>
+									<option value="Login">Login</option>
+									<option value="Forum">Forum</option>
+									<option value="Event">Event</option>
+									<option value="Potcast">Potcast</option>
+									<option value="Donation">Donation</option>
+								</select>
+							</div>
+							<div id="dateDiv" class="searchDiv">
+								<label id="dateLabel" for="selectDate">Search by date:</label>
+								<select id="selectDate" class="searchSelect" name="selectDate" onchange="customDateSelect()">
+									<option selected value="All">All</option>
+									<option value="Yesterday">Yesterday</option>
+									<option value="Last week">Last week</option>
+									<option value="Last month">Last month</option>
+									<option value="Custom">Custom</option>
+								</select>
+							</div>
+							<div id="afterDateDiv" class="searchDiv">
+								<label id="afterDateLabel" for="afterDateInput">After:</label>
+								<input type="date" id="afterDateInput" class="searchInput" name="afterDateInput">
+							</div>
+							<div id="beforeDateDiv" class="searchDiv">
+								<label id="beforeDateLabel" for="beforeDateInput">Before:</label>
+								<input type="date" id="beforeDateInput" class="searchInput" name="beforeDateInput">
+							</div>
+							<div id="buttonDiv" class="searchDiv">
+								<input type="submit" id="searchBtn" name="searchBtn" value="Search">
+							</div>
 						</div>
-						<div id="selectDiv">
-							<label id="filterLabel">Filter by:</label>
-							<select id="selectFilter" name="selectFilter" onchange="filterText()">
-								<option selected disabled hidden="true">Type</option>
-								<option value="All">All</option>
-								<option value="Login">Login</option>
-								<option value="Forum">Forum</option>
-								<option value="Event">Event</option>
-								<option value="Potcast">Potcast</option>
-								<option value="Donation">Donation</option>
-							</select>
-						</div>
-						<div id="beforeDateDiv">
-							<label id="beforeDateLabel">Before:</label>
-							<input type="date" id="beforeDateInput" name="beforeDateInput">
-						</div>
-						<div id="duringDateDiv">
-							<label id="duringDateLabel">During:</label>
-							<input type="date" id="duringDateInput" name="duringDateInput">
-						</div>
-						<div id="afterDateDiv">
-							<label id="afterDateLabel">After:</label>
-							<input type="date" id="afterDateInput" name="afterDateInput">
-						</div>
-					</div>
+					</form>
 					<div id="tableWrap">
 						<table id="logsTable" class="table table-striped">
 							<thead>

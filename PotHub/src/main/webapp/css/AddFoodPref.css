@@ -199,6 +199,14 @@ body {
 	border-right: 2px solid #e36209;
 }
 
+#displayNameDiv {
+	margin-top: 10px;
+}
+
+#displayNameSpan {
+	font-size: 20px;
+}
+
 #profileContentDiv {
 	
 }
@@ -223,15 +231,11 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #49274a;
+	border-bottom: 2px solid #e36209;
 }
 
 #defaultSelected {
 	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
 }
 
 #aboutContentDiv {
@@ -271,7 +275,23 @@ body {
 }
 
 #addBtn {
-	margin-right: 9px;
+	margin-right: 6px;
+}
+
+#otherInput {
+	width: 160px;
+	display: none;
+	margin-right: 8px;
+}
+
+#otherBtn {
+	display: none;
+	margin-right: 8px;
+	cursor: not-allowed;
+}
+
+#doneBtn {
+	display: none;
 }
 
 .editBtn {

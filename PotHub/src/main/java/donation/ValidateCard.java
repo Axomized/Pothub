@@ -9,7 +9,7 @@ public class ValidateCard {
 		boolean isValid = false;
         int s1 = 0, s2 = 0;
         
-        if ((ccNumber.length() >= 9 || ccNumber.length() <= 19) && ccNumber.matches("\\d+")) {
+        if ((ccNumber.length() >= 9 && ccNumber.length() <= 19) && ccNumber.matches("\\d+")) {
         	String reverse = new StringBuffer(ccNumber).reverse().toString();
             for (int i = 0 ; i < reverse.length(); i++) {
                 int digit = Character.digit(reverse.charAt(i), 10);

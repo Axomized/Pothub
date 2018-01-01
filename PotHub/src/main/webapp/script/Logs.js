@@ -6,15 +6,17 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
-function filterText() {  
-	var rex = new RegExp($("#selectFilter").val());
-	if(rex =="/All/") {
-		$("tbody > tr").show();
+function customDateSelect() {
+	var selectDate = document.getElementById("selectDate");
+	var afterDateDiv = document.getElementById("afterDateDiv");
+	var beforeDateDiv = document.getElementById("beforeDateDiv");
+	
+	if (selectDate.value == "Custom") {
+		afterDateDiv.style.display = "inline-block";
+		beforeDateDiv.style.display = "inline-block";
 	}
 	else {
-		$("tbody > tr").hide();
-		$("tbody > tr").filter(function() {
-		return rex.test($(this).text());
-		}).show();
+		afterDateDiv.style.display = "none";
+		beforeDateDiv.style.display = "none";
 	}
 }

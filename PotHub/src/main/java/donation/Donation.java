@@ -206,7 +206,7 @@ public class Donation extends HttpServlet {
 		String errorMessage = "";
 		
 		if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-			if (!(behalfName.isEmpty()) || !(behalfName == "")) {
+			if (!behalfName.isEmpty() && behalfName != null) {
 				if (vc.validateCCNo(ccNumber)) {
 					if (vc.validateCode(ccNumber, securityCode)) {
 						se.sendEmail("", generatePIN());

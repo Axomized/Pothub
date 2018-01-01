@@ -169,55 +169,50 @@ body {
 	margin-top: 20px;
 }
 
-#searchDiv {
+.searchDiv {
 	width: 15%;
 	display: inline-block;
 }
 
-#searchInput {
+.searchInput {
 	width: 90%;
 	display: block;
 }
 
-#selectDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#selectFilter {
+.searchSelect {
 	height: 25px;
 	width: 90%;
 	display: block;
 }
 
-#beforeDateDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#beforeDateInput {
-	width: 90%;
-	display: block;
-}
-
-#duringDateDiv {
-	width: 15%;
-	display: inline-block;
-}
-
-#duringDateInput {
-	width: 90%;
-	display: block;
-}
-
 #afterDateDiv {
-	width: 15%;
-	display: inline-block;
+	display: none;
 }
 
-#afterDateInput {
+#beforeDateDiv {
+	display: none;
+}
+
+#searchBtn {
+	height: 25px;
+	min-width: 5em;
 	width: 90%;
-	display: block;
+	font-weight: 600;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+#searchBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
 }
 
 ::-webkit-scrollbar {

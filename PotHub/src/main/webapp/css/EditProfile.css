@@ -267,15 +267,11 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #49274a;
+	border-bottom: 2px solid #e36209;
 }
 
 #defaultSelected {
 	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
 }
 
 #changeProfileDiv {
