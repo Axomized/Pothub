@@ -350,18 +350,26 @@ public class Database {
 	}
 	
 
-	public void convictUser(String iGN, boolean permanent, String reason, String admin) throws SQLException{
+	public void convictUser(boolean permanent, int reportID, String admin) throws SQLException{
 			long maxTime = (long)21459167 * (long)1000000;
+			
+			ReportSearchObject rso = new ReportSearchObject();
+			rso.setReportID(reportID);
+			
+			ArrayList<ReportModel> rms = this.getPersonalReports(rso);
+			ReportModel subjectUser = rms.get(0);
 		
 			PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Bans (IGN, startDate, endDate, reason, admin, pardoned) Values (?,?,?,?,?,?)");
-			ppstmt.setString(1, iGN);
+			ppstmt.setString(1, subjectUser.getiGNReceive());
 			ppstmt.setDate(2, new Date(System.currentTimeMillis()));
+			
+			
 			if(permanent){
 				ppstmt.setDate(3, new Date(maxTime));
 			}
 			else{
 				BansSearchObject bso = new BansSearchObject();
-				bso.setiGN(iGN);
+				bso.setiGN(subjectUser.getiGNReceive());
 				if(howManyBans(bso)==0){
 					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(86400*1000)));
 				}
@@ -375,11 +383,17 @@ public class Database {
 					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(28*86400*1000)));
 				}
 			}
-			ppstmt.setString(4, reason);
+
+			ppstmt.setString(4,subjectUser.getReason());
 			ppstmt.setString(5, "HandsomeMatt");
 			ppstmt.setBoolean(6, false);
 
 			executeUpdate(ppstmt);
+			
+			PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Report SET guiltyOrNot=2 WHERE ReportID = ?");
+			ppstmt2.setInt(1, reportID);
+			
+			ppstmt2.execute();
 	}
 	
 	public void pardonUser(String iGN) throws SQLException{

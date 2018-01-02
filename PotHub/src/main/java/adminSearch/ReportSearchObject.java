@@ -15,6 +15,7 @@ public class ReportSearchObject implements SearchObject{
 	
 	//SQL And
 	private int guiltyOrNot;
+	private int reportID;
 	
 	public ReportSearchObject(){
 		long maxTime = (long)21459168 * (long)1000000;
@@ -23,6 +24,7 @@ public class ReportSearchObject implements SearchObject{
 		dateInClose = new Date(maxTime);
 		
 		guiltyOrNot = -1;
+		reportID = -1;
 	}
 
 	@Override
@@ -53,6 +55,10 @@ public class ReportSearchObject implements SearchObject{
 		
 		if(guiltyOrNot!=-1){
 			queryToBuild += " AND guiltyOrNot = " + guiltyOrNot;
+		}
+		
+		if(reportID!=-1){
+			queryToBuild += " AND reportID = " + reportID;
 		}
 		
 		queryToBuild+=" ORDER BY IGNSend;";
@@ -107,5 +113,13 @@ public class ReportSearchObject implements SearchObject{
 	
 	public void setEvidenceType(String evidenceType){
 		this.evidenceType = evidenceType;
+	}
+	
+	public int getReportID(){
+		return this.reportID;
+	}
+	
+	public void setReportID(int reportID){
+		this.reportID=reportID;
 	}
 }

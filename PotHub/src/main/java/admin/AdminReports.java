@@ -122,12 +122,13 @@ public class AdminReports extends HttpServlet {
 				else if(rep.isGuiltyOrNot()==1){
 					pw.append("<td>Innocent"
 							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-							+"<button>Convict</button></td>");
+							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				else{
 					pw.append("<td>Undecided"
 						+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form><button>Convict</button></td>");
+						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
+						+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
@@ -212,11 +213,12 @@ public class AdminReports extends HttpServlet {
 		try {
 			Database db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){
-				System.out.println(request.getParameter("reportID"));
-			db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
-			response.sendRedirect("AdminReports");
+				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
 			}
-			
+			if(request.getParameter("whatDo").equals("convict")){
+				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
+			}
+			response.sendRedirect("AdminReports");	
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
