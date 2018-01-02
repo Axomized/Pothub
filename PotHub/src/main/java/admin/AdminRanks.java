@@ -108,15 +108,19 @@ public class AdminRanks extends HttpServlet {
 				
 				if(dbu.getUserPermission()==2){
 					pw.append("<td>Admin</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Demote</button>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form></td>");
 				}
 				else if(dbu.getUserPermission()==1){
 					pw.append("<td>Moderator</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Demote</button><button>Promote</button>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+							+ "<form method='post'><input type='hidden' name='toChange' value='0'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form>"
+							+ "<form method='post'><input type='hidden' name='toChange' value='2'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				else{
 					pw.append("<td>Normal</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Promote</button>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				
 				pw.append("</td>");
@@ -184,7 +188,15 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Posted");
+		try {
+			Database db = new Database(2);
+			if(request.getParameter("toChange")!=null||Integer.parseInt(request.getParameter("toChange"))<=2||Integer.parseInt(request.getParameter("toChange"))>=0){
+			db.updateRank(request.getParameter("ign"),Integer.parseInt(request.getParameter("toChange")));
+		}
+			response.sendRedirect("AdminRanks");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

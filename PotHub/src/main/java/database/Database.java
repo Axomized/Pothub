@@ -133,6 +133,17 @@ public class Database {
 		return null;
 	}
 	
+	
+	public void updateRank(String ign, int permissionLevel){
+		try {
+			PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET UserPermission = ? WHERE ign = ?");
+			ppstmt.setInt(1, permissionLevel);
+			ppstmt.setString(2, ign);
+			ppstmt.execute();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	//For profile page - user's donation history
 	public DonationModel getUserDonation(String name) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?;");
@@ -290,13 +301,14 @@ public class Database {
 
 		ResultSet rs = getResultSet(bso.getExecutableSQL());
 		while(rs.next()) {
+			int banID					= rs.getInt("BanID");
 			String iGN					= rs.getString("IGN");
 			Date startDate				= rs.getDate("startDate");
 			Date endDate				= rs.getDate("endDate");
 			String reason				= rs.getString("reason");
 			String admin				= rs.getString("admin");
 			boolean pardoned			= rs.getBoolean("pardoned");
-			bannedppl.add(new BansModel(iGN, startDate, endDate, reason, admin, pardoned));
+			bannedppl.add(new BansModel(banID, iGN, startDate, endDate, reason, admin, pardoned));
 		}
 		return bannedppl;
 	}

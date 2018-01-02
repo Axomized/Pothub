@@ -33,7 +33,7 @@ public class BansSearchObject implements SearchObject{
 	@Override
 	public String getExecutableSQL() {
 		String queryToBuild=
-				"SELECT TOP "+MAXRETURNS+" IGN, startDate, endDate, reason, admin, pardoned "
+				"SELECT TOP "+MAXRETURNS+" BanID, IGN, startDate, endDate, reason, admin, pardoned "
 				+ "FROM Bans ";
 		
 		queryToBuild +=
