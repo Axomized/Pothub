@@ -44,7 +44,7 @@ public class RankSearchObject implements SearchObject{
 		queryToBuild += " AND userPermission=" + permissionLevel;
 		}
 		
-		queryToBuild+=";";
+		queryToBuild+=" ORDER BY IGN;";
 		System.out.println(queryToBuild);
 		return queryToBuild;
 	}

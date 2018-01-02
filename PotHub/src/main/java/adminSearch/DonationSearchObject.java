@@ -48,10 +48,10 @@ public class DonationSearchObject implements SearchObject{
 		}
 		
 		if(onBehalf!=null && onBehalf.length()>0 ){
-			queryToBuild += " AND admin like '%" + onBehalf + "%'";
+			queryToBuild += " AND onBehalf like '%" + onBehalf + "%'";
 		}
 
-		queryToBuild+=";";
+		queryToBuild+=" ORDER BY IGN;";
 		
 		System.out.println(queryToBuild);
 		return queryToBuild;

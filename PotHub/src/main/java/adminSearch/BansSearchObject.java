@@ -68,7 +68,7 @@ public class BansSearchObject implements SearchObject{
 			queryToBuild += " AND pardoned = 'false'";
 		}
 		
-		queryToBuild+=";";
+		queryToBuild+=" ORDER BY IGN;";
 		
 		System.out.println(queryToBuild);
 		return queryToBuild;

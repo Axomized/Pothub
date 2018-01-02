@@ -119,11 +119,12 @@ public class AdminBans extends HttpServlet {
 				pw.append("<td>"+ban.getReason()+"</td>");
 				pw.append("<td>"+ban.getStartDate()+"</td>");
 				pw.append("<td>"+ban.getEndDate()+"</td>");
-				pw.append("<td>"+ban.getAdmin()+"<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
+				pw.append("<td>"+ban.getAdmin());
 				
-				if(appeals.get(counter).getMessage()!=null){
-					pw.append("<button>Pardon</button>");
-					pw.append("<a href='AppealView?user="+ban.getiGN()+"&appealID=TODO'><button>Read</button></a>");
+				pw.append("<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
+				
+				if(appeals.get(counter).getMessage()!=null && !ban.isPardoned()){
+					pw.append("<form method='post'><input type='hidden' name='ign' value='"+ban.getiGN()+"'></input><button type='submit'>Pardon</button></form><a href='AppealView?user="+ban.getiGN()+"&appealID="+appeals.get(counter).getAppealID()+"'><button>Read</button></a>");
 				}
 				
 				pw.append("</td>");
@@ -200,8 +201,13 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			Database db = new Database(2);
+			db.pardonUser(request.getParameter("ign"));
+			response.sendRedirect("AdminBans");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

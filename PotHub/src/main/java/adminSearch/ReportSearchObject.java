@@ -55,8 +55,9 @@ public class ReportSearchObject implements SearchObject{
 			queryToBuild += " AND guiltyOrNot = " + guiltyOrNot;
 		}
 		
-		queryToBuild+=";";
+		queryToBuild+=" ORDER BY IGNSend;";
 		
+		System.out.println(queryToBuild);
 		return queryToBuild;
 	}
 

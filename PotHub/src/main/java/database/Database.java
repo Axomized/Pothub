@@ -301,6 +301,15 @@ public class Database {
 		return bannedppl;
 	}
 	
+	public int howManyBans(BansSearchObject bso) throws SQLException {
+		ResultSet rs = getResultSet(bso.getExecutableSQL());
+		int counter = 0;
+		while(rs.next()){
+			counter++;
+		}
+		return counter;
+	}
+	
 	//Report
 	public ArrayList<ReportModel> getManyReports(ReportSearchObject rso) throws SQLException{
 			ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
@@ -320,6 +329,64 @@ public class Database {
 			}
 			return reports;
 	}
+	
+	public ArrayList<ReportModel> getPersonalReports(ReportSearchObject rso) throws SQLException{
+		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
+		ResultSet rs = getResultSet(rso.getExecutableSQL());
+		while(rs.next()) {
+			int reportID = 				rs.getInt("reportID");
+			String iGNSend = 			rs.getString("IGNSend");
+			String iGNReceive = 		rs.getString("IGNReceive");
+			String evidenceType = 		rs.getString("evidenceType");
+			Date date =					rs.getDate("Date");
+			int evidence = 				rs.getInt("Evidence");
+			String reason = 			rs.getString("reason");
+			int guiltyOrNot = 		rs.getInt("guiltyOrNot");
+			
+			reports.add(new ReportModel(reportID, iGNSend, iGNReceive, evidenceType, date, evidence,
+					reason, guiltyOrNot));
+		}
+		return reports;
+	}
+	
+
+	public void convictUser(String iGN, boolean permanent, String reason, String admin) throws SQLException{
+			long maxTime = (long)21459167 * (long)1000000;
+		
+			PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Bans (IGN, startDate, endDate, reason, admin, pardoned) Values (?,?,?,?,?,?)");
+			ppstmt.setString(1, iGN);
+			ppstmt.setDate(2, new Date(System.currentTimeMillis()));
+			if(permanent){
+				ppstmt.setDate(3, new Date(maxTime));
+			}
+			else{
+				BansSearchObject bso = new BansSearchObject();
+				bso.setiGN(iGN);
+				if(howManyBans(bso)==0){
+					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(86400*1000)));
+				}
+				else if(howManyBans(bso)==1){
+					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(3*86400*1000)));
+				}
+				else if(howManyBans(bso)==2){
+					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(7*86400*1000)));
+				}
+				else{
+					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(28*86400*1000)));
+				}
+			}
+			ppstmt.setString(4, reason);
+			ppstmt.setString(5, "HandsomeMatt");
+			ppstmt.setBoolean(6, false);
+
+			executeUpdate(ppstmt);
+	}
+	
+	public void pardonUser(String iGN) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Bans SET pardoned='true' WHERE IGN = ?");
+		ppstmt.setString(1, iGN);
+		executeUpdate(ppstmt);
+}
 	
 	//CommentModel
 	public void updateComment(String sql, CommentModel cM) throws SQLException { 

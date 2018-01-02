@@ -108,15 +108,16 @@ public class AdminRanks extends HttpServlet {
 				
 				if(dbu.getUserPermission()==2){
 					pw.append("<td>Admin</td>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Demote</button>");
 				}
 				else if(dbu.getUserPermission()==1){
 					pw.append("<td>Moderator</td>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Demote</button><button>Promote</button>");
 				}
 				else{
 					pw.append("<td>Normal</td>");
+					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a><button>Promote</button>");
 				}
-				
-				pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>");
 				
 				pw.append("</td>");
 				pw.append("</tr>");
@@ -183,8 +184,7 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		System.out.println("Posted");
 	}
 
 }
