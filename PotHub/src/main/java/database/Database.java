@@ -386,7 +386,13 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Bans SET pardoned='true' WHERE IGN = ?");
 		ppstmt.setString(1, iGN);
 		executeUpdate(ppstmt);
-}
+	}
+	
+	public void pardonReport(int reportID) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Report SET guiltyOrNot=1 WHERE ReportID = ?");
+		ppstmt.setInt(1, reportID);
+		executeUpdate(ppstmt);
+	}
 	
 	//CommentModel
 	public void updateComment(String sql, CommentModel cM) throws SQLException { 
