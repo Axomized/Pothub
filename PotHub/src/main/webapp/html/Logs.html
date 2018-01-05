@@ -26,55 +26,76 @@
 			<ul>
 				<li><a href="#00">General</a></li>
 				<li><a href="#01">Bans &amp; Appeals</a></li>
-				<li><a href="#02">Donation History</a></li>
+				<li><a href="#02">Donations</a></li>
 				<li><a href="#03">Forum Control</a></li>
-				<li><a href="#04">Support Tickets</a></li>
 				<li><a href="#05">Reports</a></li>
+				<li><a href="#05">Logs</a></li>
 			</ul>
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
-					<form id="searchForm" autocomplete="off" method="get">
-						<div id="filterDiv">
-							<div id="nameDiv" class="searchDiv">
-								<label id="nameLabel" for="nameInput">Search by name:</label>
-								<input type="text" id ="nameInput" class="searchInput" name="nameInput">
+					<div id="dropdownDivWrap">
+						<div id="dropdownDiv">
+							<div id="filterBtnDiv">
+								<button id="filterBtn" onclick="showDropdown()">Filter</button>
 							</div>
-							<div id="typeDiv" class="searchDiv">
-								<label id="typeLabel" for="selectType">Search by type:</label>
-								<select id="selectType" class="searchSelect" name="selectType">
-									<option selected value="All">All</option>
-									<option value="Login">Login</option>
-									<option value="Forum">Forum</option>
-									<option value="Event">Event</option>
-									<option value="Potcast">Potcast</option>
-									<option value="Donation">Donation</option>
-								</select>
-							</div>
-							<div id="dateDiv" class="searchDiv">
-								<label id="dateLabel" for="selectDate">Search by date:</label>
-								<select id="selectDate" class="searchSelect" name="selectDate" onchange="customDateSelect()">
-									<option selected value="All">All</option>
-									<option value="Yesterday">Yesterday</option>
-									<option value="Last week">Last week</option>
-									<option value="Last month">Last month</option>
-									<option value="Custom">Custom</option>
-								</select>
-							</div>
-							<div id="afterDateDiv" class="searchDiv">
-								<label id="afterDateLabel" for="afterDateInput">After:</label>
-								<input type="date" id="afterDateInput" class="searchInput" name="afterDateInput">
-							</div>
-							<div id="beforeDateDiv" class="searchDiv">
-								<label id="beforeDateLabel" for="beforeDateInput">Before:</label>
-								<input type="date" id="beforeDateInput" class="searchInput" name="beforeDateInput">
-							</div>
-							<div id="buttonDiv" class="searchDiv">
-								<input type="submit" id="searchBtn" name="searchBtn" value="Search">
+							<div id="dropdownContentDiv">
+								<form id="searchForm" autocomplete="off" method="get">
+									<div id="filterDiv">
+										<div id="nameDiv" class="searchDiv">
+											<label id="nameLabel" for="username">Search by name:</label>
+											<input type="text" id ="username" class="searchInput" name="username" list="nameList">
+											<datalist id="nameList">
+												
+											</datalist>
+										</div>
+										<div id="typeDiv" class="searchDiv">
+											<label id="typeLabel" for="selectType">Search by type:</label>
+											<select id="selectType" class="searchSelect" name="selectType">
+												<option selected value="All">All</option>
+												<option value="Login">Login</option>
+												<option value="Forum">Forum</option>
+												<option value="Event">Event</option>
+												<option value="Potcast">Potcast</option>
+												<option value="Donation">Donation</option>
+											</select>
+										</div>
+										<div id="suspiciousDiv" class="searchDiv">
+											<label id="suspiciousLabel" for="selectSuspicious">Search by suspicion: </label>
+											<select id="selectSuspicious" class="searchSelect" name="selectSuspicious">
+												<option selected value="All">All</option>
+												<option value="Yes">Yes</option>
+												<option value="No">No</option>
+											</select>
+										</div>
+										<div id="dateDiv" class="searchDiv">
+											<label id="dateLabel" for="selectDate">Search by date:</label>
+											<select id="selectDate" class="searchSelect" name="selectDate" onchange="customDateSelect()">
+												<option selected value="All">All</option>
+												<option value="Yesterday">Yesterday</option>
+												<option value="Last 7 days">Last 7 days</option>
+												<option value="Last 30 days">Last 30 days</option>
+												<option value="Last 90 days">Last 90 days</option>
+												<option value="Custom">Custom</option>
+											</select>
+										</div>
+										<div id="afterDateDiv" class="searchDiv">
+											<label id="afterDateLabel" for="afterDate">After:</label>
+											<input type="date" id="afterDate" class="searchInput" name="afterDate">
+										</div>
+										<div id="beforeDateDiv" class="searchDiv">
+											<label id="beforeDateLabel" for="beforeDate">Before:</label>
+											<input type="date" id="beforeDate" class="searchInput" name="beforeDate">
+										</div>
+										<div id="buttonDiv" class="searchDiv">
+											<input type="submit" id="searchBtn" name="searchBtn" value="Search">
+										</div>
+									</div>
+								</form>
 							</div>
 						</div>
-					</form>
+					</div>
 					<div id="tableWrap">
 						<table id="logsTable" class="table table-striped">
 							<thead>

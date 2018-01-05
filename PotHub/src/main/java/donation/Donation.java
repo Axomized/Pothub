@@ -206,7 +206,7 @@ public class Donation extends HttpServlet {
 		String errorMessage = "";
 		
 		if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-			if (!behalfName.isEmpty() && behalfName != null) {
+			if (behalfName != null && !behalfName.isEmpty()) {
 				if (vc.validateCCNo(ccNumber)) {
 					if (vc.validateCode(ccNumber, securityCode)) {
 						se.sendEmail("", generatePIN());
@@ -223,7 +223,7 @@ public class Donation extends HttpServlet {
 			else {
 				if (vc.validateCCNo(ccNumber)) {
 					if (vc.validateCode(ccNumber, securityCode)) {
-						se.sendEmail("wongweixuan3@gmail.com", generatePIN());
+						se.sendEmail("", generatePIN());
 						//Insert new row in TempStore table
 					}
 					else {
@@ -252,8 +252,11 @@ public class Donation extends HttpServlet {
 		
 		List<String> stringList = Arrays.asList(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode);
 		for (String s : stringList) {
-			if (!s.equals(null) || !s.equals("")) {
+			if (s != null && !s.isEmpty()) {
 				isNotNull = true;
+			}
+			else {
+				isNotNull = false;
 			}
 		}
 		return isNotNull;

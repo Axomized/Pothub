@@ -150,53 +150,88 @@ body {
 	color: #94618e;
 }
 
-#tableWrap {
-	max-height: 400px;
-	width: 70%;
-	margin: auto;
-	overflow: auto;
-	margin-top: 10px;
-	margin-bottom: 20px;
-}
-
-#logsTable {
-	margin-bottom: 0;
-}
-
-#filterDiv {
+#dropdownDivWrap {
 	width: 70%;
 	margin: auto;
 	margin-top: 20px;
 }
 
+#filterBtn {
+	height: 25px;
+	width: 10em;
+	font-weight: 600;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+#filterBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
+}
+
+#dropdownDiv {
+	position: relative;
+}
+
+#dropdownContentDiv {
+	display: none;
+	width: 40%;
+    min-width: 160px;
+    position: absolute;
+    background-color: #f9f9f9;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#filterDiv {
+	width: 70%;
+	min-width: 12em;
+	margin: auto;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
 .searchDiv {
-	width: 15%;
-	display: inline-block;
+	margin-bottom: 10px;
 }
 
 .searchInput {
-	width: 90%;
+	width: 100%;
 	display: block;
 }
 
 .searchSelect {
 	height: 25px;
-	width: 90%;
+	width: 100%;
 	display: block;
 }
 
 #afterDateDiv {
 	display: none;
+	margin-right: 1.5%;
 }
 
 #beforeDateDiv {
 	display: none;
 }
 
+#buttonDiv {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
 #searchBtn {
 	height: 25px;
-	min-width: 5em;
-	width: 90%;
+	width: 7em;
 	font-weight: 600;
     outline: none;
     color: white;
@@ -213,6 +248,19 @@ body {
 	border: 1px solid #49274a;
 	color: #49274a;
 	background-color: #f8eee7;
+}
+
+#tableWrap {
+	max-height: 400px;
+	width: 70%;
+	margin: auto;
+	overflow: auto;
+	margin-top: 10px;
+	margin-bottom: 2.9%;
+}
+
+#logsTable {
+	margin-bottom: 0;
 }
 
 ::-webkit-scrollbar {

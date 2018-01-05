@@ -22,6 +22,34 @@ public class Logs extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(0);
+			LogsSearch logsSearch = new LogsSearch();
+			String iGN = request.getParameter("username");
+			String logType = request.getParameter("selectType");
+			String suspicion = request.getParameter("selectSuspicious");
+			String dateInput = request.getParameter("selectDate");
+			String afterDate = request.getParameter("afterDate");
+			String beforeDate = request.getParameter("beforeDate");
+			
+			if (iGN != null && !iGN.isEmpty()) {
+				logsSearch.setiGN(iGN);
+			}
+			if (logType != null && !logType.isEmpty()) {
+				logsSearch.setLogType(logType);
+			}
+			if (suspicion != null && !suspicion.isEmpty()) {
+				logsSearch.setSuspicion(suspicion);
+			}
+			if (dateInput != null && !dateInput.isEmpty()) {
+				logsSearch.setDateInput(dateInput);
+				
+				if (dateInput.equals("Custom")) {
+					if ((afterDate != null && !afterDate.isEmpty()) && (beforeDate != null && !beforeDate.isEmpty())) {
+						logsSearch.setAfterDate(afterDate);
+						logsSearch.setBeforeDate(beforeDate);
+					}
+				}
+			}
+			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -49,45 +77,78 @@ public class Logs extends HttpServlet {
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
-					+ "				<li><a href='#00'>General</a></li>"
-					+ "				<li><a href='#01'>Bans &amp; Appeals</a></li>"
-					+ "				<li><a href='#02'>Donation History</a></li>"
-					+ "				<li><a href='#03'>Forum Control</a></li>"
-					+ "				<li><a href='#04'>Support Tickets</a></li>"
-					+ "				<li><a href='#05'>Reports</a></li>"
+					+ "				<li><a href='AdminGeneral'>General</a></li>"
+					+ "				<li><a href='AdminBans'>Bans &amp; Appeals</a></li>"
+					+ "				<li><a href='AdminDonations'>Donations</a></li>"
+					+ "				<li><a href='AdminRanks'>Forum Control</a></li>"
+					+ "				<li><a href='AdminReports'>Reports</a></li>"
+					+ "				<li><a href='Logs'>Logs</a></li>"
 					+ "			</ul>"
 					+ "		</div>"
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
 					+ "				<div id='content'>"
-					+ "					<div id='filterDiv'>"
-					+ "						<div id='searchDiv'>"
-					+ "							<label id='searchLabel'>Search:</label>"
-					+ "							<input type='text' id ='searchInput' name='searchInput'>"
-					+ "						</div>"
-					+ "						<div id='selectDiv'>"
-					+ "							<label id='filterLabel'>Filter by:</label>"
-					+ "							<select id='selectFilter' name='selectFilter' onchange='filterText()'>"
-					+ "								<option selected disabled hidden='true'>Type</option>"
-					+ "								<option value='All'>All</option>"
-					+ "								<option value='Login'>Login</option>"
-					+ "								<option value='Forum'>Forum</option>"
-					+ "								<option value='Event'>Event</option>"
-					+ "								<option value='Potcast'>Potcast</option>"
-					+ "								<option value='Donation'>Donation</option>"
-					+ "							</select>"
-					+ "						</div>"
-					+ "						<div id='beforeDateDiv'>"
-					+ "							<label id='beforeDateLabel'>Before:</label>"
-					+ "							<input type='date' id='beforeDateInput' name='beforeDateInput'>"
-					+ "						</div>"
-					+ "						<div id='duringDateDiv'>"
-					+ "							<label id='duringDateLabel'>During:</label>"
-					+ "							<input type='date' id='duringDateInput' name='duringDateInput'>"
-					+ "						</div>"
-					+ "						<div id='afterDateDiv'>"
-					+ "							<label id='afterDateLabel'>After:</label>"
-					+ "							<input type='date' id='afterDateInput' name='afterDateInput'>"
+					+ "					<div id='dropdownDivWrap'>"
+					+ "						<div id='dropdownDiv'>"
+					+ "							<div id='filterBtnDiv'>"
+					+ "								<button id='filterBtn' onclick='showDropdown()'>Filter</button>"
+					+ "							</div>"
+					+ "							<div id='dropdownContentDiv'>"
+					+ "								<form id='searchForm' autocomplete='off' method='get'>"
+					+ "									<div id='filterDiv'>"
+					+ "										<div id='nameDiv' class='searchDiv'>"
+					+ "											<label id='nameLabel' for='username'>Search by name:</label>"
+					+ "											<input type='text' id ='username' class='searchInput' name='username' list='nameList'>"
+					+ "											<datalist id='nameList'>");
+					for (String userIGN : db.getDatabaseUserIGN()) {
+						out.print("<option value='" + userIGN + "'></option>");
+					}
+					out.print("									</datalist>"
+					+ "										</div>"
+					+ "										<div id='typeDiv' class='searchDiv'>"
+					+ "											<label id='typeLabel' for='selectType'>Search by type:</label>"
+					+ "											<select id='selectType' class='searchSelect' name='selectType'>"
+					+ "												<option selected value='All'>All</option>"
+					+ "												<option value='Login'>Login</option>"
+					+ "												<option value='Forum'>Forum</option>"
+					+ "												<option value='Event'>Event</option>"
+					+ "												<option value='Potcast'>Potcast</option>"
+					+ "												<option value='Donation'>Donation</option>"
+					+ "											</select>"
+					+ "										</div>"
+					+ "										<div id='suspiciousDiv' class='searchDiv'>"
+					+ "											<label id='suspiciousLabel' for='selectSuspicious'>Search by suspicion: </label>"
+					+ "											<select id='selectSuspicious' class='searchSelect' name='selectSuspicious'>"
+					+ "												<option selected value='All'>All</option>"
+					+ "												<option value='Yes'>Yes</option>"
+					+ "												<option value='No'>No</option>"
+					+ "											</select>"
+					+ "										</div>"
+					+ "										<div id='dateDiv' class='searchDiv'>"
+					+ "											<label id='dateLabel' for='selectDate'>Search by date:</label>"
+					+ "											<select id='selectDate' class='searchSelect' name='selectDate' onchange='customDateSelect()'>"
+					+ "												<option selected value='All'>All</option>"
+					+ "												<option value='Yesterday'>Yesterday</option>"
+					+ "												<option value='Last 7 days'>Last 7 days</option>"
+					+ "												<option value='Last 30 days'>Last 30 days</option>"
+					+ "												<option value='Last 90 days'>Last 90 days</option>"
+					+ "												<option value='Custom'>Custom</option>"
+					+ "											</select>"
+					+ "										</div>"
+					+ "										<div id='afterDateDiv' class='searchDiv'>"
+					+ "											<label id='afterDateLabel' for='afterDate'>After:</label>"
+					+ "											<input type='date' id='afterDate' class='searchInput' name='afterDate'>"
+					+ "										</div>"
+					+ "										<div id='beforeDateDiv' class='searchDiv'>"
+					+ "											<label id='beforeDateLabel' for='beforeDate'>Before:</label>"
+					+ "											<input type='date' id='beforeDate' class='searchInput' name='beforeDate'>"
+					+ "										</div>"
+					+ "										<div id='buttonDiv' class='searchDiv'>"
+					+ "											<input type='submit' id='searchBtn' name='searchBtn' value='Search'>"
+					+ "										</div>"
+					+ "									</div>"
+					+ "								</form>"
+					+ "							</div>"
 					+ "						</div>"
 					+ "					</div>"
 					+ "					<div id='tableWrap'>"
@@ -103,7 +164,7 @@ public class Logs extends HttpServlet {
 					+ "								</tr>"
 					+ "							</thead>"
 					+ "							<tbody>");
-					for (LogsModel lm : db.getLogs()) {
+					for (LogsModel lm : db.getLogs(logsSearch)) {
 						out.print("<tr>"
 								+ "	<td>" + lm.converTimestamp(lm.getLogDate()) + "</td>"
 								+ "	<td>" + lm.getiPAddress() + "</td>"
@@ -116,6 +177,7 @@ public class Logs extends HttpServlet {
 						else {
 							out.print("<td>No</td>");
 						}
+						out.print("</tr>");
 					}
 					out.print("					</tbody>"
 					+ "						</table>"

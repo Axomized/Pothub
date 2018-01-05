@@ -31,6 +31,7 @@ import database.model.LogsModel;
 import database.model.PeopleEventListModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
+import logs.LogsSearch;
 
 public class Database {
 	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
@@ -169,9 +170,9 @@ public class Database {
 	}
 	
 	//For logs page
-	public ArrayList<LogsModel> getLogs() throws SQLException {
+	public ArrayList<LogsModel> getLogs(LogsSearch logsSearch) throws SQLException {
 		ArrayList<LogsModel> logsList = new ArrayList<LogsModel>();
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspicious FROM Logs;");
+		PreparedStatement ppstmt = conn.prepareStatement(logsSearch.getSearchQuery());
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			String iGN 				= rs.getString("IGN");

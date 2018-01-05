@@ -1,10 +1,8 @@
 package database.model;
 
-import java.sql.Date;
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LogsModel {
 	int logID;
@@ -91,9 +89,9 @@ public class LogsModel {
 	}
 	
 	public String converTimestamp(Timestamp timestamp) {
-		Instant instant = timestamp.toInstant();
-		DateFormat format = new SimpleDateFormat("dd/MM/yyyy hh:mm a");
-		String dateString = format.format(Date.from(instant));
+		LocalDateTime datetime = timestamp.toLocalDateTime();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+		String dateString = datetime.format(format);
 		return dateString;
 	}
 }

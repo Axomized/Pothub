@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class ProfileDonationSearch {
@@ -54,31 +54,31 @@ public class ProfileDonationSearch {
 		this.onBehalf = onBehalf;
 	}
 	
-	public Timestamp selectToTimestamp(String selectString) {
-		Calendar calendar = Calendar.getInstance();
+	private Timestamp selectToTimestamp(String selectString) {
+		LocalDateTime localDateTime = LocalDateTime.now();
 		Timestamp timestamp = null;
 		if (selectString.equals("Yesterday")) {
-			calendar.add(Calendar.DATE, -1);
-			timestamp = new Timestamp(calendar.getTime().getTime());
+			timestamp = Timestamp.valueOf(localDateTime.minusDays(1));
 		}
-		else if (selectString.equals("Last week")) {
-			calendar.add(Calendar.DATE, -7);
-			timestamp = new Timestamp(calendar.getTime().getTime());
+		else if (selectString.equals("Last 7 days")) {
+			timestamp = Timestamp.valueOf(localDateTime.minusDays(7));
 		}
-		else if (selectString.equals("Last month")) {
-			calendar.add(Calendar.DATE, -30);
-			timestamp = new Timestamp(calendar.getTime().getTime());
+		else if (selectString.equals("Last 30 days")) {
+			timestamp = Timestamp.valueOf(localDateTime.minusDays(30));
+		}
+		else if (selectString.equals("Last 90 days")) {
+			timestamp = Timestamp.valueOf(localDateTime.minusDays(90));
 		}
 		return timestamp;
 	}
 	
-	public Timestamp stringToTimestamp(String dateString) throws ParseException {
+	private Timestamp stringToTimestamp(String dateString) throws ParseException {
 		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
 		Timestamp timestamp = new Timestamp(date.getTime());
 		return timestamp;
 	}
 	
-	public String getSearchQuery(String name) throws ParseException {
+	public String getSearchQuery() throws ParseException {
 		String searchQuery = "SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?";
 		
 		if (!dateInput.isEmpty() && dateInput != null) {
@@ -99,12 +99,13 @@ public class ProfileDonationSearch {
 				}
 			}
 		}
-		else if (!(donation_Amount.compareTo(BigDecimal.ZERO) == 0)) {
+		if (!(donation_Amount.compareTo(BigDecimal.ZERO) == 0)) {
 			searchQuery += " AND Donation_Amount = " + donation_Amount;
 		}
-		else if (!onBehalf.isEmpty() && onBehalf != null) {
+		if (!onBehalf.isEmpty() && onBehalf != null) {
 			searchQuery += " AND OnBehalf = " + onBehalf;
 		}
+		
 		searchQuery += ";";
 		
 		return searchQuery;
