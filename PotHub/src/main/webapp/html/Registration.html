@@ -16,21 +16,18 @@
 	<!-- My Own Script -->
 	<script src="../script/SignUp.js"></script>
 	<!-- My Style Sheet -->
-	<link rel="stylesheet" type="text/css" href="../css/SignUp.css" />
+	<link rel="stylesheet" type="text/css" href="../css/Registration.css" />
 </head>
 <body>
 	<h1>Create Your Account</h1>
-	<form name="Registration" action="Registration" method="POST">
+	<form method="post" action="/Registration">
 		<input type="email" name="email" placeholder="Enter your email">
 		<input type="password" name="password" placeholder="Create a password">
 		<input type="password" name="password2" placeholder="Confirm your password">
 		<input type="text" name="name" placeholder="Enter your name">
 		<input type="text" name="contact" placeholder="Enter your phone number">
 		<input type="text" name="address" placeholder="Enter your address">
-		<select>
-  			<option value="male">Male</option>
-  			<option value="female">Female</option>
-  		</select>
+		
 		<input type="submit" name="submit" value="SUBMIT">
 	</form>
 	<div id="footer">

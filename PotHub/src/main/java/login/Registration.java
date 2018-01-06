@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -29,8 +30,53 @@ public class Registration extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		PrintWriter pw = response.getWriter();
+		pw.print(
+				"<!DOCTYPE html>"
+		+ "	<html>"
+		+ "	<head>"
+		+ "		<meta charset='UTF-8'>"
+		+ "		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>"
+		+ "		<!-- Favicon -->"
+		+ "		<link rel='icon' href='https://localhost/PotHub/images/crab.gif' type='image/gif'>"
+		+ "		<link rel='icon' href='https://localhost/PotHub/images/crab.png?v=2' type='image/x-icon'>"
+		+ "		<link href='https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css' rel='stylesheet'>"
+		+ "		<!-- Page Title -->"
+		+ "		<title>Registration Page</title>"
+		+ "		<!-- Latest compiled and CSS -->"
+		+ "		<link rel='stylesheet' "
+		+ "		href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' "
+		+ "		integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' "
+		+ "		crossorigin='anonymous'>"
+		+ "		<!-- Optional theme -->"
+		+ "		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
+		+ "		<!-- My Own Script -->"
+		+ "		<script src='../script/SignUp.js'></script>"
+		+ "		<!-- My Style Sheet -->"
+		+ "		<link rel='stylesheet' type='text/css' href='css/Registration.css' />"
+		+ "	</head>"
+		+ "	<body>"
+		+ "		<h1>Create Your Account</h1>"
+		+ "		<form action='Registration' method='POST'>"
+		+ "			<input type='email' name='email' placeholder='Enter your email'>"
+		+ "			<input type='password' name='password' placeholder='Create a password'>"
+		+ "			<input type='password' name='password2' placeholder='Confirm your password'>"
+		+ "			<input type='text' name='name' placeholder='Enter your name'>"
+		+ "			<input type='text' name='contact' placeholder='Enter your phone number'>"
+		+ "			<input type='text' name='address' placeholder='Enter your address'>"
+		+ "		<input type='submit' name='submit' value='SUBMIT'>"
+		+ "		</form>"
+		+ "		<div id='footer'>"
+		+ "	  		<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
+		+ "	  		<p>We like food</p>"
+		+ "	  		<p> <a href='#''>Terms of Service</a> | <a href='#''>Privacy</a> | <a href='#''>Support</a></p>"
+		+ "		</div>"
+		+ "	<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>"
+		+ "		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>"
+		+ "		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
+		+ "	</body>"
+		+ " </html>"
+		);
 	}
 
 	/**
@@ -38,7 +84,7 @@ public class Registration extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
-		try(PrintWriter out = response.getWriter()){
+		PrintWriter out = response.getWriter();
 			
 			String email = request.getParameter("email");
 			String password = request.getParameter("password");
@@ -46,16 +92,22 @@ public class Registration extends HttpServlet {
 			String name = request.getParameter("name");
 			String contact = request.getParameter("contact");
 			String address = request.getParameter("address");
-			
-			List errorList = new LinkedList();
-			
-			if(name.length() == 0){
-				errorList.add("Enter a name...");
+						
+			if(email.length() == 0 ||
+					password.length() == 0 ||
+					confirmPassword.length() == 0 ||
+					name.length() == 0 ||
+					contact.length() == 0 ||
+					address.length() == 0){
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please make sure that all fields are filled.');");
+				out.println("location='html/Registration.html';");
+				out.println("</script>");
 			}
 			
-		}catch (Exception e){
+			//doGet(request, response);
+
 			
-		}
 	}
 
 }
