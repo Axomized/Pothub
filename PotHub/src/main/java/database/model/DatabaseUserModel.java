@@ -39,6 +39,31 @@ public class DatabaseUserModel {
 		this.isPriviledged = isPriviledged;
 		this.userPermission = userPermission;
 	}
+	
+	//For profile page
+	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo, 
+			int profilePic, Date joinDate, int cookingRank, int points, BigDecimal totalDonation, boolean isPriviledged) {
+		this.email = email;
+		this.iGN = iGN;
+		this.contact_No = contact_No;
+		this.gender = gender;
+		this.bio = bio;
+		this.address = address;
+		this.unitNo = unitNo;
+		this.profilePic = profilePic;
+		this.joinDate = joinDate;
+		this.cookingRank = cookingRank;
+		this.points = points;
+		this.totalDonation = totalDonation;
+		this.isPriviledged = isPriviledged;
+	}
+	
+	//For event page
+	public DatabaseUserModel(int profilePic, int cookingRank, int points) {
+		this.profilePic = profilePic;
+		this.cookingRank = cookingRank;
+		this.points = points;
+	}
 
 	public String getEmail() {
 		return email;

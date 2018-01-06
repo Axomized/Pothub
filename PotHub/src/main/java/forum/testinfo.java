@@ -16,6 +16,7 @@ import database.model.ForumPostModel;
 /**
  * Servlet implementation class testinfo
  */
+
 public class testinfo extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -37,8 +38,8 @@ public class testinfo extends HttpServlet {
 		out.println("This is a test page");
 		try {
 			Database dbms = new Database(2);
-			ArrayList<ForumPostModel> fa = dbms.getForumPostModel("SELECT * FROM ForumPost");
-			out.println("Progress review");
+			ArrayList<ForumPostModel> fa = dbms.getForumModel();
+			out.println("Lets go play league!");
 			for(ForumPostModel qw: fa){
 				out.println("<p>");
 				out.println(qw.getPostID());

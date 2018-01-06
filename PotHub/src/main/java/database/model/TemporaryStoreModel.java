@@ -2,17 +2,17 @@ package database.model;
 
 import java.math.BigDecimal;
 
-public class TemporaryStore {
+public class TemporaryStoreModel {
 	String iGN;
 	BigDecimal temporaryAmount;
 	String temporaryPIN;
-	String temporaryStore;
+	String temporaryOnBehalf;
 	
-	public TemporaryStore(DatabaseUserModel dUM, BigDecimal temporaryAmount, String temporaryPIN, String temporaryStore) {
-		this.iGN = dUM.getiGN();
+	public TemporaryStoreModel(String iGN, BigDecimal temporaryAmount, String temporaryPIN, String TemporaryOnBehalf) {
+		this.iGN = iGN;
 		this.temporaryAmount = temporaryAmount;
 		this.temporaryPIN = temporaryPIN;
-		this.temporaryStore = temporaryStore;
+		this.temporaryOnBehalf = TemporaryOnBehalf;
 	}
 
 	public String getiGN() {
@@ -27,8 +27,8 @@ public class TemporaryStore {
 		return temporaryPIN;
 	}
 
-	public String getTemporaryStore() {
-		return temporaryStore;
+	public String getTemporaryOnBehalf() {
+		return temporaryOnBehalf;
 	}
 
 	public void setiGN(String iGN) {
@@ -43,7 +43,7 @@ public class TemporaryStore {
 		this.temporaryPIN = temporaryPIN;
 	}
 
-	public void setTemporaryStore(String temporaryStore) {
-		this.temporaryStore = temporaryStore;
+	public void setTemporaryOnBehalf(String temporaryOnBehalf) {
+		this.temporaryOnBehalf = temporaryOnBehalf;
 	}
 }

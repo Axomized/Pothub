@@ -1,20 +1,45 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
-		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-		<title>Video Streaming</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js" integrity="sha256-KWJavOowudybFMUCd547Wvd/u8vUg/2g0uSWYU5Ae+w=" crossorigin="anonymous"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha256-nkP8cj5xaTdWK/BsZl+57ZCE/Y/i4UNtbNTpgH+6Taw=" crossorigin="anonymous"></script>
+		<title>Realtime communication with WebRTC</title>
 		<style>
-			
+			.col {
+				display: flex;
+				flex-direction: column;
+			}
+			.row {
+				display: flex;
+			}
+			#messages {
+				overflow-y:scroll;
+				height: 100%;
+			}
+			#localVideo {
+				width: 150px;
+				height: 150px;
+				position: absolute;
+				top: 15px;
+				right: 15px;
+			}
 		</style>
-		<!-- My Own Script -->
-		<script src="../script/VideoStreaming.js"></script>
 	</head>
-	<body onload="connect()">
-		<video autoplay id="video">
-		</video>
+	<body>
+		<div class="col">
+			<video autoplay id="localVideo"></video>
+			<div class="row">
+				username: <input type="text" id="username" />
+				<button id="connectButton" onclick="connect()">connect</button>
+			</div>
+			<div class="row">
+				<textarea id="messages" rows="10" cols="50"></textarea>
+			</div>
+			<div id="videoDiv" class="row">
+			</div>
+		</div>     
+		
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.js" integrity="sha256-pcIHeV2fplzdElupaGGkE0vfUIatGwut2jqr8/paQRU=" crossorigin="anonymous"></script>
+	  	<script src="../script/VideoStreaming.js"></script>
 	</body>
 </html>

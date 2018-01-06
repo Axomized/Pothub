@@ -18,7 +18,15 @@ public class PeopleEventListModel {
 		return eventID;
 	}
 
-	public ArrayList<String> getInvitationPending() {
+	public String getInvitationPending() {
+		return invitationPending;
+	}
+
+	public String getInvitationConfirm() {
+		return invitationConfirm;
+	}
+
+	public ArrayList<String> getInvitationPendingArray() {
 		ArrayList<String> als = new ArrayList<String>();
 		Scanner sc = new Scanner(invitationPending);
 		sc.useDelimiter("_");
@@ -29,7 +37,7 @@ public class PeopleEventListModel {
 		return als;
 	}
 
-	public ArrayList<String> getInvitationConfirm() {
+	public ArrayList<String> getInvitationConfirmArray() {
 		ArrayList<String> als = new ArrayList<String>();
 		Scanner sc = new Scanner(invitationConfirm);
 		sc.useDelimiter("_");
@@ -44,14 +52,22 @@ public class PeopleEventListModel {
 		this.eventID = eventID;
 	}
 
-	public void setInvitationPending(ArrayList<String> invitationPending) {
+	public void setInvitationPending(String invitationPending) {
+		this.invitationPending = invitationPending;
+	}
+
+	public void setInvitationConfirm(String invitationConfirm) {
+		this.invitationConfirm = invitationConfirm;
+	}
+
+	public void setInvitationPendingArray(ArrayList<String> invitationPending) {
 		String line = "";
 		for(String s: invitationPending)
 			line += s;
 		this.invitationPending = line;
 	}
 
-	public void setInvitationConfirm(ArrayList<String> invitationConfirm) {
+	public void setInvitationConfirmArray(ArrayList<String> invitationConfirm) {
 		String line = "";
 		for(String s: invitationConfirm)
 			line += s;

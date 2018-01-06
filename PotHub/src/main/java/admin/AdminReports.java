@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.ReportSearchObject;
 import database.Database;
 import database.model.ReportModel;
 
@@ -18,13 +20,13 @@ import database.model.ReportModel;
  * Servlet implementation class Forum
  */
 @WebServlet("/AdminReports")
-public class ReportPanel extends HttpServlet {
+public class AdminReports extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ReportPanel() {
+	public AdminReports() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,6 +36,27 @@ public class ReportPanel extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
+		
+		ReportSearchObject rso = new ReportSearchObject();
+		
+		if(request.getParameter("reporter")!=null){
+			rso.setiGNSend(request.getParameter("reporter"));
+		}
+		if(request.getParameter("reported")!=null){
+			rso.setiGNReceive(request.getParameter("reported"));
+		}
+		if(request.getParameter("dateIn1")!=null && request.getParameter("dateIn1").length()>0){
+			rso.setDateInOpen(Date.valueOf(request.getParameter("dateIn1")));
+		}
+		if(request.getParameter("dateIn2")!=null && request.getParameter("dateIn2").length()>0){
+			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn2")));
+		}
+		if(request.getParameter("verdict")!=null){
+			rso.setGuiltyOrNot(Integer.parseInt(request.getParameter("verdict")));
+		}
+		if(request.getParameter("evidenceType")!=null && request.getParameter("evidenceType").length()>0){
+			rso.setEvidenceType(request.getParameter("evidenceType"));
+		}
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
@@ -58,7 +81,7 @@ public class ReportPanel extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -82,7 +105,7 @@ public class ReportPanel extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getReportModel("SELECT * FROM Report;");
+			reports = db.getManyReports(rso);
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
@@ -91,15 +114,21 @@ public class ReportPanel extends HttpServlet {
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
 				pw.append("<td>"+rep.getDate()+"</td>");
 				
-				if(rep.isGuiltyOrNot()){
+				if(rep.isGuiltyOrNot()==2){
 					pw.append("<td>Guilty"
 					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-					+"<button>Convict</button></td>");
+					+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Pardon</button></form></td>");
+				}
+				else if(rep.isGuiltyOrNot()==1){
+					pw.append("<td>Innocent"
+							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				else{
-					pw.append("<td>Innocent"
-					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-					+"<button>Pardon</button></td>");
+					pw.append("<td>Undecided"
+						+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
+						+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
@@ -125,46 +154,47 @@ public class ReportPanel extends HttpServlet {
     pw.append("</tbody>"
 +"</table>"
 +"</div>"
++"<form method='get'>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Search Reporter: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Reporter: <div id='textboxes'><input type='text' name='reporter'>"+"</input></div></p>"
 	+"</div>"
 	+"<div id='search'>"
-	+"<p>Search Reported: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Reported: <div id='textboxes'><input type='text' name='reported'>"+"</input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
-	+"<p>Date in between: <div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
-	+"<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>"
+	+"<p>Date in between: <div id='textboxes'><input type='date' name='dateIn1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='date' name='dateIn2'></input></div></p>"
 	+"</div>"
    +"</div>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
 	+"<div id='radios'>"
 	+"<p>Verdict: </p>" 
-	+"<input type='radio' name='search'></input>  Innocent"
-	+"<input type='radio' name='search'></input>  Convicted"
-	+"<input type='radio' name='search'></input>  Undecided"
+	+"<input type='radio' name='verdict' value='1'></input>  Innocent"
+	+"<input type='radio' name='verdict' value='2'></input>  Convicted"
+	+"<input type='radio' name='verdict' value='0'></input>  Undecided"
 	+"</div>"
 	+"</div>"
 	+"<div id='search'>"
-	+"<p>Evidence type: <select>"
-   	+"<option>Comment</option>"
-   	+"<option>Message/option>"
-   	+"<option>Forum Post/option>"
-   	+"<option>Potcast/option>"
+	+"<p>Evidence type: "
+	+"<select name='evidenceType'>"
+	+"<option value=''></option>"
+   	+"<option value='Forum'>Forum Post</option>"
+   	+"<option value='Comment'>Comment</option>"
+   	+"<option value='Message'>Message</option>"
+   	+"<option value='Potcast'>Potcast</option>"
    	+"</select>"
    	+"</div></p>"
 	+"</div>"
 	   +"<div id='fourbox'>"
 	   +"<div id='search'>"
-	   +"<button><</button><button>></button>"
-	   +"</div>"
-	   +"<div id='search'>"
-	   +"<button id='searchButton'>Search</button>"
+	   +"<button id='searchButton' type='submit'>Search</button>"
 	   +"</div>"
 	   +"</div>"
    +"</div>"
    +"</div>"
+   +"</form>"
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"
@@ -180,8 +210,18 @@ public class ReportPanel extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			Database db = new Database(2);
+			if(request.getParameter("whatDo").equals("pardon")){
+				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
+			}
+			if(request.getParameter("whatDo").equals("convict")){
+				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
+			}
+			response.sendRedirect("AdminReports");	
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -67,6 +67,7 @@
 							<div id="profileNavList">
 								<a href="Profile.html">About</a>
 								<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
+								<a href="ProfileDonation.html">Donation History</a>
 							</div>
 						</div>
 						<div id="aboutContentDiv">
@@ -76,21 +77,23 @@
 							<div id="prefInfoDiv">
 								<p>You may choose to remove any food from the blacklist you've made.</p>
 							</div>
-							<form id="removeFoodForm">
-								<div id="foodPrefDiv">
-									<span id="foodPrefSpan">Blacklist of Food</span>
-								</div>
-								<div id="foodListDiv" class="row">
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Beef</span>
-										</label>
+							<form id="removeFoodForm" method="post">
+								<div id="prefListDiv">
+									<div id="foodPrefDiv">
+										<span id="foodPrefSpan">Blacklist of Food</span>
+									</div>
+									<div id="foodListDiv" class="row">
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Beef</span>
+											</label>
+										</div>
 									</div>
 								</div>
 								<div class="buttonsDiv">
-									<button id="saveBtn" class="editBtn">Save changes</button>
+									<input type="submit" id="saveBtn" class="editBtn" value="Save changes">
 								</div>
 							</form>
 						</div>

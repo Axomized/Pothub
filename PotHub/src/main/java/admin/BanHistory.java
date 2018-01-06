@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.BansSearchObject;
 import database.Database;
 import database.model.AppealModel;
 import database.model.BansModel;
@@ -37,6 +38,7 @@ public class BanHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		BansSearchObject bso = new BansSearchObject();
 		String userSubject = "User";
 		if(request.getParameter("user")!=null){
 			userSubject = request.getParameter("user");
@@ -66,7 +68,7 @@ public class BanHistory extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -92,8 +94,8 @@ ArrayList<BansModel> bans = new ArrayList<BansModel>();
 ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
 try {
 	db = new Database(0);
-	bans = db.getBansModel("SELECT * FROM Bans INNER JOIN DatabaseUser ON Bans.IGN = DatabaseUser.IGN WHERE Bans.IGN='"+userSubject+"';");
-	appeals = db.getAppealModel("SELECT * FROM Appeal INNER JOIN DatabaseUser ON Appeal.IGN = DatabaseUser.IGN WHERE Appeal.IGN='"+userSubject+"';");
+	bans = db.getBansModel(bso);
+	appeals = db.getAppeal();
 	for(BansModel ban:bans){
 		pw.append("<tr>");
 		if(ban.getEndDate().compareTo(new Date(System.currentTimeMillis()))>0){
@@ -158,12 +160,13 @@ if((bans.size()+appeals.size())==0){
     pw.append("</tbody>"
 +"</table>"
 +"</div>"
++"<form>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Search Reasons: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Reasons: <div id='textboxes'><input type='text' name='reasons'>"+"</input></div></p>"
 	+"</div>"
 	+"<div id='search'>"
-	+"<p>Search Ban By: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
+	+"<p>Search Ban By: <div id='textboxes'><input type='text' name='admin'>"+"</input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
 	+"<p>Ban Start Between<div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
@@ -188,15 +191,13 @@ if((bans.size()+appeals.size())==0){
 	   	+"</div>"
 	   	+"<div id='fourbox'>"
 	   	+"<div id='search'>"
-	   	+"<button><</button><button>></button>"
-	   	+"</div>"
-	   	+"<div id='search'>"
-	   	+"<button id='searchButton'>Search</button>"
+	   	+"<button id='searchButton' type='submit'>Search</button>"
 	   	+"</div>"
 	   	+"</div>"
 	   +"</div>"
 	+"</div>"
 	+"</div>"
+	+"</form>"
 	+"<div id='footer'>"
 	  +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
 	  +"<p>We like food</p>"

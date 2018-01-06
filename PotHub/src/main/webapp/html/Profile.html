@@ -58,6 +58,12 @@
 						<div id="displayNameDiv">
 							<span id="displayNameSpan">Placeholder</span>
 						</div>
+						<div id="joinedDiv">
+							<span id="joinedSpan">Joined on 31/12/2016</span>
+						</div>
+						<div id="privilegedDiv">
+							<span id="privilegedSpan">Privileged</span>
+						</div>
 						<div id="editProfileBtnDiv">
 							<button id="editProfileBtn" onclick="toEditProfilePage()">Edit profile</button>
 						</div>
@@ -67,6 +73,7 @@
 							<div id="profileNavList">
 								<a href="Profile.html" id="defaultSelected">About</a>
 								<a href="FoodPref.html">Food Preferences</a>
+								<a href="ProfileDonation.html">Donation History</a>
 							</div>
 						</div>
 						<div id="aboutContentDiv">
@@ -86,6 +93,15 @@
 								<div class="thatLine"></div>
 								<div id="lower-RankDiv">
 									<span id="rankSpan">5000</span>
+								</div>
+							</div>
+							<div id="totalAmtDiv">
+								<div id="upper-TotalAmtDiv">
+									Total Amount Donated
+								</div>
+								<div class="thatLine"></div>
+								<div id="lower-TotalAmtDiv">
+									$500
 								</div>
 							</div>
 							<div id="genderDiv">
@@ -130,7 +146,14 @@
 								</div>
 								<div class="thatLine"></div>
 								<div id="lower-AddressDiv">
-									<span id="addressSpan">Insert address of thyself</span>
+									<div id="postalCodeDiv">
+										<span id="psSpan">Postal Code</span>
+										<span id="postalCodeSpan">Insert postal code of thyself</span>
+									</div>
+									<div id="unitNoDiv">
+										<span id="unSpan">Unit Number</span>
+										<span id="unitNoSpan">Insert unit number of thyself</span>
+									</div>
 								</div>
 							</div>
 						</div>

@@ -1,0 +1,346 @@
+html {
+	margin: 0;
+	padding: 0;
+	color: #aaaaaa;
+	background-color: #f8eee7;
+	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
+}
+
+::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+}
+
+/* Structure */
+body {
+	margin: 0;
+	float: left;
+	width: 100vw;
+	background-color: #f8eee7;
+}
+
+#header {
+	float: left;
+	width: 100%;
+	clear: both;
+	background: #f3decb;
+}
+
+#navigation {
+	float: left;
+	width: 100%; 
+	color: #f3decb;
+	background: #49274a;
+}
+
+#wrapper {
+	clear: both;
+	float: left;
+	width: 100%;
+	margin: 0;
+}
+
+#footer {
+	clear: both;
+	float: left;
+	width: 100%; 
+	color: #888888;
+	text-align: center; 
+	background-color: #f3decb;
+}
+
+/* Header */
+
+#header h1 { 
+	padding: 20px; 
+	color:#49274a;
+}
+
+#companyTitle {
+	float: left;
+	padding-top: 10px;
+}
+
+#profilePicWrapDiv {
+	position: relative;
+	display: inline-block;
+	float: right;
+	cursor: pointer;
+}
+
+#profilePic {
+	padding: 10px 20px;
+	text-align: center;
+}
+
+#profileDropdownDiv {
+	display: none;
+	position: absolute;
+	top: 100%;
+	right: 0%;
+	background-color: #f8eee7;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#profileDropdownDiv a {
+	display: block;
+	color: black;
+	font-weight: bold;
+    text-transform: uppercase;
+    padding: 12px 16px;
+    text-decoration: none;
+}
+
+#profileDropdownDiv a:hover {
+	color: #f3decb;
+    font-weight: bold;
+    text-transform: uppercase;
+	background-color: #49274a;
+}
+
+#welcomeSpan {
+	display: block;
+	padding-top: 5px;
+}
+
+/* Navigation */
+
+#navigation ul { 
+	float: left; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+	background: none; 
+	border-width: 0; 
+}
+
+#navigation li { 
+	float: left; 
+}
+
+#navigation a {
+	float: left;
+	display: block;
+	padding: 5px 10px; 
+	text-decoration: none;
+}
+
+#navigation a:link, #navigation a:visited {
+	color: #f3decb;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#navigation a:hover, #navigation a:active {
+	color: #94618e;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
+}
+
+/* Event */
+.row{
+	margin: 0px;
+}
+
+#thumbnail-container{
+	position: relative;
+	margin: 30px 15px;
+}
+
+#thumbnail-container-container{
+	clear: both;
+	display: flex;
+	flex-direction: row;
+}
+
+#thumbnail-container > div > img{
+	float: left;
+}
+
+#thumbnail-container-buttons{
+	float: right;
+	flex: 1;
+	padding: 5px 15px;
+}
+
+#thumbnail-container-buttons > input{
+	display: inline;
+}
+
+/* Popup container */
+#default-thumbnail {
+    position: relative;
+    cursor: pointer;
+}
+
+/* The actual popup (appears on top) */
+#default-thumbnail {
+    display: none;
+    width: auto;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px 0;
+    position: absolute;
+    z-index: 1;
+    bottom: -30px;
+	left: 215px;
+}
+
+/* Popup arrow */
+#default-thumbnail::after {
+    content: "";
+    position: absolute;
+    bottom: 100%;
+    left: 10%;
+    margin-left: -10px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #555 transparent;
+}
+
+#default-thumbnail *{
+	margin: 10px;
+}
+
+#eventname-container{
+	text-align: center;
+	clear: both;
+}
+
+#eventname > p{
+	text-align: left;
+}
+
+#autoaccept > input{
+	position: relative;
+	margin: 0;
+	zoom: 200%;
+}
+
+#description-container{
+	margin: 15px;
+}
+
+#description{
+	resize: none;
+	height: 100px;
+}
+
+#guest-container{
+	margin: 15px;
+	height: 200px;
+	display: flex;
+  	flex-direction: column;
+}
+
+#guest-container > div{
+	flex: 1;
+	border-radius: 15px;
+	overflow: auto;
+}
+
+#guest-container-left-container{
+	display: flex;
+	flex-direction: row;
+	float: left;
+	width: 50%;
+	min-height: 100%;
+	border-right: 2px black solid;
+	background-color: #f3decb;
+	padding: 15px;
+}
+
+guest-container-left-container > i{
+	margin: 3px 0px 0px 5px;
+	height: 28px;
+}
+
+#textguestname{
+	height: 30px;
+}
+
+#guest-container-right-container{
+	float: right;
+	width: 50%;
+	min-height: 100%;
+	background-color: #f3decb;
+	padding: 15px;
+}
+
+#date-container{
+	margin: 15px;
+}
+
+#datetime-container{
+	display: flex;
+	flex-direction: row;
+}
+
+#timeinput{
+	width: 120px;
+}
+
+#gallery-container{
+	margin: 15px;
+}
+
+#gallery-add {
+    position: relative;
+    overflow: hidden;
+    margin: 10px;
+}
+
+#gallery-add input#upload {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    cursor: pointer;
+    opacity: 0;
+    filter: alpha(opacity=0);
+}
+
+#gallery > div{
+	margin: 15px;
+}
+
+#button-container{
+	margin:15px;
+	text-align: right;
+}
+
+.requiredInput{
+	color: red;
+	font-size: 12px;
+	padding-left: 5px;
+}
+
+/* Footer */
+
+#footer p { 
+	margin: 15px 0; 
+}
+
+#footer a:link { 
+	color: #888888; 
+	font-weight: bold; 
+	text-decoration:  none;
+}
+
+#footer a:visited { 
+	color: #666666; 
+	font-weight: bold;
+}
+
+#footer a:hover, #footer a:active { 
+	color: #666666;
+}

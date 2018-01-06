@@ -3,6 +3,7 @@ package database.model;
 import java.sql.Date;
 
 public class BansModel {
+	int banID;
 	String iGN;
 	Date startDate;
 	Date endDate;
@@ -10,9 +11,12 @@ public class BansModel {
 	String admin;
 	boolean pardoned;
 
-	public BansModel(String iGN, Date startDate, Date endDate, String reason, String admin,
+	
+
+	public BansModel(int banID, String iGN, Date startDate, Date endDate, String reason, String admin,
 			boolean pardoned) {
 		super();
+		this.banID = banID;
 		this.iGN = iGN;
 		this.startDate = startDate;
 		this.endDate = endDate;
@@ -20,6 +24,11 @@ public class BansModel {
 		this.admin = admin;
 		this.pardoned = pardoned;
 	}
+
+	public int getBanID() {
+		return banID;
+	}
+
 
 	public String getiGN() {
 		return iGN;
@@ -43,6 +52,10 @@ public class BansModel {
 
 	public boolean isPardoned() {
 		return pardoned;
+	}
+
+	public void setBanID(int banID) {
+		this.banID = banID;
 	}
 
 	public void setiGN(String iGN) {

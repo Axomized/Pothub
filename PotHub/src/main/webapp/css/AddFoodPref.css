@@ -194,14 +194,6 @@ body {
 	background: #49274a;
 }
 
-.thatLine {
-	content: "";
-    display: block;
-    margin: auto;
-    width: 90%;
-    border-top: 1px solid #f8eee7;
-}
-
 #profilePicDiv {
 	text-align:center;
 	border-right: 2px solid #e36209;
@@ -224,7 +216,7 @@ body {
 }
 
 #profileNavList {
-	display: flex;
+	padding: 9px 0px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -239,15 +231,11 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #49274a;
+	border-bottom: 2px solid #e36209;
 }
 
 #defaultSelected {
 	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
 }
 
 #aboutContentDiv {
@@ -256,8 +244,7 @@ body {
 
 #removeBtnDiv {
 	text-align: center;
-    padding: 9px 8px;
-    margin: 0;
+    margin-bottom: 0;
 }
 
 #prefHeaderDiv {
@@ -275,7 +262,7 @@ body {
 	text-align: center;
 	margin-top: 10px;
     margin-bottom: 10px;
-    padding: 5px 0px;
+    padding: 5px;
     font-size: 17px;
     font-weight: 600;
     color: white;
@@ -288,7 +275,23 @@ body {
 }
 
 #addBtn {
-	margin-right: 9px;
+	margin-right: 6px;
+}
+
+#otherInput {
+	width: 160px;
+	display: none;
+	margin-right: 8px;
+}
+
+#otherBtn {
+	display: none;
+	margin-right: 8px;
+	cursor: not-allowed;
+}
+
+#doneBtn {
+	display: none;
 }
 
 .editBtn {
@@ -300,9 +303,10 @@ body {
     background-color: #49274a;
     cursor: pointer;
     border-radius: 4px;
-    border-color: transparent;
+    border: none;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     text-transform: uppercase;
+    line-height: 1;
 }
 
 .editBtn:hover {

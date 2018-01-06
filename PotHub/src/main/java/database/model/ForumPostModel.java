@@ -1,18 +1,18 @@
 package database.model;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class ForumPostModel {
 	int postID;
 	String thread;
 	int upvotes;
 	String iGN;
-	Date date;
+	Timestamp date;
 	int picture;
 	String description;
 	String fileAttachment;
 	
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Date date, int picture, String description, String fileAttachment) {
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, int picture, String description, String fileAttachment) {
 		this.postID = postID;
 		this.thread = thread;
 		this.upvotes = upvotes;
@@ -39,7 +39,7 @@ public class ForumPostModel {
 		return iGN;
 	}
 
-	public Date getDate() {
+	public Timestamp getDate() {
 		return date;
 	}
 
@@ -71,7 +71,7 @@ public class ForumPostModel {
 		this.iGN = iGN;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(Timestamp date) {
 		this.date = date;
 	}
 

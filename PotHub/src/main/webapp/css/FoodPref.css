@@ -188,14 +188,6 @@ body {
 	background: #49274a;
 }
 
-.thatLine {
-	content: "";
-    display: block;
-    margin: auto;
-    width: 90%;
-    border-top: 1px solid #f8eee7;
-}
-
 #profilePicDiv {
 	text-align:center;
 	border-right: 2px solid #e36209;
@@ -218,7 +210,7 @@ body {
 }
 
 #profileNavList {
-	display: flex;
+	padding: 9px 0px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -233,15 +225,11 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #49274a;
+	border-bottom: 2px solid #e36209;
 }
 
 #defaultSelected {
 	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
 }
 
 #aboutContentDiv {

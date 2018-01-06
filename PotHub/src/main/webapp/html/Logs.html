@@ -4,13 +4,13 @@
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 		<!-- Page Title -->
-		<title>PotHub Logs</title>
+		<title>Logs</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/"></script>
+		<script src="../script/Logs.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/Logs.css">
 	</head>
@@ -26,47 +26,79 @@
 			<ul>
 				<li><a href="#00">General</a></li>
 				<li><a href="#01">Bans &amp; Appeals</a></li>
-				<li><a href="#02">Donation History</a></li>
+				<li><a href="#02">Donations</a></li>
 				<li><a href="#03">Forum Control</a></li>
-				<li><a href="#04">Support Tickets</a></li>
 				<li><a href="#05">Reports</a></li>
+				<li><a href="#05">Logs</a></li>
 			</ul>
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
-					<div id="filterDiv">
-						<div id="searchDiv">
-							<label id="searchLabel">Search:</label>
-							<input type="text" id ="searchInput" name="searchInput">
-						</div>
-						<div id="selectDiv">
-							<label id="filterLabel">Filter by:</label>
-							<select id="selectFilter" name="selectFilter">
-								<option selected disabled hidden="true">Type</option>
-								<option value="Login">Login</option>
-								<option value="Forum">Forum</option>
-								<option value="Event">Event</option>
-								<option value="Potcast">Potcast</option>
-								<option value="Donation">Donation</option>
-							</select>
-						</div>
-						<div id="beforeDateDiv">
-							<label id="beforeDateLabel">Before:</label>
-							<input type="date" id="beforeDateInput" name="beforeDateInput">
-						</div>
-						<div id="duringDateDiv">
-							<label id="duringDateLabel">During:</label>
-							<input type="date" id="duringDateInput" name="duringDateInput">
-						</div>
-						<div id="afterDateDiv">
-							<label id="afterDateLabel">After:</label>
-							<input type="date" id="afterDateInput" name="afterDateInput">
+					<div id="dropdownDivWrap">
+						<div id="dropdownDiv">
+							<div id="filterBtnDiv">
+								<button id="filterBtn" onclick="showDropdown()">Filter</button>
+							</div>
+							<div id="dropdownContentDiv">
+								<form id="searchForm" autocomplete="off" method="get">
+									<div id="filterDiv">
+										<div id="nameDiv" class="searchDiv">
+											<label id="nameLabel" for="username">Search by name:</label>
+											<input type="text" id ="username" class="searchInput" name="username" list="nameList">
+											<datalist id="nameList">
+												
+											</datalist>
+										</div>
+										<div id="typeDiv" class="searchDiv">
+											<label id="typeLabel" for="selectType">Search by type:</label>
+											<select id="selectType" class="searchSelect" name="selectType">
+												<option selected value="All">All</option>
+												<option value="Login">Login</option>
+												<option value="Forum">Forum</option>
+												<option value="Event">Event</option>
+												<option value="Potcast">Potcast</option>
+												<option value="Donation">Donation</option>
+											</select>
+										</div>
+										<div id="suspiciousDiv" class="searchDiv">
+											<label id="suspiciousLabel" for="selectSuspicious">Search by suspicion: </label>
+											<select id="selectSuspicious" class="searchSelect" name="selectSuspicious">
+												<option selected value="All">All</option>
+												<option value="Yes">Yes</option>
+												<option value="No">No</option>
+											</select>
+										</div>
+										<div id="dateDiv" class="searchDiv">
+											<label id="dateLabel" for="selectDate">Search by date:</label>
+											<select id="selectDate" class="searchSelect" name="selectDate" onchange="customDateSelect()">
+												<option selected value="All">All</option>
+												<option value="Yesterday">Yesterday</option>
+												<option value="Last 7 days">Last 7 days</option>
+												<option value="Last 30 days">Last 30 days</option>
+												<option value="Last 90 days">Last 90 days</option>
+												<option value="Custom">Custom</option>
+											</select>
+										</div>
+										<div id="afterDateDiv" class="searchDiv">
+											<label id="afterDateLabel" for="afterDate">After:</label>
+											<input type="date" id="afterDate" class="searchInput" name="afterDate">
+										</div>
+										<div id="beforeDateDiv" class="searchDiv">
+											<label id="beforeDateLabel" for="beforeDate">Before:</label>
+											<input type="date" id="beforeDate" class="searchInput" name="beforeDate">
+										</div>
+										<div id="buttonDiv" class="searchDiv">
+											<input type="submit" id="searchBtn" name="searchBtn" value="Search">
+										</div>
+									</div>
+								</form>
+							</div>
 						</div>
 					</div>
 					<div id="tableWrap">
 						<table id="logsTable" class="table table-striped">
-							<thead id="tableHead">
+							<thead>
 								<tr>
 									<th>Date</th>
 									<th>IP Address</th>
@@ -177,7 +209,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Event</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>
@@ -185,7 +217,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Forum</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>
@@ -193,7 +225,7 @@
 									<td>28/11/2017 6:30 PM</td>
 									<td>192.168.1.17</td>
 									<td>Really Long Name</td>
-									<td>Donation</td>
+									<td>Forum</td>
 									<td>Donated $100 on behalf of Really Short Name</td>
 									<td>No</td>
 								</tr>

@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import adminSearch.ReportSearchObject;
 import database.Database;
 import database.model.ReportModel;
 
@@ -34,9 +36,23 @@ public class ReportHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
+		ReportSearchObject rso = new ReportSearchObject();
 		String subjectUser = "user";
 		if(request.getParameter("user") != null){
 			subjectUser=request.getParameter("user");
+			rso.setiGNReceive(subjectUser);
+		}
+		if(request.getParameter("dateIn1")!=null && request.getParameter("dateIn1").length()>0){
+			rso.setDateInOpen(Date.valueOf(request.getParameter("dateIn1")));
+		}
+		if(request.getParameter("dateIn2")!=null && request.getParameter("dateIn2").length()>0){
+			rso.setDateInClose(Date.valueOf(request.getParameter("dateIn2")));
+		}
+		if(request.getParameter("verdict")!=null){
+			rso.setGuiltyOrNot(Integer.parseInt(request.getParameter("verdict")));
+		}
+		if(request.getParameter("evidenceType")!=null && request.getParameter("evidenceType").length()>0){
+			rso.setEvidenceType(request.getParameter("evidenceType"));
 		}
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -62,7 +78,7 @@ public class ReportHistory extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -86,37 +102,46 @@ public class ReportHistory extends HttpServlet {
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
-			reports = db.getReportModel("SELECT * FROM Report WHERE IGNReceive = "+subjectUser+";");
+			reports = db.getPersonalReports(rso);
 			
 			for(ReportModel rep:reports){
 				pw.append("<tr>");
 				pw.append("<td>"+rep.getiGNSend()+"</td>");
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
-				pw.append("<td>Bad Stuff</td>");
+				pw.append("<td>"+rep.getReason()+"</td>");
 				pw.append("<td>"+rep.getDate());
-				pw.append("<td>"+rep.isGuiltyOrNot()+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>");
-				
-				if(rep.isGuiltyOrNot()){
-					pw.append("<button>Convict</button>");
+				if(rep.isGuiltyOrNot()==0){
+					pw.append("<td>Undecided");
+				}
+				else if(rep.isGuiltyOrNot()==1){
+					pw.append("<td>Innocent");
 				}
 				else{
+					pw.append("<td>Guilty");
+				}
+
+				pw.append("<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'></a>");
+				
+				if(rep.isGuiltyOrNot()==0||rep.isGuiltyOrNot()==1){
+					pw.append("<button>Convict</button>");
+				}
+				if(rep.isGuiltyOrNot()==2){
 					pw.append("<button>Pardon</button>");
 				}
 				
 				pw.append("</td>");
 				pw.append("</tr>");
-				
-				if(reports.size()<10){
-					for(int i = 0; i < (10-reports.size());i++){
-					pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
-					}
-				}
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} 
+		if(reports.size()<10){
+			for(int i = 0; i < (10-reports.size());i++){
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			}
+		}
 		if(reports.size()==0){
 			for(int i = 0; i < 10;i++){
 				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
@@ -126,46 +151,42 @@ public class ReportHistory extends HttpServlet {
 pw.append("</tbody>"
 +"</table>"
 +"</div>"
++"<form>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
 	+"<p>Search Reporter: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
 	+"</div>"
-	+"<div id='search'>"
-	+"<p>Search Reported: <div id='textboxes'><input type='text' name='search'>"+"</input></div></p>"
-	+"</div>"
 	+ "<div id='search'>"
-	+"<p>Date in between: <div id='textboxes'><input type='date' name='banStart1'></input></div></p>"
-	+"<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>"
+	+"<p>Date in between: <div id='textboxes'><input type='date' name='dateIn1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='date' name='dateIn2'></input></div></p>"
 	+"</div>"
    +"</div>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
 	+"<div id='radios'>"
 	+"<p>Verdict: </p>" 
-	+"<input type='radio' name='search'></input>  Innocent"
-	+"<input type='radio' name='search'></input>  Convicted"
-	+"<input type='radio' name='search'></input>  Undecided"
+	+"<input type='radio' name='verdict' value='1'></input>  Innocent"
+	+"<input type='radio' name='verdict' value='2'></input>  Convicted"
+	+"<input type='radio' name='verdict' value='0'></input>  Undecided"
 	+"</div>"
 	+"</div>"
 	+"<div id='search'>"
 	+"<p>Evidence type: <select>"
    	+"<option>Comment</option>"
-   	+"<option>Message/option>"
-   	+"<option>Forum Post/option>"
-   	+"<option>Potcast/option>"
+   	+"<option>Message</option>"
+   	+"<option>Forum Post</option>"
+   	+"<option>Potcast</option>"
    	+"</select>"
    	+"</div></p>"
 	+"</div>"
 	   +"<div id='fourbox'>"
 	   +"<div id='search'>"
-	   +"<button><</button><button>></button>"
-	   +"</div>"
-	   +"<div id='search'>"
-	   +"<button id='searchButton'>Search</button>"
+	   +"<button id='searchButton' type='submit'>Search</button>"
 	   +"</div>"
 	   +"</div>"
    +"</div>"
    +"</div>"
+   +"</form>"
 +"<div id='footer'>"
   +"<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
   +"<p>We like food</p>"

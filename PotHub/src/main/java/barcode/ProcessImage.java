@@ -3,7 +3,6 @@ package barcode;
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
@@ -59,8 +58,8 @@ public class ProcessImage extends HttpServlet {
 				e.printStackTrace();
 			}
 
-			File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
-			ImageIO.write(img, "png", outputfile);
+			//File outputfile = new File(System.getProperty("user.home") + "\\Documents\\GitHub\\PotHub\\PotHub\\src\\main\\webapp\\images\\image.png");
+			//ImageIO.write(img, "png", outputfile);
 		}
 		
 	}

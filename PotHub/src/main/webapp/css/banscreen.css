@@ -362,6 +362,9 @@ input {
 	background: #f8eee7;
 }
 
+td form{
+	display:inline;
+}
 /* Footer */
 
 #footer p { margin: 15px 0; }

@@ -1,6 +1,7 @@
 @CHARSET "ISO-8859-1";
 html
 {
+	overflow-wrap: break-word;
 	margin: 0;
 	padding: 0;
 	color: #aaaaaa;
@@ -164,7 +165,7 @@ body
 
 .top-container-image-gradient{
 	position: absolute;
-	bottom: 0;
+	top: 0;
 	width: 100%;
 	height: 100%;
 	background: -moz-linear-gradient(top, rgba(28,28,28,0) 0%, rgba(28,28,28,0.96) 96%, rgba(0,0,0,1) 100%);
@@ -198,8 +199,8 @@ hr {
 }
 
 .event-layout-title{
-	font-size: 4vw;
 	font-weight: bold;
+	font-size: 4vw;
 }
 
 .event-layout-guest-guest{
@@ -210,10 +211,15 @@ hr {
 .event-title{
 	position: absolute;
 	bottom: 0;
-	height: 6vw;
+	left: 0;
 	width: 100%;
 	font-size: 4vw;
-	padding: 0px 0px 20px 10px;
+	vertical-align: bottom;
+	font-size: 4vw;
+}
+
+.event-title > p{
+	margin: 0;
 }
 
 .top-container-bottom{

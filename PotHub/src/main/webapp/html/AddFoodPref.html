@@ -67,6 +67,7 @@
 							<div id="profileNavList">
 								<a href="Profile.html">About</a>
 								<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
+								<a href="ProfileDonation.html">Donation History</a>
 							</div>
 						</div>
 						<div id="aboutContentDiv">
@@ -79,262 +80,308 @@
 							</div>
 							<div id="addBtnDiv" class="buttonsDiv">
 								<button id="addBtn" class="editBtn" onclick="addOthers()">Add other food</button>
+								<input type="text" id="otherInput" placeholder="Please enter a food">
+								<button id="otherBtn" class="editBtn" disabled>Add to list</button>
+								<button id="doneBtn" class="editBtn">Done</button>
 							</div>
-							<form id="addFoodForm">
-								<div class="foodPrefDiv">
-									<span class="foodPrefSpan">Meat</span>
-								</div>
-								<div class="foodListDiv row">
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Chicken">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Chicken</span>
-										</label>
+							<form id="addFoodForm" method="post">
+								<div id="meatListDiv">
+									<div class="foodPrefDiv">
+										<span class="foodPrefSpan">Meat</span>
 									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Beef</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Pork">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Pork</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Fish">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Fish</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Lamb">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Lamb</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Crab">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Crab</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Prawn">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Prawn</span>
-										</label>
-									</div>
-								</div>
-								<div class="foodPrefDiv">
-									<span class="foodPrefSpan">Vegetables</span>
-								</div>
-								<div class="foodListDiv row">
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Potato">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Potato</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cabbage">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Cabbage</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Broccoli">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Broccoli</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Carrot">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Carrot</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Lettuce">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Lettuce</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Onion">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Onion</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Garlic">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Garlic</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cucumber">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Cucumber</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Spinach">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Spinach</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Asparagus">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Asparagus</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cauliflower">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Cauliflower</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Celery">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Celery</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Kale">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Kale</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Corn">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Corn</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Radish">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Radish</span>
-										</label>
+									<div class="foodListDiv row">
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Chicken">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Chicken</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Beef">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Beef</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Pork">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Pork</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Fish">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Fish</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Lamb">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Lamb</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Crab">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Crab</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Prawn">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Prawn</span>
+											</label>
+										</div>
 									</div>
 								</div>
-								<div class="foodPrefDiv">
-									<span class="foodPrefSpan">Fruits</span>
+								<div id="vegetableListDiv">
+									<div class="foodPrefDiv">
+										<span class="foodPrefSpan">Vegetables</span>
+									</div>
+									<div class="foodListDiv row">
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Potato">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Potato</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cabbage">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Cabbage</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Broccoli">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Broccoli</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Carrot">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Carrot</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Lettuce">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Lettuce</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Onion">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Onion</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Garlic">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Garlic</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cucumber">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Cucumber</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Spinach">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Spinach</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Asparagus">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Asparagus</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cauliflower">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Cauliflower</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Celery">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Celery</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Kale">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Kale</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Corn">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Corn</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Radish">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Radish</span>
+											</label>
+										</div>
+									</div>
 								</div>
-								<div class="foodListDiv row">
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Apple">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Apple</span>
-										</label>
+								<div id="fruitListDiv">
+									<div class="foodPrefDiv">
+										<span class="foodPrefSpan">Fruits</span>
 									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Pear">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Pear</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Orange">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Orange</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Grape">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Grape</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Mango">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Mango</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Watermelon">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Watermelon</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Durian">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Durian</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Dragonfruit">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Dragonfruit</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Strawberry">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Strawberry</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Blueberry">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Blueberry</span>
-										</label>
-									</div>
-									<div class="foodDiv col-sm-3">
-										<label class="custom-control custom-checkbox foodLabel">
-											<input type="checkbox" class="custom-control-input" name="foodChosen" value="Raspberry">
-											<span class="custom-control-indicator"></span>
-	  										<span class="custom-control-description">Raspberry</span>
-										</label>
+									<div class="foodListDiv row">
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Apple">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Apple</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Pear">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Pear</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Orange">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Orange</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Grape">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Grape</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Mango">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Mango</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Watermelon">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Watermelon</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Durian">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Durian</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Dragonfruit">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Dragonfruit</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Strawberry">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Strawberry</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Blueberry">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Blueberry</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Raspberry">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Raspberry</span>
+											</label>
+										</div>
 									</div>
 								</div>
-								<div class="foodPrefDiv">
-									<span class="foodPrefSpan">Others</span>
+								<div id="dairyListDiv">
+									<div class="foodPrefDiv">
+										<span class="foodPrefSpan">Dairy</span>
+									</div>
+									<div class="foodListDiv row">
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Milk">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Milk</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Butter">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Butter</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cheese">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Cheese</span>
+											</label>
+										</div>
+										<div class="foodDiv col-sm-3">
+											<label class="custom-control custom-checkbox foodLabel">
+												<input type="checkbox" class="custom-control-input" name="foodChosen" value="Cream">
+												<span class="custom-control-indicator"></span>
+		  										<span class="custom-control-description">Cream</span>
+											</label>
+										</div>
+									</div>
 								</div>
-								<div id="otherFoodDiv" class="foodListDiv row">
-									
+								<div id="otherListDiv">
+									<div class="foodPrefDiv">
+										<span class="foodPrefSpan">Others</span>
+									</div>
+									<div id="otherFoodDiv" class="foodListDiv row">
+										
+									</div>
 								</div>
 								<div class="buttonsDiv">
-									<button id="saveBtn" class="editBtn">Save changes</button>
+									<input type="submit" id="saveBtn" class="editBtn" value="Save Changes">
 								</div>
 							</form>
 						</div>
@@ -350,7 +397,6 @@
 			</p>
 		</div>
 		<!-- Optional Bootstrap Scripts -->
-		<!-- <script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script> -->
 		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>

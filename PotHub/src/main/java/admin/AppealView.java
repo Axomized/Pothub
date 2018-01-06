@@ -63,7 +63,7 @@ public class AppealView extends HttpServlet {
 +"<li>"+"<a href='AdminGeneral'>General</a>"+"</li>"
 +"<li>"+"<a href='AdminBans'>Bans & Appeals</a>"+"</li>"
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
-+"<li>"+"<a href='AdminForumControl'>Forum Control</a>"+"</li>"
++"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
@@ -77,7 +77,7 @@ public class AppealView extends HttpServlet {
   			try {
 				db = new Database(0);
 
-			ArrayList<AppealModel> appeals = db.getAppealModel("SELECT * FROM Appeals WHERE ID = "+ appealID +";");
+			ArrayList<AppealModel> appeals = db.getAppeal();
 			reason = appeals.get(0).getMessage();
 			date = appeals.get(0).getReceiveDate();
 			} catch (ClassNotFoundException e) {

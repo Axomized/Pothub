@@ -1,18 +1,24 @@
 package database.model;
 
 import java.math.BigDecimal;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 public class DonationModel {
 	int donationID;
 	String iGN;
-	Date donation_Date;
+	Timestamp donation_Date;
 	BigDecimal donation_Amount;
 	String onBehalf;
 
-	public DonationModel(int donationID, String iGN, Date donation_Date, BigDecimal donation_Amount, String onBehalf) {
+	public DonationModel(int donationID, String iGN, Timestamp donation_Date, BigDecimal donation_Amount, String onBehalf) {
 		this.donationID = donationID;
 		this.iGN = iGN;
+		this.donation_Date = donation_Date;
+		this.donation_Amount = donation_Amount;
+		this.onBehalf = onBehalf;
+	}
+	
+	public DonationModel(Timestamp donation_Date, BigDecimal donation_Amount, String onBehalf) {
 		this.donation_Date = donation_Date;
 		this.donation_Amount = donation_Amount;
 		this.onBehalf = onBehalf;
@@ -26,7 +32,7 @@ public class DonationModel {
 		return iGN;
 	}
 
-	public Date getDonation_Date() {
+	public Timestamp getDonation_Date() {
 		return donation_Date;
 	}
 
@@ -42,7 +48,7 @@ public class DonationModel {
 		this.iGN = iGN;
 	}
 
-	public void setDonation_Date(Date donation_Date) {
+	public void setDonation_Date(Timestamp donation_Date) {
 		this.donation_Date = donation_Date;
 	}
 

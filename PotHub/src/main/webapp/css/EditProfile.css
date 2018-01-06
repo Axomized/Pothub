@@ -252,7 +252,7 @@ body {
 }
 
 #profileNavList {
-	display: flex;
+	padding: 9px 0px;
 	border-bottom: 1px solid #ccc;
 }
 
@@ -267,15 +267,11 @@ body {
 
 #profileNavList a:hover {
 	color: #49274a;
-	border-bottom: 2px solid #49274a;
+	border-bottom: 2px solid #e36209;
 }
 
 #defaultSelected {
 	border-bottom: 2px solid #e36209;
-}
-
-#defaultSelected:hover {
-	border-bottom: 2px solid #e36209 !important;
 }
 
 #changeProfileDiv {
@@ -287,7 +283,6 @@ body {
 }
 
 #editProfileInfoDiv {
-	height: 70px;
 	padding: 10px 8px;
     border: 2px solid #49274a;
 }
@@ -348,6 +343,15 @@ body {
 	
 }
 
+#errorMsg {
+	display: none;
+	width: 50%;
+	margin-top: 10px;
+	color: white;
+	background-color: #f74225;
+	padding: 5px;
+}
+
 #genderDiv {
     background-color: #f3decb;
     padding: 10px 8px;
@@ -365,6 +369,7 @@ body {
 	border: 1px solid #ccc;
 	border-radius: 4px;
 	box-shadow: inset 0 2px 3px #ddd;
+	cursor: pointer;
 }
 
 #emailDiv {
@@ -451,16 +456,17 @@ body {
 
 #updateBtn {
 	height: 25px;
-    width: 120px;
+    width: 160px;
     font-weight: 600;
     outline: none;
     color: white;
     background-color: #49274a;
     cursor: not-allowed;
     border-radius: 4px;
-    border-color: transparent;
+    border: none;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     text-transform: uppercase;
+    line-height: 1;
     float: right;
 }
 
