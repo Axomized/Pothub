@@ -185,3 +185,4 @@
 		<url-pattern>/Image/*</url-pattern>
 	</servlet-mapping>
 </web-app>
+
