@@ -76,6 +76,8 @@ public class AdminBans extends HttpServlet {
 +"<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
 +"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
 +"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='script/jquery.tablesorter.min.js'></script>"
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
@@ -94,7 +96,7 @@ public class AdminBans extends HttpServlet {
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
     + "<div id='tableWrapper'>"
-    +"<table class='table table-striped'>"
+    +"<table class='table table-striped tablesorter' id='myTable'>"
     +"<thead>"
         +"<tr>"
             +"<th>Username</th>"
@@ -102,6 +104,7 @@ public class AdminBans extends HttpServlet {
             +"<th>Ban Date</th>"
             +"<th>Ban End</th>"
             +"<th>Banned by</th>"
+            +"<th>&nbsp;</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
@@ -119,9 +122,9 @@ public class AdminBans extends HttpServlet {
 				pw.append("<td>"+ban.getReason()+"</td>");
 				pw.append("<td>"+ban.getStartDate()+"</td>");
 				pw.append("<td>"+ban.getEndDate()+"</td>");
-				pw.append("<td>"+ban.getAdmin());
+				pw.append("<td>"+ban.getAdmin()+"</td>");
 				
-				pw.append("<a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
+				pw.append("<td><a href='HistoryAdminBans?user="+ban.getiGN()+"'><button>History</button></a>");
 				
 				if(appeals.get(counter).getMessage()!=null && !ban.isPardoned()){
 					pw.append("<form method='post'><input type='hidden' name='ign' value='"+ban.getiGN()+"'></input><button type='submit'>Pardon</button></form><a href='AppealView?user="+ban.getiGN()+"&appealID="+appeals.get(counter).getAppealID()+"'><button>Read</button></a>");
@@ -138,6 +141,7 @@ public class AdminBans extends HttpServlet {
 						+ "<td>&nbsp;</td>"
 						+ "<td>&nbsp;</td>"
 						+ "<td>&nbsp;</td>"
+						+ "<td>&nbsp;</td>"
 						+ "<td>&nbsp;</td></tr>");
 				}
 			}
@@ -150,7 +154,7 @@ public class AdminBans extends HttpServlet {
 		} 
 		if(bans.size()==0){
 			for(int i = 0; i < 10;i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 		}
 		

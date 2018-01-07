@@ -71,6 +71,7 @@ public class AdminReports extends HttpServlet {
 +"<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
 +"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
 +"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='script/jquery.tablesorter.min.js'></script>"
 +"</head>"
 +"<body>"
 +"<div id='header'>"
@@ -89,7 +90,7 @@ public class AdminReports extends HttpServlet {
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
     + "<div id='tableWrapper'>"
-    +"<table class='table table-striped'>"
+    +"<table class='table table-striped tablesorter' id='myTable'>"
     +"<thead>"
         +"<tr>"
             +"<th>Reporter</th>"
@@ -97,6 +98,7 @@ public class AdminReports extends HttpServlet {
             +"<th>Type</th>"
             +"<th>Date In</th>"
             +"<th>Verdict</th>"
+            +"<th>&nbsp;</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
@@ -115,17 +117,17 @@ public class AdminReports extends HttpServlet {
 				pw.append("<td>"+rep.getDate()+"</td>");
 				
 				if(rep.isGuiltyOrNot()==2){
-					pw.append("<td>Guilty"
+					pw.append("<td>Guilty</td><td>"
 					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
 					+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Pardon</button></form></td>");
 				}
 				else if(rep.isGuiltyOrNot()==1){
-					pw.append("<td>Innocent"
+					pw.append("<td>Innocent</td><td>"
 							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
 							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				else{
-					pw.append("<td>Undecided"
+					pw.append("<td>Undecided</td><td>"
 						+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
 						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
 						+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
@@ -135,7 +137,7 @@ public class AdminReports extends HttpServlet {
 			}
 			if(reports.size()<10){
 				for(int i = 0; i < (10-reports.size());i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 			}
 			
@@ -147,7 +149,7 @@ public class AdminReports extends HttpServlet {
 		
 		if(reports.size()<10){
 			for(int i = 0; i < (10-reports.size());i++){
-			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 			}
 		}
 		

@@ -68,6 +68,7 @@ public class ReportHistory extends HttpServlet {
 +"<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
 +"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
 +"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='script/jquery.tablesorter.min.js'></script>"
 +"</head>"
 +"<body>"
 +"<div id='header'>"
@@ -94,6 +95,7 @@ public class ReportHistory extends HttpServlet {
             +"<th>Reason</th>"
             +"<th>Date In</th>"
             +"<th>Verdict</th>"
+            +"<th>&nbsp;</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
@@ -109,24 +111,22 @@ public class ReportHistory extends HttpServlet {
 				pw.append("<td>"+rep.getiGNSend()+"</td>");
 				pw.append("<td>"+rep.getEvidenceType()+"</td>");
 				pw.append("<td>"+rep.getReason()+"</td>");
-				pw.append("<td>"+rep.getDate());
+				pw.append("<td>"+rep.getDate()+"</td>");
 				if(rep.isGuiltyOrNot()==0){
-					pw.append("<td>Undecided");
+					pw.append("<td>Undecided</td>");
 				}
 				else if(rep.isGuiltyOrNot()==1){
-					pw.append("<td>Innocent");
+					pw.append("<td>Innocent</td>");
 				}
 				else{
-					pw.append("<td>Guilty");
+					pw.append("<td>Guilty</td>");
 				}
-
-				pw.append("<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'></a>");
 				
 				if(rep.isGuiltyOrNot()==0||rep.isGuiltyOrNot()==1){
-					pw.append("<button>Convict</button>");
+					pw.append("<td><form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='whoDo' value='"+subjectUser+"'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form>");
 				}
 				if(rep.isGuiltyOrNot()==2){
-					pw.append("<button>Pardon</button>");
+					pw.append("<td><form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='whoDo' value='"+subjectUser+"'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>");
 				}
 				
 				pw.append("</td>");
@@ -139,12 +139,12 @@ public class ReportHistory extends HttpServlet {
 		} 
 		if(reports.size()<10){
 			for(int i = 0; i < (10-reports.size());i++){
-			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 			}
 		}
 		if(reports.size()==0){
 			for(int i = 0; i < 10;i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 		}
 		
@@ -202,8 +202,19 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		try {
+			Database db = new Database(2);
+			if(request.getParameter("whatDo").equals("pardon")){
+				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
+			}
+			if(request.getParameter("whatDo").equals("convict")){
+				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
+			}
+
+			response.sendRedirect("HistoryAdminReports?user="+request.getParameter("whoDo"));	
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

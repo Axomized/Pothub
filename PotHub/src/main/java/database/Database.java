@@ -383,6 +383,7 @@ public class Database {
 			else{
 				BansSearchObject bso = new BansSearchObject();
 				bso.setiGN(subjectUser.getiGNReceive());
+
 				if(howManyBans(bso)==0){
 					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(86400*1000)));
 				}
@@ -393,7 +394,7 @@ public class Database {
 					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(7*86400*1000)));
 				}
 				else{
-					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(28*86400*1000)));
+					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(14*86400*1000)));
 				}
 			}
 

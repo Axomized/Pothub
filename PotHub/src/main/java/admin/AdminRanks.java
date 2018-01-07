@@ -68,6 +68,7 @@ public class AdminRanks extends HttpServlet {
 +"<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
 +"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
 +"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='script/jquery.tablesorter.min.js'></script>"
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
@@ -86,12 +87,13 @@ public class AdminRanks extends HttpServlet {
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
     + "<div id='tableWrapper'>"
-    +"<table class='table table-striped'>"
+    +"<table class='table table-striped tablesorter' id='myTable'>"
     +"<thead>"
         +"<tr>"
             +"<th>Username</th>"
             +"<th>Rank</th>"
             +"<th>Join Date</th>"
+            +"<th>&nbsp;</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
@@ -108,19 +110,19 @@ public class AdminRanks extends HttpServlet {
 				
 				if(dbu.getUserPermission()==2){
 					pw.append("<td>Admin</td>");
-					pw.append("<td>"+dbu.getJoinDate()
-							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form></td>");
+					pw.append("<td>"+dbu.getJoinDate()+"</td>"
+							+ "<td><form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form></td>");
 				}
 				else if(dbu.getUserPermission()==1){
 					pw.append("<td>Moderator</td>");
-					pw.append("<td>"+dbu.getJoinDate()
-							+ "<form method='post'><input type='hidden' name='toChange' value='0'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form>"
+					pw.append("<td>"+dbu.getJoinDate()+"</td>"
+							+ "<td><form method='post'><input type='hidden' name='toChange' value='0'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form>"
 							+ "<form method='post'><input type='hidden' name='toChange' value='2'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				else{
 					pw.append("<td>Normal</td>");
-					pw.append("<td>"+dbu.getJoinDate()
-							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
+					pw.append("<td>"+dbu.getJoinDate()+"</td>"
+							+ "<td><form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				
 				pw.append("</td>");
@@ -134,12 +136,12 @@ public class AdminRanks extends HttpServlet {
 		} 
 		if(dbus.size()<10){
 			for(int i = 0; i < (10-dbus.size());i++){
-			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+			pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 			}
 		}
 		if(dbus.size()==0){
 			for(int i = 0; i < 10;i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 		}
 		

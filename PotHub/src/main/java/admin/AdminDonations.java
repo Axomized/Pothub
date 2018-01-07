@@ -73,6 +73,7 @@ public class AdminDonations extends HttpServlet {
 +"<script src='//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js'></script>"
 +"<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>"
 +"<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
++"<script src='script/jquery.tablesorter.min.js'></script>"
 +"</head>"
 +"<body id='babout'>"
 +"<div id='header'>"
@@ -91,13 +92,14 @@ public class AdminDonations extends HttpServlet {
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
     + "<div id='tableWrapper'>"
-    +"<table class='table table-striped'>"
+    +"<table class='table table-striped tablesorter' id='myTable'>"
     +"<thead>"
         +"<tr>"
             +"<th>Donor</th>"
             +"<th>Date</th>"
             +"<th>Amount</th>"
             +"<th>Receipient</th>"
+            +"<th>&nbsp;</th>"
         +"</tr>"
     +"</thead>"
     +"<tbody>");
@@ -113,17 +115,17 @@ public class AdminDonations extends HttpServlet {
 				pw.append("<td>"+dono.getDonation_Date()+"</td>");
 				pw.append("<td>"+dono.getDonation_Amount()+"</td>");
 				if(dono.getOnBehalf()!=null){
-					pw.append("<td>"+dono.getOnBehalf()+"<a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+					pw.append("<td>"+dono.getOnBehalf()+"</td><td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a></td>");
 				}
 				else{
-					pw.append("<td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a>");
+					pw.append("<td>&nbsp;</td><td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
 			}
 			if(donations.size()<10){
 				for(int i = 0; i < (10-donations.size());i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 			}
 			
@@ -134,7 +136,7 @@ public class AdminDonations extends HttpServlet {
 		} 
 		if(donations.size()==0){
 			for(int i = 0; i < 10;i++){
-				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
+				pw.append("<tr><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td><td>&nbsp;</td></tr>");
 				}
 		}
 pw.append("</tbody>"
