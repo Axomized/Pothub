@@ -52,10 +52,10 @@ public class AdminDonations extends HttpServlet {
 		if(request.getParameter("donationDate2")!=null && request.getParameter("donationDate2").length()>0){
 			dm.setDonationDateClose(Date.valueOf(request.getParameter("donationDate2")));
 		}
-		if(request.getParameter("donationDate2")!=null && request.getParameter("amount1").length()>0){
+		if(request.getParameter("amount1")!=null && request.getParameter("amount1").length()>0){
 			dm.setDonationAmountOpen(BigDecimal.valueOf(Double.valueOf(request.getParameter("amount1"))));
 		}
-		if(request.getParameter("donationDate2")!=null && request.getParameter("amount1").length()>0){
+		if(request.getParameter("amount2")!=null && request.getParameter("amount2").length()>0){
 			dm.setDonationAmountClose(BigDecimal.valueOf(Double.valueOf(request.getParameter("amount2"))));
 		}
 		PrintWriter pw = response.getWriter();

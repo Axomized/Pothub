@@ -108,18 +108,18 @@ public class AdminRanks extends HttpServlet {
 				
 				if(dbu.getUserPermission()==2){
 					pw.append("<td>Admin</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+					pw.append("<td>"+dbu.getJoinDate()
 							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form></td>");
 				}
 				else if(dbu.getUserPermission()==1){
 					pw.append("<td>Moderator</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+					pw.append("<td>"+dbu.getJoinDate()
 							+ "<form method='post'><input type='hidden' name='toChange' value='0'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Demote</button></form>"
 							+ "<form method='post'><input type='hidden' name='toChange' value='2'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				else{
 					pw.append("<td>Normal</td>");
-					pw.append("<td>"+dbu.getJoinDate()+"<a href='HistoryAdminRanks?user="+dbu.getiGN()+"'><button>History</button></a>"
+					pw.append("<td>"+dbu.getJoinDate()
 							+ "<form method='post'><input type='hidden' name='toChange' value='1'/><input type='hidden' name='ign' value='"+dbu.getiGN()+"'></input><button type='submit'>Promote</button></form></td>");
 				}
 				

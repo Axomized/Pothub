@@ -2,12 +2,20 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
+import java.sql.Date;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import adminSearch.DonationSearchObject;
+import database.Database;
+import database.model.DonationModel;
 
 /**
  * Servlet implementation class Forum
@@ -31,6 +39,25 @@ public class DonationHistory extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		PrintWriter pw = response.getWriter();
+		
+		DonationSearchObject dso = new DonationSearchObject();
+		
+		String userSubject = request.getParameter("user");
+		if(request.getParameter("amount1") != null && !request.getParameter("amount1").equals("")){
+			dso.setDonationAmountOpen(BigDecimal.valueOf(Long.parseLong(request.getParameter("amount1"))));
+		}
+		if(request.getParameter("amount2") != null && !request.getParameter("amount2").equals("")){
+			dso.setDonationAmountClose(BigDecimal.valueOf(Long.parseLong(request.getParameter("amount2"))));
+		}
+		if(request.getParameter("date1")!=null && request.getParameter("date1").length()>0){
+			dso.setDonationDateOpen(Date.valueOf(request.getParameter("date1")));
+		}
+		if(request.getParameter("date2")!=null && request.getParameter("date2").length()>0){
+			dso.setDonationDateClose(Date.valueOf(request.getParameter("date2")));
+		}
+		if(request.getParameter("recipient")!=null){
+			dso.setOnBehalf(request.getParameter("recipient"));
+		}
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 +"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
 +"<head>"
@@ -62,7 +89,7 @@ public class DonationHistory extends HttpServlet {
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
-  +"<h1>Showing Donation History for: USERNAME</h1>"
+  +"<h1>Showing Donation History for: "+userSubject+"</h1>"
     + "<div id='tableWrapper'>"
     +"<table class='table table-striped'>"
     +"<thead>"
@@ -72,46 +99,53 @@ public class DonationHistory extends HttpServlet {
             +"<th>Donation Date</th>"
         +"</tr>"
     +"</thead>"
-    +"<tbody>"
-    	+"<tr>"
-            +"<td>Matt</td>"
-            +"<td>$10</td>"
-            +"<td>30/10/2017 20:15</td>"
-        +"</tr>"+"<tr>"
-            +"<td>Appeal</td>"
-            +"<td>$10</td>"
-            +"<td>30/10/2017 20:15</td>"
-        +"</tr>"+"<tr>"
-	        +"<td>Inactive Ban</td>"
-	        +"<td>$10</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	    +"</tr>"
-        +"<tr>"
-	        +"<td>Pardon</td>"
-	        +"<td>$10</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Appeal</td>"
-	        +"<td>$10</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	    +"</tr>"+"<tr>"
-	        +"<td>Inactive Ban</td>"
-	        +"<td>$10</td>"
-	        +"<td>30/10/2017 20:15</td>"
-	    +"</tr>"
-    +"</tbody>"
+    +"<tbody>");
+
+	try {
+		Database db = new Database(0);
+
+		if(userSubject!=null){
+			dso.setiGN(userSubject);
+		}
+		ArrayList<DonationModel> donations = db.getDonationModel(dso);
+		
+		for(DonationModel dm : donations){
+			pw.append("<tr>");
+			
+			if(dm.getOnBehalf()!=null){
+				pw.append("<td>"+dm.getOnBehalf()+"</td>");
+			}
+			else{
+				pw.append("<td>"+dm.getiGN()+"</td>");
+			}
+			pw.append("<td>"+dm.getDonation_Amount()+"</td>");
+			pw.append("<td>"+dm.getDonation_Date()+"</td>");
+			pw.append("</tr>");
+		}
+		
+	} catch (ClassNotFoundException | SQLException e) {
+		e.printStackTrace();
+	}
+	
+		
+    pw.append("</tbody>"
 +"</table>"
 +"</div>"
 +"<form>"
    +"<div id='fourbox'>"
 	+"<div id='search'>"
-	+"<p>Donation Amount Between<div id='textboxes'><input type='number'></input></div></p>"
-	+"<p>And <div id='textboxes'><input type='number'></input></div></p>"
+	+"<p>Donation Amount Between<div id='textboxes'><input type='number' name='amount1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='number' name='amount2'></input></div></p>"
 	+"</div>"
 	+ "<div id='search'>"
-	+"<p>Donation Date Between<div id='textboxes'><input type='date'></input></div></p>"
-	+"<p>And <div id='textboxes'><input type='date' name='banStart2'></input></div></p>"
+	+"<p>Donation Date Between<div id='textboxes'><input type='date' name='date1'></input></div></p>"
+	+"<p>And <div id='textboxes'><input type='date' name='date2'></input></div></p>"
 	+"</div>"
+   +"</div>"
+   +"<div id='fourbox'>"
+   +"<div id='search'>"
+	+"<p>Recipient<div id='textboxes'><input type='text' name='recipient'></input></div></p>"
+   +"</div>"
    +"</div>"
    +"<div id='fourbox'>"
    +"<div id='search'>"
