@@ -139,7 +139,7 @@ public class EventofEventPage extends HttpServlet {
 				for(String s:guestArray) {
 					sb.append("							<div>");
 					if(db.getUserProfilePic(s) != null)
-						sb.append("								<img src='/PotHub/Image/" + decodeString(db.getUserProfilePic(s)) + "' alt='crab picture' height='50' width='50'><br>");
+						sb.append("								<img src='/PotHub/Image/" + decodeString(db.getUserProfilePic(s)) + "' alt='Guest's Profile Picture' height='50' width='50'><br>");
 					else
 						sb.append("								<img src='/PotHub/images/cat.png' alt='crab picture' height='50' width='50'><br>");
 					sb.append("								<p>" + decodeString(s) + "</p>");

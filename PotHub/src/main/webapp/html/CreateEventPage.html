@@ -127,7 +127,7 @@
 					<p><b>Date/Time</b><span class="requiredInput">*</span></p>
 					<div id="datetime-container">
 						<div class="input-group date">
-							<input type="text" name="EventDate" class="form-control" autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true" data-date-start-date="today" data-date-max-view-mode="2" data-date-clear-Btn="true">
+							<input type="text" id="eventDate" name="EventDate" class="form-control" autocomplete="off" data-provide="datepicker" data-date-format="dd/mm/yyyy" data-date-autoclose="true" data-date-start-date="today" data-date-max-view-mode="2" data-date-clear-Btn="true">
 							<span class="input-group-addon">
 								<i class="fa fa-calendar" aria-hidden="true"></i>
 							</span>
@@ -145,10 +145,15 @@
 					</div>
 				</div>
 				<div id="button-container">
-					<input type="button" class="btn" value="Preview">
+					<input type="button" class="btn" value="Preview" onclick="showPreview()">
 					<input type="submit" value="Submit" class="btn btn-success">
 				</div>
 			</form>
+			<div id="popup-container">
+				<i class="fa fa-window-close fa-3x" aria-hidden="true" id="closeBtn"></i>
+				<div id="closeBtnDiv"></div>
+				<iframe src="/PotHub/html/EventofEventPage.html" id="iframeEvent"></iframe>
+			</div>
 		</div>
 		<div id="footer">
 			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>

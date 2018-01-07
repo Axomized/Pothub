@@ -27,7 +27,22 @@ $(document).ready(function(){
 
 function onIce(r) {
 	ice = r.v;
-	navigator.mediaDevices.getUserMedia({audio: true, video: { width: 1280, height: 720 }})
+	var constraints;
+	//if a user is using a mobile browser 
+	if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+		constraints = {
+			audio: true, 
+			video: {
+				mandatory: { 
+					maxWidth: 480, 
+					maxHeight: 320, 
+				}
+			}
+		};
+	}else { 
+		constraints = {audio: true, video: { width: 1280, height: 720 } }; 
+	}
+	navigator.mediaDevices.getUserMedia(constraints)
 	.then(
 			stream => onGetMedia(stream)
 	)
@@ -247,7 +262,6 @@ function onCreateOffer(d, peer) {
 				msg: d
 			}
 	};
-	console.log(localUsername + " is creating an Offer...");
 	socket.send(JSON.stringify(pkt));
 }
 
@@ -264,7 +278,6 @@ function onCreateAnswer(d, peer) {
 				msg: d
 			}
 	};
-	console.log(localUsername + " is creating an Answer...");
 	socket.send(JSON.stringify(pkt));
 }
 

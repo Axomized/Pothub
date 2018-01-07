@@ -165,7 +165,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("					<p><b>Date/Time</b><span class='requiredInput'>*</span></p>");
 		sb.append("					<div id='datetime-container'>");
 		sb.append("						<div class='input-group date'>");
-		sb.append("							<input type='text' name='EventDate' class='form-control' autocomplete='off' data-provide='datepicker' data-date-format='dd/mm/yyyy' data-date-autoclose='true' data-date-start-date='today' data-date-max-view-mode='2' data-date-clear-Btn='true'>");
+		sb.append("							<input type='text' id='eventDate' name='EventDate' class='form-control' autocomplete='off' data-provide='datepicker' data-date-format='dd/mm/yyyy' data-date-autoclose='true' data-date-start-date='today' data-date-max-view-mode='2' data-date-clear-Btn='true'>");
 		sb.append("							<span class='input-group-addon'>");
 		sb.append("								<i class='fa fa-calendar' aria-hidden='true'></i>");
 		sb.append("							</span>");

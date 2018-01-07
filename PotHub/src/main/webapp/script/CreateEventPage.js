@@ -1,3 +1,5 @@
+var hidden = true;
+var googleMapLink;
 var xhttp = new XMLHttpRequest();
 
 xhttp.onreadystatechange = function() {
@@ -17,6 +19,72 @@ function showProfileDropdown() {
 
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
+}
+
+// For Iframe's script
+function showPreview(){
+	if(hidden){
+		var iframe = $("#iframeEvent");
+		var contents = iframe.contents();
+		var fileupload = document.getElementById("fileUpload");
+		if(fileupload.value.length > 0){
+			var reader = new FileReader();
+
+			reader.onload = function (e) {
+				contents.find(".headerImage").attr("src", e.target.result);
+			}
+			reader.readAsDataURL(fileupload.files[0]);
+		}else{
+			var src;
+			switch($("#fileNum").val()){
+				case "1":
+					src = "../images/crab.jpg";
+					break;
+				case "2":
+					src = "../images/foodss.jpg";
+					break;
+				case "3":
+					src = "../images/bii.jpg";
+					break;
+			}
+			contents.find(".headerImage").attr("src", src);
+		}
+		contents.find(".title").text(decodeURI(encodeURI($("#eventName").val())));
+		contents.find(".desc").text(decodeURI(encodeURI($("#description").val())));
+		var guestDiv = contents.find(".guest");
+		var guestInputValue = $("#guestNameList").val();
+		var guestArray = guestInputValue.split("_");
+		for(var i = 0; i < guestArray.length; i++){
+			var div = $(document.createElement('div'));
+			div.append("<img src='../images/cat.png' alt='Guest's Profile Picture' height='50' width='50'><br>")
+			div.append("<p>" + decodeURI(encodeURI(guestArray[i])) + "</p>");
+			guestDiv.append(div);
+		}
+		var eventGallery = contents.find(".event-gallery"); //Iframe's gallery
+		var input = document.getElementById("upload");
+		for (var i = 0; i < input.files.length; i++) {
+			if (input.files && input.files[i]) 
+			{
+				var reader = new FileReader();
+
+				reader.onload = function (e) {
+					eventGallery.append("<img src='" + e.target.result + "' alt='Gallery's pictures'>");
+				}
+				reader.readAsDataURL(input.files[i]);
+			}
+		}
+		var googleMapLink = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBksQSICQgS5CoCf49IyTtozR8R198pTS0&q=" + encodeURI($("#mainAddress").val());
+		var googleMap = contents.find("#googleMap").attr("src", googleMapLink);
+		var address = encodeURI($("#mainAddress").val() + ", " + $("#additionalAddress").val());
+		contents.find(".venue").text(decodeURI(address));
+		var timedate = $("#eventDate").val() + " " + $("#timeinput").val();
+		contents.find(".time").text(timedate);
+		$("#popup-container").show();
+		hidden = false;
+	}else{
+		$("#popup-container").hide();
+		hidden = true;
+	}
 }
 
 var open = false;
@@ -91,6 +159,11 @@ function validateForm() {
 }
 
 $(function(){
+	$("#closeBtn").click(function(){
+		$("#popup-container").hide();
+		hidden = true;
+	});
+	
 	$("#textguestname").bind('input', function () {
 		$("option").each(function(){
 			if($("#textguestname").val() == $(this).val()){
