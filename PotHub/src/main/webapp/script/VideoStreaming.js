@@ -57,6 +57,9 @@ function onGetMedia(stream) {							// Gets stream from line 10
 	var vid = document.getElementById("localVideo");	// Get video element from html
 	vid.srcObject = stream;								// Start "streaming" own stream to video element
 	localStream = stream;
+	vid.onloadedmetadata = function(e) {
+	    video.play();
+	};
 }
 
 function displayMessage(message) { 
@@ -250,6 +253,7 @@ function onDataMessage(evt) {
 }
 
 function onCreateOffer(d, peer) {
+	d.sdp = setVideoCodec(d.sdp);
 	pcs[peer].pc.setLocalDescription(d);
 	var pkt = {
 			t: "u", 
@@ -266,6 +270,7 @@ function onCreateOffer(d, peer) {
 }
 
 function onCreateAnswer(d, peer) {
+	d.sdp = setVideoCodec(d.sdp);
 	pcs[peer].pc.setLocalDescription(d);
 	var pkt = {
 			t: "u", 
@@ -303,5 +308,72 @@ function onIceCandidate(evt) {
 				}
 		}
 		socket.send(JSON.stringify(pkt));
+	}
+}
+
+function setVideoCodec(sdp){
+	var sdpLines = sdp.split('\r\n');
+	var videoLine;
+	
+	for (var i = 0; i < sdpLines.length; i++) {
+	    if (sdpLines[i].search('m=video') !== -1) {
+	    	videoLine = i;
+	    	break;
+	    }
+	}
+
+	if (videoLine === null){
+		return sdp;
+	}else{
+		var preferredCodec = [];
+		for (var i = videoLine; i < sdpLines.length; i++) {
+		    if (sdpLines[i].search('a=rtpmap') !== -1) {
+		    	var rtpmapLine = sdpLines[i].split(" ");
+		    	if(rtpmapLine[1].substr(0, 4) !== "H264"){
+		    		sdpLines.splice(i, 1);
+		    	}else{
+		    		var array = [rtpmapLine[0].substr(9)];
+		    		preferredCodec = preferredCodec.concat(array);
+		    	}
+		    }
+		}
+		
+		for (var i = videoLine; i <sdpLines.length; i++){
+			if(sdpLines[i].search('a=rtcp-fb') !== -1){
+		    	var rtpmapLine = sdpLines[i].split(" ");
+		    	var prepareDel = true;
+		    	for(var j=0; j<preferredCodec.length;j++){
+		    		if(rtpmapLine[0].substr(10) === preferredCodec[j]){
+		    			prepareDel = false;
+			    	}
+		    	}
+		    	if(prepareDel){
+		    		sdpLines.splice(i, 5);
+		    	}
+		    }
+		}
+		
+		for (var i = videoLine; i <sdpLines.length; i++){
+			if(sdpLines[i].search('a=fmtp') !== -1){
+		    	var rtpmapLine = sdpLines[i].split(" ");
+		    	var prepareDel = true;
+		    	for(var j=0; j<preferredCodec.length;j++){
+		    		if(rtpmapLine[0].substr(7) === preferredCodec[j]){
+		    			prepareDel = false;
+			    	}
+		    	}
+		    	if(prepareDel){
+		    		sdpLines.splice(i, 1);
+		    	}
+		    }
+		}
+
+		var videoLineLine = sdpLines[videoLine].split(" ");
+		var videoLineLineExtracted = [videoLineLine[0], videoLineLine[1], videoLineLine[2]];
+		videoLineLine = videoLineLineExtracted.concat(preferredCodec);
+		sdpLines[videoLine] = videoLineLine.join(" ");
+		
+		sdp = sdpLines.join('\r\n');
+		return sdp;
 	}
 }
