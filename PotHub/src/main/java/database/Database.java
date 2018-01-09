@@ -37,7 +37,7 @@ import p2pfood.PotcastSearchObject;
 import profile.ProfileDonationSearch;
 
 public class Database {
-	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;"
 	final String DB_URL="jdbc:sqlserver://pothub.database.windows.net:1433;"
 			+ "database=PotHub;"
 			+ "user=PotHub@pothub;"

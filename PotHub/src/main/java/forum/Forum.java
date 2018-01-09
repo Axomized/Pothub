@@ -2,11 +2,16 @@ package forum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.ForumPostModel;
 
 /**
  * Servlet implementation class Forum
@@ -101,7 +106,7 @@ public class Forum extends HttpServlet {
 						+ "				</p>"
 						+ "				</div>"
 						+ "				<div id='wholecomments'>"
-						+ "					<div class='cb' style='border:2px solid black; background-color:#dddddd; border-radius:10px; display:inline-flex; width:100%;'>" //First div
+						+ "					<div class='cb'>" //First div
 						+ "						<div class='voting'>"
 						+ "							<p onclick='upfirst()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
@@ -140,8 +145,76 @@ public class Forum extends HttpServlet {
 						+ "							<div id='name'>Chou Tzu FISH</div>"
 						+ "							<div id='date'>5 hours ago</div>"
 						+ "						</div>"
-						+ "					</div>"
-						+ "					<div class='cb'>"  // Second Div
+						+ "					</div>");
+						
+						
+						
+						
+						try {
+							Database dbms = new Database(2);
+							ArrayList<ForumPostModel> fa = dbms.getForumModel();
+							for(ForumPostModel qw: fa){
+								out.println(
+							
+						  "					<div class='cb'>" 
+						+ "						<div class='voting'>"
+						+ "							<p onclick='upfirst()' style='text-align: center;'>"
+						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
+						+ "							</p>"
+						+ "							<p id='firstcount' style='text-align: center;'>5</p>"
+						+ "							<p onclick='downfirst()' style='text-align: center;'>"
+						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
+						+ "							</p>"
+						+ "						</div>"
+						+ "						<div class='iconpic'>"
+						+ "							<img src='images/MAC.png' height='80' width='80' />"
+						+ "						</div>"
+						+ "						<div class='info'>"
+						+ "							<div class='title'>"
+						+ "								<h2 style='color: blue' onclick='location.href='discussion';'>" + qw.getThread() + "</h2>"
+						+ "							</div>"
+						+ "							<div class='subDescription'>"
+						+ "								<p>Betweenn Mc Spicy and Mc Salad, which would you choose for"
+						+ "									a healthy meal and more</p>"
+						+ "							</div>"
+						+ "							<div class='commentscount'>"
+						+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>31"
+						+ "									<i class=\'fa fa-comments-o\' style=\'font-size:24px\'></i>"
+						+ "								<p>"
+						+ "							</div>"
+						+ "							<div class='reporting'>"
+						+ "								<p>"
+						+ "									<a href='discussion' style='margin-right: 2%;'>Reply</a><a onclick='showsth()' href='#reports' style='margin-right: 2%;'>Report</a><a href='#' >Share</a>"
+						+ "								</p>"
+						+ "							</div>"
+						+ "						</div>"
+						+ "						<div class='author'>"
+						+ "							<div class='profilepic'>"
+						+ "								<img src='images/tzuyu.jpg' height='70' width='70' />"
+						+ "							</div>"
+						+ "							<div id='name'>" + qw.getiGN() + "</div>"
+						+ "							<div id='date'>" + qw.getDate() + "</div>"
+						+ "						</div>"
+						+ "					</div>");
+							}
+						}
+					 catch (SQLException e) {
+						e.printStackTrace();
+					} catch (ClassNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						out.println(
+						  "					<div class='cb'>"  // Second Div
 						+ "						<div class='voting'>"
 						+ "							<p id='secondup' onclick='upsecond()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
