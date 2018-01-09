@@ -8,15 +8,14 @@ function hideProfileDropdown() {
 
 function upfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	var p = parseInt(h);
-	var i = (p + 1);
-	document.getElementById("firstcount").innerHTML = i;
+	alert("upvoted by 1 from" + h);
+	location.reload();
 }
 
 function downfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	var i = (h-1);
-	document.getElementById("firstcount").innerHTML = i;
+	alert("downvoted by 1 from" + h);
+	location.reload();
 }
 
 function upsecond(){
@@ -30,19 +29,6 @@ function downsecond(){
 	var h = document.getElementById("secondcount").innerHTML;
 	var i = (h-1);
 	document.getElementById("secondcount").innerHTML = i;
-}
-
-function upthird(){
-	var h = document.getElementById("thirdcount").innerHTML;
-	var p = parseInt(h);
-	var i = (p + 1);
-	document.getElementById("thirdcount").innerHTML = i;
-}
-
-function downthird(){
-	var h = document.getElementById("thirdcount").innerHTML;
-	var i = (h-1);
-	document.getElementById("thirdcount").innerHTML = i;
 }
 
 function showsth(){

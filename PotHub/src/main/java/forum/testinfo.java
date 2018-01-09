@@ -50,6 +50,15 @@ public class testinfo extends HttpServlet {
 				out.println("<p>");
 				out.println(qw.getDescription());
 				out.println("</p>");
+				out.println("<p>");
+				out.println(qw.getUpvotes());
+				out.println("</p>");
+				out.println("<p>");
+				out.println(qw.getiGN());
+				out.println("</p>");
+				out.println("<p>");
+				out.println(qw.getDate());
+				out.println("</p>");
 				out.println("<hr>");
 				}
 			}
