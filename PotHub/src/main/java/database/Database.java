@@ -1,6 +1,7 @@
 package database;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -11,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
-
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
@@ -34,8 +34,15 @@ import database.model.ShoppingLoginModel;
 import logs.LogsSearch;
 
 public class Database {
-	//final String DB_URL = "jdbc:sqlserver://localhost:3306;databaseName=PotHub;";
-	final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
+	final String DB_URL="jdbc:sqlserver://pothub.database.windows.net:1433;"
+			+ "database=PotHub;"
+			+ "user=PotHub@pothub;"
+			+ "password=SassyPenguin123;"
+			+ "encrypt=true;"
+			+ "trustServerCertificate=false;"
+			+ "hostNameInCertificate=*.database.windows.net;"
+			+ "loginTimeout=30;";
 
 	Connection conn = null;
 
