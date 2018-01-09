@@ -2,12 +2,17 @@ package p2pfood;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.PotcastModel;
 
 /**
  * Servlet implementation class Forum
@@ -30,6 +35,16 @@ public class PotcastList extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		PotcastSearchObject pso = new PotcastSearchObject();
+		Database db;
+		
+		if(request.getParameter("title")!=null){
+			pso.setTitle(request.getParameter("username"));
+		}
+		if(request.getParameter("order")!=null){
+			pso.setOrderBy(request.getParameter("order"));
+		}
+		
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html>"
 						+ "<html>"
@@ -108,53 +123,40 @@ public class PotcastList extends HttpServlet {
 						+ "</ul>"
 						+ "</div>"
 						+ "</div>"
-						+ "</div></div>" + "<h1>Closing soon:</h1>" + "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Cocktail Shrimp</div>"
-						+ "<div class='row1'>Big Matt, 3960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>6/6 Bids, 5pm 1-1-2018</div>" + "<div class='row2'>$12</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>7.30pm, 4km</div>"
-						+ "<div class='row3'>123 CookingIsFunRoad #12-34, 465423</div>" + "</div>" + "</div>"
+						+ "</div></div>" + "<h1>Closing soon:</h1>");
+						
+		try {
+			PotcastSearchObject pso3 = new PotcastSearchObject();
+			pso3.setPurpose(3);
+			db = new Database(0);
+			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
+			for(PotcastModel ap : top3Potcasts){
+				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
+				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
+				pw.append("<div class='row2'>TODO/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
+				pw.append("</div></div></a>");
+			}			
+		
+						pw.append("<h1>Active Potcasts: </h1>");
 
-						+ "<a href='p2pdetail'>" + "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Chunk of Beef</div>"
-						+ "<div class='row1'>Matt, 1960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>9/11 Bids, 5pm 1-1-2018</div>" + "<div class='row2'>$8</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>7.30pm, 4km</div>"
-						+ "<div class='row3'>123 Road Street #09-23, Singapore 445532</div>" + "</div>" + "</div>"
-						+ "</a>"
-
-						+ "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Chili Shrimp</div>"
-						+ "<div class='row1'>Gordon, 4960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>7/8 Bids, 4pm 1-1-2018</div>" + "<div class='row2'>$20</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>5.5km</div>"
-						+ "<div class='row3'>#9-34 Singapore, 465432</div>" + "</div>" + "</div>"
-						+ "<h1>Active Potcasts: </h1>" + "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Cocktail Shrimp</div>"
-						+ "<div class='row1'>Big Matt, 3960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>6/6 Bids, 5pm 1-1-2018</div>" + "<div class='row2'>$12</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>7.30pm, 4km</div>"
-						+ "<div class='row3'>123 CookingIsFunRoad #12-34, 465423</div>" + "</div>" + "</div>"
-
-						+ "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Black Pepper Shrimp</div>"
-						+ "<div class='row1'>Matt, 1960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>1/3 Bids, 5pm 1-1-2018</div>" + "<div class='row2'>$8</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>7.30pm, 4km</div>"
-						+ "<div class='row3'>#13-34 Singapore, 465213</div>" + "</div>" + "</div>"
-
-						+ "<div id='displayUnit'>"
-						+ "<div id='thumbnailBox'><img height=100 width =100 src='images/crab.gif'></div>"
-						+ "<div id='column1'>" + "<div class='row1 foodTitle'>Chili Shrimp</div>"
-						+ "<div class='row1'>Gordon, 4960CR</div>" + "</div>" + "<div id='column2'>"
-						+ "<div class='row2'>7/8 Bids, 4pm 1-1-2018</div>" + "<div class='row2'>$20</div>" + "</div>"
-						+ "<div id='column2'>" + "<div class='row2'>5.5km</div>"
-						+ "<div class='row3'>#9-34 Singapore, 465432</div>" + "</div>" + "</div>" + "</div>"
+			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
+			for(PotcastModel ap : activePotcasts){
+				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
+				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
+				pw.append("<div class='row2'>TODO/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
+				pw.append("</div></div></a>");
+			}
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+										
+						pw.append("</div>"
 
 						+ "<div id='footer'>"
 						+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"

@@ -1,7 +1,6 @@
 package database;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.sql.Connection;
@@ -29,10 +28,12 @@ import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
+import database.model.PotcastModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
 import database.model.TemporaryStoreModel;
 import logs.LogsSearch;
+import p2pfood.PotcastSearchObject;
 import profile.ProfileDonationSearch;
 
 public class Database {
@@ -294,6 +295,28 @@ public class Database {
 		ppstmt.setInt(15, dUM.getUserPermission());
 
 		executeUpdate(ppstmt);
+	}
+	
+	//Potcast 
+	public ArrayList<PotcastModel> getLatestPotcasts(PotcastSearchObject pso) throws SQLException{
+		ArrayList<PotcastModel> potcasts = new ArrayList<PotcastModel>();
+		ResultSet rs = getResultSet(pso.getExecutableSQL());
+		while(rs.next()) {
+			String iGN			= rs.getString("iGN");
+			int potcastID		= rs.getInt("potcastID");
+			String title 		= rs.getString("title");
+			String description	= rs.getString("description");
+			int maxBids			= rs.getInt("maxBids");
+			Date bidStopTime	= rs.getDate("bidStopTime");
+			Date pickupTime		= rs.getDate("pickupTime");
+			int minBid			= rs.getInt("minBid");
+			int startingCR		= rs.getInt("startingCR");
+			int picture 		= rs.getInt("picture");
+			potcasts.add(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
+					pickupTime, minBid, startingCR, picture));
+		}
+		System.out.println(potcasts.size());
+		return potcasts;
 	}
 	
 	//Appeal

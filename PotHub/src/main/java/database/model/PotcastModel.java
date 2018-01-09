@@ -1,8 +1,13 @@
 package database.model;
 
+import java.io.FileNotFoundException;
 import java.sql.Date;
+import java.sql.SQLException;
+
+import database.Database;
 
 public class PotcastModel {
+	String iGN;
 	int potcastID;
 	String title;
 	String description;
@@ -13,8 +18,9 @@ public class PotcastModel {
 	int startingCR;
 	int picture;
 	
-	public PotcastModel(int potcastID, String title, String description, int maxBids, Date bidStopTime,
+	public PotcastModel(String iGN, int potcastID, String title, String description, int maxBids, Date bidStopTime,
 			Date pickupTime, int minBid, int startingCR, int picture) {
+		this.iGN=iGN;
 		this.potcastID = potcastID;
 		this.title = title;
 		this.description = description;
@@ -24,6 +30,20 @@ public class PotcastModel {
 		this.minBid = minBid;
 		this.startingCR = startingCR;
 		this.picture = picture;
+	}
+	
+	public String toString() {
+		try {
+		Database db = new Database(0);
+			return "PotcastID" + potcastID + "Title " + title + "Description " + description + "Max Bids " + maxBids + "Min Bids " + minBid + "Bid stop time "+bidStopTime+" Pickup Time "+pickupTime+" startingCR"+startingCR+" PictureID "+picture+" PictureName "+db.getFileNameByFileID(picture);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		return "";
 	}
 
 	public int getPotcastID() {
@@ -96,5 +116,13 @@ public class PotcastModel {
 
 	public void setPicture(int picture) {
 		this.picture = picture;
+	}
+
+	public String getiGN() {
+		return iGN;
+	}
+
+	public void setiGN(String iGN) {
+		this.iGN = iGN;
 	}
 }
