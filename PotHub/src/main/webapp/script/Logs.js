@@ -6,6 +6,10 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
+function showDropdown() {
+	$("#dropdownContentDiv").toggle();
+}
+
 function customDateSelect() {
 	var selectDate = document.getElementById("selectDate");
 	var afterDateDiv = document.getElementById("afterDateDiv");
@@ -25,8 +29,4 @@ function customDateSelect() {
 		afterDate.required = false;
 		beforeDate.required = false;
 	}
-}
-
-function showDropdown() {
-	$("#dropdownContentDiv").toggle();
 }

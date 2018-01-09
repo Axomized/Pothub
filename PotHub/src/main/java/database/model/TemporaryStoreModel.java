@@ -2,6 +2,8 @@ package database.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.util.concurrent.TimeUnit;
 
 public class TemporaryStoreModel {
 	String iGN;
@@ -16,6 +18,10 @@ public class TemporaryStoreModel {
 		this.temporaryPIN = temporaryPIN;
 		this.temporaryOnBehalf = TemporaryOnBehalf;
 		this.temporaryTime = temporaryTime;
+	}
+
+	public TemporaryStoreModel() {
+		
 	}
 
 	public String getiGN() {
@@ -56,5 +62,11 @@ public class TemporaryStoreModel {
 
 	public void setTemporaryTime(Timestamp temporaryTime) {
 		this.temporaryTime = temporaryTime;
+	}
+	
+	public Timestamp getTime5MinsLater() {
+		Instant instant = Instant.now().plusSeconds(TimeUnit.MINUTES.toSeconds(5));
+		Timestamp timestamp = Timestamp.from(instant);
+		return timestamp;
 	}
 }

@@ -2,12 +2,14 @@ package donation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.Arrays;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
 
 public class ConfirmDonation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -108,12 +110,20 @@ public class ConfirmDonation extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String[] PIN = request.getParameterValues("pinInput");
-		StringBuilder builder = new StringBuilder();
-		for (String s : PIN) {
-		    builder.append(s);
+		try {
+			Database db = new Database(2);
+			String[] PIN = request.getParameterValues("pinInput");
+			StringBuilder builder = new StringBuilder();
+			for (String s : PIN) {
+			    builder.append(s);
+			}
+			String pinNumber = builder.toString();
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		String pinNumber = builder.toString();
 	}
 
 }

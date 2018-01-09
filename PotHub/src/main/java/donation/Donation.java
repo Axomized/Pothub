@@ -2,6 +2,7 @@ package donation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import database.model.TemporaryStoreModel;
 
 public class Donation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -194,51 +196,72 @@ public class Donation extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String behalfName = request.getParameter("behalfName");
-		String donateAmt = request.getParameter("donateAmt");
-		String ccName = request.getParameter("nameInput");
-		String ccNumber = request.getParameter("cardNo");
-		String ccMonth = request.getParameter("selectMonth");
-		String ccYear = request.getParameter("selectYear");
-		String securityCode = request.getParameter("securityCode");
-		ValidateCard vc = new ValidateCard();
-		SendEmail se = new SendEmail();
-		String errorMessage = "";
-		
-		if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-			if (behalfName != null && !behalfName.isEmpty()) {
-				if (vc.validateCCNo(ccNumber)) {
-					if (vc.validateCode(ccNumber, securityCode)) {
-						se.sendEmail("", generatePIN());
-						//Insert new row in TempStore table
+		try {
+			Database db = new Database(2);
+			TemporaryStoreModel tsm =  new TemporaryStoreModel();
+			SendEmail se = new SendEmail();
+			String pinNo = generatePIN();
+			String errorMessage = "";
+			String behalfName = request.getParameter("behalfName");
+			String donateAmt = request.getParameter("donateAmt");
+			String ccName = request.getParameter("nameInput");
+			String ccNumber = request.getParameter("cardNo");
+			String ccMonth = request.getParameter("selectMonth");
+			String ccYear = request.getParameter("selectYear");
+			String securityCode = request.getParameter("securityCode");
+			ValidateCard vc = new ValidateCard();
+			
+			if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
+				if (behalfName != null && !behalfName.isEmpty()) {
+					if (vc.validateCCNo(ccNumber)) {
+						if (vc.validateCode(ccNumber, securityCode)) {
+							se.sendEmail("", pinNo);
+							tsm.setiGN("");
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(pinNo);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							db.insertTempStore(tsm);
+							response.sendRedirect("ConfirmDonation");
+						}
+						else {
+							errorMessage = "Invalid security code";
+						}
 					}
 					else {
-						errorMessage = "Invalid security code";
+						errorMessage = "Invalid credit card number";
 					}
 				}
 				else {
-					errorMessage = "Invalid credit card number";
+					if (vc.validateCCNo(ccNumber)) {
+						if (vc.validateCode(ccNumber, securityCode)) {
+							se.sendEmail("", pinNo);
+							tsm.setiGN("");
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(pinNo);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							db.insertTempStore(tsm);
+							response.sendRedirect("ConfirmDonation");
+						}
+						else {
+							errorMessage = "Invalid security code";
+						}
+					}
+					else {
+						errorMessage = "Invalid credit card number";
+					}
 				}
 			}
 			else {
-				if (vc.validateCCNo(ccNumber)) {
-					if (vc.validateCode(ccNumber, securityCode)) {
-						se.sendEmail("", generatePIN());
-						//Insert new row in TempStore table
-					}
-					else {
-						errorMessage = "Invalid security code";
-					}
-				}
-				else {
-					errorMessage = "Invalid credit card number";
-				}
+				errorMessage = "Please fill in all required inputs";
 			}
+			System.out.println(errorMessage);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
 		}
-		else {
-			errorMessage = "Please fill in all required inputs";
-		}
-		System.out.println(errorMessage);
 	}
 	
 	private String generatePIN() {
@@ -250,15 +273,11 @@ public class Donation extends HttpServlet {
 	private boolean validateInputString(String donateAmt, String ccName, String ccNumber, String ccMonth, String ccYear, String securityCode) {
 		boolean isNotNull = false;
 		
-		List<String> stringList = Arrays.asList(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode);
-		for (String s : stringList) {
-			if (s != null && !s.isEmpty()) {
-				isNotNull = true;
-			}
-			else {
-				isNotNull = false;
-			}
+		if ((donateAmt != null && !donateAmt.isEmpty()) && (ccName != null && !ccName.isEmpty()) && (ccNumber != null && !ccNumber.isEmpty()) 
+				&& (ccMonth != null && !ccMonth.isEmpty()) && (ccYear != null && !ccYear.isEmpty()) && (securityCode != null && !securityCode.isEmpty())) {
+			isNotNull = true;
 		}
+		
 		return isNotNull;
 	}
 

@@ -118,6 +118,18 @@
 		<description></description>
 		<servlet-class>forum.idkhow</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ProfileDonation</servlet-name>
+		<display-name>ProfileDonation</display-name>
+		<description></description>
+		<servlet-class>profile.ProfileDonation</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>AddFoodPref</servlet-name>
+		<display-name>AddFoodPref</display-name>
+		<description></description>
+		<servlet-class>profile.AddFoodPref</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -193,6 +205,14 @@
 	<servlet-mapping>
 		<servlet-name>idkhow</servlet-name>
 		<url-pattern>/idkhow</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ProfileDonation</servlet-name>
+		<url-pattern>/ProfileDonation</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>AddFoodPref</servlet-name>
+		<url-pattern>/AddFoodPref</url-pattern>
 	</servlet-mapping>
 </web-app>
 

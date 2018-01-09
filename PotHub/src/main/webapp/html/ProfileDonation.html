@@ -4,7 +4,7 @@
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
 		<!-- Page Title -->
-		<title>Food Preferences</title>
+		<title>Donation History</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional theme -->
@@ -68,6 +68,52 @@
 							</div>
 						</div>
 						<div id="aboutContentDiv">
+							<div id="dropdownDivWrap">
+								<div id="dropdownDiv">
+									<div id="filterBtnDiv">
+										<button id="filterBtn" onclick="showDropdown()">Filter</button>
+									</div>
+									<div id="dropdownContentDiv">
+										<form id="searchForm" autocomplete="off" method="get">
+											<div id="filterDiv">
+												<div id="onBehalfDiv" class="searchDiv">
+													<label id="onBehalfLabel" for="onBehalf">Search by donee:</label>
+													<input type="text" id ="onBehalf" class="searchInput" name="onBehalf" list="onBehalfList">
+													<datalist id="onBehalfList">
+														
+													</datalist>
+												</div>
+												<div id=amountDiv" class="searchDiv">
+													<label id="amountLabel" for="amount">Search by amount:</label>
+													<input type="text" id="amount" class="searchInput" name="amount">
+												</div>
+												<div id="dateDiv" class="searchDiv">
+													<label id="dateLabel" for="selectDate">Search by date:</label>
+													<select id="selectDate" class="searchSelect" name="selectDate" onchange="customDateSelect()">
+														<option selected value="All">All</option>
+														<option value="Yesterday">Yesterday</option>
+														<option value="Last 7 days">Last 7 days</option>
+														<option value="Last 30 days">Last 30 days</option>
+														<option value="Last 90 days">Last 90 days</option>
+														<option value="Custom">Custom</option>
+													</select>
+												</div>
+												<div id="afterDateDiv" class="searchDiv">
+													<label id="afterDateLabel" for="afterDate">After:</label>
+													<input type="date" id="afterDate" class="searchInput" name="afterDate">
+												</div>
+												<div id="beforeDateDiv" class="searchDiv">
+													<label id="beforeDateLabel" for="beforeDate">Before:</label>
+													<input type="date" id="beforeDate" class="searchInput" name="beforeDate">
+												</div>
+												<div id="buttonDiv" class="searchDiv">
+													<input type="submit" id="searchBtn" name="searchBtn" value="Search">
+												</div>
+											</div>
+										</form>
+									</div>
+								</div>
+							</div>
 							<div id="tableWrap">
 								<table id="donationTable" class="table table-striped">
 									<thead>

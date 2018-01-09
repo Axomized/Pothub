@@ -49,6 +49,16 @@ th, td {
 	padding: 16px !important;
 }
 
+input {
+	height: 25px;
+	padding: 5px 5px;
+}
+
+input[type=date] {
+	-webkit-appearance: textfield;
+	padding: 2px 5px;
+}
+
 /* Structure */
 
 body {
@@ -236,6 +246,104 @@ body {
 
 #aboutContentDiv {
 	
+}
+
+#dropdownDivWrap {
+	margin-top: 20px;
+}
+
+#filterBtn {
+	height: 25px;
+	width: 10em;
+	font-weight: 600;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+#filterBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
+}
+
+#dropdownDiv {
+	position: relative;
+}
+
+#dropdownContentDiv {
+	display: none;
+	width: 65%;
+    min-width: 160px;
+    position: absolute;
+    background-color: #f9f9f9;
+    overflow: auto;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#filterDiv {
+	width: 70%;
+	min-width: 12em;
+	margin: auto;
+	margin-top: 15px;
+	margin-bottom: 10px;
+}
+
+.searchDiv {
+	margin-bottom: 10px;
+}
+
+.searchInput {
+	width: 100%;
+	display: block;
+}
+
+.searchSelect {
+	height: 25px;
+	width: 100%;
+	display: block;
+}
+
+#afterDateDiv {
+	display: none;
+	margin-right: 6.1%;
+}
+
+#beforeDateDiv {
+	display: none;
+}
+
+#buttonDiv {
+	display: flex;
+	flex-direction: row-reverse;
+}
+
+#searchBtn {
+	height: 25px;
+	width: 7em;
+	font-weight: 600;
+    outline: none;
+    color: white;
+    background-color: #49274a;
+    cursor: pointer;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    text-transform: uppercase;
+    line-height: 1;
+}
+
+#searchBtn:hover {
+	border: 1px solid #49274a;
+	color: #49274a;
+	background-color: #f8eee7;
 }
 
 #tableWrap {

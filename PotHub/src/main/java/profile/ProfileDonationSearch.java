@@ -2,17 +2,32 @@ package profile;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.time.format.DateTimeFormatter;
 
 public class ProfileDonationSearch {
+	private String onBehalf;
+	private BigDecimal donation_Amount;
 	private String dateInput;
 	private String afterDate;
 	private String beforeDate;
-	private BigDecimal donation_Amount;
-	private String onBehalf;
+	
+	public String getOnBehalf() {
+		return onBehalf;
+	}
+
+	public void setOnBehalf(String onBehalf) {
+		this.onBehalf = onBehalf;
+	}
+
+	public BigDecimal getDonation_Amount() {
+		return donation_Amount;
+	}
+
+	public void setDonation_Amount(BigDecimal donation_Amount) {
+		this.donation_Amount = donation_Amount;
+	}
 
 	public String getDateInput() {
 		return dateInput;
@@ -38,22 +53,6 @@ public class ProfileDonationSearch {
 		this.beforeDate = beforeDate;
 	}
 
-	public BigDecimal getDonation_Amount() {
-		return donation_Amount;
-	}
-
-	public void setDonation_Amount(BigDecimal donation_Amount) {
-		this.donation_Amount = donation_Amount;
-	}
-
-	public String getOnBehalf() {
-		return onBehalf;
-	}
-
-	public void setOnBehalf(String onBehalf) {
-		this.onBehalf = onBehalf;
-	}
-	
 	private Timestamp selectToTimestamp(String selectString) {
 		LocalDateTime localDateTime = LocalDateTime.now();
 		Timestamp timestamp = null;
@@ -72,18 +71,24 @@ public class ProfileDonationSearch {
 		return timestamp;
 	}
 	
-	private Timestamp stringToTimestamp(String dateString) throws ParseException {
-		Date date = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
-		Timestamp timestamp = new Timestamp(date.getTime());
+	private Timestamp stringToTimestamp(String dateString) {
+		LocalDate date = LocalDate.parse(dateString, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+		Timestamp timestamp = Timestamp.valueOf(date.atStartOfDay());
 		return timestamp;
 	}
 	
-	public String getSearchQuery() throws ParseException {
+	public String getSearchQuery() {
 		String searchQuery = "SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?";
 		
-		if (!dateInput.isEmpty() && dateInput != null) {
+		if (donation_Amount != null && !(donation_Amount.compareTo(BigDecimal.ZERO) == 0)) {
+			searchQuery += " AND Donation_Amount = '" + donation_Amount + "'";
+		}
+		if (onBehalf != null && !onBehalf.isEmpty()) {
+			searchQuery += " AND OnBehalf = '" + onBehalf + "'";
+		}
+		if (dateInput != null && !dateInput.isEmpty()) {
 			if (dateInput.equals("Custom")) {
-				if ((!afterDate.isEmpty() && afterDate != null) && (!beforeDate.isEmpty() && beforeDate != null)) {
+				if ((afterDate != null && !afterDate.isEmpty()) && (beforeDate != null && !beforeDate.isEmpty())) {
 					Timestamp afterDateTmp = stringToTimestamp(afterDate);
 					Timestamp beforeDateTmp = stringToTimestamp(beforeDate);
 					searchQuery += " AND Donation_Date > " + afterDateTmp + " AND Donation_Date < " + beforeDateTmp;
@@ -99,14 +104,9 @@ public class ProfileDonationSearch {
 				}
 			}
 		}
-		if (!(donation_Amount.compareTo(BigDecimal.ZERO) == 0)) {
-			searchQuery += " AND Donation_Amount = " + donation_Amount;
-		}
-		if (!onBehalf.isEmpty() && onBehalf != null) {
-			searchQuery += " AND OnBehalf = " + onBehalf;
-		}
 		
 		searchQuery += ";";
+		System.out.println(searchQuery);
 		
 		return searchQuery;
 	}

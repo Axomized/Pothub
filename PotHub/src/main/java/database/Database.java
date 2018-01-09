@@ -31,7 +31,9 @@ import database.model.LogsModel;
 import database.model.PeopleEventListModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
+import database.model.TemporaryStoreModel;
 import logs.LogsSearch;
+import profile.ProfileDonationSearch;
 
 public class Database {
 	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;";
@@ -141,7 +143,6 @@ public class Database {
 		return null;
 	}
 	
-	
 	public void updateRank(String ign, int permissionLevel){
 		try {
 			PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET UserPermission = ? WHERE ign = ?");
@@ -152,18 +153,47 @@ public class Database {
 			e.printStackTrace();
 		}
 	}
+	
 	//For profile page - user's donation history
-	public DonationModel getUserDonation(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?;");
+	public ArrayList<DonationModel> getUserDonation(ProfileDonationSearch search, String name) throws SQLException {
+		ArrayList<DonationModel> userDonationList = new ArrayList<DonationModel>();
+		PreparedStatement ppstmt = conn.prepareStatement(search.getSearchQuery());
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			Timestamp donation_Date		= rs.getTimestamp("Donation_Date");
 			BigDecimal donation_Amount	= rs.getBigDecimal("Donation_Amount");
 			String onBehalf				= rs.getString("OnBehalf");
-			return new DonationModel(donation_Date, donation_Amount, onBehalf);
+			userDonationList.add(new DonationModel(donation_Date, donation_Amount, onBehalf));
+		}
+		return userDonationList;
+	}
+	
+	//For donation page
+	public TemporaryStoreModel getTempStore(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime FROM TemporaryStore WHERE IGN = ?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String iGN					= rs.getString("IGN");
+			BigDecimal temporaryAmount 	= rs.getBigDecimal("TemporaryAmount");
+			String temporaryPIN 		= rs.getString("TemporaryPIN");
+			String temporaryOnBehalf 	= rs.getString("TemporaryOnBehalf");
+			Timestamp temporaryTime 	= rs.getTimestamp("TemporaryTime");
+			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporaryOnBehalf, temporaryTime);
 		}
 		return null;
+	}
+	
+	//For donation page
+	public void insertTempStore(TemporaryStoreModel tsm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?);");
+		ppstmt.setString(1, tsm.getiGN());
+		ppstmt.setBigDecimal(2, tsm.getTemporaryAmount());
+		ppstmt.setString(3, tsm.getTemporaryPIN());
+		ppstmt.setString(4, tsm.getTemporaryOnBehalf());
+		ppstmt.setTimestamp(5, tsm.getTemporaryTime());
+		ppstmt.executeUpdate();
 	}
 	
 	//For donation page
