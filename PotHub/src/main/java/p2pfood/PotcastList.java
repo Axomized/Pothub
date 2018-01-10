@@ -130,12 +130,21 @@ public class PotcastList extends HttpServlet {
 			pso3.setPurpose(3);
 			db = new Database(0);
 			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
+
 			for(PotcastModel ap : top3Potcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
-				pw.append("<div class='row2'>TODO/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+			
+				if(db.getBidsForPotcast(ap.getPotcastID()).size()>ap.getMaxBids()){
+					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" 
+							+ "<div class='row2'>$"+db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids()-1).getBidAmount()+"</div>" + "</div>");
+				}
+				else{
+					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+				}
+				
 				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
 				pw.append("</div></div></a>");
 			}			
@@ -148,7 +157,15 @@ public class PotcastList extends HttpServlet {
 				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
-				pw.append("<div class='row2'>TODO/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+
+				if(db.getBidsForPotcast(ap.getPotcastID()).size()>ap.getMaxBids()){
+					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" 
+				+ "<div class='row2'>$"+db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids()-1).getBidAmount()+"</div>" + "</div>");
+				}
+				else{
+					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+				}
+				
 				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
 				pw.append("</div></div></a>");
 			}

@@ -28,6 +28,7 @@ import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
+import database.model.PotcastBidModel;
 import database.model.PotcastModel;
 import database.model.ReportModel;
 import database.model.ShoppingLoginModel;
@@ -315,8 +316,26 @@ public class Database {
 			potcasts.add(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
 					pickupTime, minBid, startingCR, picture));
 		}
-		System.out.println(potcasts.size());
 		return potcasts;
+	}
+	
+	//Potcast Bids
+	public ArrayList<PotcastBidModel> getBidsForPotcast(int id) throws SQLException{
+		ArrayList<PotcastBidModel> pbms = new ArrayList<PotcastBidModel>();
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT b.potcastID, b.iGN, b.bidAmount FROM Potcast a INNER JOIN PotcastBid b ON a.PotcastID = b.PotcastID WHERE b.PotcastID = ? ORDER BY b.bidAmount;");
+		ps.setInt(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			int potcastID = rs.getInt("potcastID");
+			String iGN = rs.getString("iGN");
+			BigDecimal bidAmount = rs.getBigDecimal("bidAmount");
+			
+			pbms.add(new PotcastBidModel(potcastID, iGN, bidAmount, ""));
+		}
+		
+		return pbms;
 	}
 	
 	//Appeal
