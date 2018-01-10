@@ -2,7 +2,10 @@ package p2pfood;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -39,10 +42,34 @@ public class PotcastList extends HttpServlet {
 		Database db;
 		
 		if(request.getParameter("title")!=null){
-			pso.setTitle(request.getParameter("username"));
+			pso.setTitle(request.getParameter("title"));
 		}
-		if(request.getParameter("order")!=null){
-			pso.setOrderBy(request.getParameter("order"));
+		if(request.getParameter("searchOption")!=null){
+			pso.setOrderBy(request.getParameter("searchOption"));
+			
+			if(request.getParameter("searchOption").equals("bids")){
+				pso.setPurpose(4);
+			}
+			if(request.getParameter("searchOption").equals("closingTime")){
+				pso.setOrderBy("bidStopTime");
+			}
+			if(request.getParameter("searchOption").equals("pickupTime")){
+				pso.setOrderBy("pickupTime");
+			}
+			if(request.getParameter("searchOption").equals("price")){
+				pso.setOrderBy("minBid");
+			}
+			if(request.getParameter("searchOption").equals("cookingRank")){
+				pso.setOrderBy("startingCR");
+			}
+		}
+		if(request.getParameter("searchOrder")!=null){
+			if(request.getParameter("searchOrder").equals("asc")){
+				pso.setAscDesc(true);
+			}
+			if(request.getParameter("searchOrder").equals("desc")){
+				pso.setAscDesc(false);
+			}
 		}
 		
 		PrintWriter pw = response.getWriter();
@@ -106,21 +133,26 @@ public class PotcastList extends HttpServlet {
 						+ "		</div>"
 						+ "	</div>"
 						+ "<div id='wrapper'>" + "<div id='secondHeader'>" + "<h2>Potcast</h2>"
-						+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" + "<input type='text'></input>"
-						+ "<p>Sort Results By: </p>" + "<div id='search'>" + "<div id='radios'>"
+						+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" 
+						+ "<form method='get'>"
+						+ "<input type='text' name='title'></input>"
+						+ "<p>Sort Results By: </p>" + "<div id='search'>" 
+						+ "<div id='radios'>"
 						+ "<ul>"
-						+ "<li><input type='radio' name='search' id='radioActiveBids'></input><label for='radioActiveBids'>Active Bids</label></li>"
-						+ "<li><input type='radio' name='search' id='radioClosingTime'></input><label for='radioClosingTime'>Bid Closing Time</label></li>"
-						+ "<li><input type='radio' name='search' id='radioPickupTime'></input><label for='radioPickupTime'>Pickup Time</label></li>"
-						+ "<li><input type='radio' name='search' id='radioPrice'></input><label for='radioPrice'>Price</label></li>"
-						+ "<li><input type='radio' name='search' id='radioCR'></input><label for='radioCR'>Cooking Rating</label></li>"
+						+ "<li><input type='radio' name='searchOption' id='radioActiveBids' value='bids'></input><label for='radioActiveBids'>Active Bids</label></li>"
+						+ "<li><input type='radio' name='searchOption' id='radioClosingTime' value='closingTime'></input><label for='radioClosingTime'>Bid Closing Time</label></li>"
+						+ "<li><input type='radio' name='searchOption' id='radioPickupTime' value='pickupTime'></input><label for='radioPickupTime'>Pickup Time</label></li>"
+						+ "<li><input type='radio' name='searchOption' id='radioPrice' value='price'></input><label for='radioPrice'>Price</label></li>"
+						+ "<li><input type='radio' name='searchOption' id='radioCR' value='cookingRank'></input><label for='radioCR'>Cooking Rating</label></li>"
 						+ "</ul>"
 						+ "</div>"
 						+ "<div id='radios2'>"
 						+ "<ul>"
-						+ "<li><input type='radio' name='search' id='radioAscend'></input><label for='radioAscend'>Ascending</label></li>"
-						+ "<li><input type='radio' name='search' id='radioDescend'></input><label for='radioDescend'>Descending</label></li>"
+						+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
+						+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
 						+ "</ul>"
+						+ "<input type='submit'></input>"
+						+ "</form>"
 						+ "</div>"
 						+ "</div>"
 						+ "</div></div>" + "<h1>Closing soon:</h1>");
@@ -166,8 +198,13 @@ public class PotcastList extends HttpServlet {
 					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
 				}
 				
-				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
-				pw.append("</div></div></a>");
+				pw.append("<div id='column2'><div class='row2'>");
+				
+						Date date = new Date(ap.getPickupTime().getTime());
+						DateFormat formatter = new SimpleDateFormat("HH:mm");
+						String dateFormatted = formatter.format(date);
+						
+				pw.append(dateFormatted+", HARDCODEDkm</div></div></div></a>");
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
