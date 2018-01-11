@@ -9,14 +9,16 @@ public class TemporaryStoreModel {
 	String iGN;
 	BigDecimal temporaryAmount;
 	String temporaryPIN;
+	String temporarySalt;
 	String temporaryOnBehalf;
 	Timestamp temporaryTime;
 	
-	public TemporaryStoreModel(String iGN, BigDecimal temporaryAmount, String temporaryPIN, String TemporaryOnBehalf, Timestamp temporaryTime) {
+	public TemporaryStoreModel(String iGN, BigDecimal temporaryAmount, String temporaryPIN, String temporarySalt, String temporaryOnBehalf, Timestamp temporaryTime) {
 		this.iGN = iGN;
 		this.temporaryAmount = temporaryAmount;
+		this.temporarySalt = temporarySalt;
 		this.temporaryPIN = temporaryPIN;
-		this.temporaryOnBehalf = TemporaryOnBehalf;
+		this.temporaryOnBehalf = temporaryOnBehalf;
 		this.temporaryTime = temporaryTime;
 	}
 
@@ -34,6 +36,14 @@ public class TemporaryStoreModel {
 
 	public String getTemporaryPIN() {
 		return temporaryPIN;
+	}
+
+	public String getTemporarySalt() {
+		return temporarySalt;
+	}
+
+	public void setTemporarySalt(String temporarySalt) {
+		this.temporarySalt = temporarySalt;
 	}
 
 	public String getTemporaryOnBehalf() {

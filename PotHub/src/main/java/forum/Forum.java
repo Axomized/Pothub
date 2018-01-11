@@ -153,7 +153,7 @@ public class Forum extends HttpServlet {
 						try {
 							Database dbms = new Database(2);
 							ArrayList<ForumPostModel> fa = dbms.getForumModel();
-							for(ForumPostModel qw: fa){
+							for(ForumPostModel qw: fa){	
 								out.println(
 							
 						  "					<div class='cb'>" 
@@ -161,7 +161,7 @@ public class Forum extends HttpServlet {
 						+ "							<p onclick='upfirst()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"
-						+ "							<p id='firstcount' style='text-align: center;'>5</p>"
+						+ "							<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
 						+ "							<p onclick='downfirst()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"
@@ -174,8 +174,7 @@ public class Forum extends HttpServlet {
 						+ "								<h2 style='color: blue' onclick='location.href='discussion';'>" + qw.getThread() + "</h2>"
 						+ "							</div>"
 						+ "							<div class='subDescription'>"
-						+ "								<p>Betweenn Mc Spicy and Mc Salad, which would you choose for"
-						+ "									a healthy meal and more</p>"
+						+ "								<p>" + qw.getDescription() + "</p>"
 						+ "							</div>"
 						+ "							<div class='commentscount'>"
 						+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>31"
@@ -219,7 +218,7 @@ public class Forum extends HttpServlet {
 						+ "							<p id='secondup' onclick='upsecond()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"
-						+ "							<p id='secondcount'style='text-align: center;'>19</p>"
+						+ "							<p id='secondcount'style='text-align: center;'></p>"
 						+ "							<p id='seconddown' onclick='downsecond()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"

@@ -3,6 +3,7 @@ package forum;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -34,41 +35,28 @@ public class testinfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		out.println("<html>");
-		out.println("This is a test page");
+		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		try {
-			Database dbms = new Database(2);
-			ArrayList<ForumPostModel> fa = dbms.getForumModel();
-			out.println("Lets go play league!");
-			for(ForumPostModel qw: fa){
-				out.println("<p>");
-				out.println(qw.getPostID());
-				out.println("</p>");
-				out.println("<p>");
-				out.println(qw.getThread());
-				out.println("</p>");
-				out.println("<p>");
-				out.println(qw.getDescription());
-				out.println("</p>");
-				out.println("<p>");
-				out.println(qw.getUpvotes());
-				out.println("</p>");
-				out.println("<p>");
-				out.println(qw.getiGN());
-				out.println("</p>");
-				out.println("<p>");
-				out.println(qw.getDate());
-				out.println("</p>");
-				out.println("<hr>");
-				}
-			}
-		 catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+			Database ttttt = new Database(2);
+			ForumPostModel fp = new ForumPostModel();
+			fp.setDate(timestamp);
+			fp.setDescription("blah blah blah");
+			fp.setFileAttachment(null);
+			fp.setiGN("GordonRamsey");
+			fp.setPicture(1);
+			fp.setThread("darren is handsome");
+			fp.setUpvotes(69696969);
+			ttttt.addForumPost(fp);
+			out.println("<html>"
+					+ "<p> hello </p>"
+					+ "</html>"
+					);
+		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		out.println("</html>");
+		
+		
 	}
 
 	/**
