@@ -29,6 +29,7 @@ import database.model.FileTableModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.ImageTableModel;
 import database.model.LoginModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
@@ -787,6 +788,23 @@ public class Database {
 		while(rs.next()) {
 			String imageName	= rs.getString("ImageName");
 			return imageName;
+		}
+		return null;
+	}
+	
+	//Get ImageTable by imageName
+	public ImageTableModel getImageTableByImageName(String hashName) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM ImageTable WHERE ImageName = ?;");
+		ppstmt.setString(1, hashName);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int fileID	= rs.getInt("ImageID");
+			String fileName	= rs.getString("ImageName");
+			byte[] data	= rs.getBytes("Data");
+			int inUse = rs.getInt("InUse");
+			
+			return new ImageTableModel(fileID, fileName, data, inUse);
 		}
 		return null;
 	}
