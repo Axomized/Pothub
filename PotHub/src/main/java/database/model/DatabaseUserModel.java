@@ -20,6 +20,10 @@ public class DatabaseUserModel {
 	boolean isPriviledged;
 	int userPermission;
 	
+	public DatabaseUserModel() {
+		
+	}
+	
 	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo,
 			int profilePic, Date lastLogin, Date joinDate, int cookingRank, int points, BigDecimal totalDonation,
 			boolean isPriviledged, int userPermission) {

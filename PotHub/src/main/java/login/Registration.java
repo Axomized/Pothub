@@ -2,6 +2,9 @@ package login;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,6 +14,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.PBKDF2;
+import database.model.DatabaseUserModel;
+import database.model.LoginModel;
 
 /**
  * Servlet implementation class Registration2
@@ -58,12 +66,17 @@ public class Registration extends HttpServlet {
 		+ "	<body>"
 		+ "		<h1>Create Your Account</h1>"
 		+ "		<form action='Registration' method='POST'>"
-		+ "			<input type='email' name='email' placeholder='Enter your email'>"
+		+ "			<input type='text' name='email' placeholder='Enter your email'>"
 		+ "			<input type='password' name='password' placeholder='Create a password'>"
 		+ "			<input type='password' name='password2' placeholder='Confirm your password'>"
 		+ "			<input type='text' name='name' placeholder='Enter your name'>"
 		+ "			<input type='text' name='contact' placeholder='Enter your phone number'>"
-		+ "			<input type='text' name='address' placeholder='Enter your address'>"
+		+ "			<input type='text' name='address' placeholder='Enter your postal code'>"
+		+ "		<input type='text' name='unitno' placeholder='Enter your unit number'>"		
+		+ "			<select>"
+		+ "				<option value='gender'>Male</option>"
+		+ " 			<option value='gender'>Female</option>"
+		+ "			</select>"
 		+ "		<input type='submit' name='submit' value='SUBMIT'>"
 		+ "		</form>"
 		+ "		<div id='footer'>"
@@ -85,27 +98,111 @@ public class Registration extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-			
-			String email = request.getParameter("email");
-			String password = request.getParameter("password");
-			String confirmPassword = request.getParameter("password2");
-			String name = request.getParameter("name");
-			String contact = request.getParameter("contact");
-			String address = request.getParameter("address");
+		
+		DatabaseUserModel dum = new DatabaseUserModel();
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String confirmPassword = request.getParameter("password2");
+		String name = request.getParameter("name");
+		String contact = request.getParameter("contact");
+		String address = request.getParameter("address");
+		String unitno = request.getParameter("unitno");
+		String gender = request.getParameter("gender");
 						
-			if(email.length() == 0 ||
-					password.length() == 0 ||
-					confirmPassword.length() == 0 ||
-					name.length() == 0 ||
-					contact.length() == 0 ||
-					address.length() == 0){
-				out.println("<script type=\"text/javascript\">");
-				out.println("alert('Please make sure that all fields are filled.');");
-				out.println("location='html/Registration.html';");
-				out.println("</script>");
+		if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter your email address in the format someone@example.com.');");
+			out.println("</script>");
+		}
+			
+		
+		else if(password.length() == 0 ||
+				password.length() < 7 ||
+				!password.matches(".*[A-Z].*") || //checks if password has upper case letter
+				!password.matches(".*[a-z].*") || //checks if password has lower case letter
+				!password.matches(".*\\d.*") ||  //checks if password has numbers
+				!password.matches("[a-zA-Z0-9 ]*") || //checks if password has special characters
+				password.contains(" ")) //checks if password contains spaces
+		{
+			
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Password must contain at least 8 characters and one of each of the following: uppercase letter, lowercase letter, number.');");
+			out.println("</script>");
+		}
+		
+		else if(!confirmPassword.equals(password.toString()))
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter the same exact password twice.');");
+			out.println("</script>");
+		}
+		
+		else if(name.length() == 0)
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter your name.');");
+			out.println("</script>");
+		}
+		
+		else if(contact.length() != 8 ||
+				!contact.matches("[0-9]+")) //checks if number contains all numbers only
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter a valid contact number.');");
+			out.println("</script>");
+		}
+		
+		else if(address.length() != 6 ||
+				!address.matches("[0-9]+"))
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Invalid postal code.');");
+			out.println("</script>");
+		}
+		
+		else if(unitno.length() == 0)
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter your unit number.');");
+			out.println("</script>");
+		}
+					
+		else{
+			
+			try 
+			{
+				PBKDF2.createHash(password, email);
+				
+				dum.setEmail(email);
+				dum.setiGN(name);
+				dum.setContact_No(contact);
+				dum.setAddress(address);
+				dum.setUnitNo(unitno);
+				dum.setGender(gender.charAt(0));				
+				
+			} 
+			catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
+			{
+				e.printStackTrace();
 			}
 			
-			//doGet(request, response);
+			try 
+			{
+				Database db = new Database(1);
+				db.insertRegistration(dum);
+			}
+			catch (ClassNotFoundException | SQLException e)
+			{
+				e.printStackTrace();
+			}
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('You have successfully registered!');");
+			out.println("location='html/LoginPage.html';");
+			out.println("</script>");
+		}
+			
+		doGet(request, response);
 
 			
 	}

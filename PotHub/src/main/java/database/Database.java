@@ -10,6 +10,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
@@ -26,6 +27,7 @@ import database.model.FileTableModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.LoginModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
 import database.model.PotcastBidModel;
@@ -119,6 +121,34 @@ public class Database {
 			aldum.add(iGN);
 		}
 		return aldum;
+	}
+	
+	//For Login Page
+	public void insertLogin(LoginModel lm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUE(?,?,?);");
+		ppstmt.setString(1, lm.getEmail());
+		ppstmt.setString(2, lm.getPassword());
+		ppstmt.setString(3, lm.getSalt());
+		
+		ppstmt.executeUpdate();
+	}
+	
+	//For Registration Page
+	public void insertRegistration(DatabaseUserModel dum) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO User(IGN, Email, Contact_No, Gender, PostalCode, UnitNo, JoinDate, CookingRank, Points, TotalAmountDonated, IsPriviledged) VALUES(?,?,?,?,?,?,?,?,?,?);");
+		ppstmt.setString(1, dum.getiGN());
+		ppstmt.setString(2, dum.getEmail());
+		ppstmt.setString(3, dum.getContact_No());
+		ppstmt.setString(4, String.valueOf(dum.getGender()));
+		ppstmt.setString(5, dum.getAddress());
+		ppstmt.setString(6, dum.getUnitNo());
+		ppstmt.setDate(7, new Date(Timestamp.from(Instant.now()).getTime()));
+		ppstmt.setInt(8, 0);
+		ppstmt.setInt(9, 0);
+		ppstmt.setInt(10, 0);
+		ppstmt.setBoolean(11, false);
+		
+		ppstmt.executeUpdate();
 	}
 	
 	//For profile page - user's profile information

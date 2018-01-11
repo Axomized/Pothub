@@ -11,6 +11,10 @@ public class LoginModel {
 		this.salt = salt;
 	}
 
+	public LoginModel() {
+		
+	}
+
 	public String getEmail() {
 		return email;
 	}

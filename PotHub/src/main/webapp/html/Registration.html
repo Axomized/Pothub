@@ -21,12 +21,18 @@
 <body>
 	<h1>Create Your Account</h1>
 	<form method="post" action="/Registration">
-		<input type="email" name="email" placeholder="Enter your email">
+		<input type="text" name="email" placeholder="Enter your email">
 		<input type="password" name="password" placeholder="Create a password">
 		<input type="password" name="password2" placeholder="Confirm your password">
 		<input type="text" name="name" placeholder="Enter your name">
 		<input type="text" name="contact" placeholder="Enter your phone number">
-		<input type="text" name="address" placeholder="Enter your address">
+		<input type="text" name="address" placeholder="Enter your postal code">
+		<input type="text" name="unitno" placeholder="Enter your unit number">
+		<select>
+			<option value="gender">Male</option>
+			<option value="gender">Female</option>
+		</select>		
+		
 		
 		<input type="submit" name="submit" value="SUBMIT">
 	</form>
