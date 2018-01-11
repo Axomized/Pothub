@@ -826,14 +826,14 @@ public class Database {
 	
 	//Get ImageTable by ImageID
 	public ImageTableModel getImageTableByImageID(int id) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName, ImageID, ImageData, inUse FROM ImageTable WHERE ImageID = ?;");
 		ppstmt.setInt(1, id);
 		
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
 			String imageName	= rs.getString("ImageName");
-			int imageID = rs.getInt("imageID");
-			byte[] imageData = rs.getBytes("imageData");
+			int imageID = rs.getInt("ImageID");
+			byte[] imageData = rs.getBytes("ImageData");
 			int inUse = rs.getInt("inUse");
 			return new ImageTableModel(imageID, imageName, imageData, inUse);
 		}
@@ -842,7 +842,7 @@ public class Database {
 	
 	//Get ImageTable by ImageName
 	public ImageTableModel getImageTableByImageName(String hashname) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageName = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName, ImageID, ImageData, inUse FROM ImageTable WHERE ImageName = ?;");
 		ppstmt.setString(1, hashname);
 		
 		ResultSet rs = ppstmt.executeQuery();
@@ -884,12 +884,12 @@ public class Database {
 		ppstmt.executeUpdate();
 		//(/ADD UPLOAD CODES HERE)
 		//Searching for ID of new entry
-		PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ID FROM ImageTable WHERE imageName=?;");
-		ppstmt2.setString(0, hashName);
+		PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ImageID FROM ImageTable WHERE imageName=?;");
+		ppstmt2.setString(1, hashName);
 		ResultSet checkForNewEntry = ppstmt2.executeQuery();
 		
 		while(checkForNewEntry.next()){
-			return checkForNewEntry.getInt("ID");
+			return checkForNewEntry.getInt("ImageID");
 		}
 			System.out.println("Cannot find new entry");
 		return 0;
@@ -897,23 +897,23 @@ public class Database {
 	}
 	
 	public int getIDUsingHashName(String hashName) throws SQLException{
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT ID, ImageName, inUse FROM ImageTable WHERE imageName=?;");
-		ppstmt.setString(0, hashName);
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageID, ImageName, inUse FROM ImageTable WHERE imageName=?;");
+		ppstmt.setString(1, hashName);
 		ResultSet checkForDuplicates = ppstmt.executeQuery();
 		
 		while(checkForDuplicates.next()){
 			int inUseCount = checkForDuplicates.getInt("inUse");
-			int id = checkForDuplicates.getInt("ID");
+			int id = checkForDuplicates.getInt("ImageID");
 			
 			setInUseFor(id, inUseCount);
 			
-			return checkForDuplicates.getInt("ID");
+			return checkForDuplicates.getInt("ImageID");
 		}
-		return 0;
+		return -1;
 	}
 	
 	public void setInUseFor(int id, int inUse) throws SQLException{
-		PreparedStatement updatingInUseByID = conn.prepareStatement("UPDATE ImageTable SET inUse = ? WHERE ID = ?");
+		PreparedStatement updatingInUseByID = conn.prepareStatement("UPDATE ImageTable SET inUse = ? WHERE ImageID = ?");
 		updatingInUseByID.setInt(1, inUse+1);
 		updatingInUseByID.setInt(2, id);
 		
@@ -921,7 +921,7 @@ public class Database {
 	}
 	
 	public int getInUseFor(int id) throws SQLException{
-		PreparedStatement gettingInUseByID = conn.prepareStatement("SELECT inUse FROM ImageTable WHERE ID = ?");
+		PreparedStatement gettingInUseByID = conn.prepareStatement("SELECT inUse FROM ImageTable WHERE ImageID = ?");
 		gettingInUseByID.setInt(1, id);
 		
 		ResultSet oneLiner = gettingInUseByID.executeQuery();

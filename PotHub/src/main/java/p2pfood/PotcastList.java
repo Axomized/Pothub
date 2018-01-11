@@ -165,7 +165,7 @@ public class PotcastList extends HttpServlet {
 
 			for(PotcastModel ap : top3Potcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
+				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 			
@@ -177,8 +177,13 @@ public class PotcastList extends HttpServlet {
 					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
 				}
 				
-				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
-				pw.append("</div></div></a>");
+				pw.append("<div id='column2'><div class='row2'>");
+				
+				Date date = new Date(ap.getPickupTime().getTime());
+				DateFormat formatter = new SimpleDateFormat("HH:mm");
+				String dateFormatted = formatter.format(date);
+				
+				pw.append(dateFormatted+", HARDCODEDkm</div></div></div></a>");
 			}			
 		
 						pw.append("<h1>Active Potcasts: </h1>");
@@ -186,7 +191,7 @@ public class PotcastList extends HttpServlet {
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
 			for(PotcastModel ap : activePotcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
+				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 
