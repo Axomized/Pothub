@@ -1,15 +1,3 @@
-var constraints = {audio: true, video: { width: 1280, height: 720 } };
-navigator.mediaDevices.getUserMedia(constraints, onGetMedia, function(err){console.log(err);});
-
-function onGetMedia(stream){
-	var vid = document.getElementById('localVideo');
-	vid.srcObj = stream;
-	vid.onloadedmetadata = function(e) {
-	    vid.play();
-	};
-}
-
-/*
 var token; 			// Ajax (Dont delete)
 var host;			// Ajax (Dont delete)
 var localUsername; 	// Name of Current User
@@ -75,7 +63,7 @@ function onGetMedia(stream) {							// Gets stream from line 10
 	vid.srcObject = stream;								// Start "streaming" own stream to video element
 	localStream = stream;
 	vid.onloadedmetadata = function(e) {
-	    video.play();
+	    vid.play();
 	};
 }
 
@@ -393,4 +381,4 @@ function setVideoCodec(sdp){
 		sdp = sdpLines.join('\r\n');
 		return sdp;
 	}
-}*/
+}

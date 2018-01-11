@@ -1,7 +1,10 @@
 package database;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
@@ -15,6 +18,9 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+
+import org.apache.commons.compress.utils.IOUtils;
+
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
@@ -665,11 +671,11 @@ public class Database {
 			if(profilePic == 0) {
 				break;
 			}
-			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT FileName FROM FileTable WHERE FileID = ?;");
+			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");
 			ppstmt2.setInt(1, profilePic);
 			ResultSet rs2 = ppstmt2.executeQuery();
 			while(rs2.next()) {
-				String fileName = rs2.getString("FileName");
+				String fileName = rs2.getString("ImageName");
 				
 				return fileName;
 			}
@@ -677,6 +683,19 @@ public class Database {
 		return null;
 	}
 	
+	//Get IGN's priviledge
+	public boolean getUserPriviledge(String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT isPriviledged FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, iGN);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			boolean isPriviledged = rs.getBoolean("isPriviledged");
+			
+			return isPriviledged;
+		}
+		return false;
+	}
+		
 	//For MyEvent
 	public ArrayList<EventModel> getEventModelForMyEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
@@ -1038,7 +1057,7 @@ public class Database {
 	}
 	
 	/*
-	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException{
+	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException{
 		Database db = new Database(2);
 		File file = new File("C:\\Users\\Wei Xuan\\Desktop\\mountain.jpeg");
 		InputStream in = new FileInputStream(file);
@@ -1050,11 +1069,7 @@ public class Database {
 		System.out.println(fileData);
 		System.out.println(fileSize);
 		
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
-		ps.setString(1, fileName);
-		ps.setBytes(2, fileData);
-		ps.setFloat(3, fileSize);
-		db.executeUpdate(ps);
+		System.out.println(db.addPictureWithDupeCheck(fileName, fileData));
 	}
 	*/
 	/*
