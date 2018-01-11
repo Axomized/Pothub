@@ -35,7 +35,7 @@ public class PotcastModel {
 	public String toString() {
 		try {
 		Database db = new Database(0);
-			return "PotcastID" + potcastID + "Title " + title + "Description " + description + "Max Bids " + maxBids + "Min Bids " + minBid + "Bid stop time "+bidStopTime+" Pickup Time "+pickupTime+" startingCR"+startingCR+" PictureID "+picture+" PictureName "+db.getFileNameByFileID(picture);
+			return "PotcastID" + potcastID + "Title " + title + "Description " + description + "Max Bids " + maxBids + "Min Bids " + minBid + "Bid stop time "+bidStopTime+" Pickup Time "+pickupTime+" startingCR"+startingCR+" PictureID "+picture+" PictureName "+db.getImageByImageID(picture);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
