@@ -165,7 +165,7 @@ public class PotcastList extends HttpServlet {
 
 			for(PotcastModel ap : top3Potcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 			
@@ -186,7 +186,7 @@ public class PotcastList extends HttpServlet {
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
 			for(PotcastModel ap : activePotcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 

@@ -1,6 +1,7 @@
 package database;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
@@ -29,6 +30,7 @@ import database.model.FileTableModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.ImageTableModel;
 import database.model.LoginModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
@@ -242,9 +244,10 @@ public class Database {
 			String iGN					= rs.getString("IGN");
 			BigDecimal temporaryAmount 	= rs.getBigDecimal("TemporaryAmount");
 			String temporaryPIN 		= rs.getString("TemporaryPIN");
+			String temporarySalt		= rs.getString("TemporarySalt");
 			String temporaryOnBehalf 	= rs.getString("TemporaryOnBehalf");
 			Timestamp temporaryTime 	= rs.getTimestamp("TemporaryTime");
-			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporaryOnBehalf, temporaryTime);
+			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporarySalt, temporaryOnBehalf, temporaryTime);
 		}
 		return null;
 	}
@@ -806,6 +809,136 @@ public class Database {
 			return fileName;
 		}
 		return null;
+	}
+	
+	//Get ImageName by ImageID
+	public String getImageByImageID(int iD) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");
+		ppstmt.setInt(1, iD);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String imageName	= rs.getString("ImageName");
+			return imageName;
+		}
+		return null;
+	}
+	
+	//Get ImageTable by ImageID
+	public ImageTableModel getImageTableByImageID(int id) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");
+		ppstmt.setInt(1, id);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String imageName	= rs.getString("ImageName");
+			int imageID = rs.getInt("imageID");
+			byte[] imageData = rs.getBytes("imageData");
+			int inUse = rs.getInt("inUse");
+			return new ImageTableModel(imageID, imageName, imageData, inUse);
+		}
+		return null;
+	}
+	
+	//Get ImageTable by ImageName
+	public ImageTableModel getImageTableByImageName(String hashname) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageName = ?;");
+		ppstmt.setString(1, hashname);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String imageName	= rs.getString("ImageName");
+			int imageID = rs.getInt("imageID");
+			byte[] imageData = rs.getBytes("imageData");
+			int inUse = rs.getInt("inUse");
+			return new ImageTableModel(imageID, imageName, imageData, inUse);
+		}
+		return null;
+	}
+	
+	//Add ImageName by ImageID
+	//Returns the ID of wherever your image ends up (Or a dupe of it)
+	public int addPictureWithDupeCheck(String imageName, byte[] imageData) throws SQLException, NoSuchAlgorithmException, IOException { 
+		String hash = SHA1.SHAsum(imageData);
+		String extension = imageName.substring(imageName.length()-4, imageName.length()-1);
+		//Gets the storable name
+		String hashName = hash+extension;
+		
+		//Checking for a dupe
+		int idUsingHashName = getIDUsingHashName(hashName);
+		
+		//If dupe is found
+		if(idUsingHashName!=-1){
+			setInUseFor(idUsingHashName,getInUseFor(idUsingHashName));
+			return idUsingHashName;
+		}
+		else{
+		//Inserting a new entry
+		//(ADD UPLOAD CODES HERE)
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ImageTable (ImageName, imageData, inUse) Values(?,?,?);");
+		ppstmt.setString(1, hashName);
+		ppstmt.setBytes(2, imageData);
+		ppstmt.setInt(3, 1);
+		
+		
+		ppstmt.executeUpdate();
+		//(/ADD UPLOAD CODES HERE)
+		//Searching for ID of new entry
+		PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ID FROM ImageTable WHERE imageName=?;");
+		ppstmt2.setString(0, hashName);
+		ResultSet checkForNewEntry = ppstmt2.executeQuery();
+		
+		while(checkForNewEntry.next()){
+			return checkForNewEntry.getInt("ID");
+		}
+			System.out.println("Cannot find new entry");
+		return 0;
+		}
+	}
+	
+	public int getIDUsingHashName(String hashName) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ID, ImageName, inUse FROM ImageTable WHERE imageName=?;");
+		ppstmt.setString(0, hashName);
+		ResultSet checkForDuplicates = ppstmt.executeQuery();
+		
+		while(checkForDuplicates.next()){
+			int inUseCount = checkForDuplicates.getInt("inUse");
+			int id = checkForDuplicates.getInt("ID");
+			
+			setInUseFor(id, inUseCount);
+			
+			return checkForDuplicates.getInt("ID");
+		}
+		return 0;
+	}
+	
+	public void setInUseFor(int id, int inUse) throws SQLException{
+		PreparedStatement updatingInUseByID = conn.prepareStatement("UPDATE ImageTable SET inUse = ? WHERE ID = ?");
+		updatingInUseByID.setInt(1, inUse+1);
+		updatingInUseByID.setInt(2, id);
+		
+		updatingInUseByID.executeUpdate();
+	}
+	
+	public int getInUseFor(int id) throws SQLException{
+		PreparedStatement gettingInUseByID = conn.prepareStatement("SELECT inUse FROM ImageTable WHERE ID = ?");
+		gettingInUseByID.setInt(1, id);
+		
+		ResultSet oneLiner = gettingInUseByID.executeQuery();
+		while(oneLiner.next()){
+			return oneLiner.getInt("inUse");
+		}
+		
+		System.out.println("No record found from ID");
+		return 0;
+	}
+	
+	public int editPicture(String imageName, byte[] imageData, int oldID) throws NoSuchAlgorithmException, IOException, SQLException{
+		int toRet=0;
+		toRet = addPictureWithDupeCheck(imageName, imageData);
+		setInUseFor(oldID,getInUseFor(oldID)-1);
+		
+		return toRet;
 	}
 		
 	//FoodPreferences
