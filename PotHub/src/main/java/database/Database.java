@@ -3,6 +3,8 @@ package database;
 import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -124,8 +126,37 @@ public class Database {
 	}
 	
 	//For Login Page
+		public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+			PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
+			ResultSet rs = ppstmt.executeQuery();
+			while(rs.next()) {
+				String email = rs.getString("Email");
+				String password = rs.getString("Password");
+				String salt = rs.getString("Salt");
+				
+				int PBKDF2_ITERATIONS = 100000;
+				int HASH_BYTES = 24;
+				
+				// Hash the password
+			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(salt), PBKDF2_ITERATIONS, HASH_BYTES);
+			    
+			    if (email == enteredEmail || PBKDF2.toHex(hash) == enteredPassword)
+			    {
+					System.out.println("Login Success!");
+			    }
+			    else
+			    {
+			    	System.out.println("Login fail!");
+			    }
+			    
+				return new LoginModel(email, password, salt);
+			}
+			return null;
+		}
+	
+	//For Registration Page
 	public void insertLogin(LoginModel lm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUE(?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUES(?,?,?);");
 		ppstmt.setString(1, lm.getEmail());
 		ppstmt.setString(2, lm.getPassword());
 		ppstmt.setString(3, lm.getSalt());
@@ -135,7 +166,7 @@ public class Database {
 	
 	//For Registration Page
 	public void insertRegistration(DatabaseUserModel dum) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO User(IGN, Email, Contact_No, Gender, PostalCode, UnitNo, JoinDate, CookingRank, Points, TotalAmountDonated, IsPriviledged) VALUES(?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO DatabaseUser(IGN, Email, Contact_No, Gender, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, UserPermission) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);");
 		ppstmt.setString(1, dum.getiGN());
 		ppstmt.setString(2, dum.getEmail());
 		ppstmt.setString(3, dum.getContact_No());
@@ -147,6 +178,7 @@ public class Database {
 		ppstmt.setInt(9, 0);
 		ppstmt.setInt(10, 0);
 		ppstmt.setBoolean(11, false);
+		ppstmt.setInt(12, 0);
 		
 		ppstmt.executeUpdate();
 	}

@@ -5,12 +5,8 @@ import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,7 +14,6 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import database.PBKDF2;
 import database.model.DatabaseUserModel;
-import database.model.LoginModel;
 
 /**
  * Servlet implementation class Registration2
@@ -73,9 +68,9 @@ public class Registration extends HttpServlet {
 		+ "			<input type='text' name='contact' placeholder='Enter your phone number'>"
 		+ "			<input type='text' name='address' placeholder='Enter your postal code'>"
 		+ "		<input type='text' name='unitno' placeholder='Enter your unit number'>"		
-		+ "			<select>"
-		+ "				<option value='gender'>Male</option>"
-		+ " 			<option value='gender'>Female</option>"
+		+ "			<select name='gender'>"
+		+ "				<option value='Male'>Male</option>"
+		+ " 			<option value='Female'>Female</option>"
 		+ "			</select>"
 		+ "		<input type='submit' name='submit' value='SUBMIT'>"
 		+ "		</form>"
@@ -171,16 +166,17 @@ public class Registration extends HttpServlet {
 		else{
 			
 			try 
-			{
-				PBKDF2.createHash(password, email);
-				
+			{				
 				dum.setEmail(email);
 				dum.setiGN(name);
 				dum.setContact_No(contact);
 				dum.setAddress(address);
 				dum.setUnitNo(unitno);
-				dum.setGender(gender.charAt(0));				
+				dum.setGender(gender.charAt(0));	
 				
+				PBKDF2.createHash(password, email);
+
+								
 			} 
 			catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
 			{
