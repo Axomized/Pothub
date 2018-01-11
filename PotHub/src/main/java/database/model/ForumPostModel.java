@@ -22,6 +22,12 @@ public class ForumPostModel {
 		this.description = description;
 		this.fileAttachment = fileAttachment;
 	}
+	
+
+	public ForumPostModel() {
+		super();
+	}
+
 
 	public int getPostID() {
 		return postID;

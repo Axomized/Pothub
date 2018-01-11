@@ -205,16 +205,17 @@ public class Database {
 	
 	//For donation page
 	public TemporaryStoreModel getTempStore(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime FROM TemporaryStore WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime FROM TemporaryStore WHERE IGN = ?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			String iGN					= rs.getString("IGN");
 			BigDecimal temporaryAmount 	= rs.getBigDecimal("TemporaryAmount");
 			String temporaryPIN 		= rs.getString("TemporaryPIN");
+			String temporarySalt 		= rs.getString("TemporarySalt");
 			String temporaryOnBehalf 	= rs.getString("TemporaryOnBehalf");
 			Timestamp temporaryTime 	= rs.getTimestamp("TemporaryTime");
-			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporaryOnBehalf, temporaryTime);
+			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporarySalt, temporaryOnBehalf, temporaryTime);
 		}
 		return null;
 	}
@@ -898,9 +899,22 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
+	public void addForumPost(ForumPostModel fP) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ForumPost(Thread, Upvotes, IGN, Date, Picture, Description, FileAttachment) VALUES (?,?,?,?,?,?,?); ");
+		ppstmt.setString(1, fP.getThread());
+		ppstmt.setInt(2, fP.getUpvotes());
+		ppstmt.setString(3, fP.getiGN());
+		ppstmt.setTimestamp(4, fP.getDate());
+		ppstmt.setInt(5, fP.getPicture());
+		ppstmt.setString(6, fP.getDescription());
+		ppstmt.setString(7, fP.getFileAttachment());
+
+		executeUpdate(ppstmt);
+	}
+	
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID DESC");
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String thread = rs.getString("Thread");
