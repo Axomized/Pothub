@@ -92,6 +92,14 @@ function updateTime(hours, minutes, seconds){
 	});
 }
 
+function checkPriviledge(isPriviledged){
+	if(isPriviledged){
+		window.location.href = '/PotHub/CreateEventPage';
+	}else{
+		$("#popup-container").show();
+	}
+}
+
 $(document).ready(function(){
 	$(".front-container").mouseenter(function() {
 		$(this).next().slideDown(100);
@@ -101,10 +109,6 @@ $(document).ready(function(){
 	$(".back-container").mouseleave(function(){
 		$(this).prev().show();
 		$(this).slideUp(100);
-	});
-	
-	$("#createButton").click(function(){
-		$("#popup-container").show();
 	});
 	
 	$("#closeBtn").click(function(){

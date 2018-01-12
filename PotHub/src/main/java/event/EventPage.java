@@ -145,7 +145,7 @@ public class EventPage extends HttpServlet {
 				sb.append("					<div class='top-container'>");
 				sb.append("						<div class='top-container-image-container'>");
 				sb.append("							<div class='top-container-image'> ");
-				sb.append("								<img src='/PotHub/Image/" + db.getFileTableByFileID(eM.getThumbnail()).getFileName() + "' alt='crab picture'>");
+				sb.append("								<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='crab picture'>");
 				sb.append("							</div>");
 				sb.append("							<div class='top-container-image-gradient'>");
 				sb.append("								<div class='event-title'>");
@@ -207,7 +207,7 @@ public class EventPage extends HttpServlet {
 				
 				String fileName = db.getUserProfilePic(iGN);
 				if(fileName != null) {
-					sb.append("						<img src='/PotHub/Image/" + decodeString(fileName) + "' alt='User\'s Profile Picture'>");
+					sb.append("						<img src='/PotHub/Image/" + fileName + "' alt='User\'s Profile Picture'>");
 				}else {
 					sb.append("						<img src='images/cat.png' alt='cat picture'>");
 				}

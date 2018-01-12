@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -113,9 +114,9 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("						</div>");
 		sb.append("					</div>");
 		sb.append("					<div id='default-thumbnail'>");
-		sb.append("						<img src='images/crab.jpg' alt='crab' height='50' width='100' onclick='changeThumbnail(this, 1)'>");
-		sb.append("						<img src='images/foodss.jpg' alt='food' height='50' width='100' onclick='changeThumbnail(this, 2)'>");
-		sb.append("						<img src='images/bii.jpg' alt='SomeKoreanStar' height='50' width='100' onclick='changeThumbnail(this, 3)'>");
+		sb.append("						<img src='images/wood.jpeg' alt='crab' height='50' width='100' onclick='changeThumbnail(this, 4)'>");
+		sb.append("						<img src='images/blue.jpeg' alt='food' height='50' width='100' onclick='changeThumbnail(this, 5)'>");
+		sb.append("						<img src='images/mountain.jpeg' alt='SomeKoreanStar' height='50' width='100' onclick='changeThumbnail(this, 6)'>");
 		sb.append("					</div>");
 		sb.append("				</div>");
 		sb.append("				<div id='eventname-container' class='row form-group'>");
@@ -237,10 +238,8 @@ public class CreateEventPage extends HttpServlet {
 				
 				String fileName = encodeString(Paths.get(filePart.getSubmittedFileName()).getFileName().toString());
 				byte[] thumbnailBytes = IOUtils.toByteArray(filePart.getInputStream());
-				float fileSize = filePart.getSize();
 				
-				db.insertFileTable(new FileTableModel(0, fileName, thumbnailBytes, fileSize));
-				eM.setThumbnail(Integer.parseInt(db.getFileTableID(fileName)));
+				eM.setThumbnail(db.addPictureWithDupeCheck(fileName, thumbnailBytes));
 			}else {
 				int thumbnailNumber = Integer.parseInt(thumbnailNumberInput);
 				eM.setThumbnail(thumbnailNumber);
@@ -283,10 +282,8 @@ public class CreateEventPage extends HttpServlet {
 		    for (Part p : fileParts) {
 		        String fileName = encodeString(Paths.get(p.getSubmittedFileName()).getFileName().toString());
 		        byte[] gallaryFileBytes = IOUtils.toByteArray(p.getInputStream());
-				float fileSize = p.getSize();
 				
-				db.insertFileTable(new FileTableModel(0, fileName, gallaryFileBytes, fileSize));
-				fileListArray.add(db.getFileTableID(fileName));
+				fileListArray.add(String.valueOf(db.addPictureWithDupeCheck(fileName, gallaryFileBytes)));
 		    }
 		    eM.setFileListArray(fileListArray);
 		    eM.setiGN("BlackPepper3"); // Temporary IGN (Waiting for Login)
@@ -298,6 +295,8 @@ public class CreateEventPage extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		}
 	}

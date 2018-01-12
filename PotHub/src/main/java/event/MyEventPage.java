@@ -117,19 +117,19 @@ public class MyEventPage extends HttpServlet {
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("		<div id='wrapper'>");
-		sb.append("			<button class='btn btn-success' id='createButton'>Create Event</button>");
-		sb.append("			<div id='content-container'>");
 		
 		ArrayList<EventModel> eMAL;
 		try {
 			eMAL = db.getEventModelForMyEventPage();
-		
+			
 			for(EventModel eM:eMAL) {
 				String eventName = eM.getEventName();
 				String[] parts = decodeString(eM.getVenue()).split("\\`");
 				
+				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(" + db.getUserPriviledge(eM.getiGN()) + ")'>Create Event</button>");
+				sb.append("			<div id='content-container'>");
 				sb.append("		<div class='content'>");
-				sb.append("			<img src='/PotHub/Image/" + decodeString(db.getFileNameByFileID(eM.getThumbnail())) + "' alt='crab picture'>");
+				sb.append("			<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='crab picture'>");
 				sb.append("			<div class='row front-container'>");
 				sb.append("				<div class='title'>");
 				sb.append("					<div class='hostedOrNot'>");

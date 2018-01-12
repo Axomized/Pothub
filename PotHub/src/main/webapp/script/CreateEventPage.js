@@ -37,14 +37,14 @@ function showPreview(){
 		}else{
 			var src;
 			switch($("#fileNum").val()){
-				case "1":
-					src = "../images/crab.jpg";
+				case "4":
+					src = "../images/wood.jpeg";
 					break;
-				case "2":
-					src = "../images/foodss.jpg";
+				case "5":
+					src = "../images/blue.jpeg";
 					break;
-				case "3":
-					src = "../images/bii.jpg";
+				case "6":
+					src = "../images/mountain.jpeg";
 					break;
 			}
 			contents.find(".headerImage").attr("src", src);
