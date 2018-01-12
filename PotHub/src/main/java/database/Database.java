@@ -133,34 +133,32 @@ public class Database {
 		return aldum;
 	}
 	
-	//For Login Page
-		public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-			PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
-			ResultSet rs = ppstmt.executeQuery();
-			while(rs.next()) {
-				String email = rs.getString("Email");
-				String password = rs.getString("Password");
-				String salt = rs.getString("Salt");
-				
-				int PBKDF2_ITERATIONS = 100000;
-				int HASH_BYTES = 24;
-				
-				// Hash the password
-			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(salt), PBKDF2_ITERATIONS, HASH_BYTES);
-			    
-			    if (email == enteredEmail || PBKDF2.toHex(hash) == enteredPassword)
-			    {
-					System.out.println("Login Success!");
-			    }
-			    else
-			    {
-			    	System.out.println("Login fail!");
-			    }
-			    
-				return new LoginModel(email, password, salt);
-			}
-			return null;
+	//For Login Page - Select User IGN by Email
+	public DatabaseUserModel getIGNbyEmail(String email) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM DatabaseUser WHERE Email = ?;");
+		ppstmt.setString(1, email);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String iGN					= rs.getString("IGN");
+			return new DatabaseUserModel(iGN);
 		}
+		return null;
+	}
+	
+	//For Login Page
+	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
+		ppstmt.setString(1, enteredEmail);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String email = rs.getString("Email");
+			String password = rs.getString("Password");
+			String salt = rs.getString("Salt");
+
+			return new LoginModel(email, password, salt);
+		}
+		return null;
+	}
 	
 	//For Registration Page
 	public void insertLogin(LoginModel lm) throws SQLException {
