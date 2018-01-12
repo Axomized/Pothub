@@ -10,8 +10,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.PBKDF2;
+import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 
 /**
@@ -59,7 +62,7 @@ public class LoginPage extends HttpServlet {
 		+ "		<div class='container'>"
 		+ "	<img src=''>"
 		+ "	<h2>Sign In</h2>"
-		+ "		<form>"
+		+ "		<form action='Login' method='POST'>"
 		+ "			<div class='form-input'>"
 		+ "				<span><i class='fa fa-envelope' aria-hidden='true'></i></span>"
 		+ "				<input type='text' name='username'"
@@ -102,7 +105,6 @@ public class LoginPage extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
-		LoginModel lm = new LoginModel();
 		
 		try 
 		{
@@ -111,11 +113,28 @@ public class LoginPage extends HttpServlet {
 			
 			try 
 			{
-				lm.setEmail(enteredEmail);
-				lm.setPassword(enteredPassword);
 				Database db = new Database(0);
-
-				db.getLogin(enteredPassword, enteredEmail);
+				LoginModel lm = db.getLogin(enteredPassword, enteredEmail);
+				DatabaseUserModel dum = db.getIGNbyEmail(lm.getEmail());
+								
+				// Hash the password
+			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
+				    
+			    if (lm.getEmail().equals(enteredEmail) && lm.getPassword().equals(PBKDF2.toHex(hash)) )
+			    {
+					System.out.println("Login Success!");
+					HttpSession session = request.getSession();
+					session.setAttribute("username", dum.getiGN());
+					response.sendRedirect("Forum");
+			    }
+			    else
+			    {
+			    	System.out.println("Login fail!");
+			    	out.println("<script type=\"text/javascript\">");
+					out.println("alert('Invalid username or password.');");
+					out.println("</script>");
+			    }
+				
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
 			{
 				e.printStackTrace();
@@ -125,7 +144,6 @@ public class LoginPage extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		doGet(request, response);
 	}
 
 }

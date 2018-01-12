@@ -19,8 +19,9 @@ public class PBKDF2 {
 	public static final int HASH_BYTES = 24;
 	public static final int PBKDF2_ITERATIONS = 100000;
 	
-	public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeySpecException
+	public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, ClassNotFoundException, SQLException
 	{
+		createHash("SwagPower", "swag_power@gmail.com");
 		
 	}
 	
