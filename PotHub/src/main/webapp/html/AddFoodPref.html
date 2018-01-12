@@ -50,26 +50,26 @@
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
+				<div id="profileNavDiv">
+					<div id="profileNavList">
+						<a href="Profile.html">About</a>
+						<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
+						<a href="ProfileDonation.html">Donation History</a>
+						<a href="EditProfile.html" id="defaultSelected">Settings</a>
+					</div>
+				</div>
 				<div id="content" class="row">
-					<div id="profilePicDiv" class="col-sm-4">
-						<div id="profileImgDiv">
-							<img src="../images/profile.png" height="50%" width="50%"/>
-						</div>
-						<div id="displayNameDiv">
-							<span id="displayNameSpan">Placeholder</span>
-						</div>
-						<div id="removeBtnDiv" class="buttonsDiv">
-							<button id="removeBtn" class="editBtn" onclick="toRemoveFoodPref()">Remove food</button>
+					<div id="sideBarDivWrap" class="col-sm-3">
+						<div id="sideBarDiv">
+							<ul id="sideBarList">
+								<li id="listHeader">Personal Settings</li>
+								<li><a href="EditProfile.html">Edit Profile</a></li>
+								<li><a href="AddFoodPref.html" id="linkSelected">Add Food Preferences</a></li>
+								<li><a href="RemoveFoodPref.html">Remove Food Preferences</a></li>
+							</ul>							
 						</div>
 					</div>
-					<div id="profileContentDiv" class="col-sm-8">
-						<div id="profileNavDiv">
-							<div id="profileNavList">
-								<a href="Profile.html">About</a>
-								<a href="FoodPref.html" id="defaultSelected">Food Preferences</a>
-								<a href="ProfileDonation.html">Donation History</a>
-							</div>
-						</div>
+					<div id="profileContentDiv" class="col-sm-9">
 						<div id="aboutContentDiv">
 							<div id="prefHeaderDiv">
 								<span id="prefHeaderSpan">Add Food Preferences</span>
@@ -380,7 +380,7 @@
 										
 									</div>
 								</div>
-								<div class="buttonsDiv">
+								<div id="updateBtnDiv" class="buttonsDiv">
 									<input type="submit" id="saveBtn" class="editBtn" value="Save Changes">
 								</div>
 							</form>

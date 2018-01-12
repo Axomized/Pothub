@@ -200,7 +200,7 @@ public class Donation extends HttpServlet {
 			Database db = new Database(2);
 			TemporaryStoreModel tsm =  new TemporaryStoreModel();
 			SendEmail se = new SendEmail();
-			String pinNo = generatePIN();
+			String pinNo = tsm.generatePIN();
 			String errorMessage = "";
 			String behalfName = request.getParameter("behalfName");
 			String donateAmt = request.getParameter("donateAmt");
@@ -262,12 +262,6 @@ public class Donation extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	private String generatePIN() {
-		SecureRandom random = new SecureRandom();
-		int num = random.nextInt(1000000);
-		return String.valueOf(num);
 	}
 	
 	private boolean validateInputString(String donateAmt, String ccName, String ccNumber, String ccMonth, String ccYear, String securityCode) {

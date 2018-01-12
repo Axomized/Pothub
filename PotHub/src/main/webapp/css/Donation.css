@@ -203,6 +203,7 @@ body {
 	min-width: 20em;
 	margin: auto;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #askDiv {
@@ -258,6 +259,7 @@ body {
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #donateLabel {
@@ -281,6 +283,7 @@ body {
 	padding: 10px 0px 10px 0px;
 	text-align: center;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #nameInputDiv {

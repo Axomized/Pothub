@@ -195,7 +195,10 @@ body {
 
 #profilePicDiv {
 	text-align:center;
-	border-right: 2px solid #e36209;
+}
+
+#profileImgDiv {
+	margin-top: 10px;
 }
 
 #displayNameDiv {
@@ -247,7 +250,7 @@ body {
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {
@@ -281,6 +284,7 @@ body {
     margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-PointsDiv {
@@ -303,6 +307,7 @@ body {
     margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-RankDiv {
@@ -325,6 +330,7 @@ body {
 	margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-TotalAmtDiv {
@@ -347,6 +353,7 @@ body {
     margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-GenderDiv {
@@ -370,6 +377,7 @@ body {
     text-align: center;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-EmailDiv {
@@ -393,6 +401,7 @@ body {
     text-align: center;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-ContactDiv {
@@ -415,6 +424,7 @@ body {
     margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-BioDiv {
@@ -437,6 +447,7 @@ body {
 	margin-top: 10px;
     background-color: #f3decb;
     padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 #upper-AddressDiv {

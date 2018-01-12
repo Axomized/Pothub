@@ -55,6 +55,10 @@ input {
 	box-shadow: inset 0 2px 3px #ddd;
 }
 
+label {
+	display: block;
+}
+
 /* Structure */
 
 body {
@@ -92,7 +96,8 @@ body {
 }
 
 #content {
-	padding: 0 20px;
+	margin: 0;
+	padding: 0;
 }
 
 #footer {
@@ -196,9 +201,41 @@ body {
 	background: #49274a;
 }
 
-#profilePicDiv {
-	text-align:center;
-	border-right: 2px solid #e36209;
+#sideBarDivWrap {
+	padding: 0;
+}
+
+#sideBarDiv {
+	margin-top: 10px;
+}
+
+#sideBarList {
+	padding: 0;
+}
+
+#listHeader {
+	font-size: 20px;
+    text-transform: uppercase;
+    line-height: 2;
+    color: #e36209;
+}
+
+#sideBarList > li > a {
+	display: block;
+    padding: 10px 0px;
+    line-height: 1;
+    font-size: 20px;
+    color: #848d95;
+    text-decoration: none;
+}
+
+#sideBarList > li > a:hover {
+	color: #49274a;
+}
+
+#linkSelected {
+	font-weight: 600;
+	color: #49274a !important;
 }
 
 #editProfileImgDiv {
@@ -213,8 +250,9 @@ body {
 }
 
 #profilePicLabel {
+	display: inline-block;
 	height: 25px;
-	width: 160px;
+	width: 12em;
 	font-weight: 600;
     outline: none;
     color: white;
@@ -248,7 +286,7 @@ body {
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {
@@ -301,46 +339,23 @@ body {
     align-items: center;
 }
 
-#passwordDiv {
-    background-color: #f3decb;
+#editProfileDiv {
+	margin: 0;
+}
+
+#userInfoDiv {
+	padding: 0;
+}
+
+.divWrap {
+	background-color: #f3decb;
     padding: 10px 8px;
     margin-top: 10px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
-#oldPassDiv {
-	
-}
-
-#oldPassLabel {
-	display: block;
-}
-
-#oldPassInput {
-	
-}
-
-#newPassDiv {
+.innerDiv {
 	margin-top: 10px;
-}
-
-#newPassLabel {
-	display: block;
-}
-
-#newPassInput {
-	
-}
-
-#confirmPassDiv {
-	margin-top: 10px;
-}
-
-#confirmPassLabel {
-	display: block;
-}
-
-#confirmPassInput {
-	
 }
 
 #errorMsg {
@@ -350,16 +365,6 @@ body {
 	color: white;
 	background-color: #f74225;
 	padding: 5px;
-}
-
-#genderDiv {
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#genderLabel {
-	display: block;
 }
 
 #genderSelect {
@@ -372,44 +377,6 @@ body {
 	cursor: pointer;
 }
 
-#emailDiv {
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#emailLabel {
-	display: block;
-}
-
-#emailInput {
-	
-}
-
-#contactNoDiv {
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#contactNoLabel {
-	display: block;
-}
-
-#contactNoInput {
-	
-}
-
-#bioDiv {
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#bioLabel {
-	display: block;
-}
-
 #bioText {
 	width: 50%;
 	min-height: 100px;
@@ -420,43 +387,21 @@ body {
 	box-shadow: inset 0 2px 3px #ddd;
 }
 
-#addressDiv {
-    background-color: #f3decb;
-    padding: 10px 8px;
-    margin-top: 10px;
-}
-
-#postalCodeDiv {
-	
-}
-
-#postalCodeLabel {
-	display: block;
-}
-
-#postalCodeInput {
-	
-}
-
-#unitNoDiv {
+#userPicDiv {
 	margin-top: 10px;
-}
-
-#unitNoLabel {
-	display: block;	
-}
-
-#unitNoInput {
-	
+	padding: 0;
+	text-align: right;
 }
 
 #updateBtnDiv {
+	display: flex;
+	flex-direction: row-reverse;
 	margin-top: 10px;
 }
 
 #updateBtn {
 	height: 25px;
-    width: 160px;
+    width: 12em;
     font-weight: 600;
     outline: none;
     color: white;
@@ -467,7 +412,6 @@ body {
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     text-transform: uppercase;
     line-height: 1;
-    float: right;
 }
 
 #updateBtn:hover {

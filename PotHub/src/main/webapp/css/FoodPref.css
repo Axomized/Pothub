@@ -190,7 +190,10 @@ body {
 
 #profilePicDiv {
 	text-align:center;
-	border-right: 2px solid #e36209;
+}
+
+#profileImgDiv {
+	margin-top: 10px;
 }
 
 #displayNameDiv {
@@ -201,12 +204,24 @@ body {
 	font-size: 20px;
 }
 
+#joinedSpan {
+	display: block;
+	font-size: 17px;
+}
+
+#privilegedSpan {
+	display: block;
+	font-size: 17px;
+	color: #e36209;
+    font-weight: 600;
+}
+
 #profileContentDiv {
 	
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {
@@ -234,15 +249,6 @@ body {
 
 #aboutContentDiv {
 	
-}
-
-#buttonsDiv {
-	margin-top: 10px;
-	text-align: center;
-}
-
-#removeBtn {
-	margin-top: 10px;
 }
 
 .editBtn {
@@ -293,6 +299,7 @@ body {
 	font-size: 15px;
 	font-weight: 600;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 /* Footer */

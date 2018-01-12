@@ -2,7 +2,10 @@ package donation;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
+import database.model.DonationModel;
+import database.model.TemporaryStoreModel;
 
 public class ConfirmDonation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -112,12 +117,37 @@ public class ConfirmDonation extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			Database db = new Database(2);
+			TemporaryStoreModel tsm = db.getTempStore("");
+			DonationModel dm = new DonationModel();
+			String iGN = tsm.getiGN();
+			BigDecimal temporaryAmount = tsm.getTemporaryAmount();
+			String temporaryPIN = tsm.getTemporaryPIN();
+			String temporaryOnBehalf = tsm.getTemporaryOnBehalf();
+			Timestamp temporaryTime = tsm.getTemporaryTime();
+			Timestamp currentTime = Timestamp.from(Instant.now());
+			
 			String[] PIN = request.getParameterValues("pinInput");
 			StringBuilder builder = new StringBuilder();
 			for (String s : PIN) {
 			    builder.append(s);
 			}
 			String pinNumber = builder.toString();
+			
+			if (currentTime.before(temporaryTime)) {
+				if (pinNumber.equals(temporaryPIN)) {
+					dm.setDonation_Amount(temporaryAmount);
+					dm.setDonation_Date(Timestamp.from(Instant.now()));
+					dm.setiGN(iGN);
+					dm.setOnBehalf(temporaryOnBehalf);
+					db.insertDonation(dm);
+				}
+				else {
+					//Wrong PIN number
+				}
+			}
+			else {
+				//PIN number expired
+			}
 			
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

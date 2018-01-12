@@ -6,10 +6,6 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
-function toRemoveFoodPref() {
-	location.href = "RemoveFoodPref.html";
-}
-
 function addOthers() {
 	var otherInput = document.getElementById("otherInput");
 	var otherBtn = document.getElementById("otherBtn");
