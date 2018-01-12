@@ -1,10 +1,7 @@
 package database;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
@@ -19,8 +16,6 @@ import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
 
-import org.apache.commons.compress.utils.IOUtils;
-
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
@@ -33,6 +28,7 @@ import database.model.DatabaseUserModel;
 import database.model.DonationModel;
 import database.model.EventModel;
 import database.model.FileTableModel;
+import database.model.FoodListModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
@@ -186,6 +182,14 @@ public class Database {
 		ppstmt.setBoolean(11, false);
 		ppstmt.setInt(12, 0);
 		
+		ppstmt.executeUpdate();
+	}
+	
+	//For admin panel - inserting new food for user's food preferences
+	public void insertNewFood(FoodListModel flm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodList(Food, FoodType) VALUES(?,?);");
+		ppstmt.setString(1, flm.getFood());
+		ppstmt.setString(2, flm.getFoodType());
 		ppstmt.executeUpdate();
 	}
 	
