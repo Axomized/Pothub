@@ -129,6 +129,17 @@ public class Database {
 		return aldum;
 	}
 	
+	public String getDatabaseUserPostalCodeFromIGN(String ign) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT Address FROM DatabaseUser WHERE IGN = ?");
+		ps.setString(1, ign);
+
+		ResultSet rs =	ps.executeQuery();
+		while(rs.next()) {
+			return rs.getString("Address");
+		}
+		return "";
+	}
+	
 	//For Login Page - Select User IGN by Email
 	public DatabaseUserModel getIGNbyEmail(String email) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM DatabaseUser WHERE Email = ?;");

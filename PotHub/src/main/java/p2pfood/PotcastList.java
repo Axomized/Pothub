@@ -165,8 +165,16 @@ public class PotcastList extends HttpServlet {
 			pso3.setPurpose(3);
 			db = new Database(0);
 			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
-
+			ArrayList<String> postalCodes3 = new ArrayList<String>();
+			
 			for(PotcastModel ap : top3Potcasts){
+				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
+			}
+
+			ArrayList<String> distances3 = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+			int counter3=0;
+			for(PotcastModel ap : top3Potcasts){
+				
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
@@ -191,12 +199,21 @@ public class PotcastList extends HttpServlet {
 				
 				pw.append(TimestampToDateTime(ap.getPickupTime()));
 				
-				pw.append(", HARDCODEDkm</div></div></div></a>");
+				pw.append(", "+distances3.get(counter3)+"</div></div></div></a>");
+				counter3++;
 			}			
 		
 						pw.append("<h1>Active Potcasts: </h1>");
 
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
+			ArrayList<String> postalCodes = new ArrayList<String>();
+			
+			for(PotcastModel ap : activePotcasts){
+				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
+			}
+			
+			ArrayList<String> distances = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+			int counter = 0;
 			for(PotcastModel ap : activePotcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
@@ -223,7 +240,8 @@ public class PotcastList extends HttpServlet {
 				
 				pw.append(TimestampToDateTime(ap.getPickupTime()));
 						
-				pw.append(", HARDCODEDkm</div></div></div></a>");
+				pw.append(", "+distances.get(counter)+"</div></div></div></a>");
+				counter++;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

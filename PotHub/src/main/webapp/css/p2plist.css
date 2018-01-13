@@ -393,6 +393,10 @@ input[type=text] {
 	background: #f3decb;
 }
 
+#thumbnailBox img{
+	border-radius:10px;
+}
+
 #displayUnit div { float:left;}
 
 #thumbnailBox { height:150px; width:15%;}
