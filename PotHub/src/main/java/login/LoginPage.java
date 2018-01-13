@@ -133,6 +133,7 @@ public class LoginPage extends HttpServlet {
 			    	out.println("<script type=\"text/javascript\">");
 					out.println("alert('Invalid username or password.');");
 					out.println("</script>");
+					doGet(request, response);
 			    }
 				
 			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
