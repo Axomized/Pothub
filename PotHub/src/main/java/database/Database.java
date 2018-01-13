@@ -256,7 +256,7 @@ public class Database {
 	
 	//For donation page
 	public TemporaryStoreModel getTempStore(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime FROM TemporaryStore WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
@@ -273,12 +273,20 @@ public class Database {
 	
 	//For donation page
 	public void insertTempStore(TemporaryStoreModel tsm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?,?);");
 		ppstmt.setString(1, tsm.getiGN());
 		ppstmt.setBigDecimal(2, tsm.getTemporaryAmount());
 		ppstmt.setString(3, tsm.getTemporaryPIN());
-		ppstmt.setString(4, tsm.getTemporaryOnBehalf());
-		ppstmt.setTimestamp(5, tsm.getTemporaryTime());
+		ppstmt.setString(4, tsm.getTemporarySalt());
+		ppstmt.setString(5, tsm.getTemporaryOnBehalf());
+		ppstmt.setTimestamp(6, tsm.getTemporaryTime());
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
+	public void deleteFromTempStore(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM TemporaryStore WHERE IGN = ?;");
+		ppstmt.setString(1, name);
 		ppstmt.executeUpdate();
 	}
 	

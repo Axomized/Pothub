@@ -119,11 +119,9 @@ public class ConfirmDonation extends HttpServlet {
 			Database db = new Database(2);
 			TemporaryStoreModel tsm = db.getTempStore("");
 			DonationModel dm = new DonationModel();
+			HashPIN hp = new HashPIN();
+			
 			String iGN = tsm.getiGN();
-			BigDecimal temporaryAmount = tsm.getTemporaryAmount();
-			String temporaryPIN = tsm.getTemporaryPIN();
-			String temporaryOnBehalf = tsm.getTemporaryOnBehalf();
-			Timestamp temporaryTime = tsm.getTemporaryTime();
 			Timestamp currentTime = Timestamp.from(Instant.now());
 			
 			String[] PIN = request.getParameterValues("pinInput");
@@ -132,13 +130,14 @@ public class ConfirmDonation extends HttpServlet {
 			    builder.append(s);
 			}
 			String pinNumber = builder.toString();
+			String hashedPIN = hp.getHashedPIN(pinNumber, hp.getDecodedSalt(tsm.getTemporarySalt()));
 			
-			if (currentTime.before(temporaryTime)) {
-				if (pinNumber.equals(temporaryPIN)) {
-					dm.setDonation_Amount(temporaryAmount);
+			if (currentTime.before(tsm.getTemporaryTime())) {
+				if (hashedPIN.equals(tsm.getTemporaryPIN())) {
+					dm.setDonation_Amount(tsm.getTemporaryAmount());
 					dm.setDonation_Date(Timestamp.from(Instant.now()));
 					dm.setiGN(iGN);
-					dm.setOnBehalf(temporaryOnBehalf);
+					dm.setOnBehalf(tsm.getTemporaryOnBehalf());
 					db.insertDonation(dm);
 				}
 				else {
@@ -146,7 +145,7 @@ public class ConfirmDonation extends HttpServlet {
 				}
 			}
 			else {
-				//PIN number expired
+				db.deleteFromTempStore("");
 			}
 			
 		} catch (ClassNotFoundException e) {

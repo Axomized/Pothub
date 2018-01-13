@@ -13,7 +13,7 @@ public class HashPIN {
 	public static final int iterations = 100000;
 	public static final int keyLength = 256;
 
-	public byte [] hashPassword (String password, byte[] salt, int iterations, int keyLength ) {
+	public byte [] hashPIN(String password, byte[] salt, int iterations, int keyLength ) {
 		try {
 			SecretKeyFactory skf = SecretKeyFactory.getInstance("PBKDF2WithHmacSHA512");
 			PBEKeySpec spec = new PBEKeySpec(password.toCharArray(), salt, iterations, keyLength);
@@ -26,31 +26,36 @@ public class HashPIN {
 	       }
 	   }
 	
-	public byte [] createSalt () {
+	public byte [] createSalt() {
 		SecureRandom SRandom = new SecureRandom();
 		byte [] salt = new byte [32];
 		SRandom.nextBytes(salt);
 		return salt;
 	}
 	
-	public byte [] getDecodedSalt (String saltToDecode) {
+	public String getEncodedSalt(byte[] salt) {
+		Base64.Encoder enc = Base64.getEncoder();
+		String encodedSalt = enc.encodeToString(salt);
+		return encodedSalt;
+	}
+	
+	public byte [] getDecodedSalt(String saltToDecode) {
 		Base64.Decoder dnc = Base64.getDecoder();
 		byte [] saltDecoded = dnc.decode(saltToDecode);
 		return saltDecoded;
 	}
 	
-	public String getHashedPassword (String password, byte [] salt) {
+	public String getHashedPIN(String password, byte [] salt) {
 		Base64.Encoder enc = Base64.getEncoder();
-		String hashedPassword = enc.encodeToString(hashPassword(password, salt, iterations, keyLength));
-		return hashedPassword;
+		String hashedPIN = enc.encodeToString(hashPIN(password, salt, iterations, keyLength));
+		return hashedPIN;
 	}
 
 	public static void main(String[] args) {
 		HashPIN HP = new HashPIN();
-		Base64.Encoder enc = Base64.getEncoder();
 		byte [] newSalt = HP.createSalt();
-		System.out.println("Salt: " + enc.encodeToString(newSalt));
-		System.out.println("Hash: " + HP.getHashedPassword("S3675418I", newSalt));
+		System.out.println("Salt: " + HP.getEncodedSalt(HP.createSalt()));
+		System.out.println("Hash: " + HP.getHashedPIN("S3675418I", newSalt));
 	}
 
 }
