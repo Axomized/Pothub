@@ -43,7 +43,7 @@ public class PotcastSearchObject{
 		
 		if(this.purpose==3){
 			Date rightNow = new Date(System.currentTimeMillis());
-			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime < '"+rightNow+"' ORDER BY bidStopTime DESC";
+			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime > '"+rightNow+"' ORDER BY bidStopTime DESC";
 		}
 		
 		if(this.purpose==4){

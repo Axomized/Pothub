@@ -381,8 +381,8 @@ public class Database {
 			String title 		= rs.getString("title");
 			String description	= rs.getString("description");
 			int maxBids			= rs.getInt("maxBids");
-			Date bidStopTime	= rs.getDate("bidStopTime");
-			Date pickupTime		= rs.getDate("pickupTime");
+			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
 			int minBid			= rs.getInt("minBid");
 			int startingCR		= rs.getInt("startingCR");
 			int picture 		= rs.getInt("picture");
