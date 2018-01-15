@@ -101,22 +101,10 @@
 		<servlet-class>event.MyEventPage</servlet-class>
 	</servlet>
 	<servlet>
-		<servlet-name>gettting</servlet-name>
-		<display-name>gettting</display-name>
-		<description></description>
-		<servlet-class>forum.gettting</servlet-class>
-	</servlet>
-	<servlet>
 		<servlet-name>ImageServlet</servlet-name>
 		<display-name>ImageServlet</display-name>
 		<description></description>
 		<servlet-class>image.ImageServlet</servlet-class>
-	</servlet>
-	<servlet>
-		<servlet-name>idkhow</servlet-name>
-		<display-name>idkhow</display-name>
-		<description></description>
-		<servlet-class>forum.idkhow</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>ProfileDonation</servlet-name>
@@ -131,12 +119,12 @@
 		<servlet-class>profile.AddFoodPref</servlet-class>
 	</servlet>
 	<servlet>
-<<<<<<< HEAD
 		<servlet-name>SuccessPage</servlet-name>
 		<display-name>SuccessPage</display-name>
 		<description></description>
 		<servlet-class>forum.SuccessPage</servlet-class>
-=======
+	</servlet>
+	<servlet>
 		<servlet-name>LoginPage</servlet-name>
 		<display-name>LoginPage</display-name>
 		<description></description>
@@ -153,7 +141,6 @@
 		<display-name>RemoveFoodPref</display-name>
 		<description></description>
 		<servlet-class>profile.RemoveFoodPref</servlet-class>
->>>>>>> origin/master
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
@@ -220,16 +207,8 @@
 		<url-pattern>/MyEventPage</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>gettting</servlet-name>
-		<url-pattern>/gettting</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>ImageServlet</servlet-name>
 		<url-pattern>/Image/*</url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>idkhow</servlet-name>
-		<url-pattern>/idkhow</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ProfileDonation</servlet-name>
@@ -240,10 +219,10 @@
 		<url-pattern>/AddFoodPref</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-<<<<<<< HEAD
 		<servlet-name>SuccessPage</servlet-name>
 		<url-pattern>/SuccessPage</url-pattern>
-=======
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>LoginPage</servlet-name>
 		<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
@@ -254,7 +233,5 @@
 	<servlet-mapping>
 		<servlet-name>RemoveFoodPref</servlet-name>
 		<url-pattern>/RemoveFoodPref</url-pattern>
->>>>>>> origin/master
 	</servlet-mapping>
 </web-app>
-
