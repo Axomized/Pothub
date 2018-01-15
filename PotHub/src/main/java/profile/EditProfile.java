@@ -4,33 +4,30 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.DatabaseUserModel;
 
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//private static String email;
-	//private static String contactNo;
-	//private static char gender;
-	//private static String bio;
-	//private static String address;
-	//private static String unitNo;
        
     public EditProfile() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		String username = (String)session.getAttribute("username");
+		
 		try {
 			Database db = new Database(0);
-			DatabaseUserModel currentUser = db.getUserProfile("Placeholder from Session Attribute");
+			DatabaseUserModel currentUser = db.getUserProfile(username);
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -85,26 +82,26 @@ public class EditProfile extends HttpServlet {
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
 					+ "				<form id='profileForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
+					+ "					<div id='profileNavDiv'>"
+					+ "						<div id='profileNavList'>"
+					+ "							<a href='Profile'>About</a>"
+					+ "							<a href='FoodPref'>Food Preferences</a>"
+					+ "							<a href='ProfileDonation'>Donation History</a>"
+					+ "							<a href='EditProfile' id='defaultSelected'>Settings</a>"
+					+ "						</div>"
+					+ "					</div>"
 					+ "					<div id='content' class='row'>"
-					+ "						<div id='profilePicDiv' class='col-sm-4'>"
-					+ "							<div id='profileImgDiv'>"
-					+ "								<img src='images/profile.png' height='50%' width='50%'/>"
-					+ "							</div>"
-					+ "							<div id='editProfileImgDiv'>"
-					+ "								<label id='profilePicLabel' for='profilePicFile'>"
-					+ "									<input type='file' id='profilePicFile' name='profilePicFile' accept='image/*' onchange='checkFile()'>"
-					+ "									<span id='profilePicSpan'>Upload new picture</span>"
-					+ "								</label>"
+					+ "						<div id='sideBarDivWrap' class='col-sm-3'>"
+					+ "							<div id='sideBarDiv'>"
+					+ "								<ul id='sideBarList'>"
+					+ "									<li id='listHeader'>Personal Settings</li>"
+					+ "									<li><a href='EditProfile' id='linkSelected'>Edit Profile</a></li>"
+					+ "									<li><a href='AddFoodPref'>Add Food Preferences</a></li>"
+					+ "									<li><a href='RemoveFoodPref'>Remove Food Preferences</a></li>"
+					+ "								</ul>"
 					+ "							</div>"
 					+ "						</div>"
-					+ "						<div id='profileContentDiv' class='col-sm-8'>"
-					+ "							<div id='profileNavDiv'>"
-					+ "								<div id='profileNavList'>"
-					+ "									<a href='Profile' id='defaultSelected'>About</a>"
-					+ "									<a href='FoodPref'>Food Preferences</a>"
-					+ "									<a href='ProfileDonation'>Donation History</a>"
-					+ "								</div>"
-					+ "							</div>"
+					+ "						<div id='profileContentDiv' class='col-sm-9'>"
 					+ "							<div id='changeProfileDiv'>"
 					+ "								<div id='editProfileInfoDiv'>"
 					+ "									<div id='upper-EditProfileInfoDiv'>"
@@ -114,53 +111,65 @@ public class EditProfile extends HttpServlet {
 					+ "										<span id='editProfileInfoSpan'>Change your password, gender, email, contact number, bio and address.</span>"
 					+ "									</div>"
 					+ "								</div>"
-					+ "								<div id='passwordDiv'>"
-					+ "									<div id='oldPassDiv'>"
-					+ "										<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
-					+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' oninput='startedTyping(this)'>"
+					+ "								<div id='editProfileDiv' class='row'>"
+					+ "									<div id='userInfoDiv' class='col-sm-9'>"
+					+ "										<div id='passwordDiv' class='divWrap'>"
+					+ "											<div id='oldPassDiv'>"
+					+ "												<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
+					+ "												<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' oninput='startedTyping(this)'>"
+					+ "											</div>"
+					+ "											<div id='newPassDiv' class='innerDiv'>"
+					+ "												<label id='newPassLabel' for='newPassInput'>New password</label>"
+					+ "												<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' oninput='startedTyping(this)'>"
+					+ "											</div>"
+					+ "											<div id='errorMsg'>Password must have at least 8 characters</div>"
+					+ "											<div id='confirmPassDiv' class='innerDiv'>"
+					+ "												<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
+					+ "												<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' oninput='startedTyping(this)'>"
+					+ "											</div>"
+					+ "										</div>"
+					+ "										<div id='genderDiv' class='divWrap'>"
+					+ "											<label id='genderLabel' for='genderSelect'>Gender</label>"
+					+ "											<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>"
+					+ "												<option value='' selected disabled hidden='true'>Choose your gender</option>"
+					+ "												<option value='M'>Male</option>"
+					+ "												<option value='F'>Female</option>"
+					+ "											</select>"
+					+ "										</div>"
+					+ "										<div id='contactNoDiv' class='divWrap'>"
+					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contacNoInput' oninput='startedTyping(this)'>"
+					+ "										</div>"
+					+ "										<div id='bioDiv' class='divWrap'>"
+					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'></textarea>"
+					+ "										</div>"
+					+ "										<div id='addressDiv' class='divWrap'>"
+					+ "											<div id='postalCodeDiv'>"
+					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' oninput='startedTyping(this)'>"
+					+ "											</div>"
+					+ "											<div id='unitNoDiv' class='innerDiv'>"
+					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' oninput='startedTyping(this)'>"
+					+ "											</div>"
+					+ "										</div>"
+					+ "										"
 					+ "									</div>"
-					+ "									<div id='newPassDiv'>"
-					+ "										<label id='newPassLabel' for='newPassInput'>New password</label>"
-					+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' oninput='startedTyping(this)'>"
-					+ "									</div>"
-					+ "									<div id='confirmPassDiv'>"
-					+ "										<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
-					+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' oninput='startedTyping(this)'>"
-					+ "									</div>"
-					+ "									<div id='errorMsg'>Password must have at least 8 characters</div>"
-					+ "								</div>"
-					+ "								<div id='genderDiv'>"
-					+ "									<label id='genderLabel' for='genderSelect'>Gender</label>"
-					+ "									<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>"
-					+ "										<option value='' selected disabled hidden='true'>Choose your gender</option>"
-					+ "										<option value='M'>M</option>"
-					+ "										<option value='F'>F</option>"
-					+ "									</select>"
-					+ "								</div>"
-					+ "								<div id='emailDiv'>"
-					+ "									<label id='emailLabel' for='emailInput'>Email</label>"
-					+ "									<input type='email' id='emailInput' class='inputsForFill' name='emailInput' oninput='startedTyping(this)'>"
-					+ "								</div>"
-					+ "								<div id='contactNoDiv'>"
-					+ "									<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "									<input type='text' id='contactNoInput' class='inputsForFill' name='contacNoInput' oninput='startedTyping(this)'>"
-					+ "								</div>"
-					+ "								<div id='bioDiv'>"
-					+ "									<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "									<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'></textarea>"
-					+ "								</div>"
-					+ "								<div id='addressDiv'>"
-					+ "									<div id='postalCodeDiv'>"
-					+ "										<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "										<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' oninput='startedTyping(this)'>"
-					+ "									</div>"
-					+ "									<div id='unitNoDiv'>"
-					+ "										<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "										<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' oninput='startedTyping(this)'>"
+					+ "									<div id='userPicDiv' class='col-sm-3'>"
+					+ "										<div id='profileImgDiv'>"
+					+ "											<img src='images/profile.png' height='150' width='150'/>"
+					+ "										</div>"
+					+ "										<div id='editProfileImgDiv'>"
+					+ "											<label id='profilePicLabel' for='profilePicFile'>"
+					+ "											<input type='file' id='profilePicFile' name='profilePicFile' accept='image/*' onchange='checkFile()'>"
+					+ "											<span id='profilePicSpan'>Upload new picture</span>"
+					+ "											</label>"
+					+ "										</div>"
 					+ "									</div>"
 					+ "								</div>"
 					+ "								<div id='updateBtnDiv'>"
-					+ "									<button id='updateBtn' name='updateBtn' value='updateBtn' disabled>Update profile</button>"
+					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile' disabled>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "						</div>"

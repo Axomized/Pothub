@@ -16,3 +16,12 @@ function moveToNext(id, previousID, nextID) {
 		document.getElementById(previousID).focus();
 	}
 }
+
+function onResend() {
+	document.getElementById("pinInput1").required = false;
+	document.getElementById("pinInput2").required = false;
+	document.getElementById("pinInput3").required = false;
+	document.getElementById("pinInput4").required = false;
+	document.getElementById("pinInput5").required = false;
+	document.getElementById("pinInput6").required = false;
+}

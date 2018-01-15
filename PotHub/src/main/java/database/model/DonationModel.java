@@ -9,6 +9,10 @@ public class DonationModel {
 	Timestamp donation_Date;
 	BigDecimal donation_Amount;
 	String onBehalf;
+	
+	public DonationModel() {
+		
+	}
 
 	public DonationModel(int donationID, String iGN, Timestamp donation_Date, BigDecimal donation_Amount, String onBehalf) {
 		this.donationID = donationID;

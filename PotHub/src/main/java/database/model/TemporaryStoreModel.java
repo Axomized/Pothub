@@ -1,6 +1,7 @@
 package database.model;
 
 import java.math.BigDecimal;
+import java.security.SecureRandom;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.concurrent.TimeUnit;
@@ -72,6 +73,12 @@ public class TemporaryStoreModel {
 
 	public void setTemporaryTime(Timestamp temporaryTime) {
 		this.temporaryTime = temporaryTime;
+	}
+	
+	public String generatePIN() {
+		SecureRandom random = new SecureRandom();
+		int num = random.nextInt(1000000);
+		return String.valueOf(num);
 	}
 	
 	public Timestamp getTime5MinsLater() {

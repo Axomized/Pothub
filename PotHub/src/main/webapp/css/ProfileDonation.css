@@ -202,7 +202,10 @@ body {
 
 #profilePicDiv {
 	text-align:center;
-	border-right: 2px solid #e36209;
+}
+
+#profileImgDiv {
+	margin-top: 10px;
 }
 
 #displayNameDiv {
@@ -213,12 +216,24 @@ body {
 	font-size: 20px;
 }
 
+#joinedSpan {
+	display: block;
+	font-size: 17px;
+}
+
+#privilegedSpan {
+	display: block;
+	font-size: 17px;
+	color: #e36209;
+    font-weight: 600;
+}
+
 #profileContentDiv {
 	
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {

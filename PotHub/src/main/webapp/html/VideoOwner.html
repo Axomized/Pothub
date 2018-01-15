@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
+		<title>The Streamer</title>
+		<style>
+			#localVideo {
+				width: 300px;
+				height: 300px;
+				position: absolute;
+				bottom: 15px;
+				right: 15px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>
+			<button id="backToBacodeBtn">Barcode Scanning</button>
+			<button id="startStreamingBtn">Start Streaming</button>
+			<button id="startVotingBtn">Start Voting</button>
+			<button id="changePointBtn">Change current score</button>
+			<button id="endBtn">End Event</button>
+		</div>
+		<video id="localVideo" autoplay></video>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.js" integrity="sha256-pcIHeV2fplzdElupaGGkE0vfUIatGwut2jqr8/paQRU=" crossorigin="anonymous"></script>
+	  	<script src="../script/VideoOwner.js"></script>
+	</body>
+</html>

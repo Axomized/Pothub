@@ -3,48 +3,31 @@ package profile;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.math.BigDecimal;
-import java.sql.Date;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.DatabaseUserModel;
 
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//private static String IGN;
-	//private static String email;
-	//private static String contactNo;
-	//private static char gender;
-	//private static String bio;
-	//private static String address;
-	//private static String unitNo;
-	//private static String joinDate;
-	//private static int cookingRank;
-	//private static int points;
-	//private static BigDecimal totalDonation;
 
 	public Profile() {
 		super();
 	}
 	
-	private String convertDate(Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		String convertedDate = sdf.format(date);
-		return convertedDate;
-	}
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		String username = (String)session.getAttribute("username");
+		
 		try {
 			Database db = new Database(0);
-			DatabaseUserModel currentUser = db.getUserProfile("GordonRamsey");
+			DatabaseUserModel currentUser = db.getUserProfile(username);
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -74,16 +57,16 @@ public class Profile extends HttpServlet {
 					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
-					+ "					<a href='Profile.html'>Profile</a>"
-					+ "					<a href='LoginPage.html'>Logout</a>"
+					+ "					<a href='Profile'>Profile</a>"
+					+ "					<a href='LoginPage'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
-					+ "				<li id='lhome'><a href='Forum.html'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage.html'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage.html'>Event</a></li>"
+					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
+					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
+					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
@@ -93,13 +76,21 @@ public class Profile extends HttpServlet {
 					+ "			          <li><a href='#'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
-					+ "				<li id='ldonate'><a href='Donation.html'>Donate</a></li>"
+					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
 					+ "			</ul>"
 					+ "		</div>"
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
+					+ "				<div id='profileNavDiv'>"
+					+ "					<div id='profileNavList'>"
+					+ "						<a href='Profile' id='defaultSelected'>About</a>"
+					+ "						<a href='FoodPref'>Food Preferences</a>"
+					+ "						<a href='ProfileDonation'>Donation History</a>"
+					+ "						<a href='EditProfile'>Settings</a>"
+					+ "					</div>"
+					+ "				</div>"
 					+ "				<div id='content' class='row'>"
-					+ "					<div id='profilePicDiv' class='col-sm-4'>"
+					+ "					<div id='profilePicDiv' class='col-sm-3'>"
 					+ "						<div id='profileImgDiv'>"
 					+ "							<img src='images/profile.png' height='50%' width='50%'/>"
 					+ "						</div>"
@@ -116,14 +107,7 @@ public class Profile extends HttpServlet {
 					+ "							<button id='editProfileBtn' onclick='toEditProfilePage()'>Edit profile</button>"
 					+ "						</div>"
 					+ "					</div>"
-					+ "					<div id='profileContentDiv' class='col-sm-8'>"
-					+ "						<div id='profileNavDiv'>"
-					+ "							<div id='profileNavList'>"
-					+ "								<a href='Profile.html' id='defaultSelected'>About</a>"
-					+ "								<a href='FoodPref.html'>Food Preferences</a>"
-					+ "								<a href='ProfileDonation.html'>Donation History</a>"
-					+ "							</div>"
-					+ "						</div>"
+					+ "					<div id='profileContentDiv' class='col-sm-9'>"
 					+ "						<div id='aboutContentDiv'>"
 					+ "							<div id='pointsDiv'>"
 					+ "								<div id='upper-PointsDiv'>"

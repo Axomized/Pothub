@@ -323,18 +323,30 @@ tbody td:last-child {
 	clear: both;
 }
 
-td button {
-	margin-left: 20px;
-	background: #94618e;
+#hidableSearchBlock {
+	margin-top:15px;
+}
+
+input[type='submit'] {
+	background: #f3decb;
     border: none;
-    color: white;
-    padding:5px;
+    color: black;
+    padding:3px;
     text-align: center;
     text-decoration: none;
-    display: inline-block;
-    float:right;
     width:60px;
 }
+
+#toggleSpan {
+	background: #f3decb;
+    border: none;
+    color: black;
+    padding:3px;
+    text-align: center;
+    text-decoration: none;
+    width: 120px;
+}
+
 td button:hover {
     background-color: #94618e;
     color: white;
@@ -379,6 +391,10 @@ input[type=text] {
 	margin-top:20px;
 	margin-bottom:20px;
 	background: #f3decb;
+}
+
+#thumbnailBox img{
+	border-radius:10px;
 }
 
 #displayUnit div { float:left;}

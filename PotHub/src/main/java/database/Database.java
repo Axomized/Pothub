@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -14,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
+
 import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
@@ -26,9 +28,11 @@ import database.model.DatabaseUserModel;
 import database.model.DonationModel;
 import database.model.EventModel;
 import database.model.FileTableModel;
+import database.model.FoodListModel;
 import database.model.FoodPreferences;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.ImageTableModel;
 import database.model.LoginModel;
 import database.model.LogsModel;
 import database.model.PeopleEventListModel;
@@ -125,9 +129,47 @@ public class Database {
 		return aldum;
 	}
 	
+	public String getDatabaseUserPostalCodeFromIGN(String ign) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT Address FROM DatabaseUser WHERE IGN = ?");
+		ps.setString(1, ign);
+
+		ResultSet rs =	ps.executeQuery();
+		while(rs.next()) {
+			return rs.getString("Address");
+		}
+		return "";
+	}
+	
+	//For Login Page - Select User IGN by Email
+	public DatabaseUserModel getIGNbyEmail(String email) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM DatabaseUser WHERE Email = ?;");
+		ppstmt.setString(1, email);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String iGN					= rs.getString("IGN");
+			return new DatabaseUserModel(iGN);
+		}
+		return null;
+	}
+	
 	//For Login Page
+	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
+		ppstmt.setString(1, enteredEmail);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String email = rs.getString("Email");
+			String password = rs.getString("Password");
+			String salt = rs.getString("Salt");
+
+			return new LoginModel(email, password, salt);
+		}
+		return null;
+	}
+	
+	//For Registration Page
 	public void insertLogin(LoginModel lm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUE(?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUES(?,?,?);");
 		ppstmt.setString(1, lm.getEmail());
 		ppstmt.setString(2, lm.getPassword());
 		ppstmt.setString(3, lm.getSalt());
@@ -137,7 +179,7 @@ public class Database {
 	
 	//For Registration Page
 	public void insertRegistration(DatabaseUserModel dum) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO User(IGN, Email, Contact_No, Gender, PostalCode, UnitNo, JoinDate, CookingRank, Points, TotalAmountDonated, IsPriviledged) VALUES(?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO DatabaseUser(IGN, Email, Contact_No, Gender, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, UserPermission) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);");
 		ppstmt.setString(1, dum.getiGN());
 		ppstmt.setString(2, dum.getEmail());
 		ppstmt.setString(3, dum.getContact_No());
@@ -149,7 +191,16 @@ public class Database {
 		ppstmt.setInt(9, 0);
 		ppstmt.setInt(10, 0);
 		ppstmt.setBoolean(11, false);
+		ppstmt.setInt(12, 0);
 		
+		ppstmt.executeUpdate();
+	}
+	
+	//For admin panel - inserting new food for user's food preferences
+	public void insertNewFood(FoodListModel flm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodList(Food, FoodType) VALUES(?,?);");
+		ppstmt.setString(1, flm.getFood());
+		ppstmt.setString(2, flm.getFoodType());
 		ppstmt.executeUpdate();
 	}
 	
@@ -188,6 +239,34 @@ public class Database {
 		}
 	}
 	
+	//For profile page - user's food preferences
+	public ArrayList<FoodPreferences> getFoodPref(String name) throws SQLException {
+		ArrayList<FoodPreferences> foodPrefList = new ArrayList<FoodPreferences>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT FoodPref FROM FoodPreferences WHERE IGN = ?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String foodPref = rs.getString("FoodPref");
+			foodPrefList.add(new FoodPreferences(foodPref));
+		}
+		return foodPrefList;
+	}
+	
+	//For profile page - user's food preferences
+	public void insertFoodPref(FoodPreferences fp) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodPreferences(IGN, FoodPref) VALUES(?,?);");
+		ppstmt.setString(1, fp.getiGN());
+		ppstmt.setString(2, fp.getFoodPref());
+		ppstmt.executeUpdate();
+	}
+	
+	//For profile page - user's food preferences
+	public void deleteFoodPref(String foodPref) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE FoodPref = ?");
+		ppstmt.setString(1, foodPref);
+		ppstmt.executeUpdate();
+	}
+	
 	//For profile page - user's donation history
 	public ArrayList<DonationModel> getUserDonation(ProfileDonationSearch search, String name) throws SQLException {
 		ArrayList<DonationModel> userDonationList = new ArrayList<DonationModel>();
@@ -205,14 +284,14 @@ public class Database {
 	
 	//For donation page
 	public TemporaryStoreModel getTempStore(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime FROM TemporaryStore WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			String iGN					= rs.getString("IGN");
 			BigDecimal temporaryAmount 	= rs.getBigDecimal("TemporaryAmount");
 			String temporaryPIN 		= rs.getString("TemporaryPIN");
-			String temporarySalt 		= rs.getString("TemporarySalt");
+			String temporarySalt		= rs.getString("TemporarySalt");
 			String temporaryOnBehalf 	= rs.getString("TemporaryOnBehalf");
 			Timestamp temporaryTime 	= rs.getTimestamp("TemporaryTime");
 			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporarySalt, temporaryOnBehalf, temporaryTime);
@@ -221,13 +300,31 @@ public class Database {
 	}
 	
 	//For donation page
+	public void updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
+		ppstmt.setString(1, tsm.getTemporaryPIN());
+		ppstmt.setString(2, tsm.getTemporarySalt());
+		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
+		ppstmt.setString(4, tsm.getiGN());
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
 	public void insertTempStore(TemporaryStoreModel tsm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?,?);");
 		ppstmt.setString(1, tsm.getiGN());
 		ppstmt.setBigDecimal(2, tsm.getTemporaryAmount());
 		ppstmt.setString(3, tsm.getTemporaryPIN());
-		ppstmt.setString(4, tsm.getTemporaryOnBehalf());
-		ppstmt.setTimestamp(5, tsm.getTemporaryTime());
+		ppstmt.setString(4, tsm.getTemporarySalt());
+		ppstmt.setString(5, tsm.getTemporaryOnBehalf());
+		ppstmt.setTimestamp(6, tsm.getTemporaryTime());
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
+	public void deleteFromTempStore(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM TemporaryStore WHERE IGN = ?;");
+		ppstmt.setString(1, name);
 		ppstmt.executeUpdate();
 	}
 	
@@ -341,8 +438,8 @@ public class Database {
 			String title 		= rs.getString("title");
 			String description	= rs.getString("description");
 			int maxBids			= rs.getInt("maxBids");
-			Date bidStopTime	= rs.getDate("bidStopTime");
-			Date pickupTime		= rs.getDate("pickupTime");
+			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
 			int minBid			= rs.getInt("minBid");
 			int startingCR		= rs.getInt("startingCR");
 			int picture 		= rs.getInt("picture");
@@ -660,11 +757,11 @@ public class Database {
 			if(profilePic == 0) {
 				break;
 			}
-			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT FileName FROM FileTable WHERE FileID = ?;");
+			PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");
 			ppstmt2.setInt(1, profilePic);
 			ResultSet rs2 = ppstmt2.executeQuery();
 			while(rs2.next()) {
-				String fileName = rs2.getString("FileName");
+				String fileName = rs2.getString("ImageName");
 				
 				return fileName;
 			}
@@ -672,6 +769,19 @@ public class Database {
 		return null;
 	}
 	
+	//Get IGN's priviledge
+	public boolean getUserPriviledge(String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT isPriviledged FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, iGN);
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			boolean isPriviledged = rs.getBoolean("isPriviledged");
+			
+			return isPriviledged;
+		}
+		return false;
+	}
+		
 	//For MyEvent
 	public ArrayList<EventModel> getEventModelForMyEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
@@ -794,12 +904,13 @@ public class Database {
 	
 	//Get FileName by FileID
 	public String getFileNameByFileID(int iD) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT fileName FROM fileTable WHERE fileID = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT FileName FROM FileTable WHERE FileID = ?;");
 		ppstmt.setInt(1, iD);
 		
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
-			String fileName	= rs.getString("fileName");
+			String fileName	= rs.getString("FileName");
+			
 			return fileName;
 		}
 		return null;
@@ -814,6 +925,38 @@ public class Database {
 		while(rs.next()) {
 			String imageName	= rs.getString("ImageName");
 			return imageName;
+		}
+		return null;
+	}
+	
+	//Get ImageTable by ImageID
+	public ImageTableModel getImageTableByImageID(int id) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName, ImageID, ImageData, inUse FROM ImageTable WHERE ImageID = ?;");
+		ppstmt.setInt(1, id);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String imageName	= rs.getString("ImageName");
+			int imageID = rs.getInt("ImageID");
+			byte[] imageData = rs.getBytes("ImageData");
+			int inUse = rs.getInt("inUse");
+			return new ImageTableModel(imageID, imageName, imageData, inUse);
+		}
+		return null;
+	}
+	
+	//Get ImageTable by ImageName
+	public ImageTableModel getImageTableByImageName(String hashname) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName, ImageID, ImageData, inUse FROM ImageTable WHERE ImageName = ?;");
+		ppstmt.setString(1, hashname);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String imageName	= rs.getString("ImageName");
+			int imageID = rs.getInt("imageID");
+			byte[] imageData = rs.getBytes("imageData");
+			int inUse = rs.getInt("inUse");
+			return new ImageTableModel(imageID, imageName, imageData, inUse);
 		}
 		return null;
 	}
@@ -846,44 +989,36 @@ public class Database {
 		ppstmt.executeUpdate();
 		//(/ADD UPLOAD CODES HERE)
 		//Searching for ID of new entry
-		PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ID FROM ImageTable WHERE imageName=?;");
-		ppstmt2.setString(0, hashName);
+		PreparedStatement ppstmt2 = conn.prepareStatement("SELECT ImageID FROM ImageTable WHERE imageName=?;");
+		ppstmt2.setString(1, hashName);
 		ResultSet checkForNewEntry = ppstmt2.executeQuery();
 		
 		while(checkForNewEntry.next()){
-			return checkForNewEntry.getInt("ID");
+			return checkForNewEntry.getInt("ImageID");
 		}
 			System.out.println("Cannot find new entry");
 		return 0;
 		}
 	}
 	
-	public int editPicture(String imageName, byte[] imageData, int oldID) throws NoSuchAlgorithmException, IOException, SQLException{
-		int toRet=0;
-		toRet = addPictureWithDupeCheck(imageName, imageData);
-		setInUseFor(oldID,getInUseFor(oldID)-1);
-		
-		return toRet;
-	}
-	
 	public int getIDUsingHashName(String hashName) throws SQLException{
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT ID, ImageName, inUse FROM ImageTable WHERE imageName=?;");
-		ppstmt.setString(0, hashName);
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageID, ImageName, inUse FROM ImageTable WHERE imageName=?;");
+		ppstmt.setString(1, hashName);
 		ResultSet checkForDuplicates = ppstmt.executeQuery();
 		
 		while(checkForDuplicates.next()){
 			int inUseCount = checkForDuplicates.getInt("inUse");
-			int id = checkForDuplicates.getInt("ID");
+			int id = checkForDuplicates.getInt("ImageID");
 			
 			setInUseFor(id, inUseCount);
 			
-			return checkForDuplicates.getInt("ID");
+			return checkForDuplicates.getInt("ImageID");
 		}
-		return 0;
+		return -1;
 	}
 	
 	public void setInUseFor(int id, int inUse) throws SQLException{
-		PreparedStatement updatingInUseByID = conn.prepareStatement("UPDATE ImageTable SET inUse = ? WHERE ID = ?");
+		PreparedStatement updatingInUseByID = conn.prepareStatement("UPDATE ImageTable SET inUse = ? WHERE ImageID = ?");
 		updatingInUseByID.setInt(1, inUse+1);
 		updatingInUseByID.setInt(2, id);
 		
@@ -891,7 +1026,7 @@ public class Database {
 	}
 	
 	public int getInUseFor(int id) throws SQLException{
-		PreparedStatement gettingInUseByID = conn.prepareStatement("SELECT inUse FROM ImageTable WHERE ID = ?");
+		PreparedStatement gettingInUseByID = conn.prepareStatement("SELECT inUse FROM ImageTable WHERE ImageID = ?");
 		gettingInUseByID.setInt(1, id);
 		
 		ResultSet oneLiner = gettingInUseByID.executeQuery();
@@ -903,6 +1038,14 @@ public class Database {
 		return 0;
 	}
 	
+	public int editPicture(String imageName, byte[] imageData, int oldID) throws NoSuchAlgorithmException, IOException, SQLException{
+		int toRet=0;
+		toRet = addPictureWithDupeCheck(imageName, imageData);
+		setInUseFor(oldID,getInUseFor(oldID)-1);
+		
+		return toRet;
+	}
+		
 	//FoodPreferences
 	public void updateFoodPreferences(String sql, FoodPreferences fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
@@ -926,22 +1069,9 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
-	public void addForumPost(ForumPostModel fP) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ForumPost(Thread, Upvotes, IGN, Date, Picture, Description, FileAttachment) VALUES (?,?,?,?,?,?,?); ");
-		ppstmt.setString(1, fP.getThread());
-		ppstmt.setInt(2, fP.getUpvotes());
-		ppstmt.setString(3, fP.getiGN());
-		ppstmt.setTimestamp(4, fP.getDate());
-		ppstmt.setInt(5, fP.getPicture());
-		ppstmt.setString(6, fP.getDescription());
-		ppstmt.setString(7, fP.getFileAttachment());
-
-		executeUpdate(ppstmt);
-	}
-	
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID DESC");
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String thread = rs.getString("Thread");
@@ -1013,7 +1143,7 @@ public class Database {
 	}
 	
 	/*
-	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException{
+	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException{
 		Database db = new Database(2);
 		File file = new File("C:\\Users\\Wei Xuan\\Desktop\\mountain.jpeg");
 		InputStream in = new FileInputStream(file);
@@ -1025,11 +1155,7 @@ public class Database {
 		System.out.println(fileData);
 		System.out.println(fileSize);
 		
-		PreparedStatement ps = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
-		ps.setString(1, fileName);
-		ps.setBytes(2, fileData);
-		ps.setFloat(3, fileSize);
-		db.executeUpdate(ps);
+		System.out.println(db.addPictureWithDupeCheck(fileName, fileData));
 	}
 	*/
 	/*

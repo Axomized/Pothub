@@ -10,7 +10,6 @@ import java.sql.SQLException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
-import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 
 public class PBKDF2 {
@@ -20,8 +19,9 @@ public class PBKDF2 {
 	public static final int HASH_BYTES = 24;
 	public static final int PBKDF2_ITERATIONS = 100000;
 	
-	public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeySpecException
+	public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, ClassNotFoundException, SQLException
 	{
+		createHash("SwagPower", "swag_power@gmail.com");
 		
 	}
 	
@@ -39,7 +39,6 @@ public class PBKDF2 {
 	    
 	    // Hash the password
 	    byte[] hash = pbkdf2(password, salt, PBKDF2_ITERATIONS, HASH_BYTES);
-	    // format iterations:salt:hash
 	    
 	    LoginModel lm = new LoginModel();
 	    lm.setEmail(email);
@@ -60,14 +59,14 @@ public class PBKDF2 {
 	    return null;
 	}
 	
-	private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) throws NoSuchAlgorithmException, InvalidKeySpecException
+	public static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
 	    PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
 	    SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
 	    return skf.generateSecret(spec).getEncoded();
 	}
 	
-	private static byte[] fromHex(String hex)
+	public static byte[] fromHex(String hex)
     {
         byte[] binary = new byte[hex.length() / 2];
         for(int i = 0; i < binary.length; i++)
@@ -77,7 +76,7 @@ public class PBKDF2 {
         return binary;
     }
 	
-	private static String toHex(byte[] array)
+	public static String toHex(byte[] array)
     {
         BigInteger bi = new BigInteger(1, array);
         String hex = bi.toString(16);

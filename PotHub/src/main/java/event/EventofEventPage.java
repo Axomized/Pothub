@@ -111,7 +111,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		  	<div class='row'>");
 			sb.append("				<div class='event-header'>");
 			sb.append("					<div class='event-header-image'>");
-			sb.append("						<img src='/PotHub/Image/" + decodeString(db.getFileNameByFileID(eM.getThumbnail())) + "' alt='Thumbnail'>");
+			sb.append("						<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
 			sb.append("					</div>");
 			sb.append("					<div class='event-header-title-gradient'>");
 			sb.append("						<div class='event-title'>");
@@ -139,7 +139,7 @@ public class EventofEventPage extends HttpServlet {
 				for(String s:guestArray) {
 					sb.append("							<div>");
 					if(db.getUserProfilePic(s) != null)
-						sb.append("								<img src='/PotHub/Image/" + decodeString(db.getUserProfilePic(s)) + "' alt='Guest's Profile Picture' height='50' width='50'><br>");
+						sb.append("								<img src='/PotHub/Image/" + db.getUserProfilePic(s) + "' alt='Guest's Profile Picture' height='50' width='50'><br>");
 					else
 						sb.append("								<img src='/PotHub/images/cat.png' alt='crab picture' height='50' width='50'><br>");
 					sb.append("								<p>" + decodeString(s) + "</p>");
@@ -156,8 +156,8 @@ public class EventofEventPage extends HttpServlet {
 			ArrayList<Integer> galleryArray = eM.getFileListArray();
 			if(!galleryArray.isEmpty()) {
 				for(int s:galleryArray) {
-					String fileName = db.getFileNameByFileID(s);
-					sb.append("				<img src='/PotHub/Image/" + decodeString(fileName) + "' alt='Gallery Images'>");
+					String fileName = db.getImageByImageID(s);
+					sb.append("				<img src='/PotHub/Image/" + fileName + "' alt='Gallery Images'>");
 				}
 			}
 			String[] parts = decodeString(eM.getVenue()).split("\\`");

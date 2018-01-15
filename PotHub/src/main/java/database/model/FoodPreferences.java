@@ -9,6 +9,10 @@ public class FoodPreferences {
 		this.foodPref = foodPref;
 	}
 	
+	public FoodPreferences(String foodPref) {
+		this.foodPref = foodPref;
+	}
+
 	public String getiGN() {
 		return iGN;
 	}

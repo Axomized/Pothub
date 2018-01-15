@@ -1,8 +1,8 @@
 package database.model;
 
 import java.io.FileNotFoundException;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import database.Database;
 
@@ -12,21 +12,21 @@ public class PotcastModel {
 	String title;
 	String description;
 	int maxBids;
-	Date bidStopTime;
-	Date pickupTime;
+	Timestamp bidStopTime;
+	Timestamp pickupTime;
 	int minBid;
 	int startingCR;
 	int picture;
 	
-	public PotcastModel(String iGN, int potcastID, String title, String description, int maxBids, Date bidStopTime,
-			Date pickupTime, int minBid, int startingCR, int picture) {
+	public PotcastModel(String iGN, int potcastID, String title, String description, int maxBids, Timestamp bidStopTime2,
+			Timestamp pickupTime2, int minBid, int startingCR, int picture) {
 		this.iGN=iGN;
 		this.potcastID = potcastID;
 		this.title = title;
 		this.description = description;
 		this.maxBids = maxBids;
-		this.bidStopTime = bidStopTime;
-		this.pickupTime = pickupTime;
+		this.bidStopTime = bidStopTime2;
+		this.pickupTime = pickupTime2;
 		this.minBid = minBid;
 		this.startingCR = startingCR;
 		this.picture = picture;
@@ -62,11 +62,11 @@ public class PotcastModel {
 		return maxBids;
 	}
 
-	public Date getBidStopTime() {
+	public Timestamp getBidStopTime() {
 		return bidStopTime;
 	}
 
-	public Date getPickupTime() {
+	public Timestamp getPickupTime() {
 		return pickupTime;
 	}
 
@@ -98,11 +98,11 @@ public class PotcastModel {
 		this.maxBids = maxBids;
 	}
 
-	public void setBidStopTime(Date bidStopTime) {
+	public void setBidStopTime(Timestamp bidStopTime) {
 		this.bidStopTime = bidStopTime;
 	}
 
-	public void setPickupTime(Date pickupTime) {
+	public void setPickupTime(Timestamp pickupTime) {
 		this.pickupTime = pickupTime;
 	}
 

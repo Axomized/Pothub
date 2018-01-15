@@ -190,7 +190,10 @@ body {
 
 #profilePicDiv {
 	text-align:center;
-	border-right: 2px solid #e36209;
+}
+
+#profileImgDiv {
+	margin-top: 10px;
 }
 
 #displayNameDiv {
@@ -201,12 +204,32 @@ body {
 	font-size: 20px;
 }
 
+#joinedSpan {
+	display: block;
+	font-size: 17px;
+}
+
+#privilegedSpan {
+	display: block;
+	font-size: 17px;
+	color: #e36209;
+    font-weight: 600;
+}
+
+#buttonsDiv {
+	margin-top: 10px;
+}
+
+#removeBtn {
+	margin-top: 10px;
+}
+
 #profileContentDiv {
 	
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {
@@ -236,15 +259,6 @@ body {
 	
 }
 
-#buttonsDiv {
-	margin-top: 10px;
-	text-align: center;
-}
-
-#removeBtn {
-	margin-top: 10px;
-}
-
 .editBtn {
 	height: 25px;
 	width: 160px;
@@ -257,6 +271,7 @@ body {
     border-color: transparent;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     text-transform: uppercase;
+    line-height: 1;
 }
 
 .editBtn:hover {
@@ -293,6 +308,7 @@ body {
 	font-size: 15px;
 	font-weight: 600;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 /* Footer */

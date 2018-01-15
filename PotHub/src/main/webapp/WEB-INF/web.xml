@@ -131,10 +131,29 @@
 		<servlet-class>profile.AddFoodPref</servlet-class>
 	</servlet>
 	<servlet>
+<<<<<<< HEAD
 		<servlet-name>SuccessPage</servlet-name>
 		<display-name>SuccessPage</display-name>
 		<description></description>
 		<servlet-class>forum.SuccessPage</servlet-class>
+=======
+		<servlet-name>LoginPage</servlet-name>
+		<display-name>LoginPage</display-name>
+		<description></description>
+		<servlet-class>login.LoginPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>FoodPref</servlet-name>
+		<display-name>FoodPref</display-name>
+		<description></description>
+		<servlet-class>profile.FoodPref</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RemoveFoodPref</servlet-name>
+		<display-name>RemoveFoodPref</display-name>
+		<description></description>
+		<servlet-class>profile.RemoveFoodPref</servlet-class>
+>>>>>>> origin/master
 	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
@@ -221,8 +240,21 @@
 		<url-pattern>/AddFoodPref</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
+<<<<<<< HEAD
 		<servlet-name>SuccessPage</servlet-name>
 		<url-pattern>/SuccessPage</url-pattern>
+=======
+		<servlet-name>LoginPage</servlet-name>
+		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FoodPref</servlet-name>
+		<url-pattern>/FoodPref</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RemoveFoodPref</servlet-name>
+		<url-pattern>/RemoveFoodPref</url-pattern>
+>>>>>>> origin/master
 	</servlet-mapping>
 </web-app>
 

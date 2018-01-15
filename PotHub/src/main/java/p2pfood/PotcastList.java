@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -135,7 +136,9 @@ public class PotcastList extends HttpServlet {
 						+ "<div id='wrapper'>" + "<div id='secondHeader'>" + "<h2>Potcast</h2>"
 						+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" 
 						+ "<form method='get'>"
-						+ "<input type='text' name='title'></input>"
+						+ "<input type='text' name='title'></input><input type='submit'></input>"
+						+ "<p id='toggleSpan'>More Options</p>"
+						+ "<div id='hidableSearchBlock'>"
 						+ "<p>Sort Results By: </p>" + "<div id='search'>" 
 						+ "<div id='radios'>"
 						+ "<ul>"
@@ -151,7 +154,7 @@ public class PotcastList extends HttpServlet {
 						+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
 						+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
 						+ "</ul>"
-						+ "<input type='submit'></input>"
+						+ "</div>"
 						+ "</form>"
 						+ "</div>"
 						+ "</div>"
@@ -162,49 +165,83 @@ public class PotcastList extends HttpServlet {
 			pso3.setPurpose(3);
 			db = new Database(0);
 			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
-
+			ArrayList<String> postalCodes3 = new ArrayList<String>();
+			
 			for(PotcastModel ap : top3Potcasts){
+				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
+			}
+
+			ArrayList<String> distances3 = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+			int counter3=0;
+			for(PotcastModel ap : top3Potcasts){
+				
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 			
 				if(db.getBidsForPotcast(ap.getPotcastID()).size()>ap.getMaxBids()){
-					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" 
-							+ "<div class='row2'>$"+db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids()-1).getBidAmount()+"</div>" + "</div>");
+					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, ");
+
+					pw.append(TimestampToDateTime(ap.getBidStopTime()));
+					
+					pw.append("</div><div class='row2'>$"+db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids()-1).getBidAmount()+"</div>" + "</div>");
 				}
 				else{
-					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, ");
+					
+					pw.append(TimestampToDateTime(ap.getBidStopTime()));
+					
+					pw.append("</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
 				}
 				
-				pw.append("<div id='column2'><div class='row2'>"+ap.getPickupTime()+", HARDCODEDkm</div>");
-				pw.append("</div></div></a>");
+				pw.append("<div id='column2'><div class='row2'>");
+				
+				pw.append(TimestampToDateTime(ap.getPickupTime()));
+				
+				pw.append(", "+distances3.get(counter3)+"</div></div></div></a>");
+				counter3++;
 			}			
 		
 						pw.append("<h1>Active Potcasts: </h1>");
 
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
+			ArrayList<String> postalCodes = new ArrayList<String>();
+			
+			for(PotcastModel ap : activePotcasts){
+				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
+			}
+			
+			ArrayList<String> distances = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+			int counter = 0;
 			for(PotcastModel ap : activePotcasts){
 				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
-				pw.append("<img height=100 width=100 src='/PotHub/Image/"+db.getFileNameByFileID(ap.getPicture())+"'/></div>");
+				pw.append("<img height=150 width=150 src='/PotHub/Image/"+db.getImageTableByImageID(ap.getPicture()).getImageName()+"'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>"+ap.getTitle()+"</div>");
 				pw.append("<div class='row1'>"+ap.getiGN()+", "+ap.getStartingCR()+"CR</div>" + "</div>" + "<div id='column2'>");
 
 				if(db.getBidsForPotcast(ap.getPotcastID()).size()>ap.getMaxBids()){
-					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" 
+					pw.append("<div class='row2'>"+ap.getMaxBids()+"/"+ap.getMaxBids()+" Bids, ");
+							
+					pw.append(TimestampToDateTime(ap.getBidStopTime()));
+				
+				pw.append("</div>" 
 				+ "<div class='row2'>$"+db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids()-1).getBidAmount()+"</div>" + "</div>");
 				}
 				else{
-					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, "+ap.getBidStopTime()+"</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
+					pw.append("<div class='row2'>"+db.getBidsForPotcast(ap.getPotcastID()).size()+"/"+ap.getMaxBids()+" Bids, ");
+
+					pw.append(TimestampToDateTime(ap.getBidStopTime()));
+					
+					pw.append("</div>" + "<div class='row2'>$"+ap.getMinBid()+"</div>" + "</div>");
 				}
 				
 				pw.append("<div id='column2'><div class='row2'>");
 				
-						Date date = new Date(ap.getPickupTime().getTime());
-						DateFormat formatter = new SimpleDateFormat("HH:mm");
-						String dateFormatted = formatter.format(date);
+				pw.append(TimestampToDateTime(ap.getPickupTime()));
 						
-				pw.append(dateFormatted+", HARDCODEDkm</div></div></div></a>");
+				pw.append(", "+distances.get(counter)+"</div></div></div></a>");
+				counter++;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
@@ -228,6 +265,12 @@ public class PotcastList extends HttpServlet {
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private static String TimestampToDateTime(Timestamp toChange){
+		Date date = new Date(toChange.getTime());
+		DateFormat formatter = new SimpleDateFormat("MM.dd HH:mm");
+		return formatter.format(date);
 	}
 
 }

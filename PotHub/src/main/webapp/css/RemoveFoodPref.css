@@ -82,7 +82,8 @@ body {
 }
 
 #content {
-	padding: 0 20px;
+	margin: 0;
+    padding: 0;
 }
 
 #footer {
@@ -188,17 +189,41 @@ body {
 	background: #49274a;
 }
 
-#profilePicDiv {
-	text-align:center;
-	border-right: 2px solid #e36209;
+#sideBarDivWrap {
+	padding: 0;
 }
 
-#displayNameDiv {
+#sideBarDiv {
 	margin-top: 10px;
 }
 
-#displayNameSpan {
+#sideBarList {
+	padding: 0;
+}
+
+#listHeader {
 	font-size: 20px;
+    text-transform: uppercase;
+    line-height: 2;
+    color: #e36209;
+}
+
+#sideBarList > li > a {
+	display: block;
+    padding: 10px 0px;
+    line-height: 1;
+    font-size: 20px;
+    color: #848d95;
+    text-decoration: none;
+}
+
+#sideBarList > li > a:hover {
+	color: #49274a;
+}
+
+#linkSelected {
+	font-weight: 600;
+	color: #49274a !important;
 }
 
 #profileContentDiv {
@@ -206,7 +231,7 @@ body {
 }
 
 #profileNavDiv {
-	
+	width: 98.5%;
 }
 
 #profileNavList {
@@ -312,6 +337,7 @@ body {
 	font-size: 15px;
 	font-weight: 600;
 	background-color: #f3decb;
+	box-shadow: 0 2px 3px rgba(0,0,0,0.1);
 }
 
 .custom-control-indicator {
@@ -321,8 +347,10 @@ body {
 	background-color: white;
 }
 
-#saveBtn {
-	float: right;
+#updateBtnDiv {
+	display: flex;
+	flex-direction: row-reverse;
+	margin-top: 10px;
 }
 
 /* Footer */
