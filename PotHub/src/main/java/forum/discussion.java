@@ -2,11 +2,16 @@ package forum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.CommentModel;
 
 /**
  * Servlet implementation class discussion
@@ -82,16 +87,43 @@ public class discussion extends HttpServlet {
 						+ "							<div id='date'>5 hours ago</div>"
 						+ "						</div>"
 						+ "					</div>"
+						+ "					<div>"
+						+ "						<form>"	
+						+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
+						+"						<button type='submit' id='postBtn' cursor:pointer;' class='btn'>Post/Submit</button>\""
+						+ "						</form>"
+						+ "					</div>"
 						+ "					<div id='comments'>"
-						+ "						<div class='mycomment'>"
-						+ "							<div id='author'> "
-						+ "								<div id='profilepic'><img src='images/tzuyu.jpg' height='60' width='60'/></div>"
+						);
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						try {
+							Database ttttt = new Database(2);
+							ArrayList<CommentModel> cc = ttttt.getCommentModel();
+							for(CommentModel d:cc) {
+							
+							
+						
+						
+						out.println(
+						
+						  "						<div class='mycomment'>"
+						+ "							<div class='author'> "
+						+ "								<div class='profilepic'><img src='images/tzuyu.jpg' height='60' width='60'/></div>"
 						+ "								<div class='tgt'>"
-						+ "									<div id='name'>Chou Tzu Yuuu</div>"
-						+ "									<div id='date'>A year ago</div>"
+						+ "									<div>" + d.getiGN() +"</div>"
+						+ "									<div>" + d.getDate() + "</div>"
 						+ "									"
 						+ "								</div>"
-						+ "								<div id='reaction'>"
+						+ "								<div class='reaction'>"
 						+ "									<div id='upvote'><i class='fa fa-arrow-up fa-2x' aria-hidden='true'></i></div>"
 						+ "									<div id='count' style='align-items: center;'>1029</div>"
 						+ "									<div id='downvote'><i class='fa fa-arrow-down fa-2x' aria-hidden='true'></i></div>"
@@ -99,67 +131,38 @@ public class discussion extends HttpServlet {
 						+ "								</div>"
 						+ "							</div>"
 						+ "							<div id='authorcomments'>"
-						+ "								<p>When talking about fast food giants, nothing can be bigger â€“ and more infamous â€“ than McDonald's. Those two 'golden arches' sign"
-						+ "									are so abundant and so well-known all over the world, that some toddlers"
-						+ "								 	 can even recognize it even before they are able to speak full sentences. "
-						+ "									In 2014, over 36,258 McDonald's restaurants operate worldwide,1 serving over 69 million people every day. From its humble"
-						+ "									beginnings in the 1940s, the brand has now grown to be a multi-billion dollar company with an estimated value of over $85 billion."
-						+ "								</p>"
-						+ "							</div>"
-						+ "							"
-						+ "						</div>"
-						+ "						<hr>"
-						+ "						<div class='mycomment'>"
-						+ "							<div id='author'> "
-						+ "								<div id='profilepic'><img src='images/tzuyu.jpg' height='60' width='60'/></div>"
-						+ "								<div class='tgt'>"
-						+ "									<div id='name'>Chou Tzu Yu</div>"
-						+ "									<div id='date'>A year ago</div>"
-						+ "								</div>"
-						+ "								<div id='reaction'>"
-						+ "									<div id='upvote'><i class='fa fa-arrow-up fa-2x' aria-hidden='true'></i></div>"
-						+ "									<div id='count'>1029</div>"
-						+ "									<div id='upvote'><i class='fa fa-arrow-down fa-2x' aria-hidden='true'></i></div>"
-						+ "									<div id='reports'><a href='#'>Report</a></div>"
-						+ "								</div>"
-						+ "							</div>"
-						+ "							<div id='authorcomments'>"
-						+ "								<p>When talking about fast food giants, nothing can be bigger â€“ and more infamous â€“ than McDonald's. Those two 'golden arches' sign"
-						+ "									are so abundant and so well-known all over the world, that some toddlers"
-						+ "								 	 can even recognize it even before they are able to speak full sentences. "
-						+ "									In 2014, over 36,258 McDonald's restaurants operate worldwide,1 serving over 69 million people every day. From its humble"
-						+ "									beginnings in the 1940s, the brand has now grown to be a multi-billion dollar company with an estimated value of over $85 billion."
-						+ "								</p>"
-						+ "							</div>"
-						+ "							"
-						+ "						</div>"
-						+ "						<hr>"
-						+ "						<div class='mycomment'>"
-						+ "							<div id='author'> "
-						+ "								<div id='profilepic'><img src='images/tzuyu.jpg' height='60' width='60'/></div>"
-						+ "								<div class='tgt'>"
-						+ "									<div id='name'>Chou Tzu Yu</div>"
-						+ "									<div id='date'>A year ago</div>"
-						+ "								</div>"
-						+ "								<div id='reaction'>"
-						+ "									<div id='upvote'><i class='fa fa-arrow-up fa-2x' aria-hidden='true'></i></div>"
-						+ "									<div id='count'>1029</div>"
-						+ "									<div id='upvote'><i class='fa fa-arrow-down fa-2x' aria-hidden='true'></i></div>"
-						+ "									<div id='reports'><a href='#'>Report</a></div>"
-						+ "								</div>"
-						+ "							</div>"
-						+ "							<div id='authorcomments'>"
-						+ "								<p>When talking about fast food giants, nothing can be bigger â€“ and more infamous â€“ than McDonald's. Those two 'golden arches' sign"
-						+ "									are so abundant and so well-known all over the world, that some toddlers"
-						+ "								 	 can even recognize it even before they are able to speak full sentences. "
-						+ "									In 2014, over 36,258 McDonald's restaurants operate worldwide,1 serving over 69 million people every day. From its humble"
-						+ "									beginnings in the 1940s, the brand has now grown to be a multi-billion dollar company with an estimated value of over $85 billion."
+						+ "								<p>" + d.getDescription()
 						+ "								</p>"
 						+ "							</div>"
 						+ "						</div>"
-						+ "					</div>"
-						+ "				</div>"
-						+ "				<div id='content'>"
+						+ "						<hr>");
+						
+						
+						
+							}
+							
+						} catch (ClassNotFoundException | SQLException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						out.println(
+											
+						  "					</div>"
 						+ "				</div>"
 						+ "			</div>"
 						+ "		</div>"

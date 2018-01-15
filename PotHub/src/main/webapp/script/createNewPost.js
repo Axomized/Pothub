@@ -7,11 +7,11 @@ function hideProfileDropdown() {
 }
 
 function submitting(){
-	location.href = "Forum";
+	alert("Are you sure?");
 }
 
 function goback(){
-	location.href = "Forum";
+	window.location = "Forum";
 }
 
 function showT(){

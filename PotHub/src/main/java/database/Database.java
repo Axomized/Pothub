@@ -535,6 +535,23 @@ public class Database {
 	}
 	
 	//CommentModel
+	public ArrayList<CommentModel> getCommentModel() throws SQLException{
+		ArrayList<CommentModel> comments = new ArrayList<CommentModel>();
+		ResultSet rs = getResultSet("SELECT * FROM Comment");
+		while(rs.next()) {
+			int commentId = rs.getInt("commentID");
+			int postId = rs.getInt("postID");
+			Date d = rs.getDate("date");
+			String ign = rs.getString("iGN");
+			int comment = rs.getInt("comment1");
+			String description = rs.getString("description");
+			
+			
+			comments.add(new CommentModel(commentId, postId, d, ign, comment, description));
+		}
+		return comments;
+	}
+	
 	public void updateComment(String sql, CommentModel cM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setInt(1, cM.getPostID());
@@ -543,6 +560,16 @@ public class Database {
 		ppstmt.setInt(4, cM.getComment1());
 		ppstmt.setString(5, cM.getDescription());
 
+		executeUpdate(ppstmt);
+	}
+	
+	public void addComment(CommentModel c) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Comment(date, iGN, comment1, description) VALUES (?,?,?,?); ");
+		ppstmt.setDate(1, c.getDate());
+		ppstmt.setString(2, c.getiGN());
+		ppstmt.setInt(3, c.getComment1());
+		ppstmt.setString(4, c.getDescription());
+	
 		executeUpdate(ppstmt);
 	}
 	

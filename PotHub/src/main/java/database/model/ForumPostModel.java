@@ -1,5 +1,6 @@
 package database.model;
 
+import java.sql.Blob;
 import java.sql.Timestamp;
 
 public class ForumPostModel {
@@ -11,6 +12,9 @@ public class ForumPostModel {
 	int picture;
 	String description;
 	String fileAttachment;
+	Blob video; 
+	String text;
+	String url;
 	
 	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, int picture, String description, String fileAttachment) {
 		this.postID = postID;
@@ -23,6 +27,8 @@ public class ForumPostModel {
 		this.fileAttachment = fileAttachment;
 	}
 	
+
+
 
 	public ForumPostModel() {
 		super();

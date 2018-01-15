@@ -187,11 +187,11 @@ body
 	padding: 10px;
 }
 
-#author{
+.author{
 	display:flex;
 }
 
-#reaction{
+.reaction{
 	display:flex;
 	padding:10px;
 }

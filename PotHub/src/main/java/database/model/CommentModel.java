@@ -19,6 +19,10 @@ public class CommentModel {
 		this.description = description;
 	}
 
+	public CommentModel() {
+		super();
+	}
+
 	public int getCommentID() {
 		return commentID;
 	}

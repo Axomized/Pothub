@@ -130,6 +130,12 @@
 		<description></description>
 		<servlet-class>profile.AddFoodPref</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>SuccessPage</servlet-name>
+		<display-name>SuccessPage</display-name>
+		<description></description>
+		<servlet-class>forum.SuccessPage</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -213,6 +219,10 @@
 	<servlet-mapping>
 		<servlet-name>AddFoodPref</servlet-name>
 		<url-pattern>/AddFoodPref</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SuccessPage</servlet-name>
+		<url-pattern>/SuccessPage</url-pattern>
 	</servlet-mapping>
 </web-app>
 

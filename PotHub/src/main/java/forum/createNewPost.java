@@ -2,11 +2,16 @@ package forum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import database.Database;
+import database.model.ForumPostModel;
 
 /**
  * Servlet implementation class createNewPost
@@ -79,14 +84,14 @@ public class createNewPost extends HttpServlet {
 				+ "		<div id='wrapper'>"
 				+ "			<div id='content-wrapper'>"
 				+ "				<div id='content'>"
-				+ "					<form>"
+				+ "					<form action='SuccessPage' method='post'>"
 				+ "					  <div class='form-group'>"
 				+ "					    <label for='exampleFormControlInput1'>Forum Title</label>"
-				+ "					    <input type='text' class='form-control' id='exampleFormControlInput1'>"
+				+ "					    <input type='text' class='form-control' id='exampleFormControlInput1' name='Forumtitle'>"
 				+ "					  </div>"
 				+ "					  <div class='form-group'>"
-				+ "					    <label for='exampleFormControlTextarea1'>Enter Your Forum Description Here</label>"
-				+ "					    <textarea class='form-control' id='exampleFormControlTextarea1' rows='3'></textarea>"
+				+ "					    <label for='exampleFormControlTextarea1'>Enter Your Forum Description</label>"
+				+ "					    <textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='Forumdescription'></textarea>"
 				+ "					  </div>"
 				+ "					  <div class='form-group'>"
 				
@@ -106,19 +111,19 @@ public class createNewPost extends HttpServlet {
 				
 				
 				+"					  <div class='form-group'>"	
-				+"					    <p id='text1' style='display:none;'>Enter your text here: <textarea class='form-control' id='exampleFormControlTextarea1' rows='3'></textarea>"
+				+"					    <p id='text1' style='display:none;'>Enter your text here: <textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='words'></textarea>"
 				+"						<i onclick='closeT()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='video1' style='display:none;'>Submit your picture here: <input type='file' name='pic' accept='image/*'>"
+				+"					  	<p id='video1' style='display:none;'>Submit your picture here: <input type='file' name='vid' accept='image/*'>"
 				+"						<i onclick='closeV()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
 				+"					  	<p id='image1' style='display:none;'>Submit your video here: <input type='file' name='pic' accept='image/*'>"
 				+"						<i onclick='closeI()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='link1' style='display:none;'>Enter your url here: <input type='url' name='urll'>"
-				+"						<i onclick='closeL()' class='fa fa-close' style='font-size:18px'></i>"	
+				+"					  	<p id='link1' style='display:none;' >Enter the url here: <input type='url' name='link'>"
+				+"						<i onclick='closeU()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='file1' style='display:none;'>Submit your file here: <input type='file' name='pic' accept='image/*'>"
+				+"					  	<p id='file1' style='display:none;'>Submit your file here: <input type='file' name='file' accept='image/*'>"
 				+"						<i onclick='closeF()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
 				+"					  </div>"	
@@ -130,8 +135,8 @@ public class createNewPost extends HttpServlet {
 				+ "					  	 <input type='file' name='pic' accept='image/*'>"
 				+ "					  </div>"
 				+ "					  <div>"
-				+ "					  <button id='postBtn' onclick='submitting()' cursor:pointer;' class='btn'>Post/Submit</button>"
-				+ "					  <button id='cancelBtn' onclick='goback()' cursor:pointer;' class='btn'>Cancel</button>"
+				+ "					  <button type='submit' id='postBtn' onclick='submitting()' cursor:pointer;' class='btn'>Post/Submit</button>"
+				+ "					  <button id='cancelBtn' formaction='Forum' cursor:pointer;' class='btn'>Cancel</button>"
 				+ "					  </div>"
 				+ "					  </div>"
 				+ "					</form>"
