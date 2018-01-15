@@ -1081,11 +1081,28 @@ public class Database {
 			int picture = rs.getInt("Picture");
 			String description = rs.getString("Description");
 			String fileAttachment = rs.getString("FileAttachment");
+			String text = rs.getString("ForumNormalText");
+			String url = rs.getString("ForumURL");
 			
 			
-			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment));
+			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment, text, url));
 		}
 		return forums;
+	}
+	
+	public void addForumPost(ForumPostModel fP) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ForumPost(Thread, Upvotes, IGN, Date, Picture, Description, FileAttachment, ForumNormalText, ForumURL) VALUES (?,?,?,?,?,?,?,?,?); ");
+		ppstmt.setString(1, fP.getThread());
+		ppstmt.setInt(2, fP.getUpvotes());
+		ppstmt.setString(3, fP.getiGN());
+		ppstmt.setTimestamp(4, fP.getDate());
+		ppstmt.setInt(5, fP.getPicture());
+		ppstmt.setString(6, fP.getDescription());
+		ppstmt.setString(7, fP.getFileAttachment());
+		ppstmt.setString(8, fP.getForumNormalText());
+		ppstmt.setString(9, fP.getForumURL());
+
+		executeUpdate(ppstmt);
 	}
 	
 	//ForumVoteModel

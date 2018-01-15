@@ -40,7 +40,6 @@ public class SuccessPage extends HttpServlet {
 		String file = request.getParameter("file");
 		int picc = Integer.parseInt(request.getParameter("pic"));
 		String url = request.getParameter("link");
-		//Blob video = request.getParameter("vid");
 		String words = request.getParameter("words");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		try {
@@ -53,6 +52,8 @@ public class SuccessPage extends HttpServlet {
 			fp.setPicture(1);
 			fp.setThread(forumT);
 			fp.setUpvotes(0);
+			fp.setForumNormalText(words);
+			fp.setForumURL(url);
 			ttttt.addForumPost(fp);
 			out.println("<html>Success</html>");
 			
