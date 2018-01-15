@@ -222,7 +222,7 @@ public class Donation extends HttpServlet {
 				if (behalfName != null && !behalfName.isEmpty()) {
 					if (vc.validateCCNo(ccNumber)) {
 						if (vc.validateCode(ccNumber, securityCode)) {
-							se.sendEmail("", pinNo);
+							se.sendEmail("dr.que9@gmail.com", pinNo);
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);
@@ -243,7 +243,7 @@ public class Donation extends HttpServlet {
 				else {
 					if (vc.validateCCNo(ccNumber)) {
 						if (vc.validateCode(ccNumber, securityCode)) {
-							se.sendEmail("", pinNo);
+							se.sendEmail("dr.que9@gmail.com", pinNo);
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);

@@ -136,6 +136,18 @@
 		<description></description>
 		<servlet-class>login.LoginPage</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>FoodPref</servlet-name>
+		<display-name>FoodPref</display-name>
+		<description></description>
+		<servlet-class>profile.FoodPref</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>RemoveFoodPref</servlet-name>
+		<display-name>RemoveFoodPref</display-name>
+		<description></description>
+		<servlet-class>profile.RemoveFoodPref</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -223,6 +235,14 @@
 	<servlet-mapping>
 		<servlet-name>LoginPage</servlet-name>
 		<url-pattern>/Login</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>FoodPref</servlet-name>
+		<url-pattern>/FoodPref</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>RemoveFoodPref</servlet-name>
+		<url-pattern>/RemoveFoodPref</url-pattern>
 	</servlet-mapping>
 </web-app>
 

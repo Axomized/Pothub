@@ -5,3 +5,11 @@ function showProfileDropdown() {
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
+
+function toAddFoodPref() {
+	location.href = "AddFoodPref";
+}
+
+function toRemoveFoodPref() {
+	location.href = "RemoveFoodPref";
+}

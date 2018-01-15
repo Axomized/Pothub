@@ -216,6 +216,14 @@ body {
     font-weight: 600;
 }
 
+#buttonsDiv {
+	margin-top: 10px;
+}
+
+#removeBtn {
+	margin-top: 10px;
+}
+
 #profileContentDiv {
 	
 }
@@ -263,6 +271,7 @@ body {
     border-color: transparent;
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     text-transform: uppercase;
+    line-height: 1;
 }
 
 .editBtn:hover {

@@ -359,12 +359,11 @@ body {
 }
 
 #errorMsg {
-	display: none;
-	width: 50%;
 	margin-top: 10px;
 	color: white;
 	background-color: #f74225;
-	padding: 5px;
+	padding: 7px 5px;
+	line-height: 1;
 }
 
 #genderSelect {

@@ -391,10 +391,14 @@ body {
 }
 
 #errorMsg {
+	width: 25%;
+	margin-left: auto;
+	margin-right: auto;
 	margin-bottom: 10px;
 	color: white;
 	background-color: #f74225;
-	padding: 5px;
+	padding: 7px 5px;
+	line-height: 1;
 }
 
 #buttonDiv {

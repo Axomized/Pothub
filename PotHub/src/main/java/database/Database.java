@@ -239,6 +239,34 @@ public class Database {
 		}
 	}
 	
+	//For profile page - user's food preferences
+	public ArrayList<FoodPreferences> getFoodPref(String name) throws SQLException {
+		ArrayList<FoodPreferences> foodPrefList = new ArrayList<FoodPreferences>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT FoodPref FROM FoodPreferences WHERE IGN = ?");
+		ppstmt.setString(1, name);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String foodPref = rs.getString("FoodPref");
+			foodPrefList.add(new FoodPreferences(foodPref));
+		}
+		return foodPrefList;
+	}
+	
+	//For profile page - user's food preferences
+	public void insertFoodPref(FoodPreferences fp) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodPreferences(IGN, FoodPref) VALUES(?,?);");
+		ppstmt.setString(1, fp.getiGN());
+		ppstmt.setString(2, fp.getFoodPref());
+		ppstmt.executeUpdate();
+	}
+	
+	//For profile page - user's food preferences
+	public void deleteFoodPref(String foodPref) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE FoodPref = ?");
+		ppstmt.setString(1, foodPref);
+		ppstmt.executeUpdate();
+	}
+	
 	//For profile page - user's donation history
 	public ArrayList<DonationModel> getUserDonation(ProfileDonationSearch search, String name) throws SQLException {
 		ArrayList<DonationModel> userDonationList = new ArrayList<DonationModel>();
@@ -269,6 +297,16 @@ public class Database {
 			return new TemporaryStoreModel(iGN, temporaryAmount, temporaryPIN, temporarySalt, temporaryOnBehalf, temporaryTime);
 		}
 		return null;
+	}
+	
+	//For donation page
+	public void updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
+		ppstmt.setString(1, tsm.getTemporaryPIN());
+		ppstmt.setString(2, tsm.getTemporarySalt());
+		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
+		ppstmt.setString(4, tsm.getiGN());
+		ppstmt.executeUpdate();
 	}
 	
 	//For donation page
