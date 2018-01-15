@@ -12,6 +12,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
+import adminSearch.SearchSanitizer;
 import database.model.AppealModel;
 import database.model.BansModel;
 import database.model.CommentModel;
@@ -150,6 +152,16 @@ public class Database {
 			return new DatabaseUserModel(iGN);
 		}
 		return null;
+	}
+	
+	public boolean getPrivilegeForIGN(String ign) throws SQLException{
+		PreparedStatement pptstmt = conn.prepareStatement("SELECT isPriviledged FROM databaseUser WHERE IGN = ?");
+		pptstmt.setString(1, ign);
+		ResultSet rs = pptstmt.executeQuery();
+		while(rs.next()){
+			return rs.getBoolean("isPriviledged");
+		}
+		return false;
 	}
 	
 	//For Login Page
@@ -447,6 +459,16 @@ public class Database {
 					pickupTime, minBid, startingCR, picture));
 		}
 		return potcasts;
+	}
+	
+	//Count Potcasts
+	public int getNumberOfPotcastsFrom(String ign) throws SQLException{
+	    Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+	            ResultSet.CONCUR_READ_ONLY);
+	        ResultSet r = s
+	            .executeQuery("SELECT Count(*) FROM Potcast WHERE IGN = '"+SearchSanitizer.sanitise(ign)+"' AND PickupTime > '"+new Timestamp(System.currentTimeMillis()).toString()+"'");
+	        r.last();
+	        return r.getRow();
 	}
 	
 	//Potcast Bids

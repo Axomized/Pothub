@@ -2,12 +2,16 @@ package p2pfood;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import database.Database;
 
 /**
  * Servlet implementation class Forum
@@ -30,6 +34,17 @@ public class PotcastRegister extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		String username ="";
+		
+		if(session!=null){
+			username = (String) session.getAttribute("username");
+		}else{
+			response.sendRedirect("Login");
+		}
+
+		try{
+		Database db = new Database(0);
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html>"
 				+ "<html>"
@@ -63,12 +78,16 @@ public class PotcastRegister extends HttpServlet {
 				+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 				+ "<div id='profilePic'>"
 				+ "<img src='images/profile.png' height='50' width='50'/>"
-				+ "<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+				+ "<span id='welcomeSpan'>Welcome, "+username+" </span>"
 				+ "</div>"
-				+ "<div id='profileDropdownDiv'>"
-				+ "<a href='Profile.html'>Profile</a>"
-				+ "<a href='LoginPage.html'>Logout</a>"
-				+ "</div>"
+				+ "<div id='profileDropdownDiv'>");
+		
+				if (!username.equals("")) {
+					pw.append("<a href='Login?doaction=logout'>Logout</a>");
+				} else {
+					pw.append("<a href='Login'>Login</a>");
+				}
+				pw.append( "</div>"
 				+ "</div>"
 				+ "</div>"
 				+ "	<div id='navigation'>"
@@ -89,24 +108,76 @@ public class PotcastRegister extends HttpServlet {
 				+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>"
 				+ "			</ul>"
 				+ "		</div>"
-				+ "	</div>"
-				+ "<div id='wrapper'>" + "<div id='secondHeader'>" + "<h2>Start a PotCast</h2>" + "</div>"
-				+ "<div id='form'>" + "<div class='formElement'>" + "<p>Food title</p>"
-				+ "<input type='text' class='long'></input>" + "</div>" + "<div class='formElement'>" + "<p>Description</p>"
-				+ "<input type='text' id='descBox'></input>" + "</div>" + "<div class='formElement'>"
-				+ "<p>Portions available</p>" + "<input type='number'></input>"
-				+ "<p>Starting Price Per Portion</p>" + "<input type='number'></input>" + "</div>"
-				+ "<div class='formElement'>" + "<p>Bid closing time</p>" + "<input type='time' class='veryShort'></input>"
-				+ "<p>Collection time</p>" + "<input type='time' class='veryShort'></input>" + "</div>"
-				+ "<div class='formElement'>"
-				+ "<button>Submit</button>" + "</div>" + "</div>" + "</div>"
+				+ "	</div>");
 				
-				+ "<div id='footer'>"
+		boolean postPermission=false;
+		int permissionCounter=0;
+		try {
+			if(db.getPrivilegeForIGN(username)){
+				permissionCounter=1;
+			}
+			if((db.getNumberOfPotcastsFrom(username))<1+permissionCounter){
+				postPermission=true;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		
+		if(postPermission){
+				pw.append( "<div id='wrapper'>" 
+					+ "<div id='secondHeader'>" 
+					+ "<h2>Start a PotCast</h2>" 
+				+ "</div>"
+				+ "<form method='post'>"
+				+ "<div id='form'>" 
+				+ "<div class='formElement'>" 
+				+ "<p>Food title</p>"
+				+ "<input type='text' class='long' name='title' required></input>" 
+				+ "</div>" 
+				+ "<div class='formElement'>" 
+				+ "<p>Description</p>"
+				+ "<input type='text' id='descBox' name='description' required></input>" 
+				+ "</div>" 
+				
+				+ "<div class='formElement'>"
+				+ "<p>Portions available</p>" 
+				+ "<input type='number' name='portions' required></input>"
+				+ "<p>Starting Price Per Portion</p>" 
+				+ "<input type='number' name ='ppp' required></input>" 
+				+ "</div>"
+				
+				+ "<div class='formElement'>" 
+				+ "<p>Bid closing time</p>" 
+				+ "<input type='time' class='veryShort' name='bidClosingTime' required></input>"
+				+ "<p>Collection time</p>" 
+				+ "<input type='time' class='veryShort' name='pickupTime' required></input>" 
+				+ "</div>"
+				
+				+ "<div class='formElement'>"
+				+ "<button>Submit</button>" 
+				+ "</div>" 
+				+ "</div>" 
+				+ "</form>"
+				+ "</div>");
+				
+		}
+		else{
+				pw.append( "<div id='wrapper'>" 
+				+ "<div id='secondHeader'>" 
+				+ "<h2>You have the maximum number of active Potcasts! Have fun serving your visitors first!</h2>" 
+				+ "</div>"
+				+ "</div>");
+		}
+				pw.append( "<div id='footer'>"
 				+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
 				+ "<p>We like food</p>" + "<p>"
 				+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 				+ "</p>" + "</div>"
 				+ "</body>" + "</html>");
+		}catch(Exception e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
