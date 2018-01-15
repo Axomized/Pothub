@@ -12,11 +12,12 @@ public class ForumPostModel {
 	int picture;
 	String description;
 	String fileAttachment;
-	Blob video; 
-	String text;
-	String url;
-	
-	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, int picture, String description, String fileAttachment) {
+	String ForumNormalText;
+	String ForumURL;
+
+	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, int picture,
+			String description, String fileAttachment, String forumNormalText, String forumURL) {
+		super();
 		this.postID = postID;
 		this.thread = thread;
 		this.upvotes = upvotes;
@@ -25,9 +26,29 @@ public class ForumPostModel {
 		this.picture = picture;
 		this.description = description;
 		this.fileAttachment = fileAttachment;
+		this.ForumNormalText = forumNormalText;
+		this.ForumURL = forumURL;
 	}
-	
 
+
+	public String getForumNormalText() {
+		return ForumNormalText;
+	}
+
+
+	public void setForumNormalText(String forumNormalText) {
+		ForumNormalText = forumNormalText;
+	}
+
+
+	public String getForumURL() {
+		return ForumURL;
+	}
+
+
+	public void setForumURL(String forumURL) {
+		ForumURL = forumURL;
+	}
 
 
 	public ForumPostModel() {
