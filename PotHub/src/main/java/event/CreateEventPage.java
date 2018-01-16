@@ -22,13 +22,13 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.compress.utils.IOUtils;
 
 import database.Database;
 import database.model.EventModel;
-import database.model.FileTableModel;
 
 @MultipartConfig(fileSizeThreshold=1024*1024, maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
 public class CreateEventPage extends HttpServlet {
@@ -106,7 +106,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("				<div id='thumbnail-container' class='form-group'>");
 		sb.append("					<p><b>Thumbnail</b><span class='requiredInput'>*</span></p>");
 		sb.append("					<div id='thumbnail-container-container'>");
-		sb.append("						<img src='images/crab.jpg' alt='crab' height='100' width='200' id='chosenThumbnail'>");
+		sb.append("						<img src='images/wood.jpeg' alt='crab' height='100' width='200' id='chosenThumbnail'>");
 		sb.append("						<div id='thumbnail-container-buttons'>");
 		sb.append("							<input type='button' class='btn' value='Select' onclick='showDefault()'> or");
 		sb.append("							<input type='file' class='form-control-file' accept='image/*' id='fileUpload' name='thumbnailUpload'>");
@@ -225,11 +225,16 @@ public class CreateEventPage extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			response.sendRedirect("/PotHub/Login");
 		}
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			HttpSession session = request.getSession(false);
+    		String currentIGN = (String)session.getAttribute("username");
+			
 			Database db = new Database(2);
 			EventModel eM = new EventModel();
 			String thumbnailNumberInput = request.getParameter("DefaultNumber");
@@ -286,7 +291,7 @@ public class CreateEventPage extends HttpServlet {
 				fileListArray.add(String.valueOf(db.addPictureWithDupeCheck(fileName, gallaryFileBytes)));
 		    }
 		    eM.setFileListArray(fileListArray);
-		    eM.setiGN("BlackPepper3"); // Temporary IGN (Waiting for Login)
+		    eM.setiGN(currentIGN); // Current IGN
 		    db.insertCreateEvent(eM);
 		    
 		    response.sendRedirect("/MyEvent");

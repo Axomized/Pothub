@@ -19,9 +19,10 @@ public class EventModel {
 	int max_No_People;
 	String guest;
 	String fileList;
+	String status;
 	
 	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Timestamp date, String postalCode, String venue, boolean autoAccept, int max_No_People,
-			String guest, String fileList) {
+			String guest, String fileList, String status) {
 		this.eventID = eventID;
 		this.eventName = eventName;
 		this.iGN = iGN;
@@ -34,6 +35,7 @@ public class EventModel {
 		this.max_No_People = max_No_People;
 		this.guest = guest;
 		this.fileList = fileList;
+		this.status = status;
 	}
 
 	public EventModel() {
@@ -87,6 +89,10 @@ public class EventModel {
 		return fileList;
 	}
 	
+	public String getStatus() {
+		return status;
+	}
+
 	public ArrayList<String> getGuestArray() throws UnsupportedEncodingException {
 		ArrayList<String> als = new ArrayList<String>();
 		if(guest != null) {
@@ -163,6 +169,10 @@ public class EventModel {
 		this.fileList = fileList;
 	}
 	
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 	public void setGuestArray(ArrayList<String> guest) {
 		String line = "";
 		for(String s: guest)

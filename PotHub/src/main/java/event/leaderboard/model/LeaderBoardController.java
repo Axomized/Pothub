@@ -1,16 +1,18 @@
-package event.leaderboard;
+package event.leaderboard.model;
+
+import java.util.ArrayList;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 
 @Controller
-public class GreetingController {
+public class LeaderBoardController {
 
     @MessageMapping("/update")
     @SendTo("/topic/TeaParty")
-    public UpdatingScore updateScore(UserScore message) throws Exception {
-        return new UpdatingScore(message.getUserTo(),message.getScore());
+    public ArrayList<UpdatingScore> updateScore(UserScore message) throws Exception {
+        return UserScore.getUserScore();
     }
 
 }

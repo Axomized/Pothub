@@ -13,20 +13,48 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/DefaultCss.css" />
+		<link rel="stylesheet" type="text/css" href="../css/VideoCamera.css" />
 	</head>
 	<body>
-		<div id="container">
-		    <video autoplay id="video">
-		     
-		    </video>
+		<div id="#wrapper">
+			<div id="top-container" class="row">
+				<div id="top-video-container">
+				    <video id="video" muted></video>
+				    <button type="button" class="btn btn-primary" onclick="stopRecording()">Stop</button>
+				</div>
+				<div id="top-right-container">
+					<div id="top-right-title-container">
+						<p><b> have not scanned.</b></p>
+					</div>
+					<div id="top-right-name-container">
+						<ul>
+							<li>Mathias</li>
+							<li>Mattson</li>
+							<li>Mateen</li>
+							<li>Matthan</li>
+							<li>Matthew</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div id="bottom-container">
+				<p><b>Scanned</b></p>
+				<div id="bottom-scanned-container">
+					<img src="../images/crab.jpg" alt="User's Profile picture" height="50" width="50">
+					<img src="../images/crab.jpg" alt="User's Profile picture" height="50" width="50">
+					<img src="../images/crab.jpg" alt="User's Profile picture" height="50" width="50">
+					<img src="../images/crab.jpg" alt="User's Profile picture" height="50" width="50">
+				</div>
+			</div>
 		</div>
-		<button type="button" class="btn btn-primary" onclick="stopRecording()">Stop</button>
-		<!-- My Own Script -->
-		<script src="../script/VideoCamera.js"></script>
+		
 		<!-- Optional Scripts for Bootstrap -->
-		<script src="https://code.jquery.com/jquery-3.1.1.slim.min.js" integrity="sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n" crossorigin="anonymous"></script>
+		<script src="https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.js" integrity="sha256-pcIHeV2fplzdElupaGGkE0vfUIatGwut2jqr8/paQRU=" crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
+		<!-- My Own Script -->
+		<script src="../script/VideoCamera.js"></script>
 	</body>
 </html>

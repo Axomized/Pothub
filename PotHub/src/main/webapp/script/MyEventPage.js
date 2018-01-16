@@ -11,27 +11,13 @@ function redirectPage(eventName){
 }
 
 function getTime(){
-	$(".time").each(function(){
-		var date = Number($(this).text());
-		var requestedDate = new Date(date);
-		var currentTime = new Date();
-		if(currentTime > requestedDate){
-			$(this).html("Ended");
-		}else{
-			var timeLeft = requestedDate.getTime() - currentTime.getTime();
-			var seconds = parseInt((timeLeft/1000)%60);
-			var minutes = parseInt((timeLeft/(1000*60))%60);
-			var hours = parseInt(timeLeft/(1000*60*60));
-			$(this).html(hours + " Hours " + minutes + " Minutes " + seconds + " Seconds");
-		}
-	});
-	
 	setInterval(function(){ updateTime();}, 1000);
 }
 
-function updateTime(hours, minutes, seconds){
+function updateTime(){
 	$(".time").each(function(){
-		if(!($(this).text() === "Ended")){
+		if($(this).text() === "Ended" || $(this).text() === "Ongoing"){}
+		else{
 			var date = $(this).text(); 
 			var returnString;
 			
@@ -80,7 +66,7 @@ function updateTime(hours, minutes, seconds){
 				if(minutes <= 0){
 					returnString = "0 Hours 0 Minutes " + seconds + " Seconds";
 					if(seconds <= 0){
-						returnString = "Ended";
+						returnString = "Ongoing";
 					}
 				}
 			}else{
@@ -93,7 +79,7 @@ function updateTime(hours, minutes, seconds){
 }
 
 function checkPriviledge(isPriviledged){
-	if(isPriviledged){
+	if(isPriviledged === "true"){
 		window.location.href = '/PotHub/CreateEventPage';
 	}else{
 		$("#popup-container").show();

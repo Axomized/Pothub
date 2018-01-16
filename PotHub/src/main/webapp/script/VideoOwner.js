@@ -57,16 +57,15 @@ function onIce(r) { // 23
 		console.log("Is Mobile...");
 		
 	    constraints = {
-	         audio: true,
+	         audio: false,
 	         video: {
-	        	 width: 420, 
-	        	 height: 380
+	        	 facingMode: "environment"
 	         }
 	    };
 	}else { 
 		console.log("Not Mobile...");
 		
-		constraints = {audio: true, video: { width: 1280, height: 720 } }; 
+		constraints = {audio: false, video: { width: 1280, height: 720 } }; 
 	}
 	navigator.mediaDevices.getUserMedia(constraints)
 	.then(
@@ -81,6 +80,9 @@ function onIce(r) { // 23
 
 function onGetMedia(stream) {	// 73					// Gets stream from line 10
 	var video = document.getElementById("localVideo");	// Get video element from html
+	if(jQuery.browser.mobile){
+		video.controls = true;
+	}
 	video.srcObject = stream;								// Start "streaming" own stream to video element
 	localStream = stream;
 	video.onloadedmetadata = function(e) {

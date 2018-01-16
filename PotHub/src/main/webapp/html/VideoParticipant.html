@@ -1,20 +1,32 @@
 <!DOCTYPE html>
 <html>
 	<head>
+		<meta charset="UTF-8">
+		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
+		<!-- Favicon -->
+		<link rel="icon" href="https://localhost/PotHub/images/crab.gif" type="image/gif">
+		<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
+		<link rel="icon" href="http://localhost:8080/PotHub/images/crab.png?v=2" type="image/x-icon">
+		<!-- Page Title -->
 		<title>Broadcast Testing</title>
+		<!-- Latest compiled and CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
+		<!-- My Style Sheet -->
+		<link rel="stylesheet" type="text/css" href="../css/VideoParticipant.css" />
 	</head>
 	<body>
 		<h1>
 		    The Streamer
 		</h1>
-		<button id="screenShareBtn">Enable Screen Sharing</button>
-		
 		<div id="videoDiv"></div>
 		
-		 <script src="https://cdn.webrtc-experiment.com:443/getScreenId.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js"></script>
 		<script src="https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	  	<!-- My Own Script -->
 		<script src="../script/VideoParticipant.js"></script>
 	</body>
 </html>

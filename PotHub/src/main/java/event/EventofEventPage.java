@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.EventModel;
@@ -44,6 +45,9 @@ public class EventofEventPage extends HttpServlet {
     	try {
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
 	    	
+			//HttpSession session = request.getSession(false);
+    		//String currentIGN = (String)session.getAttribute("username");
+			
 	    	ServletOutputStream out = response.getOutputStream();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<!DOCTYPE html>");

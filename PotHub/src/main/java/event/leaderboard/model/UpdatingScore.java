@@ -1,13 +1,15 @@
-package event.leaderboard;
+package event.leaderboard.model;
+
+import java.math.BigDecimal;
 
 public class UpdatingScore {
     private String userTo;
-    private double score;
+    private BigDecimal score;
 
     public UpdatingScore() {
     }
 
-	public UpdatingScore(String userTo, double score) {
+	public UpdatingScore(String userTo, BigDecimal score) {
 		this.userTo = userTo;
 		this.score = score;
 	}
@@ -16,7 +18,7 @@ public class UpdatingScore {
 		return userTo;
 	}
 
-	public double getScore() {
+	public BigDecimal getScore() {
 		return score;
 	}
 
@@ -24,7 +26,7 @@ public class UpdatingScore {
 		this.userTo = userTo;
 	}
 
-	public void setScore(double score) {
+	public void setScore(BigDecimal score) {
 		this.score = score;
 	}
 }
