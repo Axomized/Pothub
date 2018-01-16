@@ -127,6 +127,7 @@ public class LoginPage extends HttpServlet {
 					session.setAttribute("username", dum.getiGN());
 					response.sendRedirect("Forum");
 			    }
+			    
 			    else
 			    {
 			    	System.out.println("Login fail!");

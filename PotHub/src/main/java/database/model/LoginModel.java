@@ -10,7 +10,12 @@ public class LoginModel {
 		this.password = password;
 		this.salt = salt;
 	}
-
+	
+	//For Registration Page
+	public LoginModel(String email){
+		this.email = email;
+	}
+	
 	public LoginModel() {
 		
 	}

@@ -73,6 +73,12 @@ public class DatabaseUserModel {
 		this.cookingRank = cookingRank;
 		this.points = points;
 	}
+	
+	//For Registration Page
+	public DatabaseUserModel(String email, String iGN){
+		this.email = email;
+		this.iGN = iGN;
+	}
 
 	public String getEmail() {
 		return email;

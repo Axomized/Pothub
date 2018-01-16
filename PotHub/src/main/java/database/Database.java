@@ -206,6 +206,19 @@ public class Database {
 		ppstmt.executeUpdate();
 	}
 	
+	//For Registration Page - Email
+		public LoginModel getEmail(String enteredEmail) throws SQLException {
+			PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM Login WHERE Email = ?;");
+			ppstmt.setString(1, enteredEmail);
+			ResultSet rs = ppstmt.executeQuery();
+			while (rs.next()) {
+				String email = rs.getString("Email");
+				return new LoginModel(email);
+			}
+			
+			return null;
+		}
+	
 	//For admin panel - inserting new food for user's food preferences
 	public void insertNewFood(FoodListModel flm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodList(Food, FoodType) VALUES(?,?);");
