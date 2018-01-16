@@ -334,17 +334,23 @@ public class Database {
 	}
 	
 	//For donation page
-	public void updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+	public boolean updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
 		ppstmt.setString(1, tsm.getTemporaryPIN());
 		ppstmt.setString(2, tsm.getTemporarySalt());
 		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
 		ppstmt.setString(4, tsm.getiGN());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	//For donation page
-	public void insertTempStore(TemporaryStoreModel tsm) throws SQLException {
+	public boolean insertTempStore(TemporaryStoreModel tsm) throws SQLException {
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?,?);");
 		ppstmt.setString(1, tsm.getiGN());
 		ppstmt.setBigDecimal(2, tsm.getTemporaryAmount());
@@ -352,7 +358,11 @@ public class Database {
 		ppstmt.setString(4, tsm.getTemporarySalt());
 		ppstmt.setString(5, tsm.getTemporaryOnBehalf());
 		ppstmt.setTimestamp(6, tsm.getTemporaryTime());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	//For donation page

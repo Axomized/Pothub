@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.math.BigDecimal;
 import java.security.SecureRandom;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -27,6 +29,9 @@ public class Donation extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		String username = (String)session.getAttribute("username");
+		
 		try {
 			Database db = new Database(0);
 			PrintWriter out = response.getWriter();
@@ -55,7 +60,7 @@ public class Donation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>"
 					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -83,7 +88,7 @@ public class Donation extends HttpServlet {
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
 					+ "				<div id='content'>"
-					+ "					<form id='donateForm' autocomplete='off' method='post'>"
+					+ "					<form id='donateForm' method='post' autocomplete='off'>"
 					+ "						<div id='onBehalfDiv'>"
 					+ "							<div id='askDiv'>"
 					+ "								Are you donating on behalf of someone? Check the box if yes, ignore if no."
@@ -198,16 +203,13 @@ public class Donation extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-			String username = (String)request.getAttribute("username");
+			String username = (String)session.getAttribute("username");
 			Database db = new Database(2);
 			TemporaryStoreModel tsm =  new TemporaryStoreModel();
+			TemporaryStoreModel tsmCheck = db.getTempStore(username);
 			SendEmail se = new SendEmail();
 			HashPIN hp = new HashPIN();
 			ValidateCard vc = new ValidateCard();
-			byte[] salt = hp.createSalt();
-			String encodedSalt = hp.getEncodedSalt(salt);
-			String pinNo = tsm.generatePIN();
-			String hashedPIN = hp.getHashedPIN(pinNo, salt);
 			
 			String behalfName = request.getParameter("behalfName");
 			String donateAmt = request.getParameter("donateAmt");
@@ -216,54 +218,120 @@ public class Donation extends HttpServlet {
 			String ccMonth = request.getParameter("selectMonth");
 			String ccYear = request.getParameter("selectYear");
 			String securityCode = request.getParameter("securityCode");
+			byte[] salt = hp.createSalt();
+			String encodedSalt = hp.getEncodedSalt(salt);
+			String pinNo = tsm.generatePIN();
+			String hashedPIN = hp.getHashedPIN(pinNo, salt);
+			Timestamp currentTime = Timestamp.from(Instant.now());
 			String errorMessage = "";
 			
-			if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-				if (behalfName != null && !behalfName.isEmpty()) {
-					if (vc.validateCCNo(ccNumber)) {
-						if (vc.validateCode(ccNumber, securityCode)) {
-							se.sendEmail("dr.que9@gmail.com", pinNo);
-							tsm.setiGN(username);
-							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-							tsm.setTemporaryOnBehalf(behalfName);
-							tsm.setTemporaryPIN(hashedPIN);
-							tsm.setTemporarySalt(encodedSalt);
-							tsm.setTemporaryTime(tsm.getTime5MinsLater());
-							db.insertTempStore(tsm);
-							response.sendRedirect("ConfirmDonation");
-						}
-						else {
-							errorMessage = "Invalid security code";
-						}
-					}
-					else {
-						errorMessage = "Invalid credit card number";
-					}
+			if (tsmCheck != null) {
+				if (currentTime.before(tsmCheck.getTemporaryTime())) {
+					response.sendRedirect("ConfirmDonation");
 				}
 				else {
-					if (vc.validateCCNo(ccNumber)) {
-						if (vc.validateCode(ccNumber, securityCode)) {
-							se.sendEmail("dr.que9@gmail.com", pinNo);
-							tsm.setiGN(username);
-							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-							tsm.setTemporaryOnBehalf(behalfName);
-							tsm.setTemporaryPIN(hashedPIN);
-							tsm.setTemporarySalt(encodedSalt);
-							tsm.setTemporaryTime(tsm.getTime5MinsLater());
-							db.insertTempStore(tsm);
-							response.sendRedirect("ConfirmDonation");
+					db.deleteFromTempStore(username);
+					if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
+						if (behalfName != null && !behalfName.isEmpty()) {
+							if (vc.validateCCNo(ccNumber)) {
+								if (vc.validateCode(ccNumber, securityCode)) {
+									tsm.setiGN(username);
+									tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+									tsm.setTemporaryOnBehalf(behalfName);
+									tsm.setTemporaryPIN(hashedPIN);
+									tsm.setTemporarySalt(encodedSalt);
+									tsm.setTemporaryTime(tsm.getTime5MinsLater());
+									if (db.insertTempStore(tsm)) {
+										se.sendEmail("dr.que9@gmail.com", pinNo);
+									}
+									response.sendRedirect("ConfirmDonation");
+								}
+								else {
+									errorMessage = "Invalid security code";
+								}
+							}
+							else {
+								errorMessage = "Invalid credit card number";
+							}
 						}
 						else {
-							errorMessage = "Invalid security code";
+							if (vc.validateCCNo(ccNumber)) {
+								if (vc.validateCode(ccNumber, securityCode)) {
+									tsm.setiGN(username);
+									tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+									tsm.setTemporaryOnBehalf(behalfName);
+									tsm.setTemporaryPIN(hashedPIN);
+									tsm.setTemporarySalt(encodedSalt);
+									tsm.setTemporaryTime(tsm.getTime5MinsLater());
+									if (db.insertTempStore(tsm)) {
+										se.sendEmail("dr.que9@gmail.com", pinNo);
+									}
+									response.sendRedirect("ConfirmDonation");
+								}
+								else {
+									errorMessage = "Invalid security code";
+								}
+							}
+							else {
+								errorMessage = "Invalid credit card number";
+							}
 						}
 					}
 					else {
-						errorMessage = "Invalid credit card number";
+						errorMessage = "Please fill in all required inputs";
 					}
 				}
 			}
 			else {
-				errorMessage = "Please fill in all required inputs";
+				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
+					if (behalfName != null && !behalfName.isEmpty()) {
+						if (vc.validateCCNo(ccNumber)) {
+							if (vc.validateCode(ccNumber, securityCode)) {
+								tsm.setiGN(username);
+								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+								tsm.setTemporaryOnBehalf(behalfName);
+								tsm.setTemporaryPIN(hashedPIN);
+								tsm.setTemporarySalt(encodedSalt);
+								tsm.setTemporaryTime(tsm.getTime5MinsLater());
+								if (db.insertTempStore(tsm)) {
+									se.sendEmail("dr.que9@gmail.com", pinNo);
+								}
+								response.sendRedirect("ConfirmDonation");
+							}
+							else {
+								errorMessage = "Invalid security code";
+							}
+						}
+						else {
+							errorMessage = "Invalid credit card number";
+						}
+					}
+					else {
+						if (vc.validateCCNo(ccNumber)) {
+							if (vc.validateCode(ccNumber, securityCode)) {
+								tsm.setiGN(username);
+								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+								tsm.setTemporaryOnBehalf(behalfName);
+								tsm.setTemporaryPIN(hashedPIN);
+								tsm.setTemporarySalt(encodedSalt);
+								tsm.setTemporaryTime(tsm.getTime5MinsLater());
+								if (db.insertTempStore(tsm)) {
+									se.sendEmail("dr.que9@gmail.com", pinNo);
+								}
+								response.sendRedirect("ConfirmDonation");
+							}
+							else {
+								errorMessage = "Invalid security code";
+							}
+						}
+						else {
+							errorMessage = "Invalid credit card number";
+						}
+					}
+				}
+				else {
+					errorMessage = "Please fill in all required inputs";
+				}
 			}
 			
 			PrintWriter out = response.getWriter();

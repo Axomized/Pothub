@@ -2,11 +2,17 @@ package profile;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import database.Database;
+import database.model.FoodPreferences;
 
 public class AddFoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -424,7 +430,40 @@ public class AddFoodPref extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		try {
+			//HttpSession session = request.getSession(false);
+			//String username = (String)session.getAttribute("username");
+			Database db = new Database(2);
+			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref("MrKrabs");
+			ArrayList<String> foodList = new ArrayList<String>();
+			for (FoodPreferences fp : foodPrefList) {
+				foodList.add(fp.getFoodPref());
+			}
+			boolean contains = false;
+			String[] foodChosenArray = request.getParameterValues("foodChosen");
+			if (foodChosenArray != null && foodChosenArray.length != 0) {
+				for (int i = 0; i < foodChosenArray.length; i++) {
+					System.out.println("Food chosen: " + foodChosenArray[i]);
+					for (int j = 0; j < foodList.size(); j++) {
+						if (foodChosenArray[i].equals(foodList.get(j))) {
+							contains = true;
+							break;
+						}
+					}
+					if (!contains) {
+						System.out.println("New food chosen: " + foodChosenArray[i]);
+					}
+				}
+			}
+			else {
+				System.out.println("No food chosen");
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
