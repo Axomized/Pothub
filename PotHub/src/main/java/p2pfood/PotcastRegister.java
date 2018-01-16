@@ -2,21 +2,33 @@ package p2pfood;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.nio.file.Paths;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
-
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+
+import org.apache.commons.compress.utils.IOUtils;
 
 import database.Database;
+import database.model.PotcastModel;
 
 /**
  * Servlet implementation class Forum
  */
 @WebServlet("/p2preg")
+@MultipartConfig
 public class PotcastRegister extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -116,9 +128,12 @@ public class PotcastRegister extends HttpServlet {
 			if(db.getPrivilegeForIGN(username)){
 				permissionCounter=1;
 			}
-			if((db.getNumberOfPotcastsFrom(username))<1+permissionCounter){
+			if(db.getNumberOfPotcastsFrom(username)<1+permissionCounter){
+				System.out.println(permissionCounter);
+				System.out.println(db.getNumberOfPotcastsFrom(username));
 				postPermission=true;
 			}
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -127,9 +142,9 @@ public class PotcastRegister extends HttpServlet {
 		if(postPermission){
 				pw.append( "<div id='wrapper'>" 
 					+ "<div id='secondHeader'>" 
-					+ "<h2>Start a PotCast</h2>" 
+					+ "<h2>Start a Potcast</h2>" 
 				+ "</div>"
-				+ "<form method='post'>"
+				+ "<form method='post' method='post' enctype='multipart/form-data'>"
 				+ "<div id='form'>" 
 				+ "<div class='formElement'>" 
 				+ "<p>Food title</p>"
@@ -149,9 +164,14 @@ public class PotcastRegister extends HttpServlet {
 				
 				+ "<div class='formElement'>" 
 				+ "<p>Bid closing time</p>" 
-				+ "<input type='time' class='veryShort' name='bidClosingTime' required></input>"
+				+ "<input type='datetime-local' name='bidStopTime' required></input>"
 				+ "<p>Collection time</p>" 
-				+ "<input type='time' class='veryShort' name='pickupTime' required></input>" 
+				+ "<input type='datetime-local' name='pickupTime' required></input>" 
+				+ "</div>"
+				
+				+ "<div class='formElement'>"
+				+ "<p>Picture</p>"
+				+ "<input type='file' name='picture' accept='image/*' required></input>"
 				+ "</div>"
 				
 				+ "<div class='formElement'>"
@@ -186,8 +206,63 @@ public class PotcastRegister extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		HttpSession session = request.getSession(false);
+		if(session==null){
+			response.sendRedirect("Login");
+		}
+		Database db;
+		try {
+			db = new Database(2);
+
+		//Defaults
+		PotcastModel pcm = new PotcastModel();
+		if(request.getParameter("title")!=null
+			&&request.getParameter("description")!=null
+			&&request.getParameter("portions")!=null
+			&&request.getParameter("ppp")!=null
+			&&request.getParameter("bidStopTime")!=null
+			&&request.getParameter("pickupTime")!=null){
+			
+			pcm.setiGN((String)session.getAttribute("username"));
+			pcm.setTitle(request.getParameter("title"));
+			pcm.setDescription(request.getParameter("description"));
+			pcm.setMaxBids(Integer.parseInt(request.getParameter("portions")));
+			pcm.setMinBid(Integer.parseInt(request.getParameter("ppp")));
+			
+			pcm.setStartingCR(db.getCookingRankFrom((String)session.getAttribute("username")));
+
+			SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
+
+			//Timestamps
+			try {
+				Timestamp ts1 = new Timestamp(f.parse(request.getParameter("bidStopTime")).getTime());
+				Timestamp ts2 = new Timestamp(f.parse(request.getParameter("pickupTime")).getTime());
+				
+				pcm.setBidStopTime(ts1);
+				pcm.setPickupTime(ts2);
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+			
+			//Image upload
+			Part filePart = request.getPart("picture");
+			
+			String fileName = encodeString(Paths.get(filePart.getSubmittedFileName()).getFileName().toString());
+			byte[] thumbnailBytes = IOUtils.toByteArray(filePart.getInputStream());
+			
+			pcm.setPicture(db.addPictureWithDupeCheck(fileName, thumbnailBytes));
+			
+			//TODO: Add sanitizer for description
+			System.out.println(pcm);
+			db.addPotcast(pcm);
+		}
+		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		}
 		doGet(request, response);
 	}
 
+	private String encodeString(String line) throws UnsupportedEncodingException {
+		return URLEncoder.encode(line, "UTF-8");
+	}
 }

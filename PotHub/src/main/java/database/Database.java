@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
-import adminSearch.SearchSanitizer;
 import database.model.AppealModel;
 import database.model.BansModel;
 import database.model.CommentModel;
@@ -238,6 +236,17 @@ public class Database {
 			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
 		return null;
+	}
+	
+	public int getCookingRankFrom(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT CookingRank FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, name);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()){
+			return rs.getInt("CookingRank");
+		}
+		return 0;
 	}
 	
 	public void updateRank(String ign, int permissionLevel){
@@ -463,12 +472,16 @@ public class Database {
 	
 	//Count Potcasts
 	public int getNumberOfPotcastsFrom(String ign) throws SQLException{
-	    Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	            ResultSet.CONCUR_READ_ONLY);
-	        ResultSet r = s
-	            .executeQuery("SELECT Count(*) FROM Potcast WHERE IGN = '"+SearchSanitizer.sanitise(ign)+"' AND PickupTime > '"+new Timestamp(System.currentTimeMillis()).toString()+"'");
-	        r.last();
-	        return r.getRow();
+	    PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE IGN = ? AND PickupTime > ?");
+	    ps.setString(1, ign);
+	    ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+	    
+	    ResultSet rs = ps.executeQuery();
+	    int toRet=0;
+	    while(rs.next()){
+	    	toRet++;
+	    }
+	    return toRet;
 	}
 	
 	//Potcast Bids
@@ -488,6 +501,22 @@ public class Database {
 		}
 		
 		return pbms;
+	}
+	
+	//Potcast Add
+	public void addPotcast(PotcastModel pcm) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO Potcast (IGN, Title, Description, MaxBids, MinBid, BidStopTime, PickupTime, StartingCR, Picture) VALUES (?,?,?,?,?,?,?,?,?)");
+		ps.setString(1, pcm.getiGN());
+		ps.setString(2, pcm.getTitle());
+		ps.setString(3, pcm.getDescription());
+		ps.setInt(4, pcm.getMaxBids());
+		ps.setInt(5, pcm.getMinBid());
+		ps.setTimestamp(6, pcm.getBidStopTime());
+		ps.setTimestamp(7, pcm.getPickupTime());
+		ps.setInt(8, pcm.getStartingCR());
+		ps.setInt(9, pcm.getPicture());
+		
+		ps.executeUpdate();
 	}
 	
 	//Appeal
