@@ -683,11 +683,12 @@ public class Database {
 	}
 	
 	public void addComment(CommentModel c) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Comment(date, iGN, comment1, description) VALUES (?,?,?,?); ");
-		ppstmt.setDate(1, c.getDate());
-		ppstmt.setString(2, c.getiGN());
-		ppstmt.setInt(3, c.getComment1());
-		ppstmt.setString(4, c.getDescription());
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Comment(postID, date, iGN, comment1, description) VALUES (?,?,?,?,?); ");
+		ppstmt.setInt(1, c.getPostID());
+		ppstmt.setDate(2, c.getDate());
+		ppstmt.setString(3, c.getiGN());
+		ppstmt.setInt(4, c.getComment1());
+		ppstmt.setString(5, c.getDescription());
 	
 		executeUpdate(ppstmt);
 	}
@@ -1093,7 +1094,7 @@ public class Database {
 	
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet("SELECT * FROM ForumPost");
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID desc");
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String thread = rs.getString("Thread");

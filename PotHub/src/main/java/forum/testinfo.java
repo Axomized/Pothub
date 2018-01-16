@@ -68,6 +68,7 @@ public class testinfo extends HttpServlet {
 		try {
 			Database ttttt = new Database(2);
 			CommentModel cm = new CommentModel();
+			cm.setPostID(1);
 			cm.setComment1(10);
 			cm.setDate(date1);
 			cm.setDescription(haha);

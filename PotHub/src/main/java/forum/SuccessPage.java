@@ -38,7 +38,7 @@ public class SuccessPage extends HttpServlet {
 		String forumT = request.getParameter("Forumtitle");
 		String forumD = request.getParameter("Forumdescription");
 		String file = request.getParameter("file");
-		int picc = Integer.parseInt(request.getParameter("pic"));
+		//int picc = Integer.parseInt(request.getParameter("pic"));
 		String url = request.getParameter("link");
 		String words = request.getParameter("words");
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
