@@ -1,6 +1,10 @@
 package forum;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.sql.Date;
 import java.sql.SQLException;
@@ -17,6 +21,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.CommentModel;
+import database.model.FileTableModel;
 import database.model.ForumPostModel;
 
 /**
@@ -40,13 +45,16 @@ public class testinfo extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		PrintWriter out = response.getWriter();
-		out.println(
-		"<html>"
-		+ "<p> hello </p>"
-		+ "						<form action='testinfo' method='POST'>"	
-		+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
-		+"						<button type='submit' id='postBtn' cursor:pointer;' class='btn'>Post/Submit</button>"
-		+ "						</form>"		
+		out.println(""
+				+ "<html>"
+				+ "<form action='testinfo' method='post'>"
+				+ "<input type='file' name='datafile'>"
+				+ "</input>"
+				+ "<input type='submit' value='Click here to submit'>"
+				+ "</input>"
+				+ "</form>"
+				+ "</html>"
+				
 				);
 		
 		
@@ -58,29 +66,47 @@ public class testinfo extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		String haha = request.getParameter("rtor");
-		java.sql.Date date1 = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		out.println(
-		"<html>"
-		+ "<p> uploading into server </p>"						
-				);
+		String paths = request.getParameter("datafile");
+		File f = new File(paths);
+		String realpath = f.getAbsolutePath();
+		File ff = new File(realpath);
+		System.out.println(realpath);
+		FileTableModel ft = new FileTableModel();
+		/*
+		 byte[] b = new byte[(int) f.length()];
+         try {
+               FileInputStream fileInputStream = new FileInputStream(f);
+               fileInputStream.read(b);
+               for (int i = 0; i < b.length; i++) {
+                           System.out.print((char)b[i]);
+                }
+          } catch (FileNotFoundException e) {
+                      System.out.println("File Not Found.");
+                      e.printStackTrace();
+          }
+          catch (IOException e1) {
+                   System.out.println("Error Reading The File.");
+                    e1.printStackTrace();
+          }
+          */
 		
-		try {
-			Database ttttt = new Database(2);
-			CommentModel cm = new CommentModel();
-			cm.setPostID(1);
-			cm.setComment1(10);
-			cm.setDate(date1);
-			cm.setDescription(haha);
-			cm.setiGN("GordonRamsey");
-			ttttt.addComment(cm);
-			out.println("<html>Success</html>");
+		//ft.setData(b);
+		//ft.setFileName(f.getName());
+		//ft.setFileSize(f.length());
 		
-			
+		System.out.println(ff.length());
+		System.out.println(f.length());
+		System.out.println(ff.getName());
+		/*try {
+			Database db = new Database(2);
+			db.insertFileTable(ft);
+			out.println(""
+					+ "<p>Success</p>");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		*/
 	}
 }
 

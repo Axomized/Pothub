@@ -25,6 +25,10 @@ public class FileTableModel {
 		return data;
 	}
 
+	public FileTableModel() {
+		super();
+	}
+
 	public double getFileSize() {
 		return fileSize;
 	}

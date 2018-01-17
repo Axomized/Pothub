@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.CommentModel;
+import database.model.ForumPostModel;
 
 /**
  * Servlet implementation class discussion
@@ -34,6 +35,7 @@ public class discussion extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		String ForumID = request.getParameter("ForumPostID");
+		int ddd = Integer.parseInt(ForumID);
 		System.out.println(ForumID);
 		out.println(
 				"<!DOCTYPE html>"
@@ -81,16 +83,41 @@ public class discussion extends HttpServlet {
 						+ "		</div>"
 						+ "		<div id='wrapper'>"
 						+ "			<div id='content-wrapper'>"
-						+ "				<div id='content' style='width:150%;'>"
-						+ "					<div id='title111'>"
+						+ "				<div id='content' style='width:150%;'>");
+						
+						
+						
+						
+						
+							try {
+								Database dbms = new Database(2);
+								ArrayList<ForumPostModel> fa = dbms.getForumModel();
+								for(ForumPostModel qw: fa){
+									if(qw.getPostID() == ddd) {
+								
+						out.println(
+						  "					<div id='title111'>"
 						+ "						<div class='iconpic'><img src='images/MAC.png' height='80' width='80'/></div>"
 						+ "						<div class='text1'>"
-						+ "							<div id='title'><h2 style='color:blue'>Why is MacDonaldssss Healthy</h2></div>"
-						+ "							<div id='name'>Submitted by: Chou Tzu Yu</div>"
-						+ "							<div id='date'>5 hours ago</div>"
+						+ "							<div id='title'><h2 style='color:blue'>" + qw.getThread() +"</h2></div>"
+						+ "							<div id='name'>Submitted by:" + qw.getiGN() + "</div>"
+						+ "							<div id='date'>" + qw.getDate() + "</div>"
 						+ "						</div>"
 						+ "					</div>"
-						+ "					<div>"
+						);
+									}
+								}
+								}
+							 catch (SQLException e) {
+								e.printStackTrace();
+							} catch (ClassNotFoundException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						
+						
+						out.println(
+						  "					<div>"
 						+ "						<form action='discussion' method='POST'>"	
 						+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
 						+"						<button type='submit' id='postBtn' cursor:pointer;' class='btn'>Post/Submit</button>\""
@@ -107,6 +134,7 @@ public class discussion extends HttpServlet {
 							Database ttttt = new Database(2);
 							ArrayList<CommentModel> cc = ttttt.getCommentModel();
 							for(CommentModel d:cc) {
+								if(d.getPostID() == ddd)
 						
 						out.println(
 						
