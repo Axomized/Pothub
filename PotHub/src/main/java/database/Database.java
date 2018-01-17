@@ -162,6 +162,31 @@ public class Database {
 		return false;
 	}
 	
+	public DatabaseUserModel getDatabaseUserByIGN(String ign) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM DatabaseUser WHERE IGN = ?");
+		ps.setString(1, ign);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String email 				= rs.getString("Email");
+			String iGN					= rs.getString("IGN");
+			String contact_No			= rs.getString("Contact_No");
+			char gender					= rs.getString("Gender").charAt(0);
+			String bio					= rs.getString("Bio");
+			String address				= rs.getString("Address");
+			String unitNo				= rs.getString("UnitNo");
+			int profilePic				= rs.getInt("ProfilePic");
+			Date lastLogin				= rs.getDate("LastLogin");
+			Date joinDate				= rs.getDate("JoinDate");
+			int cookingRank				= rs.getInt("CookingRank");
+			int points					= rs.getInt("Points");
+			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
+			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
+			int userPermission			= rs.getInt("UserPermission");
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission);
+		}
+		return null;
+	}
+	
 	//For Login Page
 	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
@@ -491,6 +516,28 @@ public class Database {
 					pickupTime, minBid, startingCR, picture));
 		}
 		return potcasts;
+	}
+	
+	public PotcastModel getPotcastByID(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE potcastID = ?");
+		ps.setInt(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String iGN			= rs.getString("iGN");
+			int potcastID		= rs.getInt("potcastID");
+			String title 		= rs.getString("title");
+			String description	= rs.getString("description");
+			int maxBids			= rs.getInt("maxBids");
+			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
+			int minBid			= rs.getInt("minBid");
+			int startingCR		= rs.getInt("startingCR");
+			int picture 		= rs.getInt("picture");
+			return(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
+					pickupTime, minBid, startingCR, picture));
+		}
+		return null;
 	}
 	
 	//Count Potcasts

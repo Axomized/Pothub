@@ -150,7 +150,7 @@ public class PotcastList extends HttpServlet {
 			int counter3 = 0;
 			for (PotcastModel ap : top3Potcasts) {
 
-				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>" + ap.getTitle() + "</div>");
@@ -194,7 +194,7 @@ public class PotcastList extends HttpServlet {
 			ArrayList<String> distances = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
 			int counter = 0;
 			for (PotcastModel ap : activePotcasts) {
-				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>" + ap.getTitle() + "</div>");
