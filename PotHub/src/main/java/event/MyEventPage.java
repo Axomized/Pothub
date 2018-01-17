@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.EventModel;
@@ -54,7 +56,7 @@ public class MyEventPage extends HttpServlet {
 		sb.append("		<!-- Latest compiled and CSS -->");
 		sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 		sb.append("		<!-- My Own Script -->");
-		sb.append("		<script src='script/MyEventPage.min.js' defer></script>");
+		sb.append("		<script src='script/MyEventPage.js' defer></script>");
 		sb.append("		<!-- My Style Sheet -->");
 		sb.append("		<link rel='stylesheet' type='text/css' href='css/MyEventPage.css' />");
 		sb.append("	</head>");
@@ -120,25 +122,36 @@ public class MyEventPage extends HttpServlet {
 		
 		ArrayList<EventModel> eMAL;
 		try {
+			HttpSession session = request.getSession(false);
+    		String currentIGN = (String)session.getAttribute("username");
+    		
 			eMAL = db.getEventModelForMyEventPage();
 			
 			for(EventModel eM:eMAL) {
 				String eventName = eM.getEventName();
 				String[] parts = decodeString(eM.getVenue()).split("\\`");
 				
-				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(" + db.getUserPriviledge(eM.getiGN()) + ")'>Create Event</button>");
+				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(\"" + db.getUserPriviledge(eM.getiGN()) + "\")'>Create Event</button>");
 				sb.append("			<div id='content-container'>");
 				sb.append("		<div class='content'>");
 				sb.append("			<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='crab picture'>");
 				sb.append("			<div class='row front-container'>");
 				sb.append("				<div class='title'>");
 				sb.append("					<div class='hostedOrNot'>");
-				sb.append("						<p><b>" + hostOrNot(eM.getiGN(), "Blackpepper3")+ "</b></p>");
+				sb.append("						<p><b>" + hostOrNot(eM.getiGN(), currentIGN)+ "</b></p>");
 				sb.append("					</div>");
 				sb.append("					<p>" + decodeString(eM.getEventName()) + "</p>");
 				sb.append("				</div>");
 				sb.append("				<div class='timeleft'>");
-				sb.append("					<p class='time'>" + eM.getDate().getTime() + "</p>");
+				
+				if(eM.getStatus().equals("E")) {
+					System.out.println(eM.getStatus());
+					sb.append("				<p class='time'>Ended</p>");
+				}else{
+					System.out.println(eM.getStatus());
+					sb.append("				<p class='time'>" + getRemaining(eM.getDate()) + "</p>");
+				}
+				
 				sb.append("				</div>");
 				sb.append("			</div>");
 				sb.append("			<div class='row back-container' onclick='redirectPage(\"" + encodeString(eventName) + "\")'>");
@@ -182,6 +195,8 @@ public class MyEventPage extends HttpServlet {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
+		} catch (NullPointerException e) {
+			response.sendRedirect("/PotHub/Login");
 		}
 		
 		sb.append("			</div>");
@@ -215,6 +230,22 @@ public class MyEventPage extends HttpServlet {
 			return "Hosted";
 		}else {
 			return "";
+		}
+	}
+	
+	private String getRemaining(Timestamp time) {
+		Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+		if(currentTime.after(time)) {
+			return "Ongoing";
+		}else {
+			long remaining = time.getTime() - currentTime.getTime();
+			
+			int seconds = Math.toIntExact((remaining/1000) % 60);
+			int minutes = Math.toIntExact((remaining/(1000*60))%60);
+			int hours = Math.toIntExact(remaining/(1000*60*60));
+			
+			String line = hours + " Hours " + minutes + " Minutes " + seconds + " Seconds";
+			return line;
 		}
 	}
 	

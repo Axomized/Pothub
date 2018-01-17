@@ -14,6 +14,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.EventModel;
@@ -136,6 +137,13 @@ public class EventPage extends HttpServlet {
 		out.write(header);
 		try {
 			for(EventModel eM:eMAL) {
+				//HttpSession session = request.getSession(false);
+	    		//String currentIGN = (String)session.getAttribute("username");
+	    		
+	    		if(eM.getStatus().equals("E")) {
+	    			continue;
+	    		}
+	    		
 				int eventID = eM.getEventID();
 				String iGN = eM.getiGN();
 				String[] parts = decodeString(eM.getVenue()).split("\\`");

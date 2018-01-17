@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import database.Database;
 import database.PBKDF2;
 import database.model.DatabaseUserModel;
+import database.model.LoginModel;
 
 /**
  * Servlet implementation class Registration2
@@ -102,103 +103,127 @@ public class Registration extends HttpServlet {
 		String contact = request.getParameter("contact");
 		String address = request.getParameter("address");
 		String unitno = request.getParameter("unitno");
-		String gender = request.getParameter("gender");
+		String gender = request.getParameter("gender");		
+		
+		
+		try 
+		{
+			Database db1 = new Database(0);
+			LoginModel lm = db1.getEmail(email);
+		
+		
+			if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
+			{	
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please enter your email address in the format someone@example.com.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+	
+			else if(lm.getEmail().equals(email)){
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Email already exists.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+		
+			else if(password.length() == 0 ||
+					password.length() < 7 ||
+					!password.matches(".*[A-Z].*") || //checks if password has upper case letter
+					!password.matches(".*[a-z].*") || //checks if password has lower case letter
+					!password.matches(".*\\d.*") ||  //checks if password has numbers
+					!password.matches("[a-zA-Z0-9 ]*") || //checks if password has special characters
+					password.contains(" ")) //checks if password contains spaces
+			{
+			
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Password must contain at least 8 characters and one of each of the following: uppercase letter, lowercase letter, number.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+		
+			else if(!confirmPassword.equals(password.toString()))
+			{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please enter the same exact password twice.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+			
+			else if(name.length() == 0)
+			{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please enter your name.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+			
+			else if(contact.length() != 8 ||
+					!contact.matches("[0-9]+")) //checks if number contains all numbers only
+			{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please enter a valid contact number.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+			
+			else if(address.length() != 6 ||
+					!address.matches("[0-9]+"))
+			{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Invalid postal code.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+			
+			else if(unitno.length() == 0)
+			{
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Please enter your unit number.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
 						
-		if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please enter your email address in the format someone@example.com.');");
-			out.println("</script>");
-		}
-			
-		
-		else if(password.length() == 0 ||
-				password.length() < 7 ||
-				!password.matches(".*[A-Z].*") || //checks if password has upper case letter
-				!password.matches(".*[a-z].*") || //checks if password has lower case letter
-				!password.matches(".*\\d.*") ||  //checks if password has numbers
-				!password.matches("[a-zA-Z0-9 ]*") || //checks if password has special characters
-				password.contains(" ")) //checks if password contains spaces
-		{
-			
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Password must contain at least 8 characters and one of each of the following: uppercase letter, lowercase letter, number.');");
-			out.println("</script>");
-		}
-		
-		else if(!confirmPassword.equals(password.toString()))
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please enter the same exact password twice.');");
-			out.println("</script>");
-		}
-		
-		else if(name.length() == 0)
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please enter your name.');");
-			out.println("</script>");
-		}
-		
-		else if(contact.length() != 8 ||
-				!contact.matches("[0-9]+")) //checks if number contains all numbers only
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please enter a valid contact number.');");
-			out.println("</script>");
-		}
-		
-		else if(address.length() != 6 ||
-				!address.matches("[0-9]+"))
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Invalid postal code.');");
-			out.println("</script>");
-		}
-		
-		else if(unitno.length() == 0)
-		{
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('Please enter your unit number.');");
-			out.println("</script>");
-		}
-					
-		else{
-			
-			try 
-			{				
-				dum.setEmail(email);
-				dum.setiGN(name);
-				dum.setContact_No(contact);
-				dum.setAddress(address);
-				dum.setUnitNo(unitno);
-				dum.setGender(gender.charAt(0));	
+			else{
 				
-				PBKDF2.createHash(password, email);
-
-								
-			} 
-			catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
-			{
-				e.printStackTrace();
+				try 
+				{				
+					dum.setEmail(email);
+					dum.setiGN(name);
+					dum.setContact_No(contact);
+					dum.setAddress(address);
+					dum.setUnitNo(unitno);
+					dum.setGender(gender.charAt(0));	
+					
+					PBKDF2.createHash(password, email);
+	
+									
+				} 
+				catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
+				{
+					e.printStackTrace();
+				}
+				
+				try 
+				{
+					Database db = new Database(1);
+					db.insertRegistration(dum);
+				}
+				catch (ClassNotFoundException | SQLException e)
+				{
+					e.printStackTrace();
+				}
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('You have successfully registered!');");
+				out.println("</script>");
+				LoginPage lp = new LoginPage();
+				lp.doGet(request, response);
 			}
 			
-			try 
-			{
-				Database db = new Database(1);
-				db.insertRegistration(dum);
-			}
-			catch (ClassNotFoundException | SQLException e)
-			{
-				e.printStackTrace();
-			}
-			out.println("<script type=\"text/javascript\">");
-			out.println("alert('You have successfully registered!');");
-			out.println("</script>");
-			LoginPage lp = new LoginPage();
-			lp.doGet(request, response);
 		}
-			
+		catch (ClassNotFoundException | SQLException e)
+		{
+			e.printStackTrace();
+		}
 	}
-
 }

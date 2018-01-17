@@ -1,24 +1,12 @@
 var stompClient = null;
 
-function setConnected(connected) {
-    $("#connect").prop("disabled", connected);
-    $("#disconnect").prop("disabled", !connected);
-    if (connected) {
-        $("#conversation").show();
-    }
-    else {
-        $("#conversation").hide();
-    }
-    $("#greetings").html("");
-}
-
 function connect() {
-    var socket = new SockJS('/gs-guide-websocket');
+    var socket = new SockJS('/ARandomName');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
         setConnected(true);
         console.log('Connected: ' + frame);
-        stompClient.subscribe('/topic/greetings', function (greeting) {
+        stompClient.subscribe('/topic/update', function (greeting) {
             showGreeting(JSON.parse(greeting.body).content);
         });
     });
@@ -36,16 +24,38 @@ function sendName() {
     stompClient.send("/app/hello", {}, JSON.stringify({'name': $("#name").val()}));
 }
 
-function showGreeting(message) {
-    $("#greetings").append("<tr><td>" + message + "</td></tr>");
-}
-
-$(function () {
-    $("form").on('submit', function (e) {
-        e.preventDefault();
-    });
-    $( "#connect" ).click(function() { connect(); });
-    $( "#disconnect" ).click(function() { disconnect(); });
-    $( "#send" ).click(function() { sendName(); });
+$("#starNum").change(function(){
+	var starYellow = document.getElementById("starYellowBackground");
+	var value = $(this).val();
+	var width = 0;
+	switch(value){
+		case (value >= 4):
+			width += 2;
+		case (value >= 3):
+			width += 2;
+		case (value >= 2):
+			width += 2;
+		case (value >= 1):
+			width += 2;
+		case (value > 0):
+			width += 9;
+			width += (7.5 * value);
+			break;
+	}
+	starYellow.width = width;
+	alert("Entered");
 });
 
+$("#voteBtn").click(function(){
+	alert("hello");
+});
+
+
+//Profile
+function showProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "block";
+}
+
+function hideProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "none";
+}

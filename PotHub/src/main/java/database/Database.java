@@ -12,7 +12,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.sql.Timestamp;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -21,7 +20,6 @@ import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
-import adminSearch.SearchSanitizer;
 import database.model.AppealModel;
 import database.model.BansModel;
 import database.model.CommentModel;
@@ -208,6 +206,19 @@ public class Database {
 		ppstmt.executeUpdate();
 	}
 	
+	//For Registration Page - Email
+		public LoginModel getEmail(String enteredEmail) throws SQLException {
+			PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM Login WHERE Email = ?;");
+			ppstmt.setString(1, enteredEmail);
+			ResultSet rs = ppstmt.executeQuery();
+			while (rs.next()) {
+				String email = rs.getString("Email");
+				return new LoginModel(email);
+			}
+			
+			return null;
+		}
+	
 	//For admin panel - inserting new food for user's food preferences
 	public void insertNewFood(FoodListModel flm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodList(Food, FoodType) VALUES(?,?);");
@@ -238,6 +249,17 @@ public class Database {
 			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
 		return null;
+	}
+	
+	public int getCookingRankFrom(String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT CookingRank FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, name);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()){
+			return rs.getInt("CookingRank");
+		}
+		return 0;
 	}
 	
 	public void updateRank(String ign, int permissionLevel){
@@ -312,17 +334,23 @@ public class Database {
 	}
 	
 	//For donation page
-	public void updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+	public boolean updateTempStore(TemporaryStoreModel tsm) throws SQLException {
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
 		ppstmt.setString(1, tsm.getTemporaryPIN());
 		ppstmt.setString(2, tsm.getTemporarySalt());
 		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
 		ppstmt.setString(4, tsm.getiGN());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	//For donation page
-	public void insertTempStore(TemporaryStoreModel tsm) throws SQLException {
+	public boolean insertTempStore(TemporaryStoreModel tsm) throws SQLException {
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO TemporaryStore(IGN, TemporaryAmount, TemporaryPIN, TemporarySalt, TemporaryOnBehalf, TemporaryTime) VALUES(?,?,?,?,?,?);");
 		ppstmt.setString(1, tsm.getiGN());
 		ppstmt.setBigDecimal(2, tsm.getTemporaryAmount());
@@ -330,7 +358,11 @@ public class Database {
 		ppstmt.setString(4, tsm.getTemporarySalt());
 		ppstmt.setString(5, tsm.getTemporaryOnBehalf());
 		ppstmt.setTimestamp(6, tsm.getTemporaryTime());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	//For donation page
@@ -463,12 +495,16 @@ public class Database {
 	
 	//Count Potcasts
 	public int getNumberOfPotcastsFrom(String ign) throws SQLException{
-	    Statement s = conn.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
-	            ResultSet.CONCUR_READ_ONLY);
-	        ResultSet r = s
-	            .executeQuery("SELECT Count(*) FROM Potcast WHERE IGN = '"+SearchSanitizer.sanitise(ign)+"' AND PickupTime > '"+new Timestamp(System.currentTimeMillis()).toString()+"'");
-	        r.last();
-	        return r.getRow();
+	    PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE IGN = ? AND PickupTime > ?");
+	    ps.setString(1, ign);
+	    ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+	    
+	    ResultSet rs = ps.executeQuery();
+	    int toRet=0;
+	    while(rs.next()){
+	    	toRet++;
+	    }
+	    return toRet;
 	}
 	
 	//Potcast Bids
@@ -488,6 +524,22 @@ public class Database {
 		}
 		
 		return pbms;
+	}
+	
+	//Potcast Add
+	public void addPotcast(PotcastModel pcm) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO Potcast (IGN, Title, Description, MaxBids, MinBid, BidStopTime, PickupTime, StartingCR, Picture) VALUES (?,?,?,?,?,?,?,?,?)");
+		ps.setString(1, pcm.getiGN());
+		ps.setString(2, pcm.getTitle());
+		ps.setString(3, pcm.getDescription());
+		ps.setInt(4, pcm.getMaxBids());
+		ps.setInt(5, pcm.getMinBid());
+		ps.setTimestamp(6, pcm.getBidStopTime());
+		ps.setTimestamp(7, pcm.getPickupTime());
+		ps.setInt(8, pcm.getStartingCR());
+		ps.setInt(9, pcm.getPicture());
+		
+		ps.executeUpdate();
 	}
 	
 	//Appeal
@@ -731,7 +783,7 @@ public class Database {
 	//EventModel
 	public ArrayList<EventModel> getEventModelForEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
-		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest FROM Event;");
+		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest, Status FROM Event;");
 		while(rs.next()) {
 			int eventID		= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
@@ -743,15 +795,16 @@ public class Database {
 			String venue		= rs.getString("Venue");
 			int max_No_People	= rs.getInt("Max_No_People");
 			String guest		= rs.getString("Guest");
+			String status		= rs.getString("Status");
 			
-			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null, status));
 		}
 		return alem;
 	}
 	
 	//For EventofEventPage
 	public EventModel getEventofEventPage(String nameOfEvent) throws SQLException, UnsupportedEncodingException {
-		PreparedStatement ps = conn.prepareStatement("SELECT EventName, Thumbnail, Description, Date, PostalCode, Venue, Guest, FileList FROM Event WHERE EventName = ?;");
+		PreparedStatement ps = conn.prepareStatement("SELECT EventName, Thumbnail, Description, Date, PostalCode, Venue, Guest, FileList, Status FROM Event WHERE EventName = ?;");
 		ps.setString(1, nameOfEvent);
 		
 		ResultSet rs = ps.executeQuery();
@@ -764,8 +817,9 @@ public class Database {
 			String venue		= rs.getString("Venue");
 			String guest		= rs.getString("Guest");
 			String fileList		= rs.getString("FileList");
+			String status		= rs.getString("Status");
 			
-			return new EventModel(0, eventName, null, thumbnail, description, date, postalCode, venue, true, 0, guest, fileList);
+			return new EventModel(0, eventName, null, thumbnail, description, date, postalCode, venue, true, 0, guest, fileList, status);
 		}
 		return null;
 	}
@@ -808,7 +862,7 @@ public class Database {
 	//For MyEvent
 	public ArrayList<EventModel> getEventModelForMyEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
-		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest FROM Event ORDER BY Date DESC;");
+		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest, Status FROM Event ORDER BY Date DESC;");
 		while(rs.next()) {
 			int eventID		= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
@@ -820,8 +874,9 @@ public class Database {
 			String venue		= rs.getString("Venue");
 			int max_No_People	= rs.getInt("Max_No_People");
 			String guest		= rs.getString("Guest");
+			String status		= rs.getString("Status");
 			
-			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null, status));
 		}
 		return alem;
 	}
@@ -865,7 +920,6 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fTM.getFileName());
 		ppstmt.setBytes(2, fTM.getData());
-		ppstmt.setFloat(3, (float)fTM.getFileSize());
 
 		executeUpdate(ppstmt);
 	}
@@ -875,7 +929,6 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
 		ppstmt.setString(1, fTM.getFileName());
 		ppstmt.setBytes(2, fTM.getData());
-		ppstmt.setFloat(3, (float)fTM.getFileSize());
 
 		executeUpdate(ppstmt);
 	}
@@ -901,9 +954,8 @@ public class Database {
 			int fileID	= rs.getInt("FileID");
 			String fileName	= rs.getString("FileName");
 			byte[] data	= rs.getBytes("Data");
-			float fileSize	= rs.getFloat("FileSize");
 			
-			return new FileTableModel(fileID, fileName, data, fileSize);
+			return new FileTableModel(fileID, fileName, data);
 		}
 		return null;
 	}
@@ -918,9 +970,8 @@ public class Database {
 			int fileID	= rs.getInt("FileID");
 			String fileName	= rs.getString("FileName");
 			byte[] data	= rs.getBytes("Data");
-			float fileSize	= rs.getFloat("FileSize");
 			
-			return new FileTableModel(fileID, fileName, data, fileSize);
+			return new FileTableModel(fileID, fileName, data);
 		}
 		return null;
 	}
@@ -1143,11 +1194,10 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setInt(1, pELM.getEventID());
 		ppstmt.setString(2, pELM.getInvitationPending());
-		ppstmt.setString(3, pELM.getInvitationConfirm());
 
 		executeUpdate(ppstmt);
 	}
-	
+		
 	//Get number of people pending
 	public ArrayList<String> getPeopleEventListPending(int eventID) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT InvitationPending FROM PeopleEventList WHERE EventID = ?;");
@@ -1155,7 +1205,7 @@ public class Database {
 		
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
-			PeopleEventListModel pELM = new PeopleEventListModel(0, null, null);
+			PeopleEventListModel pELM = new PeopleEventListModel(0, null);
 			pELM.setInvitationPending(rs.getString("InvitationPending"));
 			
 			return pELM.getInvitationPendingArray();
@@ -1165,17 +1215,16 @@ public class Database {
 	
 	//Get number of people confirmed
 	public ArrayList<String> getPeopleEventListConfirm(int eventID) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT InvitationConfirm FROM PeopleEventList WHERE EventID = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ?;");
 		ppstmt.setInt(1, eventID);
 		ResultSet rs = ppstmt.executeQuery();
 		
+		ArrayList<String> als = new ArrayList<String>();
 		while(rs.next()) {
-			PeopleEventListModel pELM = new PeopleEventListModel(0, null, null);
-			pELM.setInvitationConfirm(rs.getString("InvitationConfirm"));
-			
-			return pELM.getInvitationConfirmArray();
+			String iGN = rs.getString("IGN");
+			als.add(iGN);
 		}
-		return new ArrayList<String>();
+		return als;
 	}
 	
 	public void close() throws SQLException {

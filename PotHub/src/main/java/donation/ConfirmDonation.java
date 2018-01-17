@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.DonationModel;
 import database.model.TemporaryStoreModel;
 
@@ -27,6 +28,7 @@ public class ConfirmDonation extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
 		session.setAttribute("pinAttempts", 0);
+		String username = (String)session.getAttribute("username");
 		
 		PrintWriter out = response.getWriter();
 		out.print("<!DOCTYPE html>"
@@ -54,7 +56,7 @@ public class ConfirmDonation extends HttpServlet {
 				+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 				+ "				<div id='profilePic'>"
 				+ "					<img src='images/profile.png' height='50' width='50'/>"
-				+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+				+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 				+ "				</div>"
 				+ "				<div id='profileDropdownDiv'>"
 				+ "					<a href='Profile'>Profile</a>"
@@ -96,7 +98,6 @@ public class ConfirmDonation extends HttpServlet {
 				+ "								<input type='password' id='pinInput6' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput5\", \"pinInput6\")'>"
 				+ "							</div>"
 				+ "							<div id='buttonsDiv'>"
-				+ "								<input type='submit' id='resendBtn' name='resendBtn' value='Resend PIN' onclick='onResend()'>"
 				+ "								<input type='submit' id='confirmBtn' name='confirmBtn' value='Confirm'>"
 				+ "							</div>"
 				+ "						</div>"
@@ -122,66 +123,80 @@ public class ConfirmDonation extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 			HttpSession session = request.getSession(false);
-			String username = (String)request.getAttribute("username");
-			int pinAttempts = (Integer)request.getAttribute("pinAttempts");
+			String username = (String)session.getAttribute("username");
+			Integer pinAttempts = (Integer)session.getAttribute("pinAttempts");
 			Database db = new Database(2);
 			TemporaryStoreModel tsm = db.getTempStore(username);
 			DonationModel dm = new DonationModel();
+			DatabaseUserModel dum = new DatabaseUserModel();
 			HashPIN hp = new HashPIN();
 			
 			boolean resendPIN = false;
 			boolean incorrectPIN = false;
 			Timestamp currentTime = Timestamp.from(Instant.now());
 			
-			String[] PIN = request.getParameterValues("pinInput");
-			StringBuilder builder = new StringBuilder();
-			for (String s : PIN) {
-			    builder.append(s);
-			}
-			String pinNumber = builder.toString();
-			
-			if (request.getParameter("confirmBtn") != null && !request.getParameter("confirmBtn").isEmpty()) {
-				String iGN = tsm.getiGN();
-				String hashedPIN = hp.getHashedPIN(pinNumber, hp.getDecodedSalt(tsm.getTemporarySalt()));
-				
-				if (currentTime.before(tsm.getTemporaryTime())) {
-					if (hashedPIN.equals(tsm.getTemporaryPIN())) {
-						dm.setDonation_Amount(tsm.getTemporaryAmount());
-						dm.setDonation_Date(Timestamp.from(Instant.now()));
-						dm.setiGN(iGN);
-						dm.setOnBehalf(tsm.getTemporaryOnBehalf());
-						db.insertDonation(dm);
+			if (tsm != null ) {
+				if (request.getParameter("confirmBtn") != null && !request.getParameter("confirmBtn").isEmpty()) {
+					String[] pinArray = request.getParameterValues("pinInput");
+					StringBuilder builder = new StringBuilder();
+					for (String s : pinArray) {
+					    builder.append(s);
 					}
-					else {
-						incorrectPIN = true;
-						session.setAttribute("pinAttempts", pinAttempts++);
-						
-						if (pinAttempts > 3) {
-							resendPIN = true;
-							session.setAttribute("pinAttempts", 0);
+					String pinNumber = builder.toString();
+					System.out.println("PIN number entered: " + pinNumber);
+					String iGN = tsm.getiGN();
+					String hashedPIN = hp.getHashedPIN(pinNumber, hp.getDecodedSalt(tsm.getTemporarySalt()));
+					System.out.println("Hashed user 	PIN: " + hashedPIN);
+					System.out.println("Hashed database PIN: " + tsm.getTemporaryPIN());
+					
+					if (currentTime.before(tsm.getTemporaryTime())) {
+						if (hashedPIN.equals(tsm.getTemporaryPIN())) {
+							dm.setDonation_Amount(tsm.getTemporaryAmount());
+							dm.setDonation_Date(Timestamp.from(Instant.now()));
+							dm.setiGN(iGN);
+							dm.setOnBehalf(tsm.getTemporaryOnBehalf());
+							db.insertDonation(dm);
+							db.deleteFromTempStore(username);
+							//Update totalDonation in DatabaseUser
+							System.out.println("Donation successful");
+						}
+						else {
+							incorrectPIN = true;
+							session.setAttribute("pinAttempts", pinAttempts++);
+							System.out.println("Number of PIN attempts: " + pinAttempts);
+							
+							if (pinAttempts > 3) {
+								resendPIN = true;
+								session.setAttribute("pinAttempts", 0);
+								System.out.println("PIN attempts more than 3");
+							}
 						}
 					}
+					else {
+						resendPIN = true;
+						System.out.println("PIN expired");
+					}
 				}
-				else {
-					resendPIN = true;
-					db.deleteFromTempStore(username);
+				else if (request.getParameter("resendBtn") != null && !request.getParameter("resendBtn").isEmpty()) {
+					TemporaryStoreModel tsmResend = new TemporaryStoreModel();
+					SendEmail se = new SendEmail();
+					byte[] salt = hp.createSalt();
+					String encodedSalt = hp.getEncodedSalt(salt);
+					String pinNo = tsmResend.generatePIN();
+					String hashedPIN = hp.getHashedPIN(pinNo, salt);
+					
+					tsmResend.setiGN(tsm.getiGN());
+					tsmResend.setTemporaryPIN(hashedPIN);
+					tsmResend.setTemporarySalt(encodedSalt);
+					tsmResend.setTemporaryTime(tsmResend.getTime5MinsLater());
+					if (db.updateTempStore(tsmResend)) {
+						se.sendEmail("dr.que9@gmail.com", pinNo);
+					}
+					System.out.println("Resend PIN successful");
 				}
 			}
-			else if (request.getParameter("resendBtn") != null && !request.getParameter("resendBtn").isEmpty()) {
-				System.out.println("Resend button clicked");
-				TemporaryStoreModel tsmResend = new TemporaryStoreModel();
-				SendEmail se = new SendEmail();
-				byte[] salt = hp.createSalt();
-				String encodedSalt = hp.getEncodedSalt(salt);
-				String pinNo = tsmResend.generatePIN();
-				String hashedPIN = hp.getHashedPIN(pinNo, salt);
-				se.sendEmail("", pinNo);
-				tsmResend.setiGN(tsm.getiGN());
-				tsmResend.setTemporaryPIN(hashedPIN);
-				tsmResend.setTemporarySalt(encodedSalt);
-				tsmResend.setTemporaryTime(tsmResend.getTime5MinsLater());
-				db.updateTempStore(tsmResend);
-				doGet(request, response);
+			else {
+				System.out.println("No entry in TemporaryStore");
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -242,25 +257,39 @@ public class ConfirmDonation extends HttpServlet {
 					+ "						<div id='confirmDonationDiv'>"
 					+ "							<div id='onTopDiv'>"
 					+ "								Enter the PIN sent to your email"
-					+ "							</div>"
-					+ "							<div id='belowDiv'>"
-					+ "								<input type='password' id='pinInput1' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput1', 'pinInput2')'>"
-					+ "								<input type='password' id='pinInput2' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput1', 'pinInput3')'>"
-					+ "								<input type='password' id='pinInput3' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput2', 'pinInput4')'>"
-					+ "								<input type='password' id='pinInput4' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput3', 'pinInput5')'>"
-					+ "								<input type='password' id='pinInput5' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput4', 'pinInput6')'>"
-					+ "								<input type='password' id='pinInput6' name='pinInput' maxlength='1' required oninput='moveToNext(this, 'pinInput5', 'pinInput6')'>"
 					+ "							</div>");
-					if (incorrectPIN = true) {
-						out.print("<div id='errorMsg'>Incorrect PIN entered</div>");
+					if (resendPIN) {
+						out.print("<div id='belowDiv'>"
+								+ "	<input type='password' id='pinInput1' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput1\", \"pinInput2\")'>"
+								+ "	<input type='password' id='pinInput2' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput1\", \"pinInput3\")'>"
+								+ "	<input type='password' id='pinInput3' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput2\", \"pinInput4\")'>"
+								+ "	<input type='password' id='pinInput4' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput3\", \"pinInput5\")'>"
+								+ "	<input type='password' id='pinInput5' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput4\", \"pinInput6\")'>"
+								+ "	<input type='password' id='pinInput6' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput5\", \"pinInput6\")'>"
+								+ "</div>"
+								+ "<div id='errorMsg'>PIN has expired. Click to send a new PIN.</div>"
+								+ "<div id='buttonsDiv'>"
+								+ "	<input type='submit' id='resendBtn' name='resendBtn' value='Resend PIN' onclick='onResend()'>"
+								+ "	<input type='submit' id='confirmBtn' name='confirmBtn' value='Confirm' style='cursor:not-allowed;' disabled>"
+								+ "</div>");
 					}
-					out.print("					<div id='buttonsDiv'>");
-					if (resendPIN = true) {
-						out.print("<input type='submit' id='resendBtn' name='resendBtn' value='Resend PIN' onclick='onResend()'>");
+					else {
+						out.print("<div id='belowDiv'>"
+								+ "	<input type='password' id='pinInput1' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput1\", \"pinInput2\")'>"
+								+ "	<input type='password' id='pinInput2' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput1\", \"pinInput3\")'>"
+								+ "	<input type='password' id='pinInput3' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput2\", \"pinInput4\")'>"
+								+ "	<input type='password' id='pinInput4' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput3\", \"pinInput5\")'>"
+								+ "	<input type='password' id='pinInput5' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput4\", \"pinInput6\")'>"
+								+ "	<input type='password' id='pinInput6' name='pinInput' maxlength='1' required oninput='moveToNext(this, \"pinInput5\", \"pinInput6\")'>"
+								+ "	</div>");
+								if (incorrectPIN) {
+									out.print("<div id='errorMsg'>Incorrect PIN entered.</div>");
+								}
+						out.print("<div id='buttonsDiv'>"
+								+ "	<input type='submit' id='confirmBtn' name='confirmBtn' value='Confirm'>"
+								+ "</div>");
 					}
-					out.print("						<input type='submit' id='confirmBtn' name='confirmBtn' value='Confirm'>"
-					+ "							</div>"
-					+ "						</div>"
+					out.print("				</div>"
 					+ "					</form>"
 					+ "				</div>"
 					+ "			</div>"
