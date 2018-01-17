@@ -352,6 +352,11 @@ input {
 	background: #f8eee7;
 }
 
+#thumbnailBox img{
+	border-radius:10px;
+}
+
+
 /* Footer */
 
 #footer p { margin: 15px 0; }

@@ -136,13 +136,26 @@ public class PotcastDetail extends HttpServlet {
 							+ "<div id='foodText'>" 
 							+ "<div id='foodTitle'>"
 							+ "<p>"+pm.getTitle()+"</p>" 
-							+ "</div>" + "<div id='foodPrice'>" 
-							+ "<p>$8</p>"
-							+ "</div>" + "<div id='foodDesc'>"
-							+ "<p>"+pm.getDescription()+"</p>"
-							+ "</div>"
-							+ "<div id='foodBits'>" 
-							+ "<p>9/11 Bids, closing "+timestampToDateTime(pm.getBidStopTime())+"</p>" 
+							+ "</div>" + "<div id='foodPrice'>" );
+							
+							if(pm.getMaxBids()<bids.size()){
+								pw.append("<p>"+bids.get(bids.size()-pm.getMaxBids()).getBidAmount()+"</p>"
+										+ "</div>" + "<div id='foodDesc'>"
+										+ "<p>"+pm.getDescription()+"</p>"
+										+ "</div>"
+										+ "<div id='foodBits'>");
+								pw.append(pm.getMaxBids()+"/"+pm.getMaxBids()+" Bids, closing");
+							}
+							else{
+								pw.append("<p>"+pm.getMinBid()+"</p>"
+										+ "</div>" + "<div id='foodDesc'>"
+										+ "<p>"+pm.getDescription()+"</p>"
+										+ "</div>"
+										+ "<div id='foodBits'>");
+								pw.append(bids.size()+"/"+pm.getMaxBids()+" Bids, closing");
+							}
+								
+							pw.append(timestampToDateTime(pm.getBidStopTime())+"</p>" 
 							+ "</div>"
 							+ "<div id='foodBits'>" + "<p>Pickup "+timestampToDateTime(pm.getPickupTime())+"</p>" + "</div>" + "<div id='foodDesc'>"
 							+ "<p>"+dbu.getUnitNo()

@@ -37,6 +37,7 @@ public class MapDistance {
 
   public static ArrayList<String> getJsonFromURL(String url) throws JSONException, IOException{
 	    JSONObject json = readJsonFromUrl(url);
+	    System.out.println(json);
 	    JSONArray array = json.getJSONArray("rows");
 
 	    JSONObject json1 = array.getJSONObject(0);
@@ -45,14 +46,19 @@ public class MapDistance {
 	    ArrayList<String> toRet = new ArrayList<String>();
 	    
 	    for(int i =0; i<array1.length();i++){
+	    	try{
 	    	toRet.add(array1.getJSONObject(i).getJSONObject("distance").getString("text"));
+	    	}
+	    	catch(JSONException j ){
+	    		toRet.add("N.A");
+	    	}
 	    }
 	    
 	    return toRet;
   }
   
-  public static String mapURLBuilder(ArrayList<String> pcodes){
-		String connectionURL= "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=Singapore,%20556748&destinations=";
+  public static String mapURLBuilder(ArrayList<String> pcodes, String origin){
+		String connectionURL= "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=Singapore,%20"+origin+"&destinations=";
 		boolean notFirst=false;
 		
 		for(String pcode:pcodes){
