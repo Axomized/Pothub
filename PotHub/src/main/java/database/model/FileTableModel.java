@@ -23,17 +23,11 @@ public class FileTableModel {
 		return data;
 	}
 
-<<<<<<< HEAD
+
 	public FileTableModel() {
 		super();
 	}
 
-	public double getFileSize() {
-		return fileSize;
-	}
-
-=======
->>>>>>> origin/master
 	public void setFileID(int fileID) {
 		this.fileID = fileID;
 	}
