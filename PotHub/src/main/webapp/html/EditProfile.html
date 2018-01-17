@@ -50,53 +50,39 @@
 		</div>
 		<div id="wrapper">
 			<div id="content-wrapper">
-				<form id="profileForm" autocomplete="off" enctype="multipart/form-data" method="post">
-					<div id="profileNavDiv">
-						<div id="profileNavList">
-							<a href="Profile.html">About</a>
-							<a href="FoodPref.html">Food Preferences</a>
-							<a href="ProfileDonation.html">Donation History</a>
-							<a href="EditProfile.html" id="defaultSelected">Settings</a>
+				<div id="profileNavDiv">
+					<div id="profileNavList">
+						<a href="Profile.html">About</a>
+						<a href="FoodPref.html">Food Preferences</a>
+						<a href="ProfileDonation.html">Donation History</a>
+						<a href="EditProfile.html" id="defaultSelected">Settings</a>
+					</div>
+				</div>
+				<div id="content" class="row">
+					<div id="sideBarDivWrap" class="col-sm-3">
+						<div id="sideBarDiv">
+							<ul id="sideBarList">
+								<li id="listHeader">Personal Settings</li>
+								<li><a href="EditProfile.html" id="linkSelected">Edit Profile</a></li>
+								<li><a href="ChangePassword.html">Change Password</a></li>
+								<li><a href="AddFoodPref.html">Add Food Preferences</a></li>
+								<li><a href="RemoveFoodPref.html">Remove Food Preferences</a></li>
+							</ul>							
 						</div>
 					</div>
-					<div id="content" class="row">
-						<div id="sideBarDivWrap" class="col-sm-3">
-							<div id="sideBarDiv">
-								<ul id="sideBarList">
-									<li id="listHeader">Personal Settings</li>
-									<li><a href="EditProfile.html" id="linkSelected">Edit Profile</a></li>
-									<li><a href="AddFoodPref.html">Add Food Preferences</a></li>
-									<li><a href="RemoveFoodPref.html">Remove Food Preferences</a></li>
-								</ul>							
-							</div>
-						</div>
-						<div id="profileContentDiv" class="col-sm-9">
-							<div id="changeProfileDiv">
-								<div id="editProfileInfoDiv">
-									<div id="upper-EditProfileInfoDiv">
-										Edit Profile
-									</div>
-									<div id="lower-EditProfileInfoDiv">
-										<span id="editProfileInfoSpan">Change your password, gender, email, contact number, bio and address.</span>
-									</div>
+					<div id="profileContentDiv" class="col-sm-9">
+						<div id="changeProfileDiv">
+							<div id="editProfileInfoDiv">
+								<div id="upper-EditProfileInfoDiv">
+									Edit Profile
 								</div>
+								<div id="lower-EditProfileInfoDiv">
+									<span id="editProfileInfoSpan">Change your gender, contact number, bio and address.</span>
+								</div>
+							</div>
+							<form id="profileForm" autocomplete="off" enctype="multipart/form-data" method="post">
 								<div id="editProfileDiv" class="row">
 									<div id="userInfoDiv" class="col-sm-9">
-										<div id="passwordDiv" class="divWrap">
-											<div id="oldPassDiv">
-												<label id="oldPassLabel" for="oldPassInput">Old password</label>
-												<input type="password" id="oldPassInput" class="inputsForFill" name="oldPassInput" oninput="startedTyping(this)">
-											</div>
-											<div id="newPassDiv" class="innerDiv">
-												<label id="newPassLabel" for="newPassInput">New password</label>
-												<input type="password" id="newPassInput" class="inputsForFill" name="newPassInput" oninput="startedTyping(this)">
-											</div>
-											<div id="errorMsg">Password must have at least 8 characters</div>
-											<div id="confirmPassDiv" class="innerDiv">
-												<label id="confirmPassLabel" for="confirmPassInput">Confirm password</label>
-												<input type="password" id="confirmPassInput" class="inputsForFill" name="confirmPassInput" oninput="startedTyping(this)">
-											</div>
-										</div>
 										<div id="genderDiv" class="divWrap">
 											<label id="genderLabel" for="genderSelect">Gender</label>
 											<select id="genderSelect" class="custom-select" name="genderSelect" onchange="checkSelect()">
@@ -107,7 +93,7 @@
 										</div>
 										<div id="contactNoDiv" class="divWrap">
 											<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
-											<input type="text" id="contactNoInput" class="inputsForFill" name="contacNoInput" oninput="startedTyping(this)">
+											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" oninput="startedTyping(this), onlyNumbers(this)">
 										</div>
 										<div id="bioDiv" class="divWrap">
 											<label id="bioLabel" for="bioText">Bio</label>
@@ -116,14 +102,13 @@
 										<div id="addressDiv" class="divWrap">
 											<div id="postalCodeDiv">
 												<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
-												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" oninput="startedTyping(this)">
+												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" oninput="startedTyping(this), onlyNumbers(this)">
 											</div>
 											<div id="unitNoDiv" class="innerDiv">
 												<label id="unitNoLabel" for="unitNoInput">Unit Number</label>
 												<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" oninput="startedTyping(this)">
 											</div>
 										</div>
-										
 									</div>
 									<div id="userPicDiv" class="col-sm-3">
 										<div id="profileImgDiv">
@@ -140,10 +125,10 @@
 								<div id="updateBtnDiv">
 									<input type="submit" id="updateBtn" name="updateBtn" value="Update profile" disabled>
 								</div>
-							</div>
+							</form>
 						</div>
 					</div>
-				</form>
+				</div>
 			</div>
 		</div>
 		<div id="footer">

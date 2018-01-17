@@ -148,6 +148,12 @@
 		<description></description>
 		<servlet-class>profile.RemoveFoodPref</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ChangePassword</servlet-name>
+		<display-name>ChangePassword</display-name>
+		<description></description>
+		<servlet-class>profile.ChangePassword</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -243,5 +249,9 @@
 	<servlet-mapping>
 		<servlet-name>RemoveFoodPref</servlet-name>
 		<url-pattern>/RemoveFoodPref</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ChangePassword</servlet-name>
+		<url-pattern>/ChangePassword</url-pattern>
 	</servlet-mapping>
 </web-app>

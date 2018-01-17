@@ -17,6 +17,10 @@ function startedTyping(inputsForFilled) {
 	}
 }
 
+function onlyNumbers(inputsForFilled) {
+	inputsForFilled.value = inputsForFilled.value.replace(/[^\d]/g, "");
+}
+
 function checkFile() {
 	if (document.getElementById("profilePicFile").value != null) {
 		document.getElementById("updateBtn").disabled = false;

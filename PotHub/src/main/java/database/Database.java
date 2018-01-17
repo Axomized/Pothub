@@ -44,6 +44,7 @@ import database.model.TemporaryStoreModel;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
 import profile.ProfileDonationSearch;
+import profile.ProfileUpdate;
 
 public class Database {
 	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;"
@@ -312,17 +313,18 @@ public class Database {
 	}
 	
 	//For profile page - user's food preferences
-	public void insertFoodPref(FoodPreferences fp) throws SQLException {
+	public void insertFoodPref(String name, String foodPref) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodPreferences(IGN, FoodPref) VALUES(?,?);");
-		ppstmt.setString(1, fp.getiGN());
-		ppstmt.setString(2, fp.getFoodPref());
+		ppstmt.setString(1, name);
+		ppstmt.setString(2, foodPref);
 		ppstmt.executeUpdate();
 	}
 	
 	//For profile page - user's food preferences
-	public void deleteFoodPref(String foodPref) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE FoodPref = ?");
-		ppstmt.setString(1, foodPref);
+	public void deleteFoodPref(String name, String foodPref) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE IGN = ? AND foodPref = ?;");
+		ppstmt.setString(1, name);
+		ppstmt.setString(2, foodPref);
 		ppstmt.executeUpdate();
 	}
 	
@@ -341,9 +343,15 @@ public class Database {
 		return userDonationList;
 	}
 	
+	//For profile page - update user's profile information
+	public void updateUserProfile(ProfileUpdate profileUpdate) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement(profileUpdate.getUpdateQuery());
+		ppstmt.executeUpdate();
+	}
+	
 	//For donation page
 	public TemporaryStoreModel getTempStore(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
@@ -361,7 +369,7 @@ public class Database {
 	//For donation page
 	public boolean updateTempStore(TemporaryStoreModel tsm) throws SQLException {
 		boolean success = false;
-		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?;");
 		ppstmt.setString(1, tsm.getTemporaryPIN());
 		ppstmt.setString(2, tsm.getTemporarySalt());
 		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
@@ -398,8 +406,24 @@ public class Database {
 	}
 	
 	//For donation page
+	public void updateTotalDonation(BigDecimal donatedAmount, String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET TotalDonation = ? WHERE IGN = ?;");
+		ppstmt.setBigDecimal(1, donatedAmount);
+		ppstmt.setString(2, name);
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
+	public void updateIsPrivileged(boolean isPrivileged, String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET isPriviledged = ? WHERE IGN = ?;");
+		ppstmt.setBoolean(1, isPrivileged);
+		ppstmt.setString(2, name);
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
 	public void insertDonation(DonationModel dm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, DonationDate, DonationAmount, OnBehalf) VALUES(?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, Donation_Date, Donation_Amount, OnBehalf) VALUES(?,?,?,?);");
 		ppstmt.setString(1, dm.getiGN());
 		ppstmt.setTimestamp(2, dm.getDonation_Date());
 		ppstmt.setBigDecimal(3, dm.getDonation_Amount());

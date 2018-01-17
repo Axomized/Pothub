@@ -2,6 +2,7 @@ package database.model;
 
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class DatabaseUserModel {
 	String email;
@@ -198,5 +199,10 @@ public class DatabaseUserModel {
 
 	public void setUserPermission(int userPermission) {
 		this.userPermission = userPermission;
+	}
+	
+	public String dateFormat(Date date) {
+		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		return formatter.format(date);
 	}
 }

@@ -77,7 +77,7 @@ public class TemporaryStoreModel {
 	
 	public String generatePIN() {
 		SecureRandom random = new SecureRandom();
-		int num = random.nextInt(1000000);
+		int num = (100000 + random.nextInt(899999));
 		return String.valueOf(num);
 	}
 	
