@@ -7,16 +7,16 @@ import java.sql.Timestamp;
 import database.Database;
 
 public class PotcastModel {
-	String iGN;
-	int potcastID;
-	String title;
-	String description;
-	int maxBids;
-	Timestamp bidStopTime;
-	Timestamp pickupTime;
-	int minBid;
-	int startingCR;
-	int picture;
+	private String iGN;
+	private int potcastID;
+	private String title;
+	private String description;
+	private int maxBids;
+	private Timestamp bidStopTime;
+	private Timestamp pickupTime;
+	private int minBid;
+	private int startingCR;
+	private int picture;
 	
 	public PotcastModel(){
 		
@@ -38,7 +38,7 @@ public class PotcastModel {
 	public String toString() {
 		try {
 		Database db = new Database(0);
-			return "PotcastID " + potcastID + " Title " + title + " Description " + description + " Max Bids " + maxBids + " Min Bids " + minBid + " Bid stop time "+bidStopTime+" Pickup Time "+pickupTime+" startingCR "+startingCR+" PictureID "+picture+" PictureName "+db.getImageByImageID(picture);
+			return "IGN " + iGN +" PotcastID " + potcastID + " Title " + title + " Description " + description + " Max Bids " + maxBids + " Min Bids " + minBid + " Bid stop time "+bidStopTime+" Pickup Time "+pickupTime+" startingCR "+startingCR+" PictureID "+picture+" PictureName "+db.getImageByImageID(picture);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (FileNotFoundException e) {
@@ -120,11 +120,9 @@ public class PotcastModel {
 	public void setPicture(int picture) {
 		this.picture = picture;
 	}
-
 	public String getiGN() {
 		return iGN;
 	}
-
 	public void setiGN(String iGN) {
 		this.iGN = iGN;
 	}

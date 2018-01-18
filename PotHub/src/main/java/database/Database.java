@@ -597,6 +597,36 @@ public class Database {
 		return pbms;
 	}
 	
+	public String addPotcastBid(PotcastBidModel pbm) throws SQLException{
+		ArrayList<PotcastBidModel> bids = this.getBidsForPotcast(pbm.getPotcastID());
+		PotcastModel pot = this.getPotcastByID(pbm.getPotcastID());
+		
+		if(pbm.getBidAmount().intValue()<=0){
+			return "Bid too low";
+		}
+		//If bid is below minimum
+		if(pbm.getBidAmount().intValue()<pot.getMinBid()){
+			return "Bid too low";
+		}
+		//If more bids than max, check: if input bid is larger than lowest relevant bid
+
+		else if(bids.size()>pot.getMaxBids() && bids.get(bids.size()-pot.getMaxBids()).getBidAmount().intValue()>pbm.getBidAmount().intValue()){
+			return "Bid too low";
+		}
+		else if(pbm.getBidAmount().intValue()>250){
+			return "Bid realistically please";
+		}
+		else{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO PotcastBid (PotcastID, IGN, bidAmount) values (?,?,?)");
+		ps.setInt(1, pbm.getPotcastID());
+		ps.setString(2, pbm.getiGN());
+		ps.setBigDecimal(3, pbm.getBidAmount());
+		
+		ps.executeUpdate();
+		return "Bid accepted!";
+		}
+	}
+	
 	//Potcast Add
 	public void addPotcast(PotcastModel pcm) throws SQLException{
 		PreparedStatement ps = conn.prepareStatement("INSERT INTO Potcast (IGN, Title, Description, MaxBids, MinBid, BidStopTime, PickupTime, StartingCR, Picture) VALUES (?,?,?,?,?,?,?,?,?)");

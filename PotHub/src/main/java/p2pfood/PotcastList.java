@@ -152,9 +152,11 @@ public class PotcastList extends HttpServlet {
 			for (PotcastModel ap : top3Potcasts) {
 				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
-			ArrayList<String> distances3;
+			
+			String url = MapDistance.mapURLBuilder(postalCodes3, dbu0.getAddress());
+			
+			ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
 
-			distances3 = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3, dbu0.getAddress()));
 
 			int counter3 = 0;
 			for (PotcastModel ap : top3Potcasts) {
@@ -200,8 +202,8 @@ public class PotcastList extends HttpServlet {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 			
-			String url = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
-			ArrayList<String> distances = MapDistance.getJsonFromURL(url);
+			String url0 = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
+			ArrayList<String> distances = MapDistance.getJsonFromURL(url0);
 			int counter = 0;
 			for (PotcastModel ap : activePotcasts) {
 				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'><div id='displayUnit'><div id='thumbnailBox'>");
