@@ -233,16 +233,34 @@ public class Database {
 	}
 	
 	//For Registration Page - Email
-	public LoginModel getEmail(String enteredEmail) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM Login WHERE Email = ?;");
+	public boolean getEmail(String enteredEmail) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT count(*) FROM Login WHERE Email = ?;");
 		ppstmt.setString(1, enteredEmail);
 		ResultSet rs = ppstmt.executeQuery();
-		while (rs.next()) {
-			String email = rs.getString("Email");
-			return new LoginModel(email);
+		boolean emailExist = false;
+		if (rs.next()) {
+			int count = rs.getInt(1);
+			if (count > 0) {
+				emailExist = true;
+			}
 		}
+		return emailExist;
 		
-		return null;
+	}
+	
+	//For Registration Page - IGN
+	public boolean getIGN(String enteredName) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT count(*) FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, enteredName);
+		ResultSet rs = ppstmt.executeQuery();
+		boolean nameExist = false;
+		if (rs.next()) {
+			int count = rs.getInt(1);
+			if (count > 0) {
+				nameExist = true;
+			}
+		}
+		return nameExist;
 	}
 		
 	//For admin panel - inserting new food for user's food preferences

@@ -4,6 +4,7 @@ public class LoginModel {
 	String email;
 	String password;
 	String salt;
+	int count;
 
 	public LoginModel(String email, String password, String salt) {
 		this.email = email;
@@ -12,8 +13,8 @@ public class LoginModel {
 	}
 	
 	//For Registration Page
-	public LoginModel(String email){
-		this.email = email;
+	public LoginModel(int count){
+		this.count = count;
 	}
 	
 	public LoginModel() {

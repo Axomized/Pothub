@@ -62,13 +62,21 @@ public class Registration extends HttpServlet {
 		+ "	<body>"
 		+ "		<h1>Create Your Account</h1>"
 		+ "		<form action='Registration' method='POST'>"
+		+ "			<font color='#49274a'>Email:</font>"
 		+ "			<input type='text' name='email' placeholder='Enter your email'>"
+		+ "			<font color='#49274a'>Password:</font>"
 		+ "			<input type='password' name='password' placeholder='Create a password'>"
+		+ "			<font color='#49274a'>Retype Password:</font>"
 		+ "			<input type='password' name='password2' placeholder='Confirm your password'>"
+		+ "			<font color='#49274a'>Name:</font>"
 		+ "			<input type='text' name='name' placeholder='Enter your name'>"
+		+ "			<font color='#49274a'>Contact Number:</font>"
 		+ "			<input type='text' name='contact' placeholder='Enter your phone number'>"
+		+ "			<font color='#49274a'>Postal Code:</font>"
 		+ "			<input type='text' name='address' placeholder='Enter your postal code'>"
-		+ "		<input type='text' name='unitno' placeholder='Enter your unit number'>"		
+		+ "			<font color='#49274a'>Unit Number:</font>"
+		+ "			<input type='text' name='unitno' placeholder='Enter your unit number'>"		
+		+ "			<font color='#49274a'>Gender:</font>"
 		+ "			<select name='gender'>"
 		+ "				<option value='Male'>Male</option>"
 		+ " 			<option value='Female'>Female</option>"
@@ -109,7 +117,7 @@ public class Registration extends HttpServlet {
 		try 
 		{
 			Database db1 = new Database(0);
-			LoginModel lm = db1.getEmail(email);
+			//LoginModel lm = db1.getEmail(email);
 		
 		
 			if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
@@ -120,7 +128,7 @@ public class Registration extends HttpServlet {
 				doGet(request, response);
 			}
 	
-			else if(lm.getEmail().equals(email)){
+			else if(db1.getEmail(email) == true){
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Email already exists.');");
 				out.println("</script>");
@@ -158,6 +166,13 @@ public class Registration extends HttpServlet {
 				doGet(request, response);
 			}
 			
+			else if(db1.getIGN(name) == true){
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('Name already exists.');");
+				out.println("</script>");
+				doGet(request, response);
+			}
+			
 			else if(contact.length() != 8 ||
 					!contact.matches("[0-9]+")) //checks if number contains all numbers only
 			{
@@ -184,35 +199,21 @@ public class Registration extends HttpServlet {
 				doGet(request, response);
 			}
 						
-			else{
+			else
+			{		
+				dum.setEmail(email);
+				dum.setiGN(name);
+				dum.setContact_No(contact);
+				dum.setAddress(address);
+				dum.setUnitNo(unitno);
+				dum.setGender(gender.charAt(0));	
+							
+				PBKDF2.createHash(password, email);
+			
+						
+				Database db = new Database(1);
+				db.insertRegistration(dum);
 				
-				try 
-				{				
-					dum.setEmail(email);
-					dum.setiGN(name);
-					dum.setContact_No(contact);
-					dum.setAddress(address);
-					dum.setUnitNo(unitno);
-					dum.setGender(gender.charAt(0));	
-					
-					PBKDF2.createHash(password, email);
-	
-									
-				} 
-				catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
-				{
-					e.printStackTrace();
-				}
-				
-				try 
-				{
-					Database db = new Database(1);
-					db.insertRegistration(dum);
-				}
-				catch (ClassNotFoundException | SQLException e)
-				{
-					e.printStackTrace();
-				}
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully registered!');");
 				out.println("</script>");
@@ -224,6 +225,10 @@ public class Registration extends HttpServlet {
 		catch (ClassNotFoundException | SQLException e)
 		{
 			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e1) {
+			e1.printStackTrace();
+		} catch (InvalidKeySpecException e1) {
+			e1.printStackTrace();
 		}
 	}
 }

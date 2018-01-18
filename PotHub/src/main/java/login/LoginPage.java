@@ -80,7 +80,7 @@ public class LoginPage extends HttpServlet {
 		+ "			</div>"
 		+ "		</form>"
 		+ "		<div class='form-input'>"
-		+ "		<a href='../html/Registration.html'>Create Account</a>"
+		+ "		<a href='/PotHub/Registration'>Create Account</a>"
 		+ "		<a href='#'>Forget Password</a>"
 		+ "		</div>"
 		+ "	</div>"
@@ -106,8 +106,7 @@ public class LoginPage extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		
-		try 
-		{
+		
 			String enteredEmail = request.getParameter("username");
 			String enteredPassword = request.getParameter("password");
 			
@@ -119,7 +118,7 @@ public class LoginPage extends HttpServlet {
 								
 				// Hash the password
 			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
-				    
+			    
 			    if (lm.getEmail().equals(enteredEmail) && lm.getPassword().equals(PBKDF2.toHex(hash)) )
 			    {
 					System.out.println("Login Success!");
@@ -137,12 +136,13 @@ public class LoginPage extends HttpServlet {
 					doGet(request, response);
 			    }
 				
-			} catch (NoSuchAlgorithmException | InvalidKeySpecException e) 
-			{
-				e.printStackTrace();
-			}
+			 
 		} catch (ClassNotFoundException | SQLException e) 
 		{
+			e.printStackTrace();
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
 			e.printStackTrace();
 		}
 		
