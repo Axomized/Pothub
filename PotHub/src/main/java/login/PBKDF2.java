@@ -1,4 +1,4 @@
-package database;
+package login;
 
 import java.io.FileNotFoundException;
 import java.math.BigInteger;
@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 
+import database.Database;
 import database.model.LoginModel;
 
 public class PBKDF2 {

@@ -203,21 +203,6 @@ public class Database {
 		return null;
 	}
 	
-	//For Login Page
-	public boolean getUsername(String enteredEmail) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT count(*) FROM Login WHERE Email = ?;");
-		ppstmt.setString(1, enteredEmail);
-		ResultSet rs = ppstmt.executeQuery();
-		boolean emailExist = false;
-		if (rs.next()) {
-			int count = rs.getInt(1);
-			if (count > 0) {
-				emailExist = true;
-			}
-		}
-		return emailExist;
-	}
-	
 	//For Registration Page
 	public void insertLogin(LoginModel lm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUES(?,?,?);");
@@ -247,7 +232,7 @@ public class Database {
 		ppstmt.executeUpdate();
 	}
 	
-	//For Registration Page - Email
+	//For Registration Page, Login Page, and Forget Password
 	public boolean getEmail(String enteredEmail) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT count(*) FROM Login WHERE Email = ?;");
 		ppstmt.setString(1, enteredEmail);
@@ -276,6 +261,14 @@ public class Database {
 			}
 		}
 		return nameExist;
+	}
+	
+	//For Forget Password Page - Update New Password
+	public void updatePassword(String newPassword, String enteredEmail) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ? WHERE Email = ?");
+		ppstmt.setString(1, newPassword);
+		ppstmt.setString(2, enteredEmail);
+		executeUpdate(ppstmt);
 	}
 		
 	//For admin panel - inserting new food for user's food preferences

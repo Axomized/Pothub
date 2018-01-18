@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
-import database.PBKDF2;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 
@@ -81,7 +80,7 @@ public class LoginPage extends HttpServlet {
 		+ "		</form>"
 		+ "		<div class='form-input'>"
 		+ "		<a href='/PotHub/Registration'>Create Account</a>"
-		+ "		<a href='#'>Forget Password</a>"
+		+ "		<a href='/PotHub/ForgetPassword'>Forget Password</a>"
 		+ "		</div>"
 		+ "	</div>"
 		+ "	<div id='footer'>"
@@ -114,7 +113,7 @@ public class LoginPage extends HttpServlet {
 			{
 				Database db = new Database(0);
 			    
-			    if(db.getUsername(enteredEmail) == true)
+			    if(db.getEmail(enteredEmail) == true)
 			    {
 			    	LoginModel lm = db.getLogin(enteredPassword, enteredEmail);
 					DatabaseUserModel dum = db.getIGNbyEmail(lm.getEmail());

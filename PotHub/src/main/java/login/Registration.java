@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
-import database.PBKDF2;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 
@@ -215,8 +214,7 @@ public class Registration extends HttpServlet {
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully registered!');");
 				out.println("</script>");
-				LoginPage lp = new LoginPage();
-				lp.doGet(request, response);
+				response.sendRedirect("/PotHub/Login");
 			}
 			
 		}

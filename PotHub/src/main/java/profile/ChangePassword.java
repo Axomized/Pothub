@@ -11,9 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
-import database.PBKDF2;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
+import login.PBKDF2;
 
 public class ChangePassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
