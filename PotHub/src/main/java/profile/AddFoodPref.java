@@ -89,9 +89,10 @@ public class AddFoodPref extends HttpServlet {
 				+ "							<ul id='sideBarList'>"
 				+ "								<li id='listHeader'>Personal Settings</li>"
 				+ "								<li><a href='EditProfile'>Edit Profile</a></li>"
+				+ "								<li><a href='ChangePassword'>Change Password</a></li>"
 				+ "								<li><a href='AddFoodPref' id='linkSelected'>Add Food Preferences</a></li>"
 				+ "								<li><a href='RemoveFoodPref'>Remove Food Preferences</a></li>"
-				+ "							</ul>							"
+				+ "							</ul>"
 				+ "						</div>"
 				+ "					</div>"
 				+ "					<div id='profileContentDiv' class='col-sm-9'>"
@@ -430,11 +431,19 @@ public class AddFoodPref extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+			return;
+		}
+		
 		try {
-			//HttpSession session = request.getSession(false);
-			//String username = (String)session.getAttribute("username");
 			Database db = new Database(2);
-			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref("MrKrabs");
+			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref(username);
 			ArrayList<String> foodList = new ArrayList<String>();
 			for (FoodPreferences fp : foodPrefList) {
 				foodList.add(fp.getFoodPref());
@@ -442,18 +451,21 @@ public class AddFoodPref extends HttpServlet {
 			boolean contains = false;
 			String[] foodChosenArray = request.getParameterValues("foodChosen");
 			if (foodChosenArray != null && foodChosenArray.length != 0) {
-				for (int i = 0; i < foodChosenArray.length; i++) {
-					System.out.println("Food chosen: " + foodChosenArray[i]);
-					for (int j = 0; j < foodList.size(); j++) {
-						if (foodChosenArray[i].equals(foodList.get(j))) {
+				for (String s : foodChosenArray) {
+					for (String x : foodList) {
+						if (s.equals(x)) {
 							contains = true;
 							break;
 						}
 					}
 					if (!contains) {
-						System.out.println("New food chosen: " + foodChosenArray[i]);
+						db.insertFoodPref(username, s);
+					}
+					else {
+						contains = false;
 					}
 				}
+				response.sendRedirect("FoodPref");
 			}
 			else {
 				System.out.println("No food chosen");

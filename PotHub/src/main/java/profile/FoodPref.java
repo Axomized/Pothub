@@ -22,9 +22,15 @@ public class FoodPref extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		try {
-			HttpSession session = request.getSession(false);
-			String username = (String)session.getAttribute("username");
 			Database db = new Database(0);
 			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref(username);
 			

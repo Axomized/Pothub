@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.PotcastModel;
 
 /**
@@ -46,9 +47,15 @@ public class PotcastList extends HttpServlet {
 		if(session!=null){
 			username = (String) session.getAttribute("username");
 		}
+		else{
+			response.sendRedirect("Login");
+		}
 
+		try {
 		PotcastSearchObject pso = new PotcastSearchObject();
-		Database db;
+		Database db = new Database(0);
+		
+		DatabaseUserModel dbu0 = db.getDatabaseUserByIGN(username);
 
 		if (request.getParameter("title") != null) {
 			pso.setTitle(request.getParameter("title"));
@@ -121,7 +128,8 @@ public class PotcastList extends HttpServlet {
 				+ "			      </li>"
 				+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>" + "			</ul>"
 				+ "		</div>" + "	</div>" + "<div id='wrapper'>" + "<div id='secondHeader'>" + "<h2>Potcast</h2>"
-				+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" + "<form method='get'>"
+				+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" 
+				+ "<form method='get'>"
 				+ "<input type='text' name='title'></input><input type='submit'></input>"
 				+ "<p id='toggleSpan'>More Options</p>" + "<div id='hidableSearchBlock'>" + "<p>Sort Results By: </p>"
 				+ "<div id='search'>" + "<div id='radios'>" + "<ul>"
@@ -135,7 +143,6 @@ public class PotcastList extends HttpServlet {
 				+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
 				+ "</ul>" + "</div>" + "</form>" + "</div>" + "</div>" + "</div></div>" + "<h1>Closing soon:</h1>");
 
-		try {
 			PotcastSearchObject pso3 = new PotcastSearchObject();
 			pso3.setPurpose(3);
 			db = new Database(0);
@@ -145,12 +152,16 @@ public class PotcastList extends HttpServlet {
 			for (PotcastModel ap : top3Potcasts) {
 				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
+			
+			String url = MapDistance.mapURLBuilder(postalCodes3, dbu0.getAddress());
+			
+			ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
 
-			ArrayList<String> distances3 = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+
 			int counter3 = 0;
 			for (PotcastModel ap : top3Potcasts) {
 
-				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>" + ap.getTitle() + "</div>");
@@ -190,11 +201,12 @@ public class PotcastList extends HttpServlet {
 			for (PotcastModel ap : activePotcasts) {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
-
-			ArrayList<String> distances = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes3));
+			
+			String url0 = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
+			ArrayList<String> distances = MapDistance.getJsonFromURL(url0);
 			int counter = 0;
 			for (PotcastModel ap : activePotcasts) {
-				pw.append("<a href='p2pdetail'><div id='displayUnit'><div id='thumbnailBox'>");
+				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'><div id='displayUnit'><div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>" + ap.getTitle() + "</div>");
@@ -225,9 +237,6 @@ public class PotcastList extends HttpServlet {
 				pw.append(", " + distances.get(counter) + "</div></div></div></a>");
 				counter++;
 			}
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
-		}
 
 		pw.append("</div>"
 
@@ -235,6 +244,9 @@ public class PotcastList extends HttpServlet {
 				+ "<p>We like food</p>" + "<p>"
 				+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>" + "</p>"
 				+ "</div>" + "</body>" + "</html>");
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.DatabaseUserModel;
 
@@ -22,12 +24,18 @@ public class EditProfile extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
 		HttpSession session = request.getSession(false);
-		String username = (String)session.getAttribute("username");
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		
 		try {
 			Database db = new Database(0);
-			DatabaseUserModel currentUser = db.getUserProfile(username);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -54,7 +62,7 @@ public class EditProfile extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>"
 					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -81,80 +89,70 @@ public class EditProfile extends HttpServlet {
 					+ "		</div>"
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
-					+ "				<form id='profileForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
-					+ "					<div id='profileNavDiv'>"
-					+ "						<div id='profileNavList'>"
-					+ "							<a href='Profile'>About</a>"
-					+ "							<a href='FoodPref'>Food Preferences</a>"
-					+ "							<a href='ProfileDonation'>Donation History</a>"
-					+ "							<a href='EditProfile' id='defaultSelected'>Settings</a>"
+					+ "				<div id='profileNavDiv'>"
+					+ "					<div id='profileNavList'>"
+					+ "						<a href='Profile'>About</a>"
+					+ "						<a href='FoodPref'>Food Preferences</a>"
+					+ "						<a href='ProfileDonation'>Donation History</a>"
+					+ "						<a href='EditProfile' id='defaultSelected'>Settings</a>"
+					+ "					</div>"
+					+ "				</div>"
+					+ "				<div id='content' class='row'>"
+					+ "					<div id='sideBarDivWrap' class='col-sm-3'>"
+					+ "						<div id='sideBarDiv'>"
+					+ "							<ul id='sideBarList'>"
+					+ "								<li id='listHeader'>Personal Settings</li>"
+					+ "								<li><a href='EditProfile' id='linkSelected'>Edit Profile</a></li>"
+					+ "								<li><a href='ChangePassword'>Change Password</a></li>"
+					+ "								<li><a href='AddFoodPref'>Add Food Preferences</a></li>"
+					+ "								<li><a href='RemoveFoodPref'>Remove Food Preferences</a></li>"
+					+ "							</ul>"
 					+ "						</div>"
 					+ "					</div>"
-					+ "					<div id='content' class='row'>"
-					+ "						<div id='sideBarDivWrap' class='col-sm-3'>"
-					+ "							<div id='sideBarDiv'>"
-					+ "								<ul id='sideBarList'>"
-					+ "									<li id='listHeader'>Personal Settings</li>"
-					+ "									<li><a href='EditProfile' id='linkSelected'>Edit Profile</a></li>"
-					+ "									<li><a href='AddFoodPref'>Add Food Preferences</a></li>"
-					+ "									<li><a href='RemoveFoodPref'>Remove Food Preferences</a></li>"
-					+ "								</ul>"
-					+ "							</div>"
-					+ "						</div>"
-					+ "						<div id='profileContentDiv' class='col-sm-9'>"
-					+ "							<div id='changeProfileDiv'>"
-					+ "								<div id='editProfileInfoDiv'>"
-					+ "									<div id='upper-EditProfileInfoDiv'>"
-					+ "										Edit Profile"
-					+ "									</div>"
-					+ "									<div id='lower-EditProfileInfoDiv'>"
-					+ "										<span id='editProfileInfoSpan'>Change your password, gender, email, contact number, bio and address.</span>"
-					+ "									</div>"
+					+ "					<div id='profileContentDiv' class='col-sm-9'>"
+					+ "						<div id='changeProfileDiv'>"
+					+ "							<div id='editProfileInfoDiv'>"
+					+ "								<div id='upper-EditProfileInfoDiv'>"
+					+ "									Edit Profile"
 					+ "								</div>"
+					+ "								<div id='lower-EditProfileInfoDiv'>"
+					+ "									<span id='editProfileInfoSpan'>Change your gender, contact number, bio and address.</span>"
+					+ "								</div>"
+					+ "							</div>"
+					+ "							<form id='profileForm' autocomplete='off' method='post'>"
 					+ "								<div id='editProfileDiv' class='row'>"
 					+ "									<div id='userInfoDiv' class='col-sm-9'>"
-					+ "										<div id='passwordDiv' class='divWrap'>"
-					+ "											<div id='oldPassDiv'>"
-					+ "												<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
-					+ "												<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' oninput='startedTyping(this)'>"
-					+ "											</div>"
-					+ "											<div id='newPassDiv' class='innerDiv'>"
-					+ "												<label id='newPassLabel' for='newPassInput'>New password</label>"
-					+ "												<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' oninput='startedTyping(this)'>"
-					+ "											</div>"
-					+ "											<div id='errorMsg'>Password must have at least 8 characters</div>"
-					+ "											<div id='confirmPassDiv' class='innerDiv'>"
-					+ "												<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
-					+ "												<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' oninput='startedTyping(this)'>"
-					+ "											</div>"
-					+ "										</div>"
 					+ "										<div id='genderDiv' class='divWrap'>"
 					+ "											<label id='genderLabel' for='genderSelect'>Gender</label>"
-					+ "											<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>"
-					+ "												<option value='' selected disabled hidden='true'>Choose your gender</option>"
-					+ "												<option value='M'>Male</option>"
-					+ "												<option value='F'>Female</option>"
+					+ "											<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>");
+					if (dum.getGender() == 'M') {
+						out.print("<option value='' selected disabled hidden='true'>Male</option>");
+					}
+					else if (dum.getGender() == 'F') {
+						out.print("<option value='' selected disabled hidden='true'>Female</option>");
+					}
+					out.print("										<option value='Male'>Male</option>"
+					+ "												<option value='Female'>Female</option>"
 					+ "											</select>"
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contacNoInput' oninput='startedTyping(this)'>"
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + dum.getContact_No() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
 					+ "										</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'></textarea>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>"
 					+ "										</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
 					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' oninput='startedTyping(this)'>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + dum.getAddress() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
 					+ "											</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
 					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' oninput='startedTyping(this)'>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + dum.getUnitNo() + "' oninput='startedTyping(this)'>"
 					+ "											</div>"
 					+ "										</div>"
-					+ "										"
 					+ "									</div>"
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>"
@@ -171,10 +169,10 @@ public class EditProfile extends HttpServlet {
 					+ "								<div id='updateBtnDiv'>"
 					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile' disabled>"
 					+ "								</div>"
-					+ "							</div>"
+					+ "							</form>"
 					+ "						</div>"
 					+ "					</div>"
-					+ "				</form>"
+					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='footer'>"
@@ -200,7 +198,78 @@ public class EditProfile extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		
+		try {
+			Database db = new Database(2);
+			DatabaseUserModel dum = new DatabaseUserModel();
+			ProfileUpdate profileUpdate = new ProfileUpdate(username);
+			String gender = request.getParameter("genderSelect");
+			String contact_No = request.getParameter("contactNoInput");
+			String bio = request.getParameter("bioText");
+			String address = request.getParameter("postalCodeInput");
+			String unitNo = request.getParameter("unitNoInput");
+			
+			if (validateInputs(gender, contact_No, bio, address, unitNo)) {
+				if (gender != null && !gender.isEmpty()) {
+					profileUpdate.setGender(gender);
+				}
+				else {
+					System.out.println("Nothing for gender");
+				}
+				if (contact_No != null && !contact_No.isEmpty()) {
+					profileUpdate.setContact_No(contact_No);
+				}
+				else {
+					System.out.println("Nothing for contact");
+				}
+				if (bio != null && !bio.isEmpty()) {
+					profileUpdate.setBio(bio);
+				}
+				else {
+					System.out.println("Nothing for bio");
+				}
+				if (address != null && !address.isEmpty()) {
+					profileUpdate.setAddress(address);
+				}
+				else {
+					System.out.println("Nothing for address");
+				}
+				if (unitNo != null && !unitNo.isEmpty()) {
+					profileUpdate.setUnitNo(unitNo);
+				}
+				else {
+					System.out.println("Nothing for unitNo");
+				}
+				
+				db.updateUserProfile(profileUpdate);
+				response.sendRedirect("EditProfile");
+			}
+			else {
+				System.out.println("All has nothing");
+			}
+			
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	private boolean validateInputs(String gender, String contact_No, String bio, String address, String unitNo) {
+		boolean isNotNull = false;
+		if ((gender != null && !gender.isEmpty()) || (contact_No != null && !contact_No.isEmpty()) || (bio != null && !bio.isEmpty()) || (address != null && !address.isEmpty() 
+				|| (unitNo != null && !unitNo.isEmpty()))) {
+			isNotNull = true;
+		}
+		return isNotNull;
 	}
 
 }

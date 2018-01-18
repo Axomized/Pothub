@@ -29,8 +29,14 @@ public class Donation extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
 		HttpSession session = request.getSession(false);
-		String username = (String)session.getAttribute("username");
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		
 		try {
 			Database db = new Database(0);
@@ -201,9 +207,16 @@ public class Donation extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
+		
 		try {
-			HttpSession session = request.getSession(false);
-			String username = (String)session.getAttribute("username");
 			Database db = new Database(2);
 			TemporaryStoreModel tsm =  new TemporaryStoreModel();
 			TemporaryStoreModel tsmCheck = db.getTempStore(username);
@@ -222,64 +235,58 @@ public class Donation extends HttpServlet {
 			String encodedSalt = hp.getEncodedSalt(salt);
 			String pinNo = tsm.generatePIN();
 			String hashedPIN = hp.getHashedPIN(pinNo, salt);
-			Timestamp currentTime = Timestamp.from(Instant.now());
 			String errorMessage = "";
 			
 			if (tsmCheck != null) {
-				if (currentTime.before(tsmCheck.getTemporaryTime())) {
-					response.sendRedirect("ConfirmDonation");
-				}
-				else {
-					db.deleteFromTempStore(username);
-					if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
-						if (behalfName != null && !behalfName.isEmpty()) {
-							if (vc.validateCCNo(ccNumber)) {
-								if (vc.validateCode(ccNumber, securityCode)) {
-									tsm.setiGN(username);
-									tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-									tsm.setTemporaryOnBehalf(behalfName);
-									tsm.setTemporaryPIN(hashedPIN);
-									tsm.setTemporarySalt(encodedSalt);
-									tsm.setTemporaryTime(tsm.getTime5MinsLater());
-									if (db.insertTempStore(tsm)) {
-										se.sendEmail("dr.que9@gmail.com", pinNo);
-									}
-									response.sendRedirect("ConfirmDonation");
+				db.deleteFromTempStore(username);
+				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
+					if (behalfName != null && !behalfName.isEmpty()) {
+						if (vc.validateCCNo(ccNumber)) {
+							if (vc.validateCode(ccNumber, securityCode)) {
+								tsm.setiGN(username);
+								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+								tsm.setTemporaryOnBehalf(behalfName);
+								tsm.setTemporaryPIN(hashedPIN);
+								tsm.setTemporarySalt(encodedSalt);
+								tsm.setTemporaryTime(tsm.getTime5MinsLater());
+								if (db.insertTempStore(tsm)) {
+									se.sendEmail("dr.que9@gmail.com", pinNo);
 								}
-								else {
-									errorMessage = "Invalid security code";
-								}
+								response.sendRedirect("ConfirmDonation");
 							}
 							else {
-								errorMessage = "Invalid credit card number";
+								errorMessage = "Invalid security code";
 							}
 						}
 						else {
-							if (vc.validateCCNo(ccNumber)) {
-								if (vc.validateCode(ccNumber, securityCode)) {
-									tsm.setiGN(username);
-									tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-									tsm.setTemporaryOnBehalf(behalfName);
-									tsm.setTemporaryPIN(hashedPIN);
-									tsm.setTemporarySalt(encodedSalt);
-									tsm.setTemporaryTime(tsm.getTime5MinsLater());
-									if (db.insertTempStore(tsm)) {
-										se.sendEmail("dr.que9@gmail.com", pinNo);
-									}
-									response.sendRedirect("ConfirmDonation");
-								}
-								else {
-									errorMessage = "Invalid security code";
-								}
-							}
-							else {
-								errorMessage = "Invalid credit card number";
-							}
+							errorMessage = "Invalid credit card number";
 						}
 					}
 					else {
-						errorMessage = "Please fill in all required inputs";
+						if (vc.validateCCNo(ccNumber)) {
+							if (vc.validateCode(ccNumber, securityCode)) {
+								tsm.setiGN(username);
+								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+								tsm.setTemporaryOnBehalf(behalfName);
+								tsm.setTemporaryPIN(hashedPIN);
+								tsm.setTemporarySalt(encodedSalt);
+								tsm.setTemporaryTime(tsm.getTime5MinsLater());
+								if (db.insertTempStore(tsm)) {
+									se.sendEmail("dr.que9@gmail.com", pinNo);
+								}
+								response.sendRedirect("ConfirmDonation");
+							}
+							else {
+								errorMessage = "Invalid security code";
+							}
+						}
+						else {
+							errorMessage = "Invalid credit card number";
+						}
 					}
+				}
+				else {
+					errorMessage = "Please fill in all required inputs";
 				}
 			}
 			else {

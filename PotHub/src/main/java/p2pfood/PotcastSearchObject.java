@@ -9,6 +9,7 @@ public class PotcastSearchObject{
 	private String orderBy;
 	private boolean ascDesc;
 	private int purpose;
+	private String ign;
 	
 	public PotcastSearchObject(){
 		this.setTitle("");
@@ -19,7 +20,6 @@ public class PotcastSearchObject{
 	
 	public String getExecutableSQL(){
 		if(this.purpose==0){
-		//Add proper column names
 		String toRet ="SELECT TOP 250 iGN, potcastID, title, description, maxBids, bidStopTime,"
 			+"pickupTime, minBid, startingCR, picture FROM Potcast";
 		
@@ -41,13 +41,63 @@ public class PotcastSearchObject{
 		return toRet;
 		}
 		
+		if(this.purpose==1){
+			System.out.println(purpose);
+			String toRet ="SELECT TOP 250 iGN, potcastID, title, description, maxBids, bidStopTime,"
+					+"pickupTime, minBid, startingCR, picture FROM Potcast";
+				
+				if(this.title.length()>0){
+					toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"'";
+				}
+				else{
+					toRet+=" WHERE IGN='"+ign+"'";
+				}
+				if(this.orderBy.length()>0){
+					toRet+=" ORDER BY "+this.orderBy+" ";
+					
+					if(isAscDesc()){
+						toRet+=" ASC;";
+					}
+					else{
+						toRet+=" DESC;";
+					}
+				}
+				System.out.println(toRet);
+				return toRet;
+		}
+		
+		if(this.purpose==2){
+			String toRet ="SELECT TOP 250 a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
+			+"a.pickupTime, a.minBid, a.startingCR, a.picture"
+			+" FROM Potcast a INNER JOIN PotcastBid b ON a.potcastID = b.potcastID";
+			
+			if(this.title.length()>0){
+				toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"'";
+			}
+			else{
+				toRet+=" WHERE IGN='"+ign+"'";
+			}
+			
+			toRet+=" GROUP BY a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
+			+"a.pickupTime, a.minBid, a.startingCR, a.picture"
+			+ " ORDER BY bidStopTime, COUNT(b.potcastID)";
+			
+			if(isAscDesc()){
+				toRet+=" ASC;";
+			}
+			else{
+				toRet+=" DESC;";
+			}
+			System.out.println(toRet);
+			return toRet;
+		}
+		
 		if(this.purpose==3){
 			Date rightNow = new Date(System.currentTimeMillis());
 			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime > '"+rightNow+"' ORDER BY bidStopTime DESC";
 		}
 		
 		if(this.purpose==4){
-			//Add proper column names
 			String toRet ="SELECT TOP 250 a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
 			+"a.pickupTime, a.minBid, a.startingCR, a.picture"
 			+" FROM Potcast a INNER JOIN PotcastBid b ON a.potcastID = b.potcastID";
@@ -104,6 +154,14 @@ public class PotcastSearchObject{
 
 	public void setPurpose(int purpose) {
 		this.purpose = purpose;
+	}
+
+	public String getIgn() {
+		return ign;
+	}
+
+	public void setIgn(String ign) {
+		this.ign = ign;
 	}
 	
 }

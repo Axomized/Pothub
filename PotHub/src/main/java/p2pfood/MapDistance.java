@@ -45,14 +45,19 @@ public class MapDistance {
 	    ArrayList<String> toRet = new ArrayList<String>();
 	    
 	    for(int i =0; i<array1.length();i++){
+	    	try{
 	    	toRet.add(array1.getJSONObject(i).getJSONObject("distance").getString("text"));
+	    	}
+	    	catch(JSONException j ){
+	    		toRet.add("N.A");
+	    	}
 	    }
 	    
 	    return toRet;
   }
   
-  public static String mapURLBuilder(ArrayList<String> pcodes){
-		String connectionURL= "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=Singapore,%20556748&destinations=";
+  public static String mapURLBuilder(ArrayList<String> pcodes, String origin){
+		String connectionURL= "https://maps.googleapis.com/maps/api/distancematrix/json?units=metric&origins=Singapore,%20"+origin+"&destinations=";
 		boolean notFirst=false;
 		
 		for(String pcode:pcodes){
@@ -64,8 +69,6 @@ public class MapDistance {
 			notFirst=true;
 		}
 				connectionURL+="&key=AIzaSyDp7sh0cctb7uFWpCaCFUO7-27GMy2uJJ8";
-				
-				System.out.println(connectionURL);
 		return connectionURL;
   }
 }

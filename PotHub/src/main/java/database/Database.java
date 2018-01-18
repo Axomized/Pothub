@@ -44,6 +44,7 @@ import database.model.TemporaryStoreModel;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
 import profile.ProfileDonationSearch;
+import profile.ProfileUpdate;
 
 public class Database {
 	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;"
@@ -160,6 +161,31 @@ public class Database {
 			return rs.getBoolean("isPriviledged");
 		}
 		return false;
+	}
+	
+	public DatabaseUserModel getDatabaseUserByIGN(String ign) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM DatabaseUser WHERE IGN = ?");
+		ps.setString(1, ign);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String email 				= rs.getString("Email");
+			String iGN					= rs.getString("IGN");
+			String contact_No			= rs.getString("Contact_No");
+			char gender					= rs.getString("Gender").charAt(0);
+			String bio					= rs.getString("Bio");
+			String address				= rs.getString("Address");
+			String unitNo				= rs.getString("UnitNo");
+			int profilePic				= rs.getInt("ProfilePic");
+			Date lastLogin				= rs.getDate("LastLogin");
+			Date joinDate				= rs.getDate("JoinDate");
+			int cookingRank				= rs.getInt("CookingRank");
+			int points					= rs.getInt("Points");
+			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
+			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
+			int userPermission			= rs.getInt("UserPermission");
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission);
+		}
+		return null;
 	}
 	
 	//For Login Page
@@ -287,17 +313,18 @@ public class Database {
 	}
 	
 	//For profile page - user's food preferences
-	public void insertFoodPref(FoodPreferences fp) throws SQLException {
+	public void insertFoodPref(String name, String foodPref) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodPreferences(IGN, FoodPref) VALUES(?,?);");
-		ppstmt.setString(1, fp.getiGN());
-		ppstmt.setString(2, fp.getFoodPref());
+		ppstmt.setString(1, name);
+		ppstmt.setString(2, foodPref);
 		ppstmt.executeUpdate();
 	}
 	
 	//For profile page - user's food preferences
-	public void deleteFoodPref(String foodPref) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE FoodPref = ?");
-		ppstmt.setString(1, foodPref);
+	public void deleteFoodPref(String name, String foodPref) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM FoodPreferences WHERE IGN = ? AND foodPref = ?;");
+		ppstmt.setString(1, name);
+		ppstmt.setString(2, foodPref);
 		ppstmt.executeUpdate();
 	}
 	
@@ -316,9 +343,15 @@ public class Database {
 		return userDonationList;
 	}
 	
+	//For profile page - update user's profile information
+	public void updateUserProfile(ProfileUpdate profileUpdate) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement(profileUpdate.getUpdateQuery());
+		ppstmt.executeUpdate();
+	}
+	
 	//For donation page
 	public TemporaryStoreModel getTempStore(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM TemporaryStore WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
@@ -336,7 +369,7 @@ public class Database {
 	//For donation page
 	public boolean updateTempStore(TemporaryStoreModel tsm) throws SQLException {
 		boolean success = false;
-		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE TemporaryStore SET TemporaryPIN = ?, TemporarySalt = ?, TemporaryTime = ? WHERE IGN = ?;");
 		ppstmt.setString(1, tsm.getTemporaryPIN());
 		ppstmt.setString(2, tsm.getTemporarySalt());
 		ppstmt.setTimestamp(3, tsm.getTemporaryTime());
@@ -373,8 +406,24 @@ public class Database {
 	}
 	
 	//For donation page
+	public void updateTotalDonation(BigDecimal donatedAmount, String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET TotalDonation = ? WHERE IGN = ?;");
+		ppstmt.setBigDecimal(1, donatedAmount);
+		ppstmt.setString(2, name);
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
+	public void updateIsPrivileged(boolean isPrivileged, String name) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET isPriviledged = ? WHERE IGN = ?;");
+		ppstmt.setBoolean(1, isPrivileged);
+		ppstmt.setString(2, name);
+		ppstmt.executeUpdate();
+	}
+	
+	//For donation page
 	public void insertDonation(DonationModel dm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, DonationDate, DonationAmount, OnBehalf) VALUES(?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, Donation_Date, Donation_Amount, OnBehalf) VALUES(?,?,?,?);");
 		ppstmt.setString(1, dm.getiGN());
 		ppstmt.setTimestamp(2, dm.getDonation_Date());
 		ppstmt.setBigDecimal(3, dm.getDonation_Amount());
@@ -493,6 +542,28 @@ public class Database {
 		return potcasts;
 	}
 	
+	public PotcastModel getPotcastByID(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE potcastID = ?");
+		ps.setInt(1, id);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String iGN			= rs.getString("iGN");
+			int potcastID		= rs.getInt("potcastID");
+			String title 		= rs.getString("title");
+			String description	= rs.getString("description");
+			int maxBids			= rs.getInt("maxBids");
+			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
+			int minBid			= rs.getInt("minBid");
+			int startingCR		= rs.getInt("startingCR");
+			int picture 		= rs.getInt("picture");
+			return(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
+					pickupTime, minBid, startingCR, picture));
+		}
+		return null;
+	}
+	
 	//Count Potcasts
 	public int getNumberOfPotcastsFrom(String ign) throws SQLException{
 	    PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE IGN = ? AND PickupTime > ?");
@@ -524,6 +595,36 @@ public class Database {
 		}
 		
 		return pbms;
+	}
+	
+	public String addPotcastBid(PotcastBidModel pbm) throws SQLException{
+		ArrayList<PotcastBidModel> bids = this.getBidsForPotcast(pbm.getPotcastID());
+		PotcastModel pot = this.getPotcastByID(pbm.getPotcastID());
+		
+		if(pbm.getBidAmount().intValue()<=0){
+			return "Bid too low";
+		}
+		//If bid is below minimum
+		if(pbm.getBidAmount().intValue()<pot.getMinBid()){
+			return "Bid too low";
+		}
+		//If more bids than max, check: if input bid is larger than lowest relevant bid
+
+		else if(bids.size()>pot.getMaxBids() && bids.get(bids.size()-pot.getMaxBids()).getBidAmount().intValue()>pbm.getBidAmount().intValue()){
+			return "Bid too low";
+		}
+		else if(pbm.getBidAmount().intValue()>250){
+			return "Bid realistically please";
+		}
+		else{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO PotcastBid (PotcastID, IGN, bidAmount) values (?,?,?)");
+		ps.setInt(1, pbm.getPotcastID());
+		ps.setString(2, pbm.getiGN());
+		ps.setBigDecimal(3, pbm.getBidAmount());
+		
+		ps.executeUpdate();
+		return "Bid accepted!";
+		}
 	}
 	
 	//Potcast Add

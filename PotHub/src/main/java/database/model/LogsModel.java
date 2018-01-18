@@ -13,6 +13,10 @@ public class LogsModel {
 	String logActivity;
 	boolean isSuspicious;
 	
+	public LogsModel() {
+		
+	}
+	
 	public LogsModel(int logID, String iGN, Timestamp logDate, String iPAddress, String logType, String logActivity, boolean isSuspicious) {
 		this.logID = logID;
 		this.iGN = iGN;
