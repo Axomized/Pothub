@@ -269,7 +269,7 @@ body {
 	position: fixed;
 	top: 0;
 	left: 0;
-	z-index: 1;
+	z-index: 2;
 	/*display: none;*/
 	background-color: green;
 	text-align: center;
@@ -294,18 +294,59 @@ body {
 	width: 100%;
 	position: absolute;
 	top: 0;
-	left: 0;
-	z-index: 3;
+	left: 100px;
+	z-index: 4;
 }
 
 #starYellowBackground{
 	position: absolute;
 	top: 0;
-	left: 0;
+	left: 100px;
 	background-color: yellow;
 	width: 200px;
 	height: 99px;
-	z-index: 2;
+	z-index: 3;
+}
+
+/* Popup */
+#popupBackground{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	background-color: rgba(100, 100, 100, 0.7);
+	z-index: 4;
+	display: none;
+}
+
+#popup{
+	width: 600px;
+	height: 60%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 3;
+	margin-top: -10%;
+	margin-left: -300px; /* (Width / 2) */
+	padding: 10px;
+	border: 2px solid #4f2f03;
+	background-color: #f8eee7;
+	border-radius: 5px;
+	text-align: center;
+	display: flex;
+	flex-direction: column;
+}
+
+#videoDiv{
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	width: 150px;
+	height: 100px;
+	background-color: black;
+	z-index: 1;
+	display: none;
 }
 
 /* Footer */

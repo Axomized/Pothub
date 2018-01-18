@@ -15,7 +15,7 @@
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/Leaderboard.css" />
 	</head>
-	<body>
+	<body onload="connect('Blackpepper3', 'TeaParty')">
 	<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript beingenabled. Please enable Javascript and reload this page!</h2></noscript>
 		<!--  Navigation Bar -->
 		<div id="header">
@@ -160,19 +160,26 @@
 					</div>
 				</div>
 			</div>
-			<div id="popup">
-				<div id="userProfileImageAndFood">
-					<img src="../images/crab.jpg">
-					<img src="../images/crab.jpg">
-				</div>
-				<div id="starVoting">
-					<div id="starContainer">
-						<img src="../images/fivestar.png" id="starBlackBackground">
-						<div id="starYellowBackground"></div>
+			<div id="popupBackground">
+				<div id="popup">
+					<div id="userIGN-container">
+						<p id="userIGN"><b>Blackpepper3</b></p>
 					</div>
-					<input type="number" id="starNum" min="0" max="5" step="0.1" value="2.5">
-					<button id="voteBtn">Vote</button>
+					<div id="userProfileImageAndFood">
+						<img src="../images/crab.jpg">
+						<img src="../images/crab.jpg">
+					</div>
+					<div id="starVoting">
+						<div id="starContainer">
+							<img src="../images/fivestar.png" id="starBlackBackground">
+							<div id="starYellowBackground"></div>
+						</div>
+						<input type="number" id="starNum" min="0" max="5" step="0.1" value="2.5">
+						<button id="voteBtn">Vote</button>
+					</div>
 				</div>
+			</div>
+			<div id="videoDiv">
 			</div>
 		</div>
 		
@@ -182,7 +189,12 @@
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
 	    <!-- Latest compiled minified STOMP Script -->
 	    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	    <!-- RTCMultiConnection -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js"></script>
+		<script src="https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
 	    <!-- My Own Script -->
 		<script src="../script/Leaderboard.js"></script>
+		<script src="../script/VideoParticipant2.js"></script>
 	</body>
 </html>

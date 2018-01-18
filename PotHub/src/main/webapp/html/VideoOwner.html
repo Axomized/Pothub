@@ -14,19 +14,28 @@
 			}
 		</style>
 	</head>
-	<body>
+	<body onload="connect('Poof', 'TeaParty')">
 		<div>
-			<button id="backToBacodeBtn">Barcode Scanning</button>
+			<button id="backToBarcodeBtn">Barcode Scanning</button>
 			<button id="startStreamingBtn">Start Streaming</button>
 			<button id="startVotingBtn">Start Voting</button>
 			<button id="changePointBtn">Change current score</button>
 			<button id="endBtn">End Event</button>
 		</div>
-		<video id="localVideo" autoplay></video>
+		<div id="videoDiv"></div>
 		
-	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
-	  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	  	<script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.js" integrity="sha256-pcIHeV2fplzdElupaGGkE0vfUIatGwut2jqr8/paQRU=" crossorigin="anonymous"></script>
-	  	<script src="../script/VideoOwner.js"></script>
+	  	<!-- Latest compiled minified Jquery Script -->
+	    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+	    <!-- Latest compiled minified SockJS Script -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js"></script>
+	    <!-- Latest compiled minified STOMP Script -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
+	    <!-- RTCMultiConnection -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js"></script>
+		<script src="https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	    <!-- My Own Script -->
+	    <script src="../script/VideoOwner.js"></script>
+	  	<script src="../script/VideoParticipant.js"></script>
 	</body>
 </html>
