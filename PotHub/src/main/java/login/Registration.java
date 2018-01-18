@@ -116,9 +116,7 @@ public class Registration extends HttpServlet {
 		
 		try 
 		{
-			Database db1 = new Database(0);
-			//LoginModel lm = db1.getEmail(email);
-		
+			Database db1 = new Database(0);		
 		
 			if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
 			{	

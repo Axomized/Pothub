@@ -60,7 +60,7 @@ public class LoginPage extends HttpServlet {
 		+ "	</head>"
 		+ "	<body>"
 		+ "		<div class='container'>"
-		+ "	<img src=''>"
+		+ "	<img src='images/tomato.jpg'>"
 		+ "	<h2>Sign In</h2>"
 		+ "		<form action='Login' method='POST'>"
 		+ "			<div class='form-input'>"
@@ -113,18 +113,31 @@ public class LoginPage extends HttpServlet {
 			try 
 			{
 				Database db = new Database(0);
-				LoginModel lm = db.getLogin(enteredPassword, enteredEmail);
-				DatabaseUserModel dum = db.getIGNbyEmail(lm.getEmail());
-								
-				// Hash the password
-			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
 			    
-			    if (lm.getEmail().equals(enteredEmail) && lm.getPassword().equals(PBKDF2.toHex(hash)) )
+			    if(db.getUsername(enteredEmail) == true)
 			    {
-					System.out.println("Login Success!");
-					HttpSession session = request.getSession();
-					session.setAttribute("username", dum.getiGN());
-					response.sendRedirect("Forum");
+			    	LoginModel lm = db.getLogin(enteredPassword, enteredEmail);
+					DatabaseUserModel dum = db.getIGNbyEmail(lm.getEmail());
+					
+					// Hash the password
+				    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
+			    	
+			    	if (lm.getEmail().equals(enteredEmail) && lm.getPassword().equals(PBKDF2.toHex(hash)) )
+			    	{
+			    		System.out.println("Login Success!");
+			    		HttpSession session = request.getSession();
+			    		session.setAttribute("username", dum.getiGN());
+			    		response.sendRedirect("Forum");
+			    	}
+			    	
+			    	else
+				    {
+				    	System.out.println("Login fail!");
+				    	out.println("<script type=\"text/javascript\">");
+						out.println("alert('Invalid username or password.');");
+						out.println("</script>");
+						doGet(request, response);
+				    }
 			    }
 			    
 			    else
