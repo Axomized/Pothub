@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -15,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.FileTableModel;
-import database.model.ImageTableModel;
 
 public class VideoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;

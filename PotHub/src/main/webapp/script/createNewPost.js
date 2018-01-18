@@ -7,7 +7,7 @@ function hideProfileDropdown() {
 }
 
 function submitting(){
-	alert("Are you sure?");
+	return confirm("Are you sure?");
 }
 
 function goback(){

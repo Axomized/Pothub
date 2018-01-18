@@ -7,15 +7,13 @@ public class CommentModel {
 	int postID;
 	Date date;
 	String iGN;
-	int comment1;
 	String description;
 
-	public CommentModel(int commentID, int postID, Date date, String iGN, int comment1, String description) {
+	public CommentModel(int commentID, int postID, Date date, String iGN, String description) {
 		this.commentID = commentID;
 		this.postID = postID;
 		this.date = date;
 		this.iGN = iGN;
-		this.comment1 = comment1;
 		this.description = description;
 	}
 
@@ -39,11 +37,6 @@ public class CommentModel {
 		return iGN;
 	}
 
-	public int getComment1() {
-		return comment1;
-	}
-
-
 	public String getDescription() {
 		return description;
 	}
@@ -64,10 +57,6 @@ public class CommentModel {
 		this.iGN = iGN;
 	}
 
-	public void setComment1(int comment1) {
-		this.comment1 = comment1;
-	}
-	
 	public void setDescription(String description) {
 		this.description = description;
 	}

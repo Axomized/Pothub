@@ -714,11 +714,10 @@ public class Database {
 			int postId = rs.getInt("postID");
 			Date d = rs.getDate("date");
 			String ign = rs.getString("iGN");
-			int comment = rs.getInt("comment1");
 			String description = rs.getString("description");
 			
 			
-			comments.add(new CommentModel(commentId, postId, d, ign, comment, description));
+			comments.add(new CommentModel(commentId, postId, d, ign, description));
 		}
 		return comments;
 	}
@@ -728,19 +727,17 @@ public class Database {
 		ppstmt.setInt(1, cM.getPostID());
 		ppstmt.setDate(2, cM.getDate());
 		ppstmt.setString(3, cM.getiGN());
-		ppstmt.setInt(4, cM.getComment1());
-		ppstmt.setString(5, cM.getDescription());
+		ppstmt.setString(4, cM.getDescription());
 
 		executeUpdate(ppstmt);
 	}
 	
 	public void addComment(CommentModel c) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Comment(postID, date, iGN, comment1, description) VALUES (?,?,?,?,?); ");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Comment(postID, date, iGN, description) VALUES (?,?,?,?); ");
 		ppstmt.setInt(1, c.getPostID());
 		ppstmt.setDate(2, c.getDate());
 		ppstmt.setString(3, c.getiGN());
-		ppstmt.setInt(4, c.getComment1());
-		ppstmt.setString(5, c.getDescription());
+		ppstmt.setString(4, c.getDescription());
 	
 		executeUpdate(ppstmt);
 	}
@@ -926,11 +923,19 @@ public class Database {
 	
 	//Insert into FileTable
 	public void insertFileTable(FileTableModel fTM) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FileTable(FileName, Data, FileSize) VALUES (?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FileTable(FileName, Data) VALUES (?,?);");
 		ppstmt.setString(1, fTM.getFileName());
 		ppstmt.setBytes(2, fTM.getData());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public int getFileCount() throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT MAX(FileID) as maxCount from FileTable;");
+		ResultSet rs = ppstmt.executeQuery();
+		rs.next();
+		int count	= rs.getInt("maxCount");
+		return count;
 	}
 	
 	//Get FileTable FileID
@@ -942,6 +947,17 @@ public class Database {
 		rs.next();
 		String fileID	= rs.getString("FileID");
 		return fileID;
+	}
+	//Get All File From File Table
+	public ArrayList<Integer>  getFileID() throws SQLException {
+		ArrayList<Integer> ft = new ArrayList<Integer>();
+		ResultSet rs = getResultSet("SELECT FileID FROM FileTable");
+		while(rs.next()) {
+			int FileId = rs.getInt("FileID");
+
+			ft.add(FileId);
+		}
+		return ft;
 	}
 	
 	//Get FileTable by fileName

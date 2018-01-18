@@ -5,6 +5,9 @@ public class FileTableModel {
 	String fileName;
 	byte[] data; // Might set to InputStream
 
+	public FileTableModel() {
+	}
+	
 	public FileTableModel(int fileID, String fileName, byte[] data) {
 		this.fileID = fileID;
 		this.fileName = fileName;
@@ -21,11 +24,6 @@ public class FileTableModel {
 
 	public byte[] getData() {
 		return data;
-	}
-
-
-	public FileTableModel() {
-		super();
 	}
 
 	public void setFileID(int fileID) {

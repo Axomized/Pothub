@@ -1,10 +1,13 @@
 package forum;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Scanner;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -103,8 +106,43 @@ public class discussion extends HttpServlet {
 						+ "							<div id='name'>Submitted by:" + qw.getiGN() + "</div>"
 						+ "							<div id='date'>" + qw.getDate() + "</div>"
 						+ "						</div>"
-						+ "					</div>"
-						);
+						+ "						<div>"
+						+ "							<p></p>"//for displaying text
+						+ "							<p><a href=''></a></p>");// for displaying URL);
+						
+						
+						
+						if(!(qw.getFileAttachment().equals(null)) || !(qw.getFileAttachment().equals(""))) {
+							String ii = qw.getFileAttachment();
+							ArrayList <Integer> IDs = new ArrayList<Integer>();
+							Scanner sc = new Scanner(ii);
+							sc.useDelimiter(";");
+							while(sc.hasNext()) {
+								IDs.add(sc.nextInt());
+							}
+							
+							for(int hi: IDs) {
+								String fileName = dbms.getFileNameByFileID(hi);
+								int extensionPos = fileName.lastIndexOf('.');
+								String ext = fileName.substring(extensionPos);
+								if(ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".gif")) {
+									out.println("<img src='/PotHub/Video/" +  fileName + "' width='200' height='200' />");
+								}
+								else if(ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".webm") || ext.equalsIgnoreCase(".ogg")) {
+									out.println("<video src='/PotHub/Video/" +  fileName + "' autoplay loop controls width='200' height='200'/>");
+									out.println("</div></div>");
+								}
+								/*else {
+									File tempFile = File.createTempFile(fileName, ".tmp", null);
+									FileOutputStream fos = new FileOutputStream(tempFile);
+									fos.write(d.getFileData());
+									out.println("");
+								}
+							*/
+							
+							}
+							
+						}
 									}
 								}
 								}
@@ -120,7 +158,8 @@ public class discussion extends HttpServlet {
 						  "					<div>"
 						+ "						<form action='discussion' method='POST'>"	
 						+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
-						+"						<button type='submit' id='postBtn' cursor:pointer;' class='btn'>Post/Submit</button>\""
+						+ "						<input type='hidden' name='jesus' value='" + ddd  + "'>"
+						+ "						<input type='submit' value='Post/Submit' id='postBtn' cursor:pointer;' class='btn'>"
 						+ "						</form>"
 						+ "					</div>"
 						+ "					<div id='comments'>"
@@ -199,12 +238,12 @@ public class discussion extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		String haha = request.getParameter("rtor");
+		int id = Integer.parseInt(request.getParameter("jesus"));
 		java.sql.Date date1 = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		try {
 			Database ttttt = new Database(2);
 			CommentModel cm = new CommentModel();
-			cm.setPostID(1);
-			cm.setComment1(10);
+			cm.setPostID(id);
 			cm.setDate(date1);
 			cm.setDescription(haha);
 			cm.setiGN("GordonRamsey");
@@ -283,7 +322,7 @@ public class discussion extends HttpServlet {
 							Database ttttt = new Database(2);
 							ArrayList<CommentModel> cc = ttttt.getCommentModel();
 							for(CommentModel d:cc) {
-						
+								if(d.getPostID() == id) {
 						out.println(
 						
 						  "						<div class='mycomment'>"
@@ -307,6 +346,7 @@ public class discussion extends HttpServlet {
 						+ "							</div>"
 						+ "						</div>"
 						+ "						<hr>");
+							}
 							}
 							
 						} catch (ClassNotFoundException | SQLException e) {

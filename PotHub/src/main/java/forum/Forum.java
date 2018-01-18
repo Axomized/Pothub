@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
+import database.model.CommentModel;
 import database.model.ForumPostModel;
 
 /**
@@ -69,8 +70,8 @@ public class Forum extends HttpServlet {
 						+ "				<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
-						+ "				<a href='html/Profile.html'>Profile</a>"
-						+ "				<a href='html/LoginPage.html'>Logout</a>"
+						+ "				<a href='Profile'>Profile</a>"
+						+ "				<a href='LoginPage'>Logout</a>"
 						+ "			</div>"
 						+ "		</div>"	
 						
@@ -79,8 +80,8 @@ public class Forum extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='PrivateMesage.html'>Private Message</a></li>"
-						+ "				<li id='levent'><a href='EventPage.html'>Event</a></li>"
+						+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
+						+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
 						+ "				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
@@ -90,7 +91,7 @@ public class Forum extends HttpServlet {
 						+ "			          <li><a href='#'>Joined PotCast</a></li>"
 						+ "			        </ul>"
 						+ "			      </li>"
-						+ "				<li id='ldonate'><a href='Donation.html'>Donate</a></li>"
+						+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
 						+ "			</ul>"
 						+ "		</div>"
 						+ "	</div>"
@@ -114,7 +115,16 @@ public class Forum extends HttpServlet {
 						try {
 							Database dbms = new Database(2);
 							ArrayList<ForumPostModel> fa = dbms.getForumModel();
+							ArrayList<CommentModel> cmm = dbms.getCommentModel();
+							
 							for(ForumPostModel qw: fa){	
+								int count = 0;
+								for(CommentModel df: cmm) {
+									if(qw.getPostID() == df.getPostID()) {
+										count ++;
+									}
+								}
+								
 								out.println(
 							
 						  "					<div class='cb'>" 
@@ -138,7 +148,7 @@ public class Forum extends HttpServlet {
 						+ "								<p>" + qw.getDescription() + "</p>"
 						+ "							</div>"
 						+ "							<div class='commentscount'>"
-						+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>31"
+						+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>" + count +""
 						+ "									<i class=\'fa fa-comments-o\' style=\'font-size:24px\'></i>"
 						+ "								<p>"
 						+ "							</div>"

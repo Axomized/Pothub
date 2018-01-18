@@ -148,6 +148,18 @@
 		<description></description>
 		<servlet-class>profile.RemoveFoodPref</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ParticipantLeaderboardPage</servlet-name>
+		<display-name>ParticipantLeaderboardPage</display-name>
+		<description></description>
+		<servlet-class>event.leaderboard.ParticipantLeaderboardPage</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>Test2</servlet-name>
+		<display-name>Test2</display-name>
+		<description></description>
+		<servlet-class>forum.Test2</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -243,5 +255,13 @@
 	<servlet-mapping>
 		<servlet-name>RemoveFoodPref</servlet-name>
 		<url-pattern>/RemoveFoodPref</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ParticipantLeaderboardPage</servlet-name>
+		<url-pattern>/ParticipantLeaderboardPage</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Test2</servlet-name>
+		<url-pattern>/Test2</url-pattern>
 	</servlet-mapping>
 </web-app>
