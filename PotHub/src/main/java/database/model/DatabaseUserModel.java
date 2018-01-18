@@ -51,10 +51,9 @@ public class DatabaseUserModel {
 	}
 	
 	//For profile page
-	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo, 
+	public DatabaseUserModel(String email, String contact_No, char gender, String bio, String address, String unitNo, 
 			int profilePic, Date joinDate, int cookingRank, int points, BigDecimal totalDonation, boolean isPriviledged) {
 		this.email = email;
-		this.iGN = iGN;
 		this.contact_No = contact_No;
 		this.gender = gender;
 		this.bio = bio;

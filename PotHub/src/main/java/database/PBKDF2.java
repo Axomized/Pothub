@@ -59,6 +59,13 @@ public class PBKDF2 {
 	    return null;
 	}
 	
+	public byte[] createSalt() {
+		SecureRandom random = new SecureRandom();
+	    byte[] salt = new byte[SALT_BYTES];
+	    random.nextBytes(salt);
+	    return salt;
+	}
+	
 	public static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) throws NoSuchAlgorithmException, InvalidKeySpecException
 	{
 	    PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8);
@@ -86,4 +93,16 @@ public class PBKDF2 {
         else
             return hex;
     }
+	
+	public String getHashedPass(String password, byte[] salt) {
+		try {
+			String hashedPassword = toHex(pbkdf2(password.toCharArray(), salt, PBKDF2_ITERATIONS, HASH_BYTES));
+			return hashedPassword;
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			e.printStackTrace();
+		}
+		return password;
+	}
 }

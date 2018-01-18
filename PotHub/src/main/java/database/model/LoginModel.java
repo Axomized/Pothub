@@ -20,6 +20,11 @@ public class LoginModel {
 		
 	}
 
+	public LoginModel(String password, String salt) {
+		this.password = password;
+		this.salt = salt;
+	}
+
 	public String getEmail() {
 		return email;
 	}

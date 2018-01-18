@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.PBKDF2;
+import database.model.DatabaseUserModel;
+import database.model.LoginModel;
 
 public class ChangePassword extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -112,23 +115,23 @@ public class ChangePassword extends HttpServlet {
 				+ "									<span id='editProfileInfoSpan'>Change your password.</span>"
 				+ "								</div>"
 				+ "							</div>"
-				+ "							<form id='changePassForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
+				+ "							<form id='changePassForm' autocomplete='off' method='post'>"
 				+ "								<div id='passwordDiv' class='divWrap'>"
 				+ "									<div id='oldPassDiv'>"
 				+ "										<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
-				+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' oninput='startedTyping(this)'>"
+				+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' required>"
 				+ "									</div>"
 				+ "									<div id='newPassDiv' class='innerDiv'>"
 				+ "										<label id='newPassLabel' for='newPassInput'>New password</label>"
-				+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' oninput='startedTyping(this)'>"
+				+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' required>"
 				+ "									</div>"
 				+ "									<div id='confirmPassDiv' class='innerDiv'>"
 				+ "										<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
-				+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' oninput='startedTyping(this)'>"
+				+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' required>"
 				+ "									</div>"
 				+ "								</div>"
 				+ "								<div id='updateBtnDiv'>"
-				+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile' disabled>"
+				+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile'>"
 				+ "								</div>"
 				+ "							</form>"
 				+ "						</div>"
@@ -163,6 +166,53 @@ public class ChangePassword extends HttpServlet {
 		
 		try {
 			Database db = new Database(2);
+			DatabaseUserModel dum = db.getUserProfile(username);
+			PBKDF2 hashClass = new PBKDF2();
+			LoginModel lm = db.getUserPassSalt(dum.getEmail());
+			LoginModel lmUpdate = new LoginModel();
+			byte[] decodedSalt = PBKDF2.fromHex(lm.getSalt());
+			byte[] newSalt = hashClass.createSalt();
+			String newEncodedSalt = PBKDF2.toHex(newSalt);
+			String oldPass = request.getParameter("oldPassInput");
+			String newPass = request.getParameter("newPassInput");
+			String confirmPass = request.getParameter("confirmPassInput");
+			String errorMessage = "It didn't go inside.";
+			boolean incorrectPass = false;
+			boolean passReq = false;
+			boolean oldNewSame = false;
+			boolean passNotMatch = false;
+			
+			if (validateInputString(oldPass, newPass, confirmPass)) {
+				if ((hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword())) && (!newPass.equals(oldPass) && newPass.length() >= 8) && (confirmPass.equals(newPass))) {
+					lmUpdate.setPassword(hashClass.getHashedPass(confirmPass, newSalt));
+					lmUpdate.setSalt(newEncodedSalt);
+					lmUpdate.setEmail(dum.getEmail());
+					//db.updateUserPassAndSalt(lmUpdate);
+					System.out.println("Can change password successfully");
+				}
+				System.out.println(!hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword()));
+				if (!hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword())) {
+					incorrectPass = true;
+					errorMessage = "Password is incorrect.";
+					System.out.println(errorMessage);
+				}
+				if (newPass.equals(oldPass)) {
+					oldNewSame = true;
+					errorMessage = "New password cannot be the same as old one.";
+					System.out.println(errorMessage);
+				}
+				if (newPass.length() < 8) {
+					passReq = true;
+					errorMessage = "Password must have at least 8 characters.";
+					System.out.println(errorMessage);
+				}
+				if (!confirmPass.equals(newPass)) {
+					passNotMatch = true;
+					errorMessage = "Password does not match with the new one.";
+					System.out.println(errorMessage);
+				}
+			}
+			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -246,26 +296,26 @@ public class ChangePassword extends HttpServlet {
 					+ "									<span id='editProfileInfoSpan'>Change your password.</span>"
 					+ "								</div>"
 					+ "							</div>"
-					+ "							<form id='changePassForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
+					+ "							<form id='changePassForm' autocomplete='off' method='post'>"
 					+ "								<div id='passwordDiv' class='divWrap'>"
 					+ "									<div id='oldPassDiv'>"
 					+ "										<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
-					+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' oninput='startedTyping(this)'>"
+					+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' required>"
 					+ "									</div>"
 					+ "									<div class='errorMsg'>Password is incorrect.</div>"
 					+ "									<div id='newPassDiv' class='innerDiv'>"
 					+ "										<label id='newPassLabel' for='newPassInput'>New password</label>"
-					+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' oninput='startedTyping(this)'>"
+					+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' required>"
 					+ "									</div>"
 					+ "									<div class='errorMsg'>Password must have at least 8 characters.</div>"
 					+ "									<div id='confirmPassDiv' class='innerDiv'>"
 					+ "										<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
-					+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' oninput='startedTyping(this)'>"
+					+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' required>"
 					+ "									</div>"
 					+ "									<div class='errorMsg'>Password does not match the new one.</div>"
 					+ "								</div>"
 					+ "								<div id='updateBtnDiv'>"
-					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile' disabled>"
+					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile'>"
 					+ "								</div>"
 					+ "							</form>"
 					+ "						</div>"
@@ -291,6 +341,13 @@ public class ChangePassword extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	private boolean validateInputString(String oldPass, String newPass, String confirmPass) {
+		if ((oldPass != null && !oldPass.isEmpty()) && (newPass != null && !newPass.isEmpty()) && (confirmPass != null && !confirmPass.isEmpty())) {
+			return true;
+		}
+		return false;
 	}
 
 }

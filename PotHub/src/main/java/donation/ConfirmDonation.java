@@ -37,6 +37,7 @@ public class ConfirmDonation extends HttpServlet {
 		else {
 			response.sendRedirect("Login");
 		}
+		
 		try {
 			Database db = new Database(0);
 			TemporaryStoreModel tsmCheck = db.getTempStore(username);

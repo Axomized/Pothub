@@ -1,21 +1,27 @@
 package profile;
 
 import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Paths;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 
+import org.apache.commons.compress.utils.IOUtils;
 import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.DatabaseUserModel;
 
+@MultipartConfig(fileSizeThreshold = 1024*1024*2, maxFileSize = 1024*1024*5, maxRequestSize = 1024*1024*5*5)
 public class EditProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -119,7 +125,7 @@ public class EditProfile extends HttpServlet {
 					+ "									<span id='editProfileInfoSpan'>Change your gender, contact number, bio and address.</span>"
 					+ "								</div>"
 					+ "							</div>"
-					+ "							<form id='profileForm' autocomplete='off' method='post'>"
+					+ "							<form id='profileForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
 					+ "								<div id='editProfileDiv' class='row'>"
 					+ "									<div id='userInfoDiv' class='col-sm-9'>"
 					+ "										<div id='genderDiv' class='divWrap'>"
@@ -155,9 +161,14 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "									</div>"
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
-					+ "										<div id='profileImgDiv'>"
-					+ "											<img src='images/profile.png' height='150' width='150'/>"
-					+ "										</div>"
+					+ "										<div id='profileImgDiv'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='150' width='150'/>");
+					}
+					out.print("								</div>"
 					+ "										<div id='editProfileImgDiv'>"
 					+ "											<label id='profilePicLabel' for='profilePicFile'>"
 					+ "											<input type='file' id='profilePicFile' name='profilePicFile' accept='image/*' onchange='checkFile()'>"
@@ -216,6 +227,9 @@ public class EditProfile extends HttpServlet {
 			String bio = request.getParameter("bioText");
 			String address = request.getParameter("postalCodeInput");
 			String unitNo = request.getParameter("unitNoInput");
+			Part profilePicPart = request.getPart("profilePicFile");
+			String profilePicName = Paths.get(profilePicPart.getSubmittedFileName()).getFileName().toString();
+			byte[] profilePicByte = IOUtils.toByteArray(profilePicPart.getInputStream());
 			
 			if (validateInputs(gender, contact_No, bio, address, unitNo)) {
 				if (gender != null && !gender.isEmpty()) {
@@ -247,6 +261,10 @@ public class EditProfile extends HttpServlet {
 				}
 				else {
 					System.out.println("Nothing for unitNo");
+				}
+				if (profilePicName != null && !profilePicName.isEmpty()) {
+					profileUpdate.setProfilePicName(profilePicName);
+					profileUpdate.setProfilePicByte(profilePicByte);
 				}
 				
 				db.updateUserProfile(profileUpdate);

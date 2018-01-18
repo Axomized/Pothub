@@ -509,14 +509,11 @@ public class Donation extends HttpServlet {
 	}
 	
 	private boolean validateInputString(String donateAmt, String ccName, String ccNumber, String ccMonth, String ccYear, String securityCode) {
-		boolean isNotNull = false;
-		
 		if ((donateAmt != null && !donateAmt.isEmpty()) && (ccName != null && !ccName.isEmpty()) && (ccNumber != null && !ccNumber.isEmpty()) 
 				&& (ccMonth != null && !ccMonth.isEmpty()) && (ccYear != null && !ccYear.isEmpty()) && (securityCode != null && !securityCode.isEmpty())) {
-			isNotNull = true;
+			return true;
 		}
-		
-		return isNotNull;
+		return false;
 	}
 
 }

@@ -252,7 +252,7 @@ body {
 #profilePicLabel {
 	display: inline-block;
 	height: 25px;
-	width: 12em;
+	width: 12.5em;
 	font-weight: 600;
     outline: none;
     color: white;
@@ -395,7 +395,7 @@ body {
 
 #updateBtn {
 	height: 25px;
-    width: 12em;
+    width: 12.5em;
     font-weight: 600;
     outline: none;
     color: white;

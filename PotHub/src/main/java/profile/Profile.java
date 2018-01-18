@@ -91,11 +91,16 @@ public class Profile extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='content' class='row'>"
 					+ "					<div id='profilePicDiv' class='col-sm-3'>"
-					+ "						<div id='profileImgDiv'>"
-					+ "							<img src='images/profile.png' height='50%' width='50%'/>"
-					+ "						</div>"
+					+ "						<div id='profileImgDiv'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='150' width='150'/>");
+					}
+					out.print("				</div>"
 					+ "						<div id='displayNameDiv'>"
-					+ "							<span id='displayNameSpan'>" + dum.getiGN() + "</span>"
+					+ "							<span id='displayNameSpan'>" + username + "</span>"
 					+ "						</div>"
 					+ "						<div id='joinedDiv'>"
 					+ "							<span id='joinedSpan'>Joined on " + dum.dateFormat(dum.getJoinDate()) + "</span>"

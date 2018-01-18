@@ -45,7 +45,7 @@ public class HashPIN {
 		return saltDecoded;
 	}
 	
-	public String getHashedPIN(String password, byte [] salt) {
+	public String getHashedPIN(String password, byte[] salt) {
 		Base64.Encoder enc = Base64.getEncoder();
 		String hashedPIN = enc.encodeToString(hashPIN(password, salt, iterations, keyLength));
 		return hashedPIN;

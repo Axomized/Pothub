@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.FoodPreferences;
 
 public class FoodPref extends HttpServlet {
@@ -30,8 +31,10 @@ public class FoodPref extends HttpServlet {
 		else {
 			response.sendRedirect("Login");
 		}
+		
 		try {
 			Database db = new Database(0);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref(username);
 			
 			PrintWriter out = response.getWriter();
@@ -97,19 +100,26 @@ public class FoodPref extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='content' class='row'>"
 					+ "					<div id='profilePicDiv' class='col-sm-3'>"
-					+ "						<div id='profileImgDiv'>"
-					+ "							<img src='images/profile.png' height='50%' width='50%'/>"
-					+ "						</div>"
+					+ "						<div id='profileImgDiv'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='150' width='150'/>");
+					}
+					out.print("				</div>"
 					+ "						<div id='displayNameDiv'>"
-					+ "							<span id='displayNameSpan'>Placeholder</span>"
+					+ "							<span id='displayNameSpan'>" + username + "</span>"
 					+ "						</div>"
 					+ "						<div id='joinedDiv'>"
-					+ "							<span id='joinedSpan'>Joined on 31/12/2016</span>"
-					+ "						</div>"
-					+ "						<div id='privilegedDiv'>"
-					+ "							<span id='privilegedSpan'>Privileged</span>"
-					+ "						</div>"
-					+ "						<div id='buttonsDiv'>"
+					+ "							<span id='joinedSpan'>Joined on " + dum.dateFormat(dum.getJoinDate()) + "</span>"
+					+ "						</div>");
+					if (dum.isPriviledged() == true) {
+						out.print("<div id='privilegedDiv'>"
+								+ "	<span id='privilegedSpan'>Privileged</span>"
+								+ "</div>");
+					}
+					out.print("				<div id='buttonsDiv'>"
 					+ "							<button id='addBtn' class='editBtn' onclick='toAddFoodPref()'>Add food</button>"
 					+ "							<button id='removeBtn' class='editBtn' onclick='toRemoveFoodPref()'>Remove food</button>"
 					+ "						</div>"

@@ -5,14 +5,3 @@ function showProfileDropdown() {
 function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
-
-function startedTyping(inputsForFilled) {
-	if (inputsForFilled.value.length > 0) {
-		document.getElementById("updateBtn").disabled = false;
-		document.getElementById("updateBtn").style.cursor = "pointer";
-	}
-	else {
-		document.getElementById("updateBtn").disabled = true;
-		document.getElementById("updateBtn").style.cursor = "not-allowed";
-	}
-}

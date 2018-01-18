@@ -233,18 +233,18 @@ public class Database {
 	}
 	
 	//For Registration Page - Email
-		public LoginModel getEmail(String enteredEmail) throws SQLException {
-			PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM Login WHERE Email = ?;");
-			ppstmt.setString(1, enteredEmail);
-			ResultSet rs = ppstmt.executeQuery();
-			while (rs.next()) {
-				String email = rs.getString("Email");
-				return new LoginModel(email);
-			}
-			
-			return null;
+	public LoginModel getEmail(String enteredEmail) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM Login WHERE Email = ?;");
+		ppstmt.setString(1, enteredEmail);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String email = rs.getString("Email");
+			return new LoginModel(email);
 		}
-	
+		
+		return null;
+	}
+		
 	//For admin panel - inserting new food for user's food preferences
 	public void insertNewFood(FoodListModel flm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO FoodList(Food, FoodType) VALUES(?,?);");
@@ -255,12 +255,11 @@ public class Database {
 	
 	//For profile page - user's profile information
 	public DatabaseUserModel getUserProfile(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, IGN, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			String email 				= rs.getString("Email");
-			String iGN					= rs.getString("IGN");
 			String contact_No			= rs.getString("Contact_No");
 			char gender					= rs.getString("Gender").charAt(0);
 			String bio					= rs.getString("Bio");
@@ -272,7 +271,7 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
+			return new DatabaseUserModel(email, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
 		}
 		return null;
 	}
@@ -346,6 +345,27 @@ public class Database {
 	//For profile page - update user's profile information
 	public void updateUserProfile(ProfileUpdate profileUpdate) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement(profileUpdate.getUpdateQuery());
+		ppstmt.executeUpdate();
+	}
+	
+	public LoginModel getUserPassSalt(String email) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Password, Salt FROM Login WHERE Email = ?;");
+		ppstmt.setString(1, email);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String password = rs.getString("Password");
+			String salt 	= rs.getString("Salt");
+			return new LoginModel(password, salt);
+		}
+		return null;
+	}
+	
+	//For profile page - changing user's passwords
+	public void updateUserPassAndSalt(LoginModel lm) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ?, Salt = ? WHERE Email = ?;");
+		ppstmt.setString(1, lm.getPassword());
+		ppstmt.setString(2, lm.getSalt());
+		ppstmt.setString(3, lm.getEmail());
 		ppstmt.executeUpdate();
 	}
 	

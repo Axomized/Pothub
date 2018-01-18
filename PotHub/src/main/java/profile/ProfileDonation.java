@@ -9,8 +9,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.DonationModel;
 
 public class ProfileDonation extends HttpServlet {
@@ -21,8 +23,18 @@ public class ProfileDonation extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
+		
 		try {
 			Database db = new Database(0);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			ProfileDonationSearch search = new ProfileDonationSearch();
 			String onBehalf = request.getParameter("onBehalf");
 			String amount = request.getParameter("amount");
@@ -99,23 +111,37 @@ public class ProfileDonation extends HttpServlet {
 					+ "		</div>"
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
-					+ "				<div id='content' class='row'>"
-					+ "					<div id='profilePicDiv' class='col-sm-4'>"
-					+ "						<div id='profileImgDiv'>"
-					+ "							<img src='images/profile.png' height='50%' width='50%'/>"
-					+ "						</div>"
-					+ "						<div id='displayNameDiv'>"
-					+ "							<span id='displayNameSpan'>Placeholder</span>"
-					+ "						</div>"
+					+ "				<div id='profileNavDiv'>"
+					+ "					<div id='profileNavList'>"
+					+ "						<a href='Profile'>About</a>"
+					+ "						<a href='FoodPref'>Food Preferences</a>"
+					+ "						<a href='ProfileDonation' id='defaultSelected'>Donation History</a>"
+					+ "						<a href='EditProfile'>Settings</a>"
 					+ "					</div>"
-					+ "					<div id='profileContentDiv' class='col-sm-8'>"
-					+ "						<div id='profileNavDiv'>"
-					+ "							<div id='profileNavList'>"
-					+ "								<a href='Profile'>About</a>"
-					+ "								<a href='FoodPref'>Food Preferences</a>"
-					+ "								<a href='ProfileDonation' id='defaultSelected'>Donation History</a>"
-					+ "							</div>"
+					+ "				</div>"
+					+ "				<div id='content' class='row'>"
+					+ "					<div id='profilePicDiv' class='col-sm-3'>"
+					+ "						<div id='profileImgDiv'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='150' width='150'/>");
+					}
+					out.print("				</div>"
+					+ "						<div id='displayNameDiv'>"
+					+ "							<span id='displayNameSpan'>" + username + "</span>"
 					+ "						</div>"
+					+ "						<div id='joinedDiv'>"
+					+ "							<span id='joinedSpan'>Joined on " + dum.dateFormat(dum.getJoinDate()) + "</span>"
+					+ "						</div>");
+					if (dum.isPriviledged() == true) {
+						out.print("<div id='privilegedDiv'>"
+								+ "	<span id='privilegedSpan'>Privileged</span>"
+								+ "</div>");
+					}
+					out.print("			</div>"
+					+ "					<div id='profileContentDiv' class='col-sm-9'>"
 					+ "						<div id='aboutContentDiv'>"
 					+ "							<div id='dropdownDivWrap'>"
 					+ "								<div id='dropdownDiv'>"
@@ -128,11 +154,9 @@ public class ProfileDonation extends HttpServlet {
 					+ "												<div id='onBehalfDiv' class='searchDiv'>"
 					+ "													<label id='onBehalfLabel' for='onBehalf'>Search by donee:</label>"
 					+ "													<input type='text' id ='onBehalf' class='searchInput' name='onBehalf' list='onBehalfList'>"
-					+ "													<datalist id='onBehalfList'>");
-					for (String userIGN : db.getDatabaseUserIGN()) {
-						out.print("<option value='" + userIGN + "'></option>");
-					}
-					out.print("											</datalist>"
+					+ "													<datalist id='onBehalfList'>"
+					+ "														"
+					+ "													</datalist>"
 					+ "												</div>"
 					+ "												<div id=amountDiv' class='searchDiv'>"
 					+ "													<label id='amountLabel' for='amount'>Search by amount:</label>"
@@ -174,15 +198,83 @@ public class ProfileDonation extends HttpServlet {
 					+ "											<th>On Behalf</th>"
 					+ "										</tr>"
 					+ "									</thead>"
-					+ "									<tbody>");
-					for (DonationModel dm : db.getUserDonation(search, "GordonRamsey")) {
-						out.print("<tr>"
-								+ "	<td>" + dm.getDonation_Date() + "</td>"
-								+ "	<td>" + dm.getDonation_Amount() + "</td>"
-								+ "	<td>" + dm.getOnBehalf() + "</td>"
-								+ "</tr>");
-					}
-					out.print("							</tbody>"
+					+ "									<tbody>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "										<tr>"
+					+ "											<td>22/12/2017</td>"
+					+ "											<td>$10</td>"
+					+ "											<td>NIL</td>"
+					+ "										</tr>"
+					+ "									</tbody>"
 					+ "								</table>"
 					+ "							</div>"
 					+ "						</div>"
