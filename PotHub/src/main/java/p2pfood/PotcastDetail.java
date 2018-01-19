@@ -43,8 +43,19 @@ public class PotcastDetail extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		boolean canBid = true;
+		String username="";
+		HttpSession session = request.getSession(false);
+		if (session == null) {
+			response.sendRedirect("Login");
+		}
+		else{
+			username=(String) session.getAttribute("username");
+		}
+		
 		int potcastID=0;
 		if (request.getParameter("potcastID") == null) {
+			System.out.println("Escaping because potcastID is null");
 			response.sendRedirect("p2plist");
 		}
 		else{
@@ -60,9 +71,25 @@ public class PotcastDetail extends HttpServlet {
 			DatabaseUserModel dbu = db.getDatabaseUserByIGN(pm.getiGN());
 
 			if (dbu == null){
+				System.out.println("Escaping because dbu is null");
 				response.sendRedirect("p2plist");
 			}
 			ArrayList<PotcastBidModel> bids = db.getBidsForPotcast(pm.getPotcastID());
+			
+			//Check if can bid
+			if(System.currentTimeMillis()>pm.getBidStopTime().getTime()){
+				canBid=false;
+			}
+			for(PotcastBidModel bid : bids){
+				if(bid.getiGN().equals(username)){
+					canBid=false;
+				}
+			}
+			if(pm.getiGN().equals(username)){
+				canBid=false;
+			}
+			
+			
 			pw.append(
 					"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 							+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
@@ -85,7 +112,7 @@ public class PotcastDetail extends HttpServlet {
 					+ "<div id='companyTitle'>" + "<h1>PotHub</h1>" + "</div>"
 					+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
-					+ "<span id='welcomeSpan'>Welcome, [Placeholder]</span>" + "</div>"
+					+ "<span id='welcomeSpan'>Welcome, "+username+"</span>" + "</div>"
 					+ "<div id='profileDropdownDiv'>" + "<a href='html/Profile.html'>Profile</a>"
 					+ "<a href='html/LoginPage.html'>Logout</a>" + "</div>" + "</div>" + "</div>"
 					+ "	<div id='navigation'>" + "		<div class='container-fluid'>"
@@ -134,20 +161,17 @@ public class PotcastDetail extends HttpServlet {
 			for (PotcastBidModel bid : bids) {
 				pw.append("<li>" + bid.getiGN() + "</li>");
 			}
-			pw.append("</ul>" + "</div>" + "<div id='foodDesc'>");
+			pw.append("</ul>" + "</div>");
 
-					if(System.currentTimeMillis()<pm.getBidStopTime().getTime()){
-					pw.append("<form method='post'><input type='hidden' name='potcastID' value='"+pm.getPotcastID()+"'></input><input type='number' id='bidNumberBox' name='amount'></input>"
-					+ "<button>Bid!</button>" 
-					+ "</form>");
+					if(canBid){
+					pw.append("<div id='foodDesc'><form method='post'><input type='hidden' name='potcastID' value='"+pm.getPotcastID()+"'></input><input type='number' id='bidNumberBox' name='amount'></input>"
+						+ "<button>Bid!</button>" 
+						+ "</form></div>");
 					}
-					
-					pw.append("</div>"
-					+ "</div>");
-							
-					if (request.getParameter("response") != null) {
-						pw.append("<p>"+request.getParameter("response") + "</p>");
+					else if (request.getParameter("response") != null) {
+						pw.append("<div id='foodDesc'><p>"+request.getParameter("response") + "</p></div>");
 					}
+					pw.append("</div>");
 					
 					pw.append( "</div>" + "<div id='footer'>"
 					+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>" + "<p>We like food</p>"
@@ -178,10 +202,10 @@ public class PotcastDetail extends HttpServlet {
 					(String) session.getAttribute("username"),
 					BigDecimal.valueOf(Long.parseLong(request.getParameter("amount"))), "0");
 
-			response.sendRedirect("p2pdetail?id=" + request.getParameter("potcastID") + "&response='" + db.addPotcastBid(pbm)+"'");
+			response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID") + "&response='" + db.addPotcastBid(pbm)+"'");
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("p2pdetail?id=" + request.getParameter("potcastID"));
+			response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID"));
 		}
 	}
 

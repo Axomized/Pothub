@@ -41,8 +41,6 @@ public class PotcastJoined extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("Loading joined potcasts!");
-		
 		HttpSession session = request.getSession(false);
 		String username = "";
 
