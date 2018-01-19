@@ -14,6 +14,7 @@ public class UserScore {
     public static Lock lock = new Lock();
     private static Map<String, BigDecimal> userTotalScore = new TreeMap<String, BigDecimal>(); // Current score of people
     private static Map<String, BigDecimal> userTotalNumber = new TreeMap<String, BigDecimal>(); // Number of people submitted
+    private static Map<String, LeaderboardDetail> userDetails = new TreeMap<String, LeaderboardDetail>(); //User details that they enter themselves
     public static ArrayList<UserScore> userScoreArray = new ArrayList<UserScore>(); // History
 
     public UserScore() {
@@ -90,7 +91,6 @@ public class UserScore {
 	public static void registerUser(String userTo) throws InterruptedException {
 		lock.lockWrite();
 		
-		System.out.println(!userTotalScore.containsKey(userTo));
 		if (!userTotalScore.containsKey(userTo)) {
 			userTotalScore.put(userTo, new BigDecimal(0));
 		}
@@ -109,6 +109,35 @@ public class UserScore {
 		}
 		
 		lock.unlockRead(); //Unlocking Read
+	}
+	
+	public static LeaderboardDetail getUserFoodDetails(String userTo) throws InterruptedException {
+		LeaderboardDetail lBD = new LeaderboardDetail();
+		
+		lock.lockRead();
+		
+		if (userDetails.containsKey(userTo)) {
+			lBD = userDetails.get(userTo);
+		}
+		
+		lock.unlockRead();
+		
+		return lBD;
+	}
+	
+	public static void insertUserFoodDetails(String userTo, String title, String desc, byte[] foodPic) throws InterruptedException {
+		LeaderboardDetail lBD = new LeaderboardDetail(title, desc, foodPic);
+		
+		lock.lockWrite();
+		
+		if (userDetails.containsKey(userTo) ) {
+			userDetails.replace(userTo, lBD);
+		}
+		else {
+			userDetails.put(userTo, lBD);
+		}
+		
+		lock.unlockWrite();
 	}
 	
 	public String toString() {

@@ -1032,7 +1032,7 @@ public class Database {
 	//For MyEvent
 	public ArrayList<EventModel> getEventModelForMyEventPage() throws SQLException, UnsupportedEncodingException {
 		ArrayList<EventModel> alem = new ArrayList<EventModel>();
-		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest, Status FROM Event ORDER BY Date DESC;");
+		ResultSet rs = getResultSet("SELECT EventID, EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Max_No_People, Guest, Status FROM Event ORDER BY Date;");
 		while(rs.next()) {
 			int eventID		= rs.getInt("EventID");
 			String eventName	= rs.getString("EventName");
@@ -1053,7 +1053,7 @@ public class Database {
 	
 	//CreateEvent
 	public void insertCreateEvent(EventModel eM) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Event(EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, AutoAccept, Max_No_People, Guest, FileList) VALUES (?,?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Event(EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, AutoAccept, Max_No_People, Guest, FileList, Status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
 		ppstmt.setString(1, eM.getEventName());
 		ppstmt.setString(2, eM.getiGN());
 		ppstmt.setInt(3, eM.getThumbnail());
@@ -1065,6 +1065,7 @@ public class Database {
 		ppstmt.setInt(9, eM.getMax_No_People());
 		ppstmt.setString(10, eM.getGuest());
 		ppstmt.setString(11, eM.getFileList());
+		ppstmt.setString(12, eM.getStatus());
 
 		executeUpdate(ppstmt);
 	}

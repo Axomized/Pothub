@@ -197,8 +197,8 @@ body {
 
 #createButton{
 	position: absolute;
-	bottom: 0;
-	right: 10px;
+	bottom: 20px;
+	right: 20px;
 	font-size: 18px;
 	z-index: 2;
 }

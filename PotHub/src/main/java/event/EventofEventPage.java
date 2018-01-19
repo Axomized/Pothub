@@ -45,8 +45,16 @@ public class EventofEventPage extends HttpServlet {
     	try {
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
 	    	
-			//HttpSession session = request.getSession(false);
-    		//String currentIGN = (String)session.getAttribute("username");
+			//Check session whether the user got login in
+			String username = "";
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            username = (String)session.getAttribute("username");
+	            session.setAttribute("pinAttempts", 0);
+	        }
+	        else {
+	            response.sendRedirect("Login");
+	        }
 			
 	    	ServletOutputStream out = response.getOutputStream();
 			StringBuffer sb = new StringBuffer();

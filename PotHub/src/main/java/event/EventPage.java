@@ -136,9 +136,18 @@ public class EventPage extends HttpServlet {
 		ServletOutputStream out = response.getOutputStream();
 		out.write(header);
 		try {
+			//Check session whether the user got login in
+			String username = "";
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            username = (String)session.getAttribute("username");
+	            session.setAttribute("pinAttempts", 0);
+	        }
+	        else {
+	            response.sendRedirect("Login");
+	        }
+	        
 			for(EventModel eM:eMAL) {
-				//HttpSession session = request.getSession(false);
-	    		//String currentIGN = (String)session.getAttribute("username");
 	    		
 	    		if(eM.getStatus().equals("E")) {
 	    			continue;

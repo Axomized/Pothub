@@ -33,12 +33,14 @@ $(document).ready(function(){
 			}));
 			connectToStream(iGN, eventName);
 			$(this).text("Stop Streaming");
+			$("#videoDiv").show();
 			start = false;
 		}else{
 			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
 				"messageType": "Hide", "userToDisplay": iGN
 			}));
 			$(this).text("Start Streaming");
+			$("#videoDiv").hide();
 			start = true;
 		}
 	});

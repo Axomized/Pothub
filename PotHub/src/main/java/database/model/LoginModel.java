@@ -4,28 +4,34 @@ public class LoginModel {
 	String email;
 	String password;
 	String salt;
+	boolean passwordResetted;
 	int count;
+
+	public LoginModel() {}
+
+	//For Registration Page
+	public LoginModel(int count){
+		this.count = count;
+	}
+		
+	public LoginModel(String password, String salt) {
+		this.password = password;
+		this.salt = salt;
+	}
 
 	public LoginModel(String email, String password, String salt) {
 		this.email = email;
 		this.password = password;
 		this.salt = salt;
 	}
-	
-	//For Registration Page
-	public LoginModel(int count){
-		this.count = count;
-	}
-	
-	public LoginModel() {
-		
-	}
 
-	public LoginModel(String password, String salt) {
+	public LoginModel(String email, String password, String salt, boolean passwordResetted) {
+		this.email = email;
 		this.password = password;
 		this.salt = salt;
+		this.passwordResetted = passwordResetted;
 	}
-
+	
 	public String getEmail() {
 		return email;
 	}
@@ -36,6 +42,10 @@ public class LoginModel {
 
 	public String getSalt() {
 		return salt;
+	}
+
+	public boolean isPasswordResetted() {
+		return passwordResetted;
 	}
 
 	public void setEmail(String email) {
@@ -50,4 +60,7 @@ public class LoginModel {
 		this.salt = salt;
 	}
 
+	public void setPasswordResetted(boolean passwordResetted) {
+		this.passwordResetted = passwordResetted;
+	}
 }

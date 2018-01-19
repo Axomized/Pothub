@@ -15,7 +15,6 @@ function connect(username, topic) {
         	if(array.length > 0){
         		if(array[0].score == -1){
         			startVotingDisplay(array[0].userTo);
-            		console.log("Equals: " + array);
             	}else if(array[0].score == -2){
             		hideStreamAsIfNotStreaming();
             	}else if(array[0].score == -3){
@@ -28,7 +27,6 @@ function connect(username, topic) {
             		for(var i=0; i<json.length; i++){
             			animateBar(json[i].userTo, scoreToWidth(json[i].score));
             		}
-            		console.log(socketReply.body);
             	}
         	}
         });
@@ -158,13 +156,12 @@ $("#voteBtn").click(function(){
 
 //ProgressBar animation
 function animateBar(userTo, score){
-	console.log(score);
 	$(".progressbarbar").each(function(index){
-		if($(this).text() === userTo){
+		//if($(this).parent().parent().previous().children(".name").text() === userTo){
 			$(this).animate({
-		        width: score + "px"
+		        width: '100%'
 		    });
-		}
+		//}
 	});
 }
 
@@ -177,6 +174,7 @@ function startVotingDisplay(userTo){
 function countDownAndRedirectToEndPage(){
 	
 }
+
 // Video Stream
 function hideStreamAsIfNotStreaming(){
 	$("#videoDiv").hide();
@@ -185,6 +183,30 @@ function hideStreamAsIfNotStreaming(){
 function showStreamAsIfStreaming(){
 	$("#videoDiv").show();
 }
+
+//Sidebar Animation
+var sidebarOpen = true;
+$("#leftBars").click(function(){
+	if(sidebarOpen){
+		document.getElementById("left-container").style.right = "260px";
+	    document.getElementById("right-container").style.marginLeft = "-260px";
+	    sidebarOpen = false;
+	}else{
+		document.getElementById("left-container").style.right = "0";
+	    document.getElementById("right-container").style.marginLeft = "0";
+	    sidebarOpen = true;
+	}
+});
+
+$("#resultPage").click(function(){
+	$(".userDetailsInfo-container").show();
+	$(".userDetailsForm-container").hide();
+});
+
+$("#registerPage").click(function(){
+	$(".userDetailsInfo-container").hide();
+	$(".userDetailsForm-container").show();
+});
 
 //Profile
 function showProfileDropdown() {

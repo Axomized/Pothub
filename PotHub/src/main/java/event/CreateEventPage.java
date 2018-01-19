@@ -30,7 +30,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import database.Database;
 import database.model.EventModel;
 
-@MultipartConfig(fileSizeThreshold=1024*1024*2, maxFileSize=1024*1024*5, maxRequestSize=1024*1024*5*5)
+@MultipartConfig(fileSizeThreshold=(1024*1024*10), maxFileSize=(1024*1024*25), maxRequestSize=1024*1024*5*5*4)
 public class CreateEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private byte[] header;
@@ -102,7 +102,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("			</ul>");
 		sb.append("		</div>");
 		sb.append("		<div id='wrapper'>");
-		sb.append("			<form action='/PotHub/CreateEvent' method='post' enctype='multipart/form-data' onsubmit='return validateForm()'>");
+		sb.append("			<form method='post' enctype='multipart/form-data' onsubmit='return validateForm()'>");
 		sb.append("				<div id='thumbnail-container' class='form-group'>");
 		sb.append("					<p><b>Thumbnail</b><span class='requiredInput'>*</span></p>");
 		sb.append("					<div id='thumbnail-container-container'>");
@@ -178,16 +178,21 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("					<p><b>Gallery</b></p>");
 		sb.append("					<div class='btn btn-primary' id='gallery-add'>");
 		sb.append("					    <span>Add</span>");
-		sb.append("					    <input type='file' id='upload' name='EventGallery' multiple>");
+		sb.append("					    <input type='file' id='upload' accept='image/*' name='EventGallery' multiple>");
 		sb.append("					</div>");
 		sb.append("					<div id='gallery' class='row'>");
 		sb.append("					</div>");
 		sb.append("				</div>");
 		sb.append("				<div id='button-container'>");
-		sb.append("					<input type='button' class='btn' value='Preview'>");
+		sb.append("					<input type='button' class='btn' value='Preview' onclick='showPreview()'>");
 		sb.append("					<input type='submit' value='Submit' class='btn btn-success'>");
 		sb.append("				</div>");
 		sb.append("			</form>");
+		sb.append("			<div id='popup-container'>");
+		sb.append("				<i class='fa fa-window-close fa-3x' aria-hidden='true' id='closeBtn'></i>");
+		sb.append(				"<div id='closeBtnDiv'></div>");
+		sb.append("				<iframe src='/PotHub/html/EventofEventPage.html' id='iframeEvent'></iframe>");
+		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("		<div id='footer'>");
 		sb.append("			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>");
@@ -209,6 +214,14 @@ public class CreateEventPage extends HttpServlet {
     }
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            session.setAttribute("pinAttempts", 0);
+	        }
+	        else {
+	            response.sendRedirect("Login");
+	        }
+	        
 			Database db = new Database(0);
 			response.setContentType("text/html");
 			ServletOutputStream out = response.getOutputStream();
@@ -292,9 +305,10 @@ public class CreateEventPage extends HttpServlet {
 		    }
 		    eM.setFileListArray(fileListArray);
 		    eM.setiGN(currentIGN); // Current IGN
+		    eM.setStatus("H");
 		    db.insertCreateEvent(eM);
 		    
-		    response.sendRedirect("/MyEvent");
+		    response.sendRedirect("/PotHub/MyEventPage");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
