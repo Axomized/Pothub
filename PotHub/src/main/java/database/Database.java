@@ -643,6 +643,32 @@ public class Database {
 		return pbms;
 	}
 	
+	//Potcast Bids
+	public ArrayList<Integer> getBidsForPotcastUser(String ign) throws SQLException{
+		ArrayList<Integer> pbms = new ArrayList<Integer>();
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT PotcastID FROM PotcastBid WHERE ign = ?;");
+		ps.setString(1, ign);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			pbms.add(rs.getInt("potcastID"));
+		}
+		
+		return pbms;
+	}
+	
+	public ArrayList<PotcastModel> getJoinedPotcasts(String ign) throws SQLException{
+		ArrayList<PotcastModel> pbms = new ArrayList<PotcastModel>();
+		ArrayList<Integer> potcastIDs = this.getBidsForPotcastUser(ign);
+		
+		for(Integer potcastID : potcastIDs){
+			pbms.add(this.getPotcastByID(potcastID));
+		}
+		
+		return pbms;
+	}
+	
 	public String addPotcastBid(PotcastBidModel pbm) throws SQLException{
 		ArrayList<PotcastBidModel> bids = this.getBidsForPotcast(pbm.getPotcastID());
 		PotcastModel pot = this.getPotcastByID(pbm.getPotcastID());

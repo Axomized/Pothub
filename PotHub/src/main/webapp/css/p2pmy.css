@@ -180,6 +180,30 @@ body
 	padding-top: 5px;
 }
 
+#hidableSearchBlock {
+	margin-top:15px;
+}
+
+input[type='submit'] {
+	background: #f3decb;
+    border: none;
+    color: black;
+    padding:3px;
+    text-align: center;
+    text-decoration: none;
+    width:60px;
+}
+
+#toggleSpan {
+	background: #f3decb;
+    border: none;
+    color: black;
+    padding:3px;
+    text-align: center;
+    text-decoration: none;
+    width: 120px;
+}
+
 /* Navigation */
 #navigation
 {
