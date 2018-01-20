@@ -118,7 +118,7 @@ public class ForgetPassword extends HttpServlet {
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Your new password has been sent to your email.');");
 				out.println("</script>");
-				response.sendRedirect("/PotHub/Login");
+				response.sendRedirect("Login");
 			}
 			
 			else

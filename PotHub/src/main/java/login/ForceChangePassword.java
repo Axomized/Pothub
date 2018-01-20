@@ -2,11 +2,18 @@ package login;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import database.Database;
+import database.model.LoginModel;
 
 /**
  * Servlet implementation class ForceChangePassword1
@@ -78,6 +85,39 @@ public class ForceChangePassword extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.setContentType("text/html; charset=UTF-8");
 		PrintWriter out = response.getWriter();	
+		
+		String enteredPassword = request.getParameter("password");
+		String confirmPassword = request.getParameter("password2");
+		
+		HttpSession session = request.getSession();
+		String email = session.getAttribute("username").toString();
+		System.out.println(email);
+		
+		if (enteredPassword.equals(confirmPassword))
+		{
+			try {
+				Database db = new Database(2);
+		    	LoginModel lm = db.getLogin(enteredPassword, email);
+			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
+				db.updateChangedPassword(PBKDF2.toHex(hash), email);
+				response.sendRedirect("Forum");
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			} catch (NoSuchAlgorithmException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InvalidKeySpecException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else
+		{
+			out.println("<script type=\"text/javascript\">");
+			out.println("alert('Please enter the same exact password twice.');");
+			out.println("</script>");
+			doGet(request, response);
+		}
 	}
 
 }

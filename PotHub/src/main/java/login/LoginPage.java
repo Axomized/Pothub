@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -133,7 +134,9 @@ public class LoginPage extends HttpServlet {
 			    		}
 			    		else
 			    		{
-			    			System.out.println(dum.getEmail());
+			    			String email = request.getParameter("username");
+			    			HttpSession HttpSession = request.getSession();
+			    			HttpSession.setAttribute("username", email);
 			    			response.sendRedirect("ForceChangePassword");
 			    		}
 			    	}

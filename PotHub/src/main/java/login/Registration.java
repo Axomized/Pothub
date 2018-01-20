@@ -147,7 +147,7 @@ public class Registration extends HttpServlet {
 				doGet(request, response);
 			}
 		
-			else if(!confirmPassword.equals(password.toString()))
+			else if(!confirmPassword.equals(password))
 			{
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Please enter the same exact password twice.');");
@@ -214,7 +214,7 @@ public class Registration extends HttpServlet {
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully registered!');");
 				out.println("</script>");
-				response.sendRedirect("/PotHub/Login");
+				response.sendRedirect("Login");
 			}
 			
 		}
