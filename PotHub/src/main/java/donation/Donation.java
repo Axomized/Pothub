@@ -66,7 +66,7 @@ public class Donation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>"
 					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -94,7 +94,7 @@ public class Donation extends HttpServlet {
 					+ "		<div id='wrapper'>"
 					+ "			<div id='content-wrapper'>"
 					+ "				<div id='content'>"
-					+ "					<form id='donateForm' method='post' autocomplete='off'>"
+					+ "					<form id='donateForm' autocomplete='off' method='post'>"
 					+ "						<div id='onBehalfDiv'>"
 					+ "							<div id='askDiv'>"
 					+ "								Are you donating on behalf of someone? Check the box if yes, ignore if no."
@@ -104,77 +104,90 @@ public class Donation extends HttpServlet {
 					+ "								<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
 					+ "									<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' onclick='showBehalfName()'>"
 					+ "									<span class='custom-control-indicator'></span>"
-					+ "  									<span class='custom-control-description'>Yes</span>"
+					+ "  								<span class='custom-control-description'>Yes</span>"
 					+ "								</label>"
-					+ "								<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
-					+ "								<datalist id='behalfNameList'>");
-					for (String userIGN : db.getDatabaseUserIGN()) {
-						out.print("<option value='" + userIGN + "'></option>");
+					+ "								<div id='behalfNameDiv'>"
+					+ "									<label id='behalfNameLabel' class='inputLabel' for='behalfName'>Donee</label>"
+					+ "									<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
+					+ "									<datalist id='behalfNameList'>");
+					for (String s : db.getDatabaseUserIGN()) {
+						out.print("<option value='" + s + "'></option>"); 
 					}
-					out.println("					</datalist>"			
+					out.print("							</datalist>"
+					+ "								</div>"
 					+ "							</div>"
 					+ "						</div>"
 					+ "						<div id='donateAmtDiv'>"
-					+ "							<label id='donateLabel' for='donateAmt'>How much would you like to donate?</label>"
-					+ "							<input type='number' id='donateAmt' name='donateAmt' min='0' max='5000' step='0.01' placeholder='0.00' required>"
+					+ "							<div class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='donateLabel' class='inputLabel' for='donateAmt'>How much would you like to donate?</label>"
+					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0' max='2000' step='0.01' placeholder='0.00' required>"
+					+ "								</div>"
+					+ "							</div>"
 					+ "						</div>"
 					+ "						<div id='inputInfoDiv'>"
-					+ "							<div id='nameInputDiv'>"
-					+ "								<label id='nameLabel' for='nameInput'>Name</label>"
-					+ "								<input type='text' id='nameInput' name='nameInput' required>"
+					+ "							<div id='nameInputDiv' class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='nameLabel' class='inputLabel' for='nameInput'>Name</label>"
+					+ "									<input type='text' id='nameInput' name='nameInput' required>"
+					+ "								</div>"
 					+ "							</div>"
-					+ "							<div id='cardInputDiv'>"
-					+ "								<label id='cardLabel' for='cardNo'>Credit Card Number</label>"
-					+ "								<div id='inputCardDiv'>"
-					+ "									<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>"
-					+ "									<div id='cardIconDiv'>"
-					+ "										<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='dinersIcon' class='fa fa-cc-diners-club cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='jcbIcon' class='fa fa-cc-jcb cardIcon' aria-hidden='true'></i>"
+					+ "							<div id='cardInputDiv' class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='cardLabel' class='inputLabel' for='cardNo'>Credit Card Number</label>"
+					+ "									<div id='inputCardDiv'>"
+					+ "										<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>"
+					+ "										<div id='cardIconDiv'>"
+					+ "											<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='dinersIcon' class='fa fa-cc-diners-club cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='jcbIcon' class='fa fa-cc-jcb cardIcon' aria-hidden='true'></i>"
+					+ "										</div>"
 					+ "									</div>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div id='dateCodeDiv'>"
-					+ "								<div id='dateDiv'>"
-					+ "									<label id='expiryDateLabel'>Expiration</label>"
-					+ "									<select id='selectMonth' class='custom-select' name='selectMonth' required>"
-					+ "										<option value='' selected disabled hidden='true'>MM</option>"
-					+ "										<option value='1'>1</option>"
-					+ "										<option value='2'>2</option>"
-					+ "										<option value='3'>3</option>"
-					+ "										<option value='4'>4</option>"
-					+ "										<option value='5'>5</option>"
-					+ "										<option value='6'>6</option>"
-					+ "										<option value='7'>7</option>"
-					+ "										<option value='8'>8</option>"
-					+ "										<option value='9'>9</option>"
-					+ "										<option value='10'>10</option>"
-					+ "										<option value='11'>11</option>"
-					+ "										<option value='12'>12</option>"
-					+ "									</select>"
-					+ "									<select id='selectYear' class='custom-select' name='selectYear' required>"
-					+ "										<option value='' selected disabled hidden='true'>YYYY</option>"
-					+ "										<option value='2017'>2017</option>"
-					+ "										<option value='2018'>2018</option>"
-					+ "										<option value='2019'>2019</option>"
-					+ "										<option value='2020'>2020</option>"
-					+ "										<option value='2021'>2021</option>"
-					+ "										<option value='2022'>2022</option>"
-					+ "										<option value='2023'>2023</option>"
-					+ "										<option value='2024'>2024</option>"
-					+ "										<option value='2025'>2025</option>"
-					+ "										<option value='2026'>2026</option>"
-					+ "										<option value='2027'>2027</option>"
-					+ "										<option value='2028'>2028</option>"
-					+ "										<option value='2029'>2029</option>"
-					+ "										<option value='2030'>2030</option>"
-					+ "									</select>"
-					+ "								</div>"
-					+ "								<div id='codeDiv'>"
-					+ "									<label id='codeLabel' for='securityCode'>Security Code</label>"
-					+ "									<input type='text' id='securityCode' name='securityCode' maxlength='4' required/>"
+					+ "								<div id='dateCodeInputDiv' class='row'>"
+					+ "									<div id='dateDiv' class='col-md-3'>"
+					+ "										<label id='expiryDateLabel' class='inputLabel' >Expiration</label>"
+					+ "										<select id='selectMonth' class='custom-select' name='selectMonth' required>"
+					+ "											<option value='' selected disabled hidden='true'>MM</option>"
+					+ "											<option value='1'>1</option>"
+					+ "											<option value='2'>2</option>"
+					+ "											<option value='3'>3</option>"
+					+ "											<option value='4'>4</option>"
+					+ "											<option value='5'>5</option>"
+					+ "											<option value='6'>6</option>"
+					+ "											<option value='7'>7</option>"
+					+ "											<option value='8'>8</option>"
+					+ "											<option value='9'>9</option>"
+					+ "											<option value='10'>10</option>"
+					+ "											<option value='11'>11</option>"
+					+ "											<option value='12'>12</option>"
+					+ "										</select>"
+					+ "										<select id='selectYear' class='custom-select' name='selectYear' required>"
+					+ "											<option value='' selected disabled hidden='true'>YYYY</option>"
+					+ "											<option value='2017'>2017</option>"
+					+ "											<option value='2018'>2018</option>"
+					+ "											<option value='2019'>2019</option>"
+					+ "											<option value='2020'>2020</option>"
+					+ "											<option value='2021'>2021</option>"
+					+ "											<option value='2022'>2022</option>"
+					+ "											<option value='2023'>2023</option>"
+					+ "											<option value='2024'>2024</option>"
+					+ "											<option value='2025'>2025</option>"
+					+ "											<option value='2026'>2026</option>"
+					+ "											<option value='2027'>2027</option>"
+					+ "											<option value='2028'>2028</option>"
+					+ "											<option value='2029'>2029</option>"
+					+ "											<option value='2030'>2030</option>"
+					+ "										</select>"
+					+ "									</div>"
+					+ "									<div id='codeDiv' class='col-md-3'>"
+					+ "										<label id='codeLabel' class='inputLabel' for='securityCode'>Security Code</label>"
+					+ "										<input type='text' id='securityCode' name='securityCode' maxlength='4' required>"
+					+ "									</div>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div class='thatLine'></div>"
@@ -235,109 +248,123 @@ public class Donation extends HttpServlet {
 			String encodedSalt = hp.getEncodedSalt(salt);
 			String pinNo = tsm.generatePIN();
 			String hashedPIN = hp.getHashedPIN(pinNo, salt);
-			String errorMessage = "";
+			boolean behalfNameError = false;
+			boolean donateAmtError = false;
+			boolean cardNoError = false;
+			boolean securityCodeError = false;
+			boolean fillInputError = false;
 			
 			if (tsmCheck != null) {
 				db.deleteFromTempStore(username);
 				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
 					if (behalfName != null && !behalfName.isEmpty()) {
-						if (vc.validateCCNo(ccNumber)) {
-							if (vc.validateCode(ccNumber, securityCode)) {
-								tsm.setiGN(username);
-								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-								tsm.setTemporaryOnBehalf(behalfName);
-								tsm.setTemporaryPIN(hashedPIN);
-								tsm.setTemporarySalt(encodedSalt);
-								tsm.setTemporaryTime(tsm.getTime5MinsLater());
-								if (db.insertTempStore(tsm)) {
-									se.sendEmail("dr.que9@gmail.com", pinNo);
-								}
-								response.sendRedirect("ConfirmDonation");
+						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
+							tsm.setiGN(username);
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(hashedPIN);
+							tsm.setTemporarySalt(encodedSalt);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							if (db.insertTempStore(tsm)) {
+								se.sendEmail("dr.que9@gmail.com", pinNo);
 							}
-							else {
-								errorMessage = "Invalid security code";
-							}
+							response.sendRedirect("ConfirmDonation");
 						}
-						else {
-							errorMessage = "Invalid credit card number";
+						if (!(checkUserExists(behalfName, db))) {
+							behalfNameError = true;
+						}
+						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
+							donateAmtError = true;
+						}
+						if (!(vc.validateCCNo(ccNumber))) {
+							cardNoError = true;
+						}
+						if (!(vc.validateCode(ccNumber, securityCode))) {
+							securityCodeError = true;
 						}
 					}
 					else {
-						if (vc.validateCCNo(ccNumber)) {
-							if (vc.validateCode(ccNumber, securityCode)) {
-								tsm.setiGN(username);
-								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-								tsm.setTemporaryOnBehalf(behalfName);
-								tsm.setTemporaryPIN(hashedPIN);
-								tsm.setTemporarySalt(encodedSalt);
-								tsm.setTemporaryTime(tsm.getTime5MinsLater());
-								if (db.insertTempStore(tsm)) {
-									se.sendEmail("dr.que9@gmail.com", pinNo);
-								}
-								response.sendRedirect("ConfirmDonation");
+						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
+							tsm.setiGN(username);
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(hashedPIN);
+							tsm.setTemporarySalt(encodedSalt);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							if (db.insertTempStore(tsm)) {
+								se.sendEmail("dr.que9@gmail.com", pinNo);
 							}
-							else {
-								errorMessage = "Invalid security code";
-							}
+							response.sendRedirect("ConfirmDonation");
 						}
-						else {
-							errorMessage = "Invalid credit card number";
+						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
+							donateAmtError = true;
+						}
+						if (!(vc.validateCCNo(ccNumber))) {
+							cardNoError = true;
+						}
+						if (!(vc.validateCode(ccNumber, securityCode))) {
+							securityCodeError = true;
 						}
 					}
 				}
 				else {
-					errorMessage = "Please fill in all required inputs";
+					fillInputError = false;
 				}
 			}
 			else {
 				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
 					if (behalfName != null && !behalfName.isEmpty()) {
-						if (vc.validateCCNo(ccNumber)) {
-							if (vc.validateCode(ccNumber, securityCode)) {
-								tsm.setiGN(username);
-								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-								tsm.setTemporaryOnBehalf(behalfName);
-								tsm.setTemporaryPIN(hashedPIN);
-								tsm.setTemporarySalt(encodedSalt);
-								tsm.setTemporaryTime(tsm.getTime5MinsLater());
-								if (db.insertTempStore(tsm)) {
-									se.sendEmail("dr.que9@gmail.com", pinNo);
-								}
-								response.sendRedirect("ConfirmDonation");
+						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
+							tsm.setiGN(username);
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(hashedPIN);
+							tsm.setTemporarySalt(encodedSalt);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							if (db.insertTempStore(tsm)) {
+								se.sendEmail("dr.que9@gmail.com", pinNo);
 							}
-							else {
-								errorMessage = "Invalid security code";
-							}
+							response.sendRedirect("ConfirmDonation");
 						}
-						else {
-							errorMessage = "Invalid credit card number";
+						if (!(checkUserExists(behalfName, db))) {
+							behalfNameError = true;
+						}
+						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
+							donateAmtError = true;
+						}
+						if (!(vc.validateCCNo(ccNumber))) {
+							cardNoError = true;
+						}
+						if (!(vc.validateCode(ccNumber, securityCode))) {
+							securityCodeError = true;
 						}
 					}
 					else {
-						if (vc.validateCCNo(ccNumber)) {
-							if (vc.validateCode(ccNumber, securityCode)) {
-								tsm.setiGN(username);
-								tsm.setTemporaryAmount(new BigDecimal(donateAmt));
-								tsm.setTemporaryOnBehalf(behalfName);
-								tsm.setTemporaryPIN(hashedPIN);
-								tsm.setTemporarySalt(encodedSalt);
-								tsm.setTemporaryTime(tsm.getTime5MinsLater());
-								if (db.insertTempStore(tsm)) {
-									se.sendEmail("dr.que9@gmail.com", pinNo);
-								}
-								response.sendRedirect("ConfirmDonation");
+						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
+							tsm.setiGN(username);
+							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
+							tsm.setTemporaryOnBehalf(behalfName);
+							tsm.setTemporaryPIN(hashedPIN);
+							tsm.setTemporarySalt(encodedSalt);
+							tsm.setTemporaryTime(tsm.getTime5MinsLater());
+							if (db.insertTempStore(tsm)) {
+								se.sendEmail("dr.que9@gmail.com", pinNo);
 							}
-							else {
-								errorMessage = "Invalid security code";
-							}
+							response.sendRedirect("ConfirmDonation");
 						}
-						else {
-							errorMessage = "Invalid credit card number";
+						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
+							donateAmtError = true;
+						}
+						if (!(vc.validateCCNo(ccNumber))) {
+							cardNoError = true;
+						}
+						if (!(vc.validateCode(ccNumber, securityCode))) {
+							securityCodeError = true;
 						}
 					}
 				}
 				else {
-					errorMessage = "Please fill in all required inputs";
+					fillInputError = true;
 				}
 			}
 			
@@ -400,87 +427,132 @@ public class Donation extends HttpServlet {
 					+ "							<div id='askDiv'>"
 					+ "								Are you donating on behalf of someone? Check the box if yes, ignore if no."
 					+ "							</div>"
-					+ "							<div class='thatLine'></div>"
-					+ "							<div id='onBehalfCheckDiv'>"
-					+ "								<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
-					+ "									<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' onclick='showBehalfName()'>"
-					+ "									<span class='custom-control-indicator'></span>"
-					+ "  									<span class='custom-control-description'>Yes</span>"
-					+ "								</label>"
-					+ "								<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
-					+ "								<datalist id='behalfNameList'>");
-					for (String userIGN : db.getDatabaseUserIGN()) {
-						out.print("<option value='" + userIGN + "'></option>");
+					+ "							<div class='thatLine'></div>");
+					if (behalfNameError) {
+						out.print("<div id='onBehalfCheckDiv'>"
+								+ "	<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
+								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' checked onclick='showBehalfName()'>"
+								+ "		<span class='custom-control-indicator'></span>"
+								+ "		<span class='custom-control-description'>Yes</span>"
+								+ "	</label>"
+								+ "	<div id='behalfNameDiv' style='display: block;'>"
+								+ "		<label id='behalfNameLabel' class='inputLabel' for='behalfName'>Donee</label>"
+								+ "		<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
+								+ "		<div id='behalfNameError' class='errorMsg'>Donee does not exist.</div>"
+								+ "		<datalist id='behalfNameList'>");
+						for (String s : db.getDatabaseUserIGN()) {
+							out.print("		<option value='" + s + "'></option>");
+						}
+						out.print("		</datalist>"
+								+ "	</div>"
+								+ "</div>");
 					}
-					out.println("					</datalist>"			
-					+ "							</div>"
-					+ "						</div>"
+					else {
+						out.print("<div id='onBehalfCheckDiv'>"
+								+ "	<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
+								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' onclick='showBehalfName()'>"
+								+ "		<span class='custom-control-indicator'></span>"
+								+ "		<span class='custom-control-description'>Yes</span>"
+								+ "	</label>"
+								+ "	<div id='behalfNameDiv'>"
+								+ "		<label id='behalfNameLabel' class='inputLabel' for='behalfName'>Donee</label>"
+								+ "		<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
+								+ "		<datalist id='behalfNameList'>");
+						for (String s : db.getDatabaseUserIGN()) {
+							out.print("		<option value='" + s + "'></option>");
+						}
+						out.print("		</datalist>"
+								+ "	</div>"
+								+ "</div>");
+					}
+					out.print("				</div>"
 					+ "						<div id='donateAmtDiv'>"
-					+ "							<label id='donateLabel' for='donateAmt'>How much would you like to donate?</label>"
-					+ "							<input type='number' id='donateAmt' name='donateAmt' min='0' max='5000' step='0.01' placeholder='0.00' required>"
+					+ "							<div class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='donateLabel' class='inputLabel' for='donateAmt'>How much would you like to donate?</label>"
+					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0' max='2000' step='0.01' placeholder='0.00' required>");
+					if (donateAmtError) {
+						out.print("<div id='donateAmtError' class='errorMsg'>You can only donate a maximum of $2000.</div>");
+					}
+					out.print("						</div>"
+					+ "							</div>"
 					+ "						</div>"
 					+ "						<div id='inputInfoDiv'>"
-					+ "							<div id='nameInputDiv'>"
-					+ "								<label id='nameLabel' for='nameInput'>Name</label>"
-					+ "								<input type='text' id='nameInput' name='nameInput' required>"
+					+ "							<div id='nameInputDiv' class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='nameLabel' class='inputLabel' for='nameInput'>Name</label>"
+					+ "									<input type='text' id='nameInput' name='nameInput' required>"
+					+ "								</div>"
 					+ "							</div>"
-					+ "							<div id='cardInputDiv'>"
-					+ "								<label id='cardLabel' for='cardNo'>Credit Card Number</label>"
-					+ "								<div id='inputCardDiv'>"
-					+ "									<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>"
-					+ "									<div id='cardIconDiv'>"
-					+ "										<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='dinersIcon' class='fa fa-cc-diners-club cardIcon' aria-hidden='true'></i>"
-					+ "										<i id='jcbIcon' class='fa fa-cc-jcb cardIcon' aria-hidden='true'></i>"
+					+ "							<div id='cardInputDiv' class='flexDiv'>"
+					+ "								<div class='centerDiv'>"
+					+ "									<label id='cardLabel' class='inputLabel' for='cardNo'>Credit Card Number</label>"
+					+ "									<div id='inputCardDiv'>"
+					+ "										<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>");
+					if (cardNoError) {
+						out.print("<div id='cardNoError' class='errorMsg'>Invalid credit card number.</div>");
+					}
+					out.print("								<div id='cardIconDiv'>"
+					+ "											<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='mastercardIcon' class='fa fa-cc-mastercard cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='amexIcon' class='fa fa-cc-amex cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='dinersIcon' class='fa fa-cc-diners-club cardIcon' aria-hidden='true'></i>"
+					+ "											<i id='jcbIcon' class='fa fa-cc-jcb cardIcon' aria-hidden='true'></i>"
+					+ "										</div>"
 					+ "									</div>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div id='dateCodeDiv'>"
-					+ "								<div id='dateDiv'>"
-					+ "									<label id='expiryDateLabel'>Expiration</label>"
-					+ "									<select id='selectMonth' class='custom-select' name='selectMonth' required>"
-					+ "										<option value='' selected disabled hidden='true'>MM</option>"
-					+ "										<option value='1'>1</option>"
-					+ "										<option value='2'>2</option>"
-					+ "										<option value='3'>3</option>"
-					+ "										<option value='4'>4</option>"
-					+ "										<option value='5'>5</option>"
-					+ "										<option value='6'>6</option>"
-					+ "										<option value='7'>7</option>"
-					+ "										<option value='8'>8</option>"
-					+ "										<option value='9'>9</option>"
-					+ "										<option value='10'>10</option>"
-					+ "										<option value='11'>11</option>"
-					+ "										<option value='12'>12</option>"
-					+ "									</select>"
-					+ "									<select id='selectYear' class='custom-select' name='selectYear' required>"
-					+ "										<option value='' selected disabled hidden='true'>YYYY</option>"
-					+ "										<option value='2017'>2017</option>"
-					+ "										<option value='2018'>2018</option>"
-					+ "										<option value='2019'>2019</option>"
-					+ "										<option value='2020'>2020</option>"
-					+ "										<option value='2021'>2021</option>"
-					+ "										<option value='2022'>2022</option>"
-					+ "										<option value='2023'>2023</option>"
-					+ "										<option value='2024'>2024</option>"
-					+ "										<option value='2025'>2025</option>"
-					+ "										<option value='2026'>2026</option>"
-					+ "										<option value='2027'>2027</option>"
-					+ "										<option value='2028'>2028</option>"
-					+ "										<option value='2029'>2029</option>"
-					+ "										<option value='2030'>2030</option>"
-					+ "									</select>"
-					+ "								</div>"
-					+ "								<div id='codeDiv'>"
-					+ "									<label id='codeLabel' for='securityCode'>Security Code</label>"
-					+ "									<input type='text' id='securityCode' name='securityCode' maxlength='4' required/>"
+					+ "								<div id='dateCodeInputDiv' class='row'>"
+					+ "									<div id='dateDiv' class='col-md-3'>"
+					+ "										<label id='expiryDateLabel' class='inputLabel' >Expiration</label>"
+					+ "										<select id='selectMonth' class='custom-select' name='selectMonth' required>"
+					+ "											<option value='' selected disabled hidden='true'>MM</option>"
+					+ "											<option value='1'>1</option>"
+					+ "											<option value='2'>2</option>"
+					+ "											<option value='3'>3</option>"
+					+ "											<option value='4'>4</option>"
+					+ "											<option value='5'>5</option>"
+					+ "											<option value='6'>6</option>"
+					+ "											<option value='7'>7</option>"
+					+ "											<option value='8'>8</option>"
+					+ "											<option value='9'>9</option>"
+					+ "											<option value='10'>10</option>"
+					+ "											<option value='11'>11</option>"
+					+ "											<option value='12'>12</option>"
+					+ "										</select>"
+					+ "										<select id='selectYear' class='custom-select' name='selectYear' required>"
+					+ "											<option value='' selected disabled hidden='true'>YYYY</option>"
+					+ "											<option value='2017'>2017</option>"
+					+ "											<option value='2018'>2018</option>"
+					+ "											<option value='2019'>2019</option>"
+					+ "											<option value='2020'>2020</option>"
+					+ "											<option value='2021'>2021</option>"
+					+ "											<option value='2022'>2022</option>"
+					+ "											<option value='2023'>2023</option>"
+					+ "											<option value='2024'>2024</option>"
+					+ "											<option value='2025'>2025</option>"
+					+ "											<option value='2026'>2026</option>"
+					+ "											<option value='2027'>2027</option>"
+					+ "											<option value='2028'>2028</option>"
+					+ "											<option value='2029'>2029</option>"
+					+ "											<option value='2030'>2030</option>"
+					+ "										</select>"
+					+ "									</div>"
+					+ "									<div id='codeDiv' class='col-md-3'>"
+					+ "										<label id='codeLabel' class='inputLabel' for='securityCode'>Security Code</label>"
+					+ "										<input type='text' id='securityCode' name='securityCode' maxlength='4' required>");
+					if (securityCodeError) {
+						out.print("<div id='securityCodeError' class='errorMsg'>Invalid security code.</div>");
+					}
+					out.print("							</div>"
 					+ "								</div>"
 					+ "							</div>"
-					+ "							<div id='errorMsg'>" + errorMessage + "</div>"
-					+ "							<div class='thatLine'></div>"
-					+ "							<div id='buttonDiv'>"
+					+ "							<div class='thatLine'></div>");
+					if (fillInputError) {
+						out.print("<div class='errorMsg'>Please fill in all required inputs.</div>");
+					}
+					out.print("					<div id='buttonDiv'>"
 					+ "								<input type='submit' id='donateBtn' name='donateBtn' value='Donate'>"
 					+ "							</div>"
 					+ "						</div>"
@@ -514,6 +586,20 @@ public class Donation extends HttpServlet {
 			return true;
 		}
 		return false;
+	}
+	
+	private boolean checkUserExists(String behalfName, Database db) {
+		try {
+			for (String s : db.getDatabaseUserIGN()) {
+				if (behalfName.equals(s)) {
+					return true;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return false;
+		
 	}
 
 }

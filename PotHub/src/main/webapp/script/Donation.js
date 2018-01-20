@@ -8,15 +8,15 @@ function hideProfileDropdown() {
 
 function showBehalfName() {
 	var x = document.getElementById("checkYes").checked;
-	var behalfName = document.getElementById("behalfName");
+	var behalfNameDiv = document.getElementById("behalfNameDiv");
 	
 	if (x == true) {
-		behalfName.style.display = "block";
-		behalfName.required = true;
+		behalfNameDiv.style.display = "block";
+		behalfNameDiv.required = true;
 	}
 	else {
-		behalfName.style.display = "none";
-		behalfName.required = false;
+		behalfNameDiv.style.display = "none";
+		behalfNameDiv.required = false;
 	}
 }
 

@@ -32,10 +32,10 @@ public class SendEmail {
 
 		// Get the Session object.
 		Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-		@Override
-		protected PasswordAuthentication getPasswordAuthentication() {
-			return new PasswordAuthentication(username, password);
-			}
+			@Override
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(username, password);
+				}
 		});
 		
 		try {
@@ -49,10 +49,10 @@ public class SendEmail {
 	         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
 
 	         // Set Subject: header field
-	         message.setSubject("Testing");
+	         message.setSubject("PotHub Donation PIN");
 
 	         // Now set the actual message
-	         message.setText(content);
+	         message.setText("This is the PIN to confirm your donation. It is valid only for 5 minutes.\n\n" + content);
 
 	         // Send message
 	         Transport.send(message);
