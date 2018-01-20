@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class PeopleEventListModel {
-	int eventID;
-	String invitationPending;
+	private int eventID;
+	private String invitationPending;
 	
 	public PeopleEventListModel(int eventID, String invitationPending) {
 		this.eventID = eventID;

@@ -3,11 +3,11 @@ package database.model;
 import java.sql.Date;
 
 public class CommentModel {
-	int commentID;
-	int postID;
-	Date date;
-	String iGN;
-	String description;
+	private int commentID;
+	private int postID;
+	private Date date;
+	private String iGN;
+	private String description;
 
 	public CommentModel(int commentID, int postID, Date date, String iGN, String description) {
 		this.commentID = commentID;

@@ -204,8 +204,8 @@ public class ConfirmDonation extends HttpServlet {
 					
 					if (currentTime.before(tsm.getTemporaryTime())) {
 						if (hashedPIN.equals(tsm.getTemporaryPIN())) {
-							dm.setDonation_Amount(tsm.getTemporaryAmount());
-							dm.setDonation_Date(Timestamp.from(Instant.now()));
+							dm.setDonationAmount(tsm.getTemporaryAmount());
+							dm.setDonationDate(Timestamp.from(Instant.now()));
 							dm.setiGN(iGN);
 							dm.setOnBehalf(tsm.getTemporaryOnBehalf());
 							db.insertDonation(dm);

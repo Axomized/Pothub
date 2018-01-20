@@ -5,13 +5,13 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogsModel {
-	int logID;
-	String iGN;
-	Timestamp logDate;
-	String iPAddress;
-	String logType;
-	String logActivity;
-	boolean isSuspicious;
+	private int logID;
+	private String iGN;
+	private Timestamp logDate;
+	private String iPAddress;
+	private String logType;
+	private String logActivity;
+	private boolean isSuspicious;
 	
 	public LogsModel() {
 		

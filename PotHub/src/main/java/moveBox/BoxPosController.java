@@ -1,4 +1,4 @@
-package moveBox;
+package movebox;
 
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.handler.annotation.SendTo;

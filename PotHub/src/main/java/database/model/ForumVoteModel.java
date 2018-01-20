@@ -3,9 +3,9 @@ package database.model;
 import java.sql.Date;
 
 public class ForumVoteModel {
-	int postID;
-	String iGN;
-	Date date;
+	private int postID;
+	private String iGN;
+	private Date date;
 
 	public ForumVoteModel(int postID, String iGN, Date date) {
 		this.postID = postID;

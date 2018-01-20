@@ -6,18 +6,15 @@ var currentScore;
 function connect(username, topic) {
 	iGN = username;
 	eventName = topic;
-    var socket = new SockJS('https://localhost:8443/ARandomName');
-    stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {
-        console.log('Connected: ' + frame);
-    });
+    var socket = new SockJS("https://localhost:8443/ARandomName");
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {});
 }
 
 function disconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
     }
-    console.log("Disconnected");
 }
 var start = true;
 $(document).ready(function(){

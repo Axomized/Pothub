@@ -1,9 +1,9 @@
 package database.model;
 
 public class FileTableModel {
-	int fileID;
-	String fileName;
-	byte[] data; // Might set to InputStream
+	private int fileID;
+	private String fileName;
+	private byte[] data; // Might set to InputStream
 
 	public FileTableModel() {
 	}

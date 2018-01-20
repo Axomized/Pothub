@@ -7,22 +7,35 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class EventModel {
-	int eventID;
-	String eventName;
-	String iGN;
-	int thumbnail;
-	String description;
-	Timestamp date;
-	String postalCode;
-	String venue;
-	boolean autoAccept;
-	int max_No_People;
-	String guest;
-	String fileList;
-	String status;
+	private int eventID;
+	private String eventName;
+	private String iGN;
+	private int thumbnail;
+	private String description;
+	private Timestamp date;
+	private String postalCode;
+	private String venue;
+	private boolean autoAccept;
+	private int max_No_People;
+	private String guest;
+	private String fileList;
+	private String status;
 	
-	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Timestamp date, String postalCode, String venue, boolean autoAccept, int max_No_People,
-			String guest, String fileList, String status) {
+	public EventModel(String eventName, int thumbnail, String description, Timestamp date, String postalCode,
+			String venue, String guest, String fileList, String status) {
+		this.eventName = eventName;
+		this.thumbnail = thumbnail;
+		this.description = description;
+		this.date = date;
+		this.postalCode = postalCode;
+		this.venue = venue;
+		this.guest = guest;
+		this.fileList = fileList;
+		this.status = status;
+	}
+
+	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Timestamp date,
+			String postalCode, String venue, int max_No_People, String guest, String status) {
 		this.eventID = eventID;
 		this.eventName = eventName;
 		this.iGN = iGN;
@@ -31,15 +44,12 @@ public class EventModel {
 		this.date = date;
 		this.postalCode = postalCode;
 		this.venue = venue;
-		this.autoAccept = autoAccept;
 		this.max_No_People = max_No_People;
 		this.guest = guest;
-		this.fileList = fileList;
 		this.status = status;
 	}
 
-	public EventModel() {
-	}
+	public EventModel() {}
 
 	public int getEventID() {
 		return eventID;

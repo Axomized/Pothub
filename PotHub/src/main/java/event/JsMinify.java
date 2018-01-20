@@ -20,7 +20,7 @@ public class JsMinify {
 		while ((str = in.readLine()) != null) {
 			s += str.trim();
 		}
-		s.replaceAll("\\s+", "");
+		s = s.replaceAll("\\s+", "");
 		in.close(); //Close BufferedReader
 		reader.close(); //Close FileReader
 		

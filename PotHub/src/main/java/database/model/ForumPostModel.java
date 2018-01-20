@@ -1,19 +1,18 @@
 package database.model;
 
-import java.sql.Blob;
 import java.sql.Timestamp;
 
 public class ForumPostModel {
-	int postID;
-	String thread;
-	int upvotes;
-	String iGN;
-	Timestamp date;
-	int picture;
-	String description;
-	String fileAttachment;
-	String ForumNormalText;
-	String ForumURL;
+	private int postID;
+	private String thread;
+	private int upvotes;
+	private String iGN;
+	private Timestamp date;
+	private int picture;
+	private String description;
+	private String fileAttachment;
+	private String ForumNormalText;
+	private String ForumURL;
 
 	public ForumPostModel(int postID, String thread, int upvotes, String iGN, Timestamp date, int picture,
 			String description, String fileAttachment, String forumNormalText, String forumURL) {

@@ -3,12 +3,12 @@ package database.model;
 import java.sql.Date;
 
 public class AppealModel {
-	int appealID;
-	String iGN;
-	Date receiveDate;
-	String message;
-	boolean approval;
-	Date dateApproved;
+	private int appealID;
+	private String iGN;
+	private Date receiveDate;
+	private String message;
+	private boolean approval;
+	private Date dateApproved;
 	
 	public AppealModel(int appealID, String iGN, Date receiveDate, String message, boolean approval, Date dateApproved) {
 		this.appealID = appealID;

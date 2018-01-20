@@ -1,4 +1,4 @@
-package moveBox;
+package movebox;
 
 public class BoxPos {
 	private int boxTop;

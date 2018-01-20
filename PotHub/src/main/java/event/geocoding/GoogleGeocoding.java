@@ -18,10 +18,6 @@ import com.google.maps.model.LatLng;
 
 public class GoogleGeocoding extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public GoogleGeocoding() {
-        super();
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
@@ -75,7 +71,7 @@ public class GoogleGeocoding extends HttpServlet {
 		for(int i = 0; i < results1[0].addressComponents.length; i++){
 		    String searchedResult = gson.toJson(results1[0].addressComponents[i].types[0]);
 		    searchedResult = searchedResult.replaceAll("\"", "");
-		    if(searchedResult.equals("POSTAL_CODE")) {
+		    if("POSTAL_CODE".equals(searchedResult)) {
 		    	String postalCode = gson.toJson(results1[0].addressComponents[i].longName).replaceAll("\"", "");
 		    	return postalCode;
 		    }

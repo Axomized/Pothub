@@ -3,13 +3,13 @@ package database.model;
 import java.sql.Date;
 
 public class BansModel {
-	int banID;
-	String iGN;
-	Date startDate;
-	Date endDate;
-	String reason;
-	String admin;
-	boolean pardoned;
+	private int banID;
+	private String iGN;
+	private Date startDate;
+	private Date endDate;
+	private String reason;
+	private String admin;
+	private boolean pardoned;
 
 	
 

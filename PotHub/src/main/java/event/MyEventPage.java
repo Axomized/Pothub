@@ -22,10 +22,6 @@ import database.model.EventModel;
 public class MyEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Database db;
-    
-    public MyEventPage() {
-        super();
-    }
 
     public void init(ServletConfig config) throws ServletException{
     	try {

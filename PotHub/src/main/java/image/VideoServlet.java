@@ -20,10 +20,6 @@ import database.model.FileTableModel;
 public class VideoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public VideoServlet() {
-        super();
-    }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
 		try {

@@ -48,7 +48,7 @@ import profile.ProfileUpdate;
 
 public class Database {
 	//final String DB_URL="jdbc:sqlserver://119.74.135.44:3306;databaseName=PotHub;"
-	final String DB_URL="jdbc:sqlserver://pothub.database.windows.net:1433;"
+	private final String DB_URL="jdbc:sqlserver://pothub.database.windows.net:1433;"
 			+ "database=PotHub;"
 			+ "user=PotHub@pothub;"
 			+ "password=SassyPenguin123;"
@@ -483,8 +483,8 @@ public class Database {
 	public void insertDonation(DonationModel dm) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, Donation_Date, Donation_Amount, OnBehalf) VALUES(?,?,?,?);");
 		ppstmt.setString(1, dm.getiGN());
-		ppstmt.setTimestamp(2, dm.getDonation_Date());
-		ppstmt.setBigDecimal(3, dm.getDonation_Amount());
+		ppstmt.setTimestamp(2, dm.getDonationDate());
+		ppstmt.setBigDecimal(3, dm.getDonationAmount());
 		ppstmt.setString(4, dm.getOnBehalf());
 		ppstmt.executeUpdate();
 	}
@@ -940,8 +940,8 @@ public class Database {
 	public void updateDonation(String sql, DonationModel dM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dM.getiGN());
-		ppstmt.setTimestamp(2, dM.getDonation_Date());
-		ppstmt.setBigDecimal(3, dM.getDonation_Amount());
+		ppstmt.setTimestamp(2, dM.getDonationDate());
+		ppstmt.setBigDecimal(3, dM.getDonationAmount());
 		ppstmt.setString(4, dM.getOnBehalf());
 
 		executeUpdate(ppstmt);
@@ -979,7 +979,7 @@ public class Database {
 			String guest		= rs.getString("Guest");
 			String status		= rs.getString("Status");
 			
-			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null, status));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, max_No_People, guest, status));
 		}
 		return alem;
 	}
@@ -990,6 +990,7 @@ public class Database {
 		ps.setString(1, nameOfEvent);
 		
 		ResultSet rs = ps.executeQuery();
+		EventModel eM = new EventModel();
 		while(rs.next()) {
 			String eventName	= rs.getString("EventName");
 			int thumbnail		= rs.getInt("Thumbnail");
@@ -1001,9 +1002,9 @@ public class Database {
 			String fileList		= rs.getString("FileList");
 			String status		= rs.getString("Status");
 			
-			return new EventModel(0, eventName, null, thumbnail, description, date, postalCode, venue, true, 0, guest, fileList, status);
+			eM = new EventModel(eventName, thumbnail, description, date, postalCode, venue, guest, fileList, status);
 		}
-		return null;
+		return eM;
 	}
 		
 	//Get guest's profile picture
@@ -1011,6 +1012,7 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT ProfilePic FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, iGN);
 		ResultSet rs = ppstmt.executeQuery();
+		String fileName = "";
 		while(rs.next()) {
 			int profilePic = rs.getInt("ProfilePic");
 			if(profilePic == 0) {
@@ -1020,25 +1022,23 @@ public class Database {
 			ppstmt2.setInt(1, profilePic);
 			ResultSet rs2 = ppstmt2.executeQuery();
 			while(rs2.next()) {
-				String fileName = rs2.getString("ImageName");
-				
-				return fileName;
+				fileName = rs2.getString("ImageName");
 			}
 		}
-		return null;
+		return fileName;
 	}
 	
 	//Get IGN's priviledge
 	public boolean getUserPriviledge(String iGN) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT isPriviledged FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, iGN);
+		boolean isPriviledged = false;
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
-			boolean isPriviledged = rs.getBoolean("isPriviledged");
+			isPriviledged = rs.getBoolean("isPriviledged");
 			
-			return isPriviledged;
 		}
-		return false;
+		return isPriviledged;
 	}
 		
 	//For MyEvent
@@ -1058,7 +1058,7 @@ public class Database {
 			String guest		= rs.getString("Guest");
 			String status		= rs.getString("Status");
 			
-			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, true, max_No_People, guest, null, status));
+			alem.add(new EventModel(eventID, eventName, iGN, thumbnail, description, date, postalCode, venue, max_No_People, guest, status));
 		}
 		return alem;
 	}
@@ -1151,15 +1151,16 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM FileTable WHERE FileName = ?;");
 		ppstmt.setString(1, name);
 		
+		FileTableModel fTM = new FileTableModel();
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
 			int fileID	= rs.getInt("FileID");
 			String fileName	= rs.getString("FileName");
 			byte[] data	= rs.getBytes("Data");
 			
-			return new FileTableModel(fileID, fileName, data);
+			fTM = new FileTableModel(fileID, fileName, data);
 		}
-		return null;
+		return fTM;
 	}
 	
 	//Get FileTable by fileID

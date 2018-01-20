@@ -1,8 +1,8 @@
 package database.model;
 
 public class ForgetPasswordModel {
-	String newPassword;
-	String body;
+	private String newPassword;
+	private String body;
 	
 	public String getNewPassword(){
 		return newPassword;
