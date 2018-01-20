@@ -43,7 +43,7 @@ function startConnection(){
 	var stunServer = {url: "stun:119.74.135.44:6666"};
 	var iceServers = [stunServer];
 	for(var i=0;i<iceServer.length;i++){
-		iceServers.push(iceServer[i]);
+		iceServers.push(iceServer.i);
 	}
 
 	connection.iceServers = iceServers;

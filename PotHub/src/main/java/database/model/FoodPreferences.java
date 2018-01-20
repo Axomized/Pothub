@@ -1,8 +1,8 @@
 package database.model;
 
 public class FoodPreferences {
-	String iGN;
-	String foodPref;
+	private String iGN;
+	private String foodPref;
 	
 	public FoodPreferences(String iGN, String foodPref) {
 		this.iGN = iGN;

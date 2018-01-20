@@ -4,27 +4,27 @@ import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 public class DonationModel {
-	int donationID;
-	String iGN;
-	Timestamp donation_Date;
-	BigDecimal donation_Amount;
-	String onBehalf;
+	private int donationID;
+	private String iGN;
+	private Timestamp donationDate;
+	private BigDecimal donationAmount;
+	private String onBehalf;
 	
 	public DonationModel() {
 		
 	}
 
-	public DonationModel(int donationID, String iGN, Timestamp donation_Date, BigDecimal donation_Amount, String onBehalf) {
+	public DonationModel(int donationID, String iGN, Timestamp donationDate, BigDecimal donationAmount, String onBehalf) {
 		this.donationID = donationID;
 		this.iGN = iGN;
-		this.donation_Date = donation_Date;
-		this.donation_Amount = donation_Amount;
+		this.donationDate = donationDate;
+		this.donationAmount = donationAmount;
 		this.onBehalf = onBehalf;
 	}
 	
-	public DonationModel(Timestamp donation_Date, BigDecimal donation_Amount, String onBehalf) {
-		this.donation_Date = donation_Date;
-		this.donation_Amount = donation_Amount;
+	public DonationModel(Timestamp donationDate, BigDecimal donationAmount, String onBehalf) {
+		this.donationDate = donationDate;
+		this.donationAmount = donationAmount;
 		this.onBehalf = onBehalf;
 	}
 
@@ -36,12 +36,12 @@ public class DonationModel {
 		return iGN;
 	}
 
-	public Timestamp getDonation_Date() {
-		return donation_Date;
+	public Timestamp getDonationDate() {
+		return donationDate;
 	}
 
-	public BigDecimal getDonation_Amount() {
-		return donation_Amount;
+	public BigDecimal getDonationAmount() {
+		return donationAmount;
 	}
 
 	public void setDonationID(int donationID) {
@@ -52,12 +52,12 @@ public class DonationModel {
 		this.iGN = iGN;
 	}
 
-	public void setDonation_Date(Timestamp donation_Date) {
-		this.donation_Date = donation_Date;
+	public void setDonationDate(Timestamp donationDate) {
+		this.donationDate = donationDate;
 	}
 
-	public void setDonation_Amount(BigDecimal donation_Amount) {
-		this.donation_Amount = donation_Amount;
+	public void setDonationAmount(BigDecimal donationAmount) {
+		this.donationAmount = donationAmount;
 	}
 
 	public String getOnBehalf() {

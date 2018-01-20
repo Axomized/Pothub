@@ -1,10 +1,10 @@
 package database.model;
 
 public class ImageTableModel {
-	int imageID;
-	String imageName;
-	byte[] imageData;
-	int inUse;
+	private int imageID;
+	private String imageName;
+	private byte[] imageData;
+	private int inUse;
 	
 	public ImageTableModel(int imageID, String imageName, byte[] imageData, int inUse) {
 		this.imageID = imageID;

@@ -1,8 +1,8 @@
 package database.model;
 
 public class FoodListModel {
-	String food;
-	String foodType;
+	private String food;
+	private String foodType;
 	
 	public FoodListModel() {
 		

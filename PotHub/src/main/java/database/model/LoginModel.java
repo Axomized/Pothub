@@ -1,11 +1,11 @@
 package database.model;
 
 public class LoginModel {
-	String email;
-	String password;
-	String salt;
-	boolean passwordResetted;
-	int count;
+	private String email;
+	private String password;
+	private String salt;
+	private boolean passwordResetted;
+	private int count;
 
 	public LoginModel() {}
 

@@ -18,10 +18,6 @@ import database.model.ImageTableModel;
 
 public class ImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    public ImageServlet() {
-        super();
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");

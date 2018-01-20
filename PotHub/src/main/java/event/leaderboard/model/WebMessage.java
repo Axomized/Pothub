@@ -1,8 +1,8 @@
 package event.leaderboard.model;
 
 public class WebMessage {
-	String messageType; //Retrieve, Push
-	String userToDisplay;
+	private String messageType; //Retrieve, Push
+	private String userToDisplay;
 	
 	public WebMessage() {
 	}

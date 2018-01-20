@@ -57,20 +57,20 @@ function showPreview(){
 		for(var i = 0; i < guestArray.length; i++){
 			var div = $(document.createElement('div'));
 			div.append("<img src='../images/cat.png' alt='Guest's Profile Picture' height='50' width='50'><br>")
-			div.append("<p>" + decodeURI(encodeURI(guestArray[i])) + "</p>");
+			div.append("<p>" + decodeURI(encodeURI(guestArray.i)) + "</p>");
 			guestDiv.append(div);
 		}
 		var eventGallery = contents.find(".event-gallery"); //Iframe's gallery
 		var input = document.getElementById("upload");
 		for (var i = 0; i < input.files.length; i++) {
-			if (input.files && input.files[i]) 
+			if (input.files && input.files.i) 
 			{
 				var reader = new FileReader();
 
 				reader.onload = function (e) {
 					eventGallery.append("<img src='" + e.target.result + "' alt='Gallery's pictures'>");
 				}
-				reader.readAsDataURL(input.files[i]);
+				reader.readAsDataURL(input.files.i);
 			}
 		}
 		var googleMapLink = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBksQSICQgS5CoCf49IyTtozR8R198pTS0&q=" + encodeURI($("#mainAddress").val());
@@ -249,7 +249,7 @@ $(function(){
 		var url = $(this).val();
 		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
 		for (var i = 0; i < input.files.length; ++ i) {
-			if (input.files && input.files[i] && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+			if (input.files && input.files.i && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
 			{
 				var reader = new FileReader();
 

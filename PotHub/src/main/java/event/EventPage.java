@@ -148,6 +148,9 @@ public class EventPage extends HttpServlet {
 	        }
 	        
 			for(EventModel eM:eMAL) {
+	    		if(eM.getiGN().equals(username)) {
+	    			continue;
+	    		}
 	    		
 	    		if(eM.getStatus().equals("E")) {
 	    			continue;

@@ -5,21 +5,21 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class DatabaseUserModel {
-	String email;
-	String iGN;
-	String contact_No;
-	char gender;
-	String bio;
-	String address;
-	String unitNo;
-	int profilePic;
-	Date lastLogin;
-	Date joinDate;
-	int cookingRank;
-	int points;
-	BigDecimal totalDonation;
-	boolean isPriviledged;
-	int userPermission;
+	private String email;
+	private String iGN;
+	private String contact_No;
+	private char gender;
+	private String bio;
+	private String address;
+	private String unitNo;
+	private int profilePic;
+	private Date lastLogin;
+	private Date joinDate;
+	private int cookingRank;
+	private int points;
+	private BigDecimal totalDonation;
+	private boolean isPriviledged;
+	private int userPermission;
 	
 	public DatabaseUserModel() {
 		

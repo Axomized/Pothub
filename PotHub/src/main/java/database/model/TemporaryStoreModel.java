@@ -7,12 +7,12 @@ import java.time.Instant;
 import java.util.concurrent.TimeUnit;
 
 public class TemporaryStoreModel {
-	String iGN;
-	BigDecimal temporaryAmount;
-	String temporaryPIN;
-	String temporarySalt;
-	String temporaryOnBehalf;
-	Timestamp temporaryTime;
+	private String iGN;
+	private BigDecimal temporaryAmount;
+	private String temporaryPIN;
+	private String temporarySalt;
+	private String temporaryOnBehalf;
+	private Timestamp temporaryTime;
 	
 	public TemporaryStoreModel(String iGN, BigDecimal temporaryAmount, String temporaryPIN, String temporarySalt, String temporaryOnBehalf, Timestamp temporaryTime) {
 		this.iGN = iGN;

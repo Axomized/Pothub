@@ -3,10 +3,10 @@ package database.model;
 import java.math.BigDecimal;
 
 public class PotcastBidModel {
-	int potcastID;
-	String iGN;
-	BigDecimal bidAmount;
-	String rating;
+	private int potcastID;
+	private String iGN;
+	private BigDecimal bidAmount;
+	private String rating;
 	
 	public PotcastBidModel(int potcastID, String iGN, BigDecimal bidAmount, String rating) {
 		this.potcastID = potcastID;

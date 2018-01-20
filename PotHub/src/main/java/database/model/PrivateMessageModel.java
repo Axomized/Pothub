@@ -3,12 +3,12 @@ package database.model;
 import java.sql.Date;
 
 public class PrivateMessageModel {
-	int messageID;
-	String iGNSend;
-	String iGNReceive;
-	String message;
-	Date date;
-	boolean readOrNot;
+	private int messageID;
+	private String iGNSend;
+	private String iGNReceive;
+	private String message;
+	private Date date;
+	private boolean readOrNot;
 
 	public PrivateMessageModel(int messageID, String iGNSend, String iGNReceive, String message, Date date, boolean readOrNot) {
 		this.messageID = messageID;

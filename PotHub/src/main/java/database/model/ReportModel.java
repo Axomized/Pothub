@@ -3,14 +3,14 @@ package database.model;
 import java.sql.Date;
 
 public class ReportModel {
-	int reportID;
-	String iGNSend;
-	String iGNReceive;
-	String evidenceType;
-	Date date;
-	int evidence;
-	String reason;
-	int guiltyOrNot;
+	private int reportID;
+	private String iGNSend;
+	private String iGNReceive;
+	private String evidenceType;
+	private Date date;
+	private int evidence;
+	private String reason;
+	private int guiltyOrNot;
 	
 	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence,
 			String reason, int guiltyOrNot) {

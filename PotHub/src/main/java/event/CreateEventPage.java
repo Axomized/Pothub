@@ -36,10 +36,6 @@ public class CreateEventPage extends HttpServlet {
 	private byte[] header;
     private byte[] footer;
     
-    public CreateEventPage() {
-        super();
-    }
-    
     public void init(ServletConfig config) throws ServletException{
     	StringBuffer sb = new StringBuffer();
 		sb.append("<!DOCTYPE html>");
@@ -251,7 +247,7 @@ public class CreateEventPage extends HttpServlet {
 			Database db = new Database(2);
 			EventModel eM = new EventModel();
 			String thumbnailNumberInput = request.getParameter("DefaultNumber");
-			if(thumbnailNumberInput.isEmpty() || thumbnailNumberInput == "") {
+			if(thumbnailNumberInput.isEmpty() || thumbnailNumberInput.equals("")) {
 				Part filePart = request.getPart("thumbnailUpload");
 				
 				String fileName = encodeString(Paths.get(filePart.getSubmittedFileName()).getFileName().toString());

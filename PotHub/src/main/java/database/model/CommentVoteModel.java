@@ -3,9 +3,9 @@ package database.model;
 import java.sql.Date;
 
 public class CommentVoteModel {
-	int commentID;
-	String iGN;
-	Date date;
+	private int commentID;
+	private String iGN;
+	private Date date;
 
 	public CommentVoteModel(int commentID, String iGN, Date date) {
 		this.commentID = commentID;
