@@ -16,6 +16,7 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import database.model.ForgetPasswordModel;
 import database.model.LoginModel;
 
 /**
@@ -94,13 +95,18 @@ public class ForgetPassword extends HttpServlet {
 
 			if(db.getEmail(email) == true)
 			{
+				ForgetPasswordModel fpm = new ForgetPasswordModel();
 				DatabaseUserModel dum = db.getIGNbyEmail(email);
+				fpm.setNewPassword(SendEmail.getRandomPassword());
 				
-				String newPassword = "Password123";
-				String body1 = "Dear " + dum.getiGN() + ",\n" + "You have recently requested to reset your password. " + 
-				"\nYour new password is: " + newPassword + "\nPlease change your password again as soon as possible. Thank you and have a nice day!";
+				String newPassword = fpm.getNewPassword();
+				String body = "Dear " + dum.getiGN() + ",\n" + "You have recently requested to reset your password. "
+						+ "You will be asked to change your password upon login. "
+						+ "Please change your password as soon as possible. "
+						+ "\nThank you and have a nice day!" 
+						+ "\n\nYour new password is: " + newPassword;
 				
-				SendEmail.sendEmail(SendEmail.USER_NAME, SendEmail.PASSWORD, email, SendEmail.SUBJECT, body1+newPassword);
+				SendEmail.sendEmail(SendEmail.USER_NAME, SendEmail.PASSWORD, email, SendEmail.SUBJECT, body);
 				
 		    	LoginModel lm = db.getLogin(newPassword, email);
 

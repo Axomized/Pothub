@@ -172,6 +172,12 @@
 		<description></description>
 		<servlet-class>login.ForgetPassword</servlet-class>
 	</servlet>
+	<servlet>
+		<servlet-name>ForceChangePassword</servlet-name>
+		<display-name>ForceChangePassword</display-name>
+		<description></description>
+		<servlet-class>login.ForceChangePassword</servlet-class>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -283,5 +289,9 @@
 	<servlet-mapping>
 		<servlet-name>ForgetPassword</servlet-name>
 		<url-pattern>/ForgetPassword</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ForceChangePassword</servlet-name>
+		<url-pattern>/ForceChangePassword</url-pattern>
 	</servlet-mapping>
 </web-app>

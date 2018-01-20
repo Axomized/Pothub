@@ -18,8 +18,9 @@ public class SendEmail {
 	
 	public static void main(String [] args) throws AddressException, MessagingException{
         ForgetPasswordModel fpm = new ForgetPasswordModel();
+        fpm.setNewPassword(getRandomPassword());
 		String recipientEmail = "xiangjing90@hotmail.com";
-		String body = fpm.getBody();
+		String body = fpm.getNewPassword();
 		sendEmail(USER_NAME, PASSWORD, recipientEmail, SUBJECT, body);
 	}
 	public static void sendEmail(String username, String password, String recipientEmail, String subject, String body) throws AddressException, MessagingException {
@@ -77,6 +78,9 @@ public class SendEmail {
         }
         String newPasswordStr = newPassword.toString();
         System.out.println(newPasswordStr);
+        
+        ForgetPasswordModel fpm = new ForgetPasswordModel();
+        fpm.setNewPassword(newPasswordStr);
         return newPasswordStr;
 
     }

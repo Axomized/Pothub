@@ -190,25 +190,27 @@ public class Database {
 	
 	//For Login Page
 	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt FROM Login WHERE Email = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt, passwordResetted FROM Login WHERE Email = ?;");
 		ppstmt.setString(1, enteredEmail);
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
 			String email = rs.getString("Email");
 			String password = rs.getString("Password");
 			String salt = rs.getString("Salt");
+			Boolean passwordResetted = rs.getBoolean("passwordResetted");
 
-			return new LoginModel(email, password, salt);
+			return new LoginModel(email, password, salt, passwordResetted);
 		}
 		return null;
 	}
 	
 	//For Registration Page
 	public void insertLogin(LoginModel lm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt) VALUES(?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Login(Email, Password, Salt, passwordResetted) VALUES(?,?,?,?);");
 		ppstmt.setString(1, lm.getEmail());
 		ppstmt.setString(2, lm.getPassword());
 		ppstmt.setString(3, lm.getSalt());
+		ppstmt.setBoolean(4, false);
 		
 		ppstmt.executeUpdate();
 	}
@@ -263,11 +265,21 @@ public class Database {
 		return nameExist;
 	}
 	
-	//For Forget Password Page - Update New Password
+	//For Forget Password Page - Update New Password and Change passwordResetted to true
 	public void updatePassword(String newPassword, String enteredEmail) throws SQLException{
-		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ? WHERE Email = ?");
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ?, passwordResetted = ? WHERE Email = ?");
 		ppstmt.setString(1, newPassword);
-		ppstmt.setString(2, enteredEmail);
+		ppstmt.setBoolean(2, true);
+		ppstmt.setString(3, enteredEmail);
+		executeUpdate(ppstmt);
+	}
+	
+	//For Force Change Password - Update New Password and Change passwordResetted to false
+	public void updateChangedPassword(String newPassword, String enteredEmail) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ?, passwordResetted = ? WHERE Email = ?");
+		ppstmt.setString(1, newPassword);
+		ppstmt.setBoolean(2, false);
+		ppstmt.setString(3, enteredEmail);
 		executeUpdate(ppstmt);
 	}
 		

@@ -126,7 +126,16 @@ public class LoginPage extends HttpServlet {
 			    		System.out.println("Login Success!");
 			    		HttpSession session = request.getSession();
 			    		session.setAttribute("username", dum.getiGN());
-			    		response.sendRedirect("Forum");
+			    		
+			    		if (lm.isPasswordResetted() == false)
+			    		{
+			    			response.sendRedirect("Forum");
+			    		}
+			    		else
+			    		{
+			    			System.out.println(dum.getEmail());
+			    			response.sendRedirect("ForceChangePassword");
+			    		}
 			    	}
 			    	
 			    	else
