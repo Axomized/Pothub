@@ -49,4 +49,11 @@ public class LeaderBoardController {
     			return null;
     	}
     }
+    
+    @MessageMapping("/register/{topic}")
+    @SendTo("/topic/{topic}")
+    public LeaderboardDetail registerFood(@DestinationVariable("topic") String topic, LeaderboardDetail message) throws Exception {
+    	boolean successOrNot = UserScore.insertUserFoodDetails(message);
+    	return message;
+    }
 }

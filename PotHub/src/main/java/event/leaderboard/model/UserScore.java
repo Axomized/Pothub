@@ -2,7 +2,6 @@ package event.leaderboard.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -125,19 +124,26 @@ public class UserScore {
 		return lBD;
 	}
 	
-	public static void insertUserFoodDetails(String userTo, String title, String desc, byte[] foodPic) throws InterruptedException {
-		LeaderboardDetail lBD = new LeaderboardDetail(title, desc, foodPic);
-		
-		lock.lockWrite();
-		
-		if (userDetails.containsKey(userTo) ) {
-			userDetails.replace(userTo, lBD);
+	public static boolean insertUserFoodDetails(LeaderboardDetail lBD) throws InterruptedException {
+		try {
+			String userTo = lBD.getiGN();
+			
+			lock.lockWrite();
+			
+			if (userDetails.containsKey(userTo) ) {
+				userDetails.replace(userTo, lBD);
+			}
+			else {
+				userDetails.put(userTo, lBD);
+			}
+			
+			lock.unlockWrite();
+			
+			return true;
+		}catch(Exception e) {
+			e.printStackTrace();
+			return false;
 		}
-		else {
-			userDetails.put(userTo, lBD);
-		}
-		
-		lock.unlockWrite();
 	}
 	
 	public String toString() {

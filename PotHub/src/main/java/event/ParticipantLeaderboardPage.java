@@ -1,4 +1,4 @@
-package event.leaderboard;
+package event;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -29,7 +29,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("		<link rel='stylesheet' type='text/css' href='css/Leaderboard.css' />");
 		sb.append("	</head>");
 		sb.append("	<body onload='connect('Blackpepper3', 'TeaParty')'>");
-		sb.append("	<noscript><h2 style='color: #ff0000'>Seems your browser doesn't support Javascript! Websocket relies on Javascript beingenabled. Please enable Javascript and reload this page!</h2></noscript>");
+		sb.append("	<noscript><h2 style='color: #ff0000'>Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable Javascript and reload this page!</h2></noscript>");
 		sb.append("		<!--  Navigation Bar -->");
 		sb.append("		<div id='header'>");
 		sb.append("			<div id='companyTitle'>");
@@ -70,27 +70,49 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("			</ul>");
 		sb.append("		</div>");
 		sb.append("		<div id='wrapper'>");
-		sb.append("			<div class='left-container'>");
-		sb.append("				<div class='left-container-picture'>");
-		sb.append("					<img src='images/crab.jpg'>");
-		sb.append("					<img src='images/crab.jpg'>");
+		sb.append("			<div id='left-container'>");
+		sb.append("				<div id='left-left-container'>");
+		sb.append("					<div id='resultPage'>");
+		sb.append("						<i class='fa fa-clipboard fa-2x' aria-hidden='true'></i>");
+		sb.append("					</div><hr>");
+		sb.append("					<div id='registerPage'>");
+		sb.append("						<i class='fa fa-pencil-square-o fa-2x' aria-hidden='true'></i>");
+		sb.append("					</div><hr>");
 		sb.append("				</div>");
-		sb.append("				<div class='left-container-title'>");
-		sb.append("					<p><b>Curry Crab</b></p>");
-		sb.append("					<p>Cooked by: Blackpepper3</p>");
-		sb.append("				</div>");
-		sb.append("				<div class='left-container-points'>");
-		sb.append("					<p>8.6/10</p>");
-		sb.append("				</div>");
-		sb.append("				<div class='left-container-desc'>");
-		sb.append("					<p><b>Description</b></p>");
-		sb.append("					<p>Curry crab cooked by me... Very nice.</p>");
-		sb.append("				</div>");
-		sb.append("				<div class='left-container-close'>");
-		sb.append("					<i class='fa fa-times' aria-hidden='true'></i>");
+		sb.append("				<div id='left-right-container'>");
+		sb.append("					<div class='userDetailsInfo-container'>");
+		sb.append("						<div class='left-container-picture'>");
+		sb.append("							<img src='images/crab.jpg'>");
+		sb.append("							<img src='images/crab.jpg'>");
+		sb.append("						</div>");
+		sb.append("						<div class='left-container-title'>");
+		sb.append("							<p><b>Curry Crab</b></p>");
+		sb.append("							<p>Cooked by: Blackpepper3</p>");
+		sb.append("						</div>");
+		sb.append("						<div class='left-container-points'>");
+		sb.append("							<p>8.6/10</p>");
+		sb.append("						</div>");
+		sb.append("						<div class='left-container-desc'>");
+		sb.append("							<p><b>Description</b></p>");
+		sb.append("							<p>Curry crab cooked by me... Very nice.</p>");
+		sb.append("						</div>");
+		sb.append("					</div>");
+		sb.append("					<div class='userDetailsForm-container'>");
+		sb.append("						<h4><b>Register your food!</b></h4><br>");
+		sb.append("						<p><b>Picture of your food</b></p>");
+		sb.append("						<input type='file' id='foodPicture' accept='image/*;capture=camera'><br><br>");
+		sb.append("						<p><b>Name of your food</b><span class='requiredInput'>*</span></p>");
+		sb.append("						<input type='text' id='foodName' class='form-control' placeholder='Name'><br>");
+		sb.append("						<p><b>Short Description of your food</b><span class='requiredInput'>*</span></p>");
+		sb.append("						<textarea id='foodDesc' class='form-control' placeholder='Short Description'></textarea><br>");
+		sb.append("						<button id='registerBtn' class='btn btn-primary'>Submit</button>");
+		sb.append("					</div>");
+		sb.append("					<div id='leftBars'>");
+		sb.append("						<i class='fa fa-bars fa-2x' aria-hidden='true'></i>");
+		sb.append("					</div>");
 		sb.append("				</div>");
 		sb.append("			</div>");
-		sb.append("			<div class='right-container'>");
+		sb.append("			<div id='right-container'>");
 		sb.append("				<div class='right-top-container'>");
 		sb.append("					<div class='right-top-topthree-container'>");
 		sb.append("						<div class='right-top-topthree-picture'>");
@@ -121,7 +143,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-picture'>");
 		sb.append("							<img src='images/crab.jpg'>");
-		sb.append("							<p><b>Jerry</b></p>");
+		sb.append("							<p class='name'><b>Jerry</b></p>");
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-score'>");
 		sb.append("							<div class='progressbar'>");
@@ -135,7 +157,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-picture'>");
 		sb.append("							<img src='images/crab.jpg'>");
-		sb.append("							<p><b>Jerry</b></p>");
+		sb.append("							<p class='name'><b>Jerry</b></p>");
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-score'>");
 		sb.append("							<div class='progressbar'>");
@@ -149,7 +171,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-picture'>");
 		sb.append("							<img src='images/crab.jpg'>");
-		sb.append("							<p><b>Jerry</b></p>");
+		sb.append("							<p class='name'><b>Jerry</b></p>");
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-score'>");
 		sb.append("							<div class='progressbar'>");
@@ -163,7 +185,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-picture'>");
 		sb.append("							<img src='images/crab.jpg'>");
-		sb.append("							<p><b>Jerry</b></p>");
+		sb.append("							<p class='name'><b>Jerry</b></p>");
 		sb.append("						</div>");
 		sb.append("						<div class='right-bottom-score'>");
 		sb.append("							<div class='progressbar'>");
@@ -192,6 +214,8 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("					</div>");
 		sb.append("				</div>");
 		sb.append("			</div>");
+		sb.append("			<div id='videoDiv'>");
+		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("		");
 		sb.append("		<!-- Latest compiled minified Jquery Script -->");
@@ -200,6 +224,10 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js'></script>");
 		sb.append("	    <!-- Latest compiled minified STOMP Script -->");
 		sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js'></script>");
+		sb.append("	    <!-- RTCMultiConnection -->");
+		sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js'></script>");
+		sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
+		sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
 		sb.append("	    <!-- My Own Script -->");
 		sb.append("		<script src='script/Leaderboard.js'></script>");
 		sb.append("		<script src='script/VideoParticipant2.js'></script>");
@@ -209,7 +237,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String iGN = request.getParameter("");
 	}
 
 }

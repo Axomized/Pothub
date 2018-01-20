@@ -247,7 +247,7 @@ public class CreateEventPage extends HttpServlet {
 			Database db = new Database(2);
 			EventModel eM = new EventModel();
 			String thumbnailNumberInput = request.getParameter("DefaultNumber");
-			if(thumbnailNumberInput.isEmpty() || thumbnailNumberInput.equals("")) {
+			if(thumbnailNumberInput.isEmpty() || "".equals(thumbnailNumberInput)) {
 				Part filePart = request.getPart("thumbnailUpload");
 				
 				String fileName = encodeString(Paths.get(filePart.getSubmittedFileName()).getFileName().toString());

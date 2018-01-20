@@ -1,14 +1,14 @@
-function redirectPage(eventName){
-	window.location.href = "EventofEventPage/" + eventName;
+function redirectPage(eventName) {
+	window.location.href = "EventofEventPage/${eventName}";
 }
 
-$(function(){
-	$(".top-container-image-gradient").mouseenter(function(){
+$(function a() {
+	$(".top-container-image-gradient").mouseenter(function a() {
 		$(this).hide();
 		$(this).next().show();
 	});
 	
-	$(".overlay").mouseleave(function(){
+	$(".overlay").mouseleave(function a() {
 		$(this).hide();
 		$(this).prev().show();
 	});

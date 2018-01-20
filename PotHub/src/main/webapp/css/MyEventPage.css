@@ -9,7 +9,7 @@ html {
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
     background: transparent;
 }
 
@@ -40,7 +40,7 @@ body {
 	float: left;
 	width: 100%;
 	margin: 0;
-	display: relative;
+	position: relative;
 	padding-bottom: 10vh;
 }
 
@@ -58,9 +58,11 @@ body {
 }
 
 /* Header */
-#header h1 { 
-	padding: 20px; 
-	color:#49274a;
+#header p { 
+	font-size: 30px;
+	padding: 15px 0 10px 20px; 
+	color: #49274a;
+	font-weight: 500;
 }
 
 #companyTitle {
@@ -70,7 +72,6 @@ body {
 
 #profilePicWrapDiv {
 	position: relative;
-	display: inline-block;
 	float: right;
 	cursor: pointer;
 }
@@ -87,7 +88,7 @@ body {
 	right: 0%;
 	background-color: #f8eee7;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -155,6 +156,7 @@ body {
 	left: 0;
 	height: 100%;
 	width: 100%;
+	background-color: rgb(100, 100, 100);
 	background-color: rgba(100, 100, 100, 0.7);
 	z-index: 3;
 	display: none;
@@ -169,7 +171,6 @@ body {
 	z-index: 3;
 	margin-top: -10%;
 	margin-left: -20%; /* (Width / 2) */
-	padding: 10px;
 	border: 2px solid #4f2f03;
 	background-color: #f8eee7;
 	border-radius: 5px;
@@ -221,7 +222,7 @@ body {
 }
 
 .content *{
-	margin: 0px;
+	margin: 0;
 }
 
 .front-container{
@@ -235,7 +236,6 @@ body {
  	background: -webkit-linear-gradient(top, rgba(28,28,28,0) 0%, rgba(28,28,28,0.96) 96%, rgba(0,0,0,1) 100%); /* Chrome10+,Safari5.1+ */
  	background: -o-linear-gradient(top, rgba(28,28,28,0) 0%, rgba(28,28,28,0.96) 96%, rgba(0,0,0,1) 100%); 		/* Opera 11.10+ */
  	background: -ms-linear-gradient(top, rgba(28,28,28,0) 0%, rgba(28,28,28,0.96) 96%, rgba(0,0,0,1) 100%); 	/* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#001c1c1c', endColorstr='#000000', GradientType= 0);
 	padding-right: 15%;
 }
 
@@ -271,7 +271,6 @@ body {
  	background: -webkit-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.63) 41%, rgba(0,0,0,0.95) 100%); /* Chrome10+,Safari5.1+ */
  	background: -o-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.63) 41%, rgba(0,0,0,0.95) 100%); 		/* Opera 11.10+ */
  	background: -ms-linear-gradient(top, rgba(0,0,0,0.4) 0%, rgba(0,0,0,0.63) 41%, rgba(0,0,0,0.95) 100%); 	/* IE10+ */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#66000000', endColorstr='#f2000000',GradientType=0 );
 	text-align: center;
 	overflow: auto;
 	z-index: 1;
@@ -306,7 +305,7 @@ hr {
 	height: 6vw;
 	width: 100%;
 	font-size: 4vw;
-	padding: 0px 0px 20px 10px;
+	padding: 0 0 20px 10px;
 }
 /* Footer */
 

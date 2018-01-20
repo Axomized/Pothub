@@ -6,53 +6,44 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
-function redirectPage(eventName){
-	window.location.href = "EventofEventPage/" + eventName;	
+function redirectPage(eventName) {
+	window.location.href = "EventofEventPage/" + eventName;
 }
 
-function getTime(){
-	setInterval(function(){ updateTime();}, 1000);
-}
-
-function updateTime(){
-	$(".time").each(function(){
-		if($(this).text() === "Ended" || $(this).text() === "Ongoing"){}
-		else{
-			var date = $(this).text(); 
+function updateTime() {
+	$(".time").each(function a() {
+		if( $(this).text() !== "Ended" && $(this).text() !== "Ongoing") {
 			var returnString;
-			
-			var lastIndexSeconds = date.indexOf(' Seconds');
-			var lastIndexMinutes = date.indexOf(' Minutes ');
-			var lastIndexHour = date.indexOf(' Hours ');
-			
-			var seconds; 
+			var seconds;
 			var minutes;
 			var hours;
+			var date = $(this).text(); 
+			var lastIndexSeconds = date.indexOf(" Seconds");
+			var lastIndexMinutes = date.indexOf(" Minutes ");
+			var lastIndexHour = date.indexOf(" Hours ");
 			
-			if(lastIndexHour == -1){
+			if(lastIndexHour === -1) {
 				hours = 0;
 			}else{
 				hours = Number(date.substring(0, lastIndexHour));
 			}
-			if(lastIndexMinutes == -1){
+			if(lastIndexMinutes === -1) {
 				minutes = 0;
-			}else{
+			}else {
 				minutes = Number(date.substring(lastIndexHour + 7, lastIndexMinutes));
 			}
-			if(lastIndexSeconds == -1){
+			if(lastIndexSeconds === -1) {
 				seconds = 0;
-			}else{
+			}else {
 				seconds = Number(date.substring(lastIndexMinutes + 9, lastIndexSeconds));
 			}
 			
 			seconds--;
-			if(seconds < 0){
+			if(seconds < 0) {
 				minutes--;
-				if(minutes < 0){
+				if(minutes < 0) {
 					hours--;
-					if(hours < 0){
-						
-					}else{
+					if(hours >= 0) {
 						minutes = 59;
 						seconds = 59;
 					}
@@ -78,9 +69,13 @@ function updateTime(){
 	});
 }
 
+function getTime(){
+	setInterval(function(){ updateTime();}, 1000);
+}
+
 function checkPriviledge(isPriviledged){
 	if(isPriviledged === "true"){
-		window.location.href = '/PotHub/CreateEventPage';
+		window.location.href = "/PotHub/CreateEventPage";
 	}else{
 		$("#popup-container").show();
 	}

@@ -2,8 +2,9 @@ var stompClient = null;
 var iGN;
 var eventName;
 var currentScore;
+var stompClient; // Making it global
 
-function disconnect() {
+function stompDisconnect () {
 	if (stompClient !== null) {
 		stompClient.disconnect();
 	}
@@ -18,14 +19,14 @@ function sendVote(userFrom, userTo, score, topic) {
 	}
 }
 
-function updateStar(container){
+function updateStar(container) {
 	var starYellow = document.getElementById("starYellowBackground");
 	var value = container.val();
 	var width = scoreToWidth(value);
 	starYellow.style.width = width + "px";
 }
 
-function scoreToWidth(score){
+function scoreToWidth(score) {
 	var value = score;
 	var width = 0;
 	switch(true){
@@ -56,15 +57,15 @@ function scoreToWidth(score){
 	return width;
 }
 
-$("#starNum").click(function(){
+$("#starNum").click(function a () {
 	updateStar($(this));
 });
 
-$("#starNum").change(function(){
+$("#starNum").change(function a () {
 	updateStar($(this));
 });
 
-$("#starBlackBackground").click(function(e){
+$("#starBlackBackground").click(function(e) {
 	var x = e.pageX - $(this).offset().left;
 	var value = 0;
 	switch(true){
@@ -106,7 +107,7 @@ $("#starBlackBackground").click(function(e){
 	updateStar($("#starNum"));
 });
 
-$("#voteBtn").click(function(){
+$("#voteBtn").click(function a () {
 	var userFrom = iGN;
 	var userTo = $("#userIGN").text();
 	var score = $("#starNum").val();
@@ -115,80 +116,114 @@ $("#voteBtn").click(function(){
 	$("#popupBackground").hide();
 });
 
-//ProgressBar animation
-function animateBar(userTo, score){
-	$(".progressbarbar").each(function(index){
-		//if($(this).parent().parent().previous().children(".name").text() === userTo){
-		$(this).animate({width: '100%'});
-		//}
+// ProgressBar animation
+function animateBar(userTo, score) {
+	$(".progressbarbar").each(function a (index) {
+		// if($(this).parent().parent().previous().children(".name").text() === userTo){
+		$(this).animate({width: "100%"});
+		// }
 	});
 }
 
-//Vote
-function startVotingDisplay(userTo){
+// Vote
+function startVotingDisplay(userTo) {
 	document.getElementById("popupBackground").style.display = "block";
 }
 
-//End
-function countDownAndRedirectToEndPage(){
+// End
+function countDownAndRedirectToEndPage () {
 
 }
 
-//Video Stream
-function hideStreamAsIfNotStreaming(){
+// Video Stream
+function hideStreamAsIfNotStreaming () {
 	$("#videoDiv").hide();
 }
 
-function showStreamAsIfStreaming(){
+function showStreamAsIfStreaming () {
 	$("#videoDiv").show();
 }
 
-//Sidebar Animation
+// Sidebar Animation
 var sidebarOpen = true;
-$("#leftBars").click(function(){
-	if(sidebarOpen){
+$("#leftBars").click(function a () {
+	if(sidebarOpen) {
 		document.getElementById("left-container").style.right = "260px";
 		document.getElementById("right-container").style.marginLeft = "-260px";
 		sidebarOpen = false;
-	}else{
+	}else {
 		document.getElementById("left-container").style.right = "0";
 		document.getElementById("right-container").style.marginLeft = "0";
 		sidebarOpen = true;
 	}
 });
 
-$("#resultPage").click(function(){
+$("#resultPage").click(function a () {
 	$(".userDetailsInfo-container").show();
 	$(".userDetailsForm-container").hide();
 });
 
-$("#registerPage").click(function(){
+$("#registerPage").click(function a () {
 	$(".userDetailsInfo-container").hide();
 	$(".userDetailsForm-container").show();
 });
 
-//Connect
+$("#registerBtn").click(function a () {
+	var pictureInput = document.getElementById("foodPicture");
+	var nameInput = $("#foodName").val();
+	var descInput = $("#foodDesc").val();
+	
+	var foodpic;
+	var title;
+	var desc;
+	if(pictureInput.value.length > 0) {
+		var reader = new FileReader();
+		reader.onload = function(){ 
+			foodpic = this.result; 
+		};
+		reader.readAsDataURL(pictureInput.files[0]);
+	}
+	if(nameInput !== null) {
+		title = nameInput;
+	}
+	if(descInput !== null) {
+		desc = descInput;
+	}
+	$.post(
+			"/PotHub/ParticipantLeaderboardPage",
+			{iGN, title, desc, foodpic}
+	);
+});
+
+// Connect
 function connect(username, topic) {
 	iGN = username;
 	eventName = topic;
-	var socket = new SockJS('https://localhost:8443/ARandomName');
-	var stompClient = Stomp.over(socket);
-	stompClient.connect({}, function (frame) {
-		stompClient.subscribe('/topic/' + topic, function (socketReply) {
-			var array = JSON.parse(socketReply.body);
-			if(array.length>0){
-				if(array[0].score===-1){
-					startVotingDisplay(array[0].userTo);
-				}else if(array[0].score===-2){
-					hideStreamAsIfNotStreaming();
-				}else if(array[0].score===-3){
-					showStreamAsIfStreaming();
-				}else if(array[0].score===-4){
-					countDownAndRedirectToEndPage();
-				}else{
-					var json = JSON.parse(socketReply.body);
-					for(var i=0; i<json.length; i++){animateBar(json.i.userTo, scoreToWidth(json.i.score));}
+	var socket = new SockJS("https://localhost:8443/ARandomName");
+	stompClient = Stomp.over(socket);
+	stompClient.connect({}, function a () {
+		stompClient.subscribe("/topic/" + topic, function (socketReply) {
+			try{
+				var array = JSON.parse(socketReply.body);
+				if(array.length>0) {
+					if(array[0].score===-1) {
+						startVotingDisplay(array[0].userTo);
+					}else if(array[0].score===-2) {
+						hideStreamAsIfNotStreaming();
+					}else if(array[0].score===-3) {
+						showStreamAsIfStreaming();
+					}else if(array[0].score===-4) {
+						countDownAndRedirectToEndPage();
+					}else if(array[0].desc.length > 0) {
+						console.log(array[0].foodpic)
+						alert("Successful upload");
+					}else {
+						var json = JSON.parse(socketReply.body);
+						for(var i=0; i<json.length; i++){animateBar(json.i.userTo, scoreToWidth(json.i.score));}
+					}
 				}
+			}catch(err) {
+				console.log("Error: \n" + socketReply);
 			}
 		});
 		stompClient.send("/app/other/" + topic, {}, JSON.stringify({"messageType": "Retrieve", "userToDisplay": username}));
@@ -197,11 +232,11 @@ function connect(username, topic) {
 	connectToStream(username, topic);
 }
 
-//Profile
-function showProfileDropdown() {
+// Profile
+function showProfileDropdown () {
 	document.getElementById("profileDropdownDiv").style.display = "block";
 }
 
-function hideProfileDropdown() {
+function hideProfileDropdown () {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }

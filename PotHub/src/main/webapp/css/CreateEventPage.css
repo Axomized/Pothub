@@ -7,7 +7,7 @@ html {
 }
 
 ::-webkit-scrollbar {
-    width: 0px;
+    width: 0;
     background: transparent;
 }
 
@@ -51,9 +51,11 @@ body {
 
 /* Header */
 
-#header h1 { 
-	padding: 20px; 
-	color:#49274a;
+#header p { 
+	font-size: 30px;
+	padding: 15px 0 10px 20px; 
+	color: #49274a;
+	font-weight: 500;
 }
 
 #companyTitle {
@@ -63,7 +65,6 @@ body {
 
 #profilePicWrapDiv {
 	position: relative;
-	display: inline-block;
 	float: right;
 	cursor: pointer;
 }
@@ -77,10 +78,10 @@ body {
 	display: none;
 	position: absolute;
 	top: 100%;
-	right: 0%;
+	right: 0;
 	background-color: #f8eee7;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -144,7 +145,7 @@ body {
 
 /* Event */
 .row{
-	margin: 0px;
+	margin: 0;
 }
 
 #thumbnail-container{
@@ -258,7 +259,7 @@ body {
 }
 
 guest-container-left-container > i{
-	margin: 3px 0px 0px 5px;
+	margin: 3px 0 0 5px;
 	height: 28px;
 }
 

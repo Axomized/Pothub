@@ -22,10 +22,6 @@ import database.model.EventModel;
 public class EventofEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Database db;
-    
-    public EventofEventPage() {
-        super();
-    }
 
     public void init(ServletConfig config) throws ServletException{
     	try {
@@ -46,14 +42,14 @@ public class EventofEventPage extends HttpServlet {
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
 	    	
 			//Check session whether the user got login in
-			String username = "";
+			//String username = "";
 	        HttpSession session = request.getSession(false);
 	        if (session != null) {
-	            username = (String)session.getAttribute("username");
+	            //username = (String)session.getAttribute("username");
 	            session.setAttribute("pinAttempts", 0);
 	        }
 	        else {
-	            response.sendRedirect("Login");
+	            response.sendRedirect("/PotHub/Login");
 	        }
 			
 	    	ServletOutputStream out = response.getOutputStream();

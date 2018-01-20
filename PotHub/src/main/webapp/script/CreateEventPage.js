@@ -1,14 +1,15 @@
 var hidden = true;
 var googleMapLink;
-var xhttp = new XMLHttpRequest();
+const xhttp = new XMLHttpRequest();
 
 xhttp.onreadystatechange = function() {
-	if (this.readyState == 4 && this.status == 200) {
-		if(this.responseText != null || this.responseText != ""){
-			if(this.responseText.substring(0, 7) == "Geocode")
+	if (this.readyState === 4 && this.status === 200) {
+		if(this.responseText !== null || this.responseText !== ""){
+			if(this.responseText.substring(0, 7) === "Geocode"){
 				document.getElementById("mainAddress").value = this.responseText.substring(7);
-			else if(this.responseText.substring(0, 7) == "Reverse")
+			}else if(this.responseText.substring(0, 7) === "Reverse"){
 				document.getElementById("postalInput").value = this.responseText.substring(7);
+			}
 		}
 	}
 };
@@ -21,22 +22,21 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
-// For Iframe's script
-function showPreview(){
-	if(hidden){
+// For Iframe"s script
+function showPreview() {
+	if(hidden) {
 		var iframe = $("#iframeEvent");
 		var contents = iframe.contents();
 		var fileupload = document.getElementById("fileUpload");
-		if(fileupload.value.length > 0){
-			var reader = new FileReader();
-
-			reader.onload = function (e) {
+		if(fileupload.value.length > 0) {
+			const reader = new FileReader();
+			reader.onload = function a(e) {
 				contents.find(".headerImage").attr("src", e.target.result);
 			}
 			reader.readAsDataURL(fileupload.files[0]);
 		}else{
 			var src;
-			switch($("#fileNum").val()){
+			switch($("#fileNum").val()) {
 				case "4":
 					src = "../images/wood.jpeg";
 					break;
@@ -54,21 +54,21 @@ function showPreview(){
 		var guestDiv = contents.find(".guest");
 		var guestInputValue = $("#guestNameList").val();
 		var guestArray = guestInputValue.split("_");
-		for(var i = 0; i < guestArray.length; i++){
-			var div = $(document.createElement('div'));
-			div.append("<img src='../images/cat.png' alt='Guest's Profile Picture' height='50' width='50'><br>")
-			div.append("<p>" + decodeURI(encodeURI(guestArray.i)) + "</p>");
+		for(j = 0; i < guestArray.length; j++) {
+			var div = $(document.createElement("div"));
+			div.append("<img src=\"../images/cat.png\" alt=\"Guest's Profile Picture\" height=\"50\" width=\"50\"><br>");
+			div.append("<p>" + decodeURI(encodeURI(guestArray.j)) + "</p>");
 			guestDiv.append(div);
 		}
-		var eventGallery = contents.find(".event-gallery"); //Iframe's gallery
+		var eventGallery = contents.find(".event-gallery"); //Iframe"s gallery
 		var input = document.getElementById("upload");
-		for (var i = 0; i < input.files.length; i++) {
+		for (i = 0; i < input.files.length; i++) {
 			if (input.files && input.files.i) 
 			{
 				var reader = new FileReader();
 
-				reader.onload = function (e) {
-					eventGallery.append("<img src='" + e.target.result + "' alt='Gallery's pictures'>");
+				reader.onload = function a(e) {
+					eventGallery.append("<img src=\"" + e.target.result + "\" alt=\"Gallery's pictures\">");
 				}
 				reader.readAsDataURL(input.files.i);
 			}
@@ -99,7 +99,7 @@ function showDefault() {
 	}
 }
 
-function changeThumbnail(current, number){
+function changeThumbnail(current, number) {
 	var chosen = document.getElementById("chosenThumbnail");
 	chosen.src = current.src;
 	document.getElementById("fileUpload").value = "";
@@ -122,37 +122,27 @@ function validateForm() {
 	var guestName = document.getElementById("guestNameList");
 	var galleryUpload = $("#upload");
 
-	if(eventName.value.length < 255){
-		
-	}else{
+	if(eventName.value.length > 255){
 		alert("Event Name: Failed");
 		return false;
 	}
 
-	if(postalCode.value.length <= 6 && postalCode.value.length >= 1){
-		
-	}else{
+	if(postalCode.value.length > 6 || postalCode.value.length < 1){
 		alert("Postal Code: Failed");
 		return false;
 	}	
 
-	if(additionalAddress.value.length + address.value.length < 255){
-		
-	}else{
+	if(additionalAddress.value.length + address.value.length > 255){
 		alert("Address Name: Failed");
 		return false;
 	}	
 
-	if(guestName.childElementCount < 50){
-		
-	}else{
+	if(guestName.childElementCount > 50){
 		alert("Guest Name List: Failed");
 		return false;
 	}	
 
-	if(galleryUpload.files.length < 10){
-		
-	}else{
+	if(galleryUpload.files.length >= 10){
 		alert("Upload only <10 photos");
 		return false;
 	}	
@@ -164,10 +154,10 @@ $(function(){
 		hidden = true;
 	});
 	
-	$("#textguestname").bind('input', function () {
+	$("#textguestname").bind("input", function () {
 		$("option").each(function(){
-			if($("#textguestname").val() == $(this).val()){
-				$('#guest-container-right-container').append("<p class='right-guest' onclick='addToLeft(this)'>" + $("#textguestname").val() + "</p>");
+			if($("#textguestname").val() === $(this).val()){
+				$("#guest-container-right-container").append("<p class=\"right-guest\" onclick=\"addToLeft(this)\">" + $("#textguestname").val() + "</p>");
 				$(this).remove();
 				$("#textguestname").val("");
 				$(".right-guest").each(function(index){
@@ -185,9 +175,9 @@ $(function(){
 	$("#postalInput").keyup(function(){
 		var line = $("#postalInput").val();
 		if(line == ""){
-			$("#mainAddress").prop('readonly', false);
+			$("#mainAddress").prop("readonly", false);
 		}else if(line.length > 0){
-			$("#mainAddress").prop('readonly', true);
+			$("#mainAddress").prop("readonly", true);
 			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
 			xhttp.send(line);
 		}
@@ -196,9 +186,9 @@ $(function(){
 	$("#postalInput").change(function(){
 		var line = $("#postalInput").val();
 		if(line == ""){
-			$("#mainAddress").prop('readonly', false);
+			$("#mainAddress").prop("readonly", false);
 		}else if(line.length > 0){
-			$("#mainAddress").prop('readonly', true);
+			$("#mainAddress").prop("readonly", true);
 			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
 			xhttp.send(line);
 		}
@@ -207,9 +197,9 @@ $(function(){
 	$("#mainAddress").keyup(function(){
 		var line = $("#mainAddress").val();
 		if(line == ""){
-			$("#postalInput").prop('readonly', false);
+			$("#postalInput").prop("readonly", false);
 		}else if(line.length > 0){
-			$("#postalInput").prop('readonly', true);
+			$("#postalInput").prop("readonly", true);
 			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
 			xhttp.send(line);
 		}
@@ -218,65 +208,61 @@ $(function(){
 	$("#mainAddress").change(function(){
 		var line = $("#mainAddress").val();
 		if(line == ""){
-			$("#postalInput").prop('readonly', false);
+			$("#postalInput").prop("readonly", false);
 		}else if(line.length > 0){
-			$("#postalInput").prop('readonly', true);
+			$("#postalInput").prop("readonly", true);
 			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
 			xhttp.send(line);
 		}
 	});
 
-	$('#fileUpload').change(function(){
+	$("#fileUpload").change(function a() {
 		var input = this;
 		var url = $(this).val();
-		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
-		if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+		var ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
+		if (input.files && input.files[0]&& (ext === "gif" || ext === "png" || ext === "jpeg" || ext === "jpg")) 
 		{
 			var reader = new FileReader();
 
-			reader.onload = function (e) {
-				$('#chosenThumbnail').attr('src', e.target.result);
+			reader.onload = function a(e) {
+				$("#chosenThumbnail").attr("src", e.target.result);
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
-		$('#fileNum').removeAttr('value');
+		$("#fileNum").removeAttr("value");
 		open = true;
 		showDefault();
 	});
 
-	$('#upload').change(function(){
+	$("#upload").change(function a() {
 		var input = this;
 		var url = $(this).val();
-		var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+		var ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
 		for (var i = 0; i < input.files.length; ++ i) {
-			if (input.files && input.files.i && (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) 
+			if (input.files && input.files.i && (ext === "gif" || ext === "png" || ext === "jpeg" || ext === "jpg")) 
 			{
-				var reader = new FileReader();
-
-				reader.onload = function (e) {
-					$('#gallery').append(
-							"<div class='removableImage' style='position:relative;'>" +
-							"<img src='" + e.target.result + "' alt='User's pictures' height='100px' width='200px' onclick='removeImg(this)' >" +
-							"<div style='position:absolute;top:0;left:0;width:200px;height:100px;z-index:1;background-color:rgba(155,155,155,0.5);display:none'></div>" +
+				reader.onload = function a(e) {
+					$("#gallery").append(
+							"<div class=\"removableImage\" style=\"position:relative;\">" +
+							"<img src=\"" + e.target.result + "\" alt=\"User's pictures\" height=\"100px\" width=\"200px\" onclick=\"removeImg(this)\" >" +
+							"<div style=\"position:absolute;top:0;left:0;width:200px;height:100px;z-index:1;background-color:rgba(155,155,155,0.5);display:none\"></div>" +
 					"</div>");
 
-					$('.removableImage').mouseenter(function(){
+					$(".removableImage").mouseenter(function(){
 						$(this).children("div").css("display", "block");
-						$('.removableImage').click(function(){
+						$(".removableImage").click(function(){
 							$(this).remove();
 						})
 					});
 
-					$('.removableImage').mouseleave(function(){
+					$(".removableImage").mouseleave(function(){
 						$(this).children("div").css("display", "none");
 					});
 				}
-				reader.readAsDataURL(input.files[i]);
+				reader.readAsDataURL(input.files.i);
 			}
 		}
 		open = true;
 		showDefault();
 	});
-
-
 });

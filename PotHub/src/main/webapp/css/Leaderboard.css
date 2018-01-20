@@ -57,9 +57,11 @@ body {
 
 /* Header */
 
-#header h1 { 
-	padding: 20px; 
-	color:#49274a;
+#header p { 
+	font-size: 30px;
+	padding: 15px 0 10px 20px; 
+	color: #49274a;
+	font-weight: 500;
 }
 
 #companyTitle {
@@ -69,7 +71,6 @@ body {
 
 #profilePicWrapDiv {
 	position: relative;
-	display: inline-block;
 	float: right;
 	cursor: pointer;
 }
@@ -83,10 +84,10 @@ body {
 	display: none;
 	position: absolute;
 	top: 100%;
-	right: 0%;
+	right: 0;
 	background-color: #f8eee7;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -156,12 +157,11 @@ body {
 	height: 100%;
 	display: flex;
 	flex-direction: row;
-	border: dotted 1px red;
 	overflow: auto;
 }
 
 #left-left-container{
-	margin: 0px 10px;
+	margin: 0 10px;
 	width: 30px;
 	height: 100%;
 	float: left;
@@ -169,7 +169,7 @@ body {
 }
 
 #left-left-container > div{
-	margin: 20px 0px;
+	margin: 20px 0;
 }
 
 #left-right-container{
@@ -184,6 +184,16 @@ body {
 	left: 0;
 	z-index: 1;
 	display: none;
+	padding: 10px 0;
+}
+#registerBtn{
+	float: right;
+}
+
+.requiredInput{
+	color: red;
+	font-size: 12px;
+	padding-left: 5px;
 }
 
 .left-container-picture{
@@ -213,13 +223,20 @@ body {
 }
 
 .userDetailsForm-container{
+	padding: 10px 0;
 	z-index: 1;
+}
+
+textarea{
+	resize: none;
+	height: 50px;
 }
 
 #leftBars{
 	position: absolute;
 	top: 10px;
 	right: 10px;
+	z-index: 1;
 }
 
 #right-container{
@@ -295,18 +312,6 @@ body {
 	background-color: rgb(128, 255, 0);
 }
 
-#popup{
-	width: 400px;
-	height: 300px;
-	position: fixed;
-	top: 0;
-	left: 0;
-	z-index: 2;
-	/*display: none;*/
-	background-color: green;
-	text-align: center;
-}
-
 #userProfileImageAndFood{
 	width: 100%;
 }
@@ -347,6 +352,7 @@ body {
 	left: 0;
 	height: 100%;
 	width: 100%;
+	background-color: rgb(100, 100, 100);
 	background-color: rgba(100, 100, 100, 0.7);
 	z-index: 4;
 	display: none;
@@ -361,8 +367,6 @@ body {
 	z-index: 3;
 	margin-top: -10%;
 	margin-left: -300px; /* (Width / 2) */
-	padding: 10px;
-	border: 2px solid #4f2f03;
 	background-color: #f8eee7;
 	border-radius: 5px;
 	text-align: center;

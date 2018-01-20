@@ -16,11 +16,11 @@
 		<link rel="stylesheet" type="text/css" href="../css/Leaderboard.css" />
 	</head>
 	<body onload="connect('Blackpepper3', 'TeaParty')">
-	<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript beingenabled. Please enable Javascript and reload this page!</h2></noscript>
+	<noscript><h2 style="color: #ff0000">Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable Javascript and reload this page!</h2></noscript>
 		<!--  Navigation Bar -->
 		<div id="header">
 			<div id="companyTitle">
-				<h1>PotHub</h1>
+				<p>PotHub</p>
 			</div>
 			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
 				<div id="profilePic">
@@ -85,12 +85,14 @@
 						</div>
 					</div>
 					<div class="userDetailsForm-container">
-						<p><b>Register your food!</b></p>
-						<input type="file" accept="image/*;capture=camera">
-						<input type="text" placeholder="Title">
-						<textarea>
-						</textarea>
-						<button id="registerBtn">Submit</button>
+						<h4><b>Register your food!</b></h4><br>
+						<p><b>Picture of your food</b></p>
+						<input type="file" id="foodPicture" accept="image/*;capture=camera"><br><br>
+						<p><b>Name of your food</b><span class="requiredInput">*</span></p>
+						<input type="text" id="foodName" class="form-control" placeholder="Name"><br>
+						<p><b>Short Description of your food</b><span class="requiredInput">*</span></p>
+						<textarea id="foodDesc" class="form-control" placeholder="Short Description"></textarea><br>
+						<button id="registerBtn" class="btn btn-primary">Submit</button>
 					</div>
 					<div id="leftBars">
 						<i class="fa fa-bars fa-2x" aria-hidden="true"></i>
