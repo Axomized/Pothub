@@ -54,7 +54,7 @@ public class Registration extends HttpServlet {
 		+ "		<!-- Optional theme -->"
 		+ "		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 		+ "		<!-- My Own Script -->"
-		+ "		<script src='../script/SignUp.js'></script>"
+		+ "		<script src='../script/'></script>"
 		+ "		<!-- My Style Sheet -->"
 		+ "		<link rel='stylesheet' type='text/css' href='css/Registration.css' />"
 		+ "	</head>"
@@ -213,8 +213,8 @@ public class Registration extends HttpServlet {
 				
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully registered!');");
+				out.println("window.location.href = 'Login'");
 				out.println("</script>");
-				response.sendRedirect("Login");
 			}
 			
 		}

@@ -96,7 +96,7 @@ public class LoginPage extends HttpServlet {
 		+ "		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
 		+ "	</body>"
 		+ "</html>"
-		);
+		);	
 	}
 
 	/**
@@ -128,16 +128,33 @@ public class LoginPage extends HttpServlet {
 			    		HttpSession session = request.getSession();
 			    		session.setAttribute("username", dum.getiGN());
 			    		
-			    		if (lm.isPasswordResetted() == false)
+			    		if (BanChecker.isThisGuyBanned(enteredEmail) == true)
 			    		{
-			    			response.sendRedirect("Forum");
+			    			out.println("<script type=\"text/javascript\">");
+							out.println("alert('This account has already been banned.');");
+							out.println("</script>");
+							doGet(request, response);
 			    		}
-			    		else
+			    		else 
 			    		{
-			    			String email = request.getParameter("username");
-			    			HttpSession HttpSession = request.getSession();
-			    			HttpSession.setAttribute("username", email);
-			    			response.sendRedirect("ForceChangePassword");
+			    			if (lm.isPasswordResetted() == false)
+				    		{
+			    				out.println("<script type=\"text/javascript\">");
+			    				out.println("alert('You have successfully logged in. Welcome!');");
+			    				out.println("window.location.href = 'Forum'");
+			    				out.println("</script>");
+				    		}
+				    		else
+				    		{
+				    			String email = request.getParameter("username");
+				    			HttpSession HttpSession = request.getSession();
+				    			HttpSession.setAttribute("username", email);
+				    			
+				    			out.println("<script type=\"text/javascript\">");
+			    				out.println("alert('Please change your password.');");
+			    				out.println("window.location.href = 'ForceChangePassword'");
+			    				out.println("</script>");				    		
+			    			}
 			    		}
 			    	}
 			    	

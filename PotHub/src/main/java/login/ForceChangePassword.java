@@ -100,8 +100,10 @@ public class ForceChangePassword extends HttpServlet {
 		    	LoginModel lm = db.getLogin(enteredPassword, email);
 			    byte[] hash = PBKDF2.pbkdf2(enteredPassword.toCharArray(), PBKDF2.fromHex(lm.getSalt()), PBKDF2.PBKDF2_ITERATIONS, PBKDF2.HASH_BYTES);
 				db.updateChangedPassword(PBKDF2.toHex(hash), email);
-				response.sendRedirect("Forum");
-			} catch (ClassNotFoundException | SQLException e) {
+				out.println("<script type=\"text/javascript\">");
+				out.println("alert('You have successfully changed your password!');");
+				out.println("window.location.href = 'Forum'");
+				out.println("</script>");			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block

@@ -58,6 +58,7 @@ public class ForgetPassword extends HttpServlet {
 		+"			<!-- Optional theme -->"
 		+"			<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 		+"			<!-- My Own Script -->"
+		+"			<script src='../script/'></script>"
 		+"			<!-- My Style Sheet -->"
 		+"			<link rel='stylesheet' type='text/css' href='css/Registration.css' />"
 		+"		</head>"
@@ -117,8 +118,8 @@ public class ForgetPassword extends HttpServlet {
 				System.out.println("Email Sent!");
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Your new password has been sent to your email.');");
+				out.println("window.location.href = 'Login'");
 				out.println("</script>");
-				response.sendRedirect("Login");
 			}
 			
 			else
