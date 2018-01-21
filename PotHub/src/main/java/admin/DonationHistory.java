@@ -118,8 +118,8 @@ public class DonationHistory extends HttpServlet {
 			else{
 				pw.append("<td>"+dm.getiGN()+"</td>");
 			}
-			pw.append("<td>"+dm.getDonation_Amount()+"</td>");
-			pw.append("<td>"+dm.getDonation_Date()+"</td>");
+			pw.append("<td>"+dm.getDonationAmount()+"</td>");
+			pw.append("<td>"+dm.getDonationDate()+"</td>");
 			pw.append("</tr>");
 		}
 		

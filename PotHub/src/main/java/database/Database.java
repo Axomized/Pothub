@@ -791,6 +791,26 @@ public class Database {
 		return counter;
 	}
 	
+	public ArrayList<BansModel> getBansForUser(String ign) throws SQLException{
+		ArrayList<BansModel> toRet = new ArrayList<BansModel>();
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT BanID, IGN, startDate, endDate, reason, admin, pardoned FROM Bans WHERE IGN = ?");
+		ps.setString(1, ign);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			int banID					= rs.getInt("BanID");
+			String iGN					= rs.getString("IGN");
+			Date startDate				= rs.getDate("startDate");
+			Date endDate				= rs.getDate("endDate");
+			String reason				= rs.getString("reason");
+			String admin				= rs.getString("admin");
+			boolean pardoned			= rs.getBoolean("pardoned");
+			toRet.add(new BansModel(banID, iGN, startDate, endDate, reason, admin, pardoned));
+		}
+		return toRet;
+	}
+	
 	//Report
 	public ArrayList<ReportModel> getManyReports(ReportSearchObject rso) throws SQLException{
 			ArrayList<ReportModel> reports = new ArrayList<ReportModel>();

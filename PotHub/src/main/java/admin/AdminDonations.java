@@ -112,8 +112,8 @@ public class AdminDonations extends HttpServlet {
 			for(DonationModel dono:donations){
 				pw.append("<tr>");
 				pw.append("<td>"+dono.getiGN()+"</td>");
-				pw.append("<td>"+dono.getDonation_Date()+"</td>");
-				pw.append("<td>"+dono.getDonation_Amount()+"</td>");
+				pw.append("<td>"+dono.getDonationDate()+"</td>");
+				pw.append("<td>"+dono.getDonationAmount()+"</td>");
 				if(dono.getOnBehalf()!=null){
 					pw.append("<td>"+dono.getOnBehalf()+"</td><td><a href='HistoryAdminDonations?user="+dono.getiGN()+"'><button>History</button></a></td>");
 				}
