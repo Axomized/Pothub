@@ -131,7 +131,7 @@ public class ChangePassword extends HttpServlet {
 				+ "									</div>"
 				+ "								</div>"
 				+ "								<div id='updateBtnDiv'>"
-				+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile'>"
+				+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update password'>"
 				+ "								</div>"
 				+ "							</form>"
 				+ "						</div>"
@@ -187,7 +187,7 @@ public class ChangePassword extends HttpServlet {
 					lmUpdate.setPassword(hashClass.getHashedPass(confirmPass, newSalt));
 					lmUpdate.setSalt(newEncodedSalt);
 					lmUpdate.setEmail(dum.getEmail());
-					//db.updateUserPassAndSalt(lmUpdate);
+					db.updateUserPassAndSalt(lmUpdate);
 					System.out.println("Can change password successfully");
 				}
 				System.out.println(!hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword()));
@@ -300,22 +300,31 @@ public class ChangePassword extends HttpServlet {
 					+ "								<div id='passwordDiv' class='divWrap'>"
 					+ "									<div id='oldPassDiv'>"
 					+ "										<label id='oldPassLabel' for='oldPassInput'>Old password</label>"
-					+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' required>"
-					+ "									</div>"
-					+ "									<div class='errorMsg'>Password is incorrect.</div>"
+					+ "										<input type='password' id='oldPassInput' class='inputsForFill' name='oldPassInput' required>");
+					if (incorrectPass) {
+						out.print("<div class='errorMsg'>Password is incorrect.</div>");
+					}
+					out.print("							</div>"
 					+ "									<div id='newPassDiv' class='innerDiv'>"
 					+ "										<label id='newPassLabel' for='newPassInput'>New password</label>"
-					+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' required>"
-					+ "									</div>"
-					+ "									<div class='errorMsg'>Password must have at least 8 characters.</div>"
+					+ "										<input type='password' id='newPassInput' class='inputsForFill' name='newPassInput' required>");
+					if (oldNewSame) {
+						out.print("<div class='errorMsg'>New password cannot be the same as old one.</div>");
+					}
+					if (passReq) {
+						out.print("<div class='errorMsg'>Password must have at least 8 characters.</div>");
+					}
+					out.print("							</div>"
 					+ "									<div id='confirmPassDiv' class='innerDiv'>"
 					+ "										<label id='confirmPassLabel' for='confirmPassInput'>Confirm password</label>"
-					+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' required>"
-					+ "									</div>"
-					+ "									<div class='errorMsg'>Password does not match the new one.</div>"
+					+ "										<input type='password' id='confirmPassInput' class='inputsForFill' name='confirmPassInput' required>");
+					if (passNotMatch) {
+						out.print("<div class='errorMsg'>Password does not match the new one.</div>");
+					}
+					out.print("							</div>"
 					+ "								</div>"
 					+ "								<div id='updateBtnDiv'>"
-					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update profile'>"
+					+ "									<input type='submit' id='updateBtn' name='updateBtn' value='Update password'>"
 					+ "								</div>"
 					+ "							</form>"
 					+ "						</div>"

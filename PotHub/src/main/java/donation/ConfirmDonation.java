@@ -242,7 +242,7 @@ public class ConfirmDonation extends HttpServlet {
 							
 							if (pinAttempts > 2) {
 								resendPIN = true;
-								errorMessage = "Please click to send a new PIN";
+								errorMessage = "Please click to send a new PIN.";
 								System.out.println("PIN attempts cannot be more than 3");
 							}
 							else {

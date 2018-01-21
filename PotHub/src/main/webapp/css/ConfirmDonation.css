@@ -225,14 +225,12 @@ body {
 }
 
 #errorMsg {
-    margin-left: auto;
-	margin-right: auto;
+    margin: auto;
 	margin-bottom: 10px;
-	color: white;
-	background-color: #f74225;
-	text-align: center;
-	padding: 7px;
-	line-height: 1;
+	color: #f74225;
+	text-align: left;
+	font-size: 15px;
+	font-weight: 600;
 }
 
 #buttonsDiv {

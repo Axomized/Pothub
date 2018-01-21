@@ -438,7 +438,7 @@ public class Donation extends HttpServlet {
 								+ "	<div id='behalfNameDiv' style='display: block;'>"
 								+ "		<label id='behalfNameLabel' class='inputLabel' for='behalfName'>Donee</label>"
 								+ "		<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
-								+ "		<div id='behalfNameError' class='errorMsg'>Donee does not exist.</div>"
+								+ "		<div class='errorMsg'>Donee does not exist.</div>"
 								+ "		<datalist id='behalfNameList'>");
 						for (String s : db.getDatabaseUserIGN()) {
 							out.print("		<option value='" + s + "'></option>");
@@ -472,7 +472,7 @@ public class Donation extends HttpServlet {
 					+ "									<label id='donateLabel' class='inputLabel' for='donateAmt'>How much would you like to donate?</label>"
 					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0' max='2000' step='0.01' placeholder='0.00' required>");
 					if (donateAmtError) {
-						out.print("<div id='donateAmtError' class='errorMsg'>You can only donate a maximum of $2000.</div>");
+						out.print("<div class='errorMsg'>You can only donate a maximum of $2000.</div>");
 					}
 					out.print("						</div>"
 					+ "							</div>"
@@ -490,7 +490,7 @@ public class Donation extends HttpServlet {
 					+ "									<div id='inputCardDiv'>"
 					+ "										<input type='text' id='cardNo' name='cardNo' maxlength='19' oninput='checkCardType()' required>");
 					if (cardNoError) {
-						out.print("<div id='cardNoError' class='errorMsg'>Invalid credit card number.</div>");
+						out.print("<div class='errorMsg'>Invalid credit card number.</div>");
 					}
 					out.print("								<div id='cardIconDiv'>"
 					+ "											<i id='visaIcon' class='fa fa-cc-visa cardIcon' aria-hidden='true'></i>"
@@ -543,14 +543,14 @@ public class Donation extends HttpServlet {
 					+ "										<label id='codeLabel' class='inputLabel' for='securityCode'>Security Code</label>"
 					+ "										<input type='text' id='securityCode' name='securityCode' maxlength='4' required>");
 					if (securityCodeError) {
-						out.print("<div id='securityCodeError' class='errorMsg'>Invalid security code.</div>");
+						out.print("<div class='errorMsg'>Invalid security code.</div>");
 					}
 					out.print("							</div>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div class='thatLine'></div>");
 					if (fillInputError) {
-						out.print("<div class='errorMsg'>Please fill in all required inputs.</div>");
+						out.print("<div id='fillInputError' class='errorMsg'>Please fill in all required inputs.</div>");
 					}
 					out.print("					<div id='buttonDiv'>"
 					+ "								<input type='submit' id='donateBtn' name='donateBtn' value='Donate'>"

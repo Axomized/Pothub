@@ -359,74 +359,14 @@ body {
 }
 
 .errorMsg {
-	width: 100%;
-	position: relative;
+	color: #f74225;
+	text-align: left;
+	font-weight: 600;
+}
+
+#fillInputError {
 	margin-top: 10px;
-	color: white;
 	text-align: center;
-	background-color: #f74225;
-	padding: 7px 5px;
-	line-height: 1;
-}
-
-#behalfNameError:before {
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	bottom: 100%;
-	left: 15%;
-	pointer-events: none;
-	border: solid transparent;
-	border-color: rgba(247, 66, 37, 0);
-	border-bottom-color: #f74225;
-	border-width: 10px;
-	margin-left: -10px;
-}
-
-#donateAmtError:before {
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	bottom: 100%;
-	left: 12%;
-	pointer-events: none;
-	border: solid transparent;
-	border-color: rgba(247, 66, 37, 0);
-	border-bottom-color: #f74225;
-	border-width: 10px;
-	margin-left: -10px;
-}
-
-#cardNoError:before {
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	bottom: 100%;
-	left: 12%;
-	pointer-events: none;
-	border: solid transparent;
-	border-color: rgba(247, 66, 37, 0);
-	border-bottom-color: #f74225;
-	border-width: 10px;
-	margin-left: -10px;
-}
-
-#securityCodeError:before {
-	content: " ";
-	height: 0;
-	width: 0;
-	position: absolute;
-	bottom: 100%;
-	left: 20%;
-	pointer-events: none;
-	border: solid transparent;
-	border-color: rgba(247, 66, 37, 0);
-	border-bottom-color: #f74225;
-	border-width: 10px;
-	margin-left: -10px;
 }
 
 #buttonDiv {
