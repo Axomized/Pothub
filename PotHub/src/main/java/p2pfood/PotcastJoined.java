@@ -165,7 +165,8 @@ public class PotcastJoined extends HttpServlet {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 			
-			String url = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
+			String url = MapDistance.mapURLBuilder(postalCodes, 
+					dbu0.getAddress());
 			
 			ArrayList<String> distances = MapDistance.getJsonFromURL(url);
 			

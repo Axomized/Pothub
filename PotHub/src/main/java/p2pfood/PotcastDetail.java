@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.PotcastBidModel;
@@ -44,6 +46,7 @@ public class PotcastDetail extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		boolean canBid = true;
+		boolean canRate = false;
 		String username="";
 		HttpSession session = request.getSession(false);
 		if (session == null) {
@@ -75,6 +78,9 @@ public class PotcastDetail extends HttpServlet {
 				response.sendRedirect("p2plist");
 			}
 			ArrayList<PotcastBidModel> bids = db.getBidsForPotcast(pm.getPotcastID());
+			if(bids.size()>pm.getMaxBids()){
+				bids = getRelevantBids(bids, pm.getMaxBids());
+			}
 			
 			//Check if can bid
 			if(System.currentTimeMillis()>pm.getBidStopTime().getTime()){
@@ -88,8 +94,21 @@ public class PotcastDetail extends HttpServlet {
 			if(pm.getiGN().equals(username)){
 				canBid=false;
 			}
+			//Check if can rate
 			
+			if(System.currentTimeMillis()>pm.getPickupTime().getTime()){
+				for(PotcastBidModel bid : bids){
+					if(bid.getiGN().equals(username)){
+						canRate=true;
+					}
+				}
+			}
 			
+			for(PotcastBidModel bid : bids){
+				if(bid.getRating() != null && bid.getiGN().equals(username)){
+					canRate = false;
+				}
+			}
 			pw.append(
 					"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 							+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
@@ -114,7 +133,7 @@ public class PotcastDetail extends HttpServlet {
 					+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
 					+ "<span id='welcomeSpan'>Welcome, "+username+"</span>" + "</div>"
 					+ "<div id='profileDropdownDiv'>" + "<a href='html/Profile.html'>Profile</a>"
-					+ "<a href='html/LoginPage.html'>Logout</a>" + "</div>" + "</div>" + "</div>"
+					+ "<a href='Login'>Logout</a>" + "</div>" + "</div>" + "</div>"
 					+ "	<div id='navigation'>" + "		<div class='container-fluid'>"
 					+ "			<ul class='nav navbar-nav'>"
 					+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
@@ -169,7 +188,15 @@ public class PotcastDetail extends HttpServlet {
 						+ "</form></div>");
 					}
 					else if (request.getParameter("response") != null) {
-						pw.append("<div id='foodDesc'><p>"+request.getParameter("response") + "</p></div>");
+						pw.append("<div id='foodDesc'><p>"+SearchSanitizer.sanitise(request.getParameter("response")) + "</p></div>");
+					}
+					
+					if(canRate){
+						pw.append("<div id='foodDesc'><form method='post' action='RatingHandler' target = '_blank'>"
+								+ "<input type='hidden' name='potcastID' value='"+pm.getPotcastID()+"'></input>"
+								+ "<input type='range' min='0' max='10' value='5' name='rating'></input>"
+								+ "<button>Bid!</button>" 
+								+ "</form></div>");
 					}
 					pw.append("</div>");
 					
@@ -213,5 +240,16 @@ public class PotcastDetail extends HttpServlet {
 		Date date = new Date(toChange.getTime());
 		DateFormat formatter = new SimpleDateFormat("MM.dd HH:mm");
 		return formatter.format(date);
+	}
+	
+	private static ArrayList<PotcastBidModel> getRelevantBids(ArrayList<PotcastBidModel> allBids, int topHowMany){
+		Collections.reverse(allBids);
+		ArrayList<PotcastBidModel> bidsToRet = new ArrayList<PotcastBidModel>();
+		
+		for(int i=0;i<topHowMany;i++){
+			bidsToRet.add(allBids.get(i));
+		}
+		Collections.reverse(bidsToRet);
+		return bidsToRet;
 	}
 }

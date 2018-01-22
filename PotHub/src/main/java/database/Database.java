@@ -188,6 +188,24 @@ public class Database {
 		return null;
 	}
 	
+	public int getDatabaseUserRank(String ign) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT CookingRank FROM DatabaseUser WHERE IGN = ?");
+		ps.setString(1, ign);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			return rs.getInt("CookingRank");
+		}
+		return 0;
+	}
+	
+	public void setDatabaseUserRank(String ign, int newRank) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("UPDATE databaseUser SET CookingRank = ? WHERE ign =?");
+		ps.setInt(1, newRank);
+		ps.setString(2, ign);
+		
+		ps.executeUpdate();
+	}
+	
 	//For Login Page
 	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt, passwordResetted FROM Login WHERE Email = ?;");
@@ -620,6 +638,15 @@ public class Database {
 					pickupTime, minBid, startingCR, picture));
 		}
 		return null;
+	}
+	
+	public void updateBid(String ign, int potcastID, int rating) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("UPDATE PotcastBid SET rating = ? WHERE ign = ? AND potcastID = ?");
+		ps.setInt(1, rating);
+		ps.setString(2, ign);
+		ps.setInt(3, potcastID);
+		
+		ps.executeUpdate();
 	}
 	
 	//Count Potcasts

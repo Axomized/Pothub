@@ -145,6 +145,8 @@ public class PotcastList extends HttpServlet {
 
 			PotcastSearchObject pso3 = new PotcastSearchObject();
 			pso3.setPurpose(3);
+			
+			System.out.println(pso3.getExecutableSQL());
 			db = new Database(0);
 			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
 			ArrayList<String> postalCodes3 = new ArrayList<String>();
@@ -153,7 +155,8 @@ public class PotcastList extends HttpServlet {
 				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 			
-			String url = MapDistance.mapURLBuilder(postalCodes3, dbu0.getAddress());
+			String url = MapDistance.mapURLBuilder(postalCodes3,
+					dbu0.getAddress());
 			
 			ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
 
@@ -195,6 +198,7 @@ public class PotcastList extends HttpServlet {
 
 			pw.append("<h1>Active Potcasts: </h1>");
 
+			System.out.println(pso.getExecutableSQL());
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
 			ArrayList<String> postalCodes = new ArrayList<String>();
 

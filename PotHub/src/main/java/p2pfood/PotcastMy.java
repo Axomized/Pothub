@@ -115,7 +115,7 @@ public class PotcastMy extends HttpServlet {
 							+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
 							+ "<span id='welcomeSpan'>Welcome, [Placeholder]</span>" + "</div>"
 							+ "<div id='profileDropdownDiv'>" + "<a href='Profile.html'>Profile</a>"
-							+ "<a href='LoginPage.html'>Logout</a>" + "</div>" + "</div>" + "</div>"
+							+ "<a href='Login'>Logout</a>" + "</div>" + "</div>" + "</div>"
 							+ "	<div id='navigation'>" + "		<div class='container-fluid'>"
 							+ "			<ul class='nav navbar-nav'>"
 							+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"

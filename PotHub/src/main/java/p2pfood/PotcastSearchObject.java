@@ -1,6 +1,6 @@
 package p2pfood;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 import adminSearch.SearchSanitizer;
 
@@ -10,22 +10,26 @@ public class PotcastSearchObject{
 	private boolean ascDesc;
 	private int purpose;
 	private String ign;
+	private Timestamp rightNow;
 	
 	public PotcastSearchObject(){
 		this.setTitle("");
 		this.setOrderBy("bidStopTime");
 		this.setAscDesc(false);
 		this.purpose=0;
+		this.rightNow = new Timestamp(System.currentTimeMillis());
 	}
 	
 	public String getExecutableSQL(){
 		if(this.purpose==0){
 		String toRet ="SELECT TOP 250 iGN, potcastID, title, description, maxBids, bidStopTime,"
-			+"pickupTime, minBid, startingCR, picture FROM Potcast";
+			+ "pickupTime, minBid, startingCR, picture FROM Potcast"
+			+ " WHERE";
 		
 		if(this.title.length()>0){
-			toRet+=" WHERE title LIKE '%"+this.title+"%'";
+			toRet+=" title LIKE '%"+this.title+"%' AND";
 		}
+			toRet+=" bidStopTime > '"+rightNow+"'";
 		if(this.orderBy.length()>0){
 			toRet+=" ORDER BY "+this.orderBy+" ";
 			
@@ -47,10 +51,10 @@ public class PotcastSearchObject{
 					+"pickupTime, minBid, startingCR, picture FROM Potcast";
 				
 				if(this.title.length()>0){
-					toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"'";
+					toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
 				}
 				else{
-					toRet+=" WHERE IGN='"+ign+"'";
+					toRet+=" WHERE IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
 				}
 				if(this.orderBy.length()>0){
 					toRet+=" ORDER BY "+this.orderBy+" ";
@@ -72,10 +76,10 @@ public class PotcastSearchObject{
 			+" FROM Potcast a INNER JOIN PotcastBid b ON a.potcastID = b.potcastID";
 			
 			if(this.title.length()>0){
-				toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"'";
+				toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
 			}
 			else{
-				toRet+=" WHERE IGN='"+ign+"'";
+				toRet+=" WHERE IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
 			}
 			
 			toRet+=" GROUP BY a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
@@ -93,17 +97,20 @@ public class PotcastSearchObject{
 		}
 		
 		if(this.purpose==3){
-			Date rightNow = new Date(System.currentTimeMillis());
 			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime > '"+rightNow+"' ORDER BY bidStopTime DESC";
 		}
 		
 		if(this.purpose==4){
 			String toRet ="SELECT TOP 250 a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
-			+"a.pickupTime, a.minBid, a.startingCR, a.picture"
-			+" FROM Potcast a INNER JOIN PotcastBid b ON a.potcastID = b.potcastID";
+			+ "a.pickupTime, a.minBid, a.startingCR, a.picture"
+			+ " FROM Potcast a INNER JOIN PotcastBid b ON a.potcastID = b.potcastID"
+			+ " WHERE";
 			
 			if(this.title.length()>0){
-				toRet+=" WHERE title LIKE '%"+this.title+"%'";
+				toRet+=" title LIKE '%"+this.title+"%' AND bidStopTime > '"+rightNow+"'";
+			}
+			else{
+				toRet+=" bidStopTime > '"+rightNow+"'";
 			}
 			toRet+=" GROUP BY a.iGN, a.potcastID, a.title, a.description, a.maxBids, a.bidStopTime,"
 			+"a.pickupTime, a.minBid, a.startingCR, a.picture"
