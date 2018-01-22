@@ -8,14 +8,15 @@ function hideProfileDropdown() {
 
 function upfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	alert("upvoted by 1 from" + h);
-	location.reload();
+	alert("upvoted by 111 from" + h);
+	document.getElementById("gonext").submit();
+	
 }
 
 function downfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	alert("downvoted by 1 from" + h);
-	location.reload();
+	alert("downvoted by 111 from" + h);
+	document.getElementById("gonext").submit();
 }
 
 function upsecond(){
@@ -47,5 +48,8 @@ function success(){
 function gonext(){
 	alert("creating");
 	location.href = "createNewPost";
-	
+}
+
+function gosub(){
+	location.href = "Subscription";
 }

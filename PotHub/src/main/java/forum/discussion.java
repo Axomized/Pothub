@@ -13,6 +13,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.CommentModel;
@@ -37,6 +38,14 @@ public class discussion extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		String ForumID = request.getParameter("ForumPostID");
 		int ddd = Integer.parseInt(ForumID);
 		System.out.println(ForumID);
@@ -143,6 +152,10 @@ public class discussion extends HttpServlet {
 							}
 							
 						}
+						else {
+							out.println("<p>Nothing to display</p>");
+						}
+								
 									}
 								}
 								}

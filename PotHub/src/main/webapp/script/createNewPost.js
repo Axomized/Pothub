@@ -7,16 +7,31 @@ function hideProfileDropdown() {
 }
 
 function submitting(){
-	return confirm("Are you sure?");
+	if(document.getElementById("exampleFormControlInput1").value == ""){
+		alert("Please Fill in your Forum Title");
+		return false;
+	}
+	else if(document.getElementById("exampleFormControlTextarea1").value == ""){
+		alert("Please Fill in your Forum Description");
+		return false;
+	}
+	else if(document.getElementById("needit").value == ""){
+		alert("Please select a thumbnail picture");
+		return false;
+	}
+	else{
+		return confirm("Are you sure?");
+	}
+
 }
 
 function goback(){
 	window.location = "Forum";
 }
 
-function showT(){
-	document.getElementById("text1").style.display = "block";
-}
+//function showT(){
+//	document.getElementById("text1").style.display = "block";
+//}
 
 function showP(){
 	document.getElementById("image1").style.display = "block";
@@ -34,9 +49,9 @@ function showF(){
 	document.getElementById("file1").style.display = "block";
 }
 
-function closeT(){
-	document.getElementById("text1").style.display = "none";
-}
+//function closeT(){
+//	document.getElementById("text1").style.display = "none";
+//}
 
 function closeI(){
 	document.getElementById("image1").style.display = "none";

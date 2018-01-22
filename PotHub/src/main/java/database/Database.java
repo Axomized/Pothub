@@ -1440,13 +1440,26 @@ public class Database {
 	}
 	
 	//ForumVoteModel
-	public void updateForumVote(String sql, ForumVoteModel fP) throws SQLException { 
-		PreparedStatement ppstmt = conn.prepareStatement(sql);
+	public void addForumVote(ForumVoteModel fP) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ForumVote(PostID, IGN, Date) VALUES (?,?,?); ");
 		ppstmt.setInt(1, fP.getPostID());
 		ppstmt.setString(2, fP.getiGN());
 		ppstmt.setDate(3, fP.getDate());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public ArrayList<ForumVoteModel> getForumVoteModel() throws SQLException{
+		ArrayList<ForumVoteModel> votes = new ArrayList<ForumVoteModel>();
+		ResultSet rs = getResultSet("SELECT * FROM ForumVote");
+		while(rs.next()) {
+			int postID = rs.getInt("PostID");
+			String iGN = rs.getString("IGN");
+			Date date = rs.getDate("Date");
+			
+			votes.add(new ForumVoteModel(postID, iGN, date));
+		}
+		return votes;
 	}
 	
 	//PeopleEventListModel

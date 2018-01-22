@@ -9,10 +9,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.CommentModel;
+import database.model.FileTableModel;
 import database.model.ForumPostModel;
+import database.model.ForumVoteModel;
 
 /**
  * Servlet implementation class Forum
@@ -34,7 +37,15 @@ public class Forum extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String username = "";
+		int canvote = 1;
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		PrintWriter out = response.getWriter();
 		out.println(
 				"<!DOCTYPE html>"
@@ -100,10 +111,12 @@ public class Forum extends HttpServlet {
 						+ "			<div id='content'>"
 						+ "				<div id='personalinfo' style='background:url('../images/foodss.jpg'); height:20%;'>"
 						+ "				<p style='font-size:50px; text-align:center;'>"
-						+ "					Welcome Guest"
+						+ "				Welcome " + username + ""
 						+ "				</p>"
-						+ "				<p style='text-align:right; width:98%;'>"
-						+ "					<button style='font-size:25px; cursor:pointer;' id='creatingnew' onclick='gonext()' class='btn'>NEW POST</button>		"
+						+ "				<p style='text-align:right; width:98%; padding-left:2%;'>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left; background-color:white;' class='btn'>Forum</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gosub()'>My Subscription</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border-color:blue; border-radius: 5px; background-color:red; border:solid;' id='creatingnew' onclick='gonext()' class='btn'>Create New Thread</button>		"
 						+ "				</p>"
 						+ "				</div>"
 						+ "				<div id='wholecomments'>"
@@ -116,6 +129,7 @@ public class Forum extends HttpServlet {
 							Database dbms = new Database(2);
 							ArrayList<ForumPostModel> fa = dbms.getForumModel();
 							ArrayList<CommentModel> cmm = dbms.getCommentModel();
+							FileTableModel ftm = new FileTableModel();
 							
 							for(ForumPostModel qw: fa){	
 								int count = 0;
@@ -125,21 +139,73 @@ public class Forum extends HttpServlet {
 									}
 								}
 								
+								
+								
+								ArrayList<ForumVoteModel> fvm = new ArrayList<ForumVoteModel>();
+								fvm = dbms.getForumVoteModel();
+								for(ForumVoteModel f:fvm) {
+									if(f.getPostID() == qw.getPostID()) {
+										if(f.getiGN().equals(username)) {
+											canvote = 0;
+										}
+										else {
+											canvote = 1;
+										}
+									}
+									else {
+										canvote = 1;
+									}
+								}
 								out.println(
-							
-						  "					<div class='cb'>" 
-						+ "						<div class='voting'>"
+						  
+						  "					<div class='cb'>" );
+						if(canvote == 1) {
+							out.println(	
+						  "						<div class='voting'>"
+						+ "						<form id='gonext' action='Forum' method='Post'>"	
+						+ "						<input type='hidden' name='hisname' value=' " + username +"'>"
+						+ "						<input type='hidden' name='hisid' value=' " + qw.getPostID() + "'>"
 						+ "							<p onclick='upfirst()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"
 						+ "							<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
 						+ "							<p onclick='downfirst()' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
-						+ "							</p>"
+						+ "							</p>"		
+						+ "						</form>"
 						+ "						</div>"
 						+ "						<div class='iconpic'>"
-						+ "							<img src='images/MAC.png' height='80' width='80' />"
-						+ "						</div>"
+						);
+							}
+						else if(canvote == 0) {
+							out.println("<div class='voting'>"
+									+ "<p style='text-align: center;'>"
+									+ "<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
+									+ "</p>"
+									+ "<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
+									+ "<p style='text-align: center;'>"
+									+ "<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
+									+ "</p>"
+									+"</div>"
+									+"<div class='iconpic'>"
+									);
+						}
+						
+						if(qw.getPicture() == 1) {
+							out.println("<img src='images/MAC.png' height='80' width='80' />");
+						}
+						else {
+						ftm = dbms.getFileTableByFileID(qw.getPicture());
+						out.println("<img src='/PotHub/Video/" +  ftm.getFileName() + "' height='80' width='80' />");
+						}
+						
+						
+						//+ "							<img src='images/MAC.png' height='80' width='80' />"
+						
+						
+						
+						out.println(
+						  "						</div>"
 						+ "						<div class='info'>"
 						+ "							<div class='title'>"
 						+ "								<h2 style='color: blue' onclick='location.href='discussion';'>" + qw.getThread() + "</h2>"
@@ -245,10 +311,12 @@ public class Forum extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) {
+		String ign = request.getParameter("hisname");
+		String pos = request.getParameter("hisid");
+		int pid = Integer.valueOf(pos);
+		System.out.println(ign + pid);
+		//int pid = Integer.parseInt(pos);
+		}
 
 }
