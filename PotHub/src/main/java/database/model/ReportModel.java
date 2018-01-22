@@ -24,6 +24,10 @@ public class ReportModel {
 		this.guiltyOrNot = guiltyOrNot;
 	}
 
+	public ReportModel() {
+
+	}
+
 	public int getReportID() {
 		return reportID;
 	}

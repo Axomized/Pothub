@@ -23,6 +23,7 @@ import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.PotcastBidModel;
 import database.model.PotcastModel;
+import database.model.ReportModel;
 
 /**
  * Servlet implementation class Forum
@@ -109,6 +110,16 @@ public class PotcastDetail extends HttpServlet {
 					canRate = false;
 				}
 			}
+			
+			ArrayList<ReportModel> reports = db.getReportsFromOneUser((String) session.getAttribute("username"));
+			ArrayList<ReportModel> relevantReports = new ArrayList<ReportModel>();
+			
+			for(ReportModel report:reports){
+				if(report.isGuiltyOrNot()==0){
+					relevantReports.add(report);
+				}
+			}
+			
 			pw.append(
 					"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 							+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
@@ -148,15 +159,31 @@ public class PotcastDetail extends HttpServlet {
 					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>" + "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>" + "			</ul>"
-					+ "		</div>" + "	</div>" + "<div id='wrapper'>" + "<div id='foodAndMap'>"
-					+ "		<button id='reportButton' onclick='showReportables();'><img src='images/flag.png' height=30 width=30></button>"
-					+ "<div id='reportOptions'>" + "<ul id='reportList'>"
-					+ "<li onclick='hideReportables();'>Vulgar</li>"
-					+ "<li onclick='hideReportables();'>Inapropriate Title</li>"
-					+ "<li onclick='hideReportables();'>Inapropriate Picture</li>"
-					+ "<li onclick='hideReportables();'>Fraudulent Location</li>"
-					+ "<li onclick='hideReportables();'>Not food</li>" + "</ul>" + "</div>"
-					+ "<img height=400 width =400 src='/PotHub/Image/" + db.getImageByImageID(pm.getPicture())
+					+ "		</div>" + "	</div>" + "<div id='wrapper'>" 
+					+ "<div id='foodAndMap'>");
+			
+					boolean doesNotExist = true;
+					for(ReportModel rel : relevantReports){
+						if(rel.getEvidence()==pm.getPotcastID()&&rel.getEvidenceType().equals("Potcast")){
+							doesNotExist = false;
+						}
+					}
+					
+					if(relevantReports.size()<=2&&doesNotExist){
+					pw.append( "<button id='reportButton' onclick='showReportables();'><img src='images/flag.png' height=30 width=30></button>"
+					+ "<div id='reportOptions'>" 
+					+ "<form method='post' action='reportHandler' id='reportList'>"
+					+ "<input name='evidenceType' value='Potcast' type='hidden'></input>"
+					+ "<input name='evidence' value='"
+					+ pm.getPotcastID()
+					+ "' type='hidden'></input>"
+					+ "<input name='reason' type='text'></input>"
+					+ "<input type='submit'></input>"
+					+ "</form>"
+					+ "</div>");
+					}
+					
+					pw.append( "<img height=400 width =400 src='/PotHub/Image/" + db.getImageByImageID(pm.getPicture())
 					+ "' id='foodPicture'>" + "<iframe src='//www.google.com/maps/embed/v1/place?" + "&zoom=15"
 					+ "&key=AIzaSyDmftQ7JHdzj22y3wlP01IH_LlTgFQ3JOE" + "&q=Singapore," + dbu.getAddress()
 					+ "' id='foodPicture'></iframe>" + "</div>" + "<div id='foodText'>" + "<div id='foodTitle'>" + "<p>"

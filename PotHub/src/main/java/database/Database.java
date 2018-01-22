@@ -848,9 +848,14 @@ public class Database {
 			return reports;
 	}
 	
-	public ArrayList<ReportModel> getPersonalReports(ReportSearchObject rso) throws SQLException{
+	public ArrayList<ReportModel> getReportsFromOneUser(String ign) throws SQLException{
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
-		ResultSet rs = getResultSet(rso.getExecutableSQL());
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT reportID, IGNSend, IGNReceive, evidenceType, Date, Evidence, reason, guiltyOrNot"
+				+ " FROM Report"
+				+ " WHERE IGNSend = ?");
+		ps.setString(1, ign);
+		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
 			int reportID = 				rs.getInt("reportID");
 			String iGNSend = 			rs.getString("IGNSend");
@@ -867,6 +872,18 @@ public class Database {
 		return reports;
 	}
 	
+	public void addReport(ReportModel report) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO report (IGNSend, IGNReceive, evidenceType, Date, Evidence, reason, guiltyOrNot) values(?,?,?,?,?,?,?)");
+		ps.setString(1, report.getiGNSend());
+		ps.setString(2, report.getiGNReceive());
+		ps.setString(3, report.getEvidenceType());
+		ps.setDate(4, report.getDate());
+		ps.setInt(5, report.getEvidence());
+		ps.setString(6, report.getReason());
+		ps.setInt(7, report.isGuiltyOrNot());
+		
+		ps.executeUpdate();
+	}
 
 	public void convictUser(boolean permanent, int reportID, String admin) throws SQLException{
 			long maxTime = (long)21459167 * (long)1000000;
@@ -874,7 +891,7 @@ public class Database {
 			ReportSearchObject rso = new ReportSearchObject();
 			rso.setReportID(reportID);
 			
-			ArrayList<ReportModel> rms = this.getPersonalReports(rso);
+			ArrayList<ReportModel> rms = this.getManyReports(rso);
 			ReportModel subjectUser = rms.get(0);
 		
 			PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Bans (IGN, startDate, endDate, reason, admin, pardoned) Values (?,?,?,?,?,?)");
@@ -1453,6 +1470,38 @@ public class Database {
 		ppstmt.setString(9, fP.getForumURL());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public ForumPostModel getForumModelByID(int postID) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM ForumPost WHERE postID = ?");
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			int postID1 = rs.getInt("PostID");
+			String thread = rs.getString("Thread");
+			int upvotes = rs.getInt("Upvotes");
+			String iGN = rs.getString("IGN");
+			Timestamp date = rs.getTimestamp("Date");
+			int picture = rs.getInt("Picture");
+			String description = rs.getString("Description");
+			String fileAttachment = rs.getString("FileAttachment");
+			String text = rs.getString("ForumNormalText");
+			String url = rs.getString("ForumURL");
+			
+			
+			return new ForumPostModel(postID1, thread, upvotes, iGN, date, picture, description, fileAttachment, text, url);
+		}
+		return null;
+	}
+	
+	public String getPersonWithEventID(int eventID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM Event WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
+		ResultSet rs = ppstmt.executeQuery();
+		
+		while(rs.next()) {
+			return rs.getString("IGN");
+		}
+		return null;
 	}
 	
 	//ForumVoteModel
