@@ -7,7 +7,21 @@ function hideProfileDropdown() {
 }
 
 function submitting(){
-	return confirm("Are you sure?");
+	if(document.getElementById("exampleFormControlInput1").value == ""){
+		alert("Please Fill in your Forum Title");
+		return false;
+	}
+	else if(document.getElementById("exampleFormControlTextarea1").value == ""){
+		alert("Please Fill in your Forum Description");
+		return false;
+	}
+	else if(document.getElementById("needit").value == ""){
+		alert("Please select a thumbnail picture");
+		return false;
+	}
+	else{
+		return confirm("Are you sure?");
+	}
 }
 
 function goback(){

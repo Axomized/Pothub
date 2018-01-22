@@ -25,6 +25,10 @@ public class ForumVoteModel {
 		return date;
 	}
 
+	public ForumVoteModel() {
+		super();
+	}
+
 	public void setPostID(int postID) {
 		this.postID = postID;
 	}
