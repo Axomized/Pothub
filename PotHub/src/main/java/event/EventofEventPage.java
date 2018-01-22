@@ -47,7 +47,6 @@ public class EventofEventPage extends HttpServlet {
 	        session = request.getSession(false);
 	        if (session != null) {
 	            //username = (String)session.getAttribute("username");
-	            session.setAttribute("pinAttempts", 0);
 	            session.setAttribute("EventName", nameOfEvent);
 	        }
 	        else {

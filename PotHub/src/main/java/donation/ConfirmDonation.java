@@ -212,7 +212,7 @@ public class ConfirmDonation extends HttpServlet {
 							if (tsm.getTemporaryOnBehalf() != null && !tsm.getTemporaryOnBehalf().isEmpty()) {
 								DatabaseUserModel dumOnBehalf = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								db.updateTotalDonation(dumOnBehalf.getTotalDonation().add(tsm.getTemporaryAmount()), tsm.getTemporaryOnBehalf());
-								if (dumOnBehalf.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
+								if ((dumOnBehalf.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumOnBehalf.isPriviledged())) {
 									db.updateIsPrivileged(true, tsm.getTemporaryOnBehalf());
 								}
 								lm.setiGN(username);
@@ -222,7 +222,7 @@ public class ConfirmDonation extends HttpServlet {
 							}
 							else {
 								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
-								if (dum.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
+								if ((dum.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dum.isPriviledged())) {
 									db.updateIsPrivileged(true, username);
 								}
 								lm.setiGN(username);

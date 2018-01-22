@@ -212,7 +212,7 @@ public class CreateEventPage extends HttpServlet {
 		try {
 	        HttpSession session = request.getSession(false);
 	        if (session != null) {
-	            session.setAttribute("pinAttempts", 0);
+	            
 	        }
 	        else {
 	            response.sendRedirect("Login");

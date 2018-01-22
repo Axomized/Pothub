@@ -489,7 +489,7 @@ public class Database {
 	
 	//For donation page
 	public void insertDonation(DonationModel dm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, Donation_Date, Donation_Amount, OnBehalf) VALUES(?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Donation(IGN, DonationDate, DonationAmount, OnBehalf) VALUES(?,?,?,?);");
 		ppstmt.setString(1, dm.getiGN());
 		ppstmt.setTimestamp(2, dm.getDonationDate());
 		ppstmt.setBigDecimal(3, dm.getDonationAmount());

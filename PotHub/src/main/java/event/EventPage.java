@@ -141,7 +141,6 @@ public class EventPage extends HttpServlet {
 	        HttpSession session = request.getSession(false);
 	        if (session != null) {
 	            username = (String)session.getAttribute("username");
-	            session.setAttribute("pinAttempts", 0);
 	        }
 	        else {
 	            response.sendRedirect("Login");

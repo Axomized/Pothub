@@ -22,8 +22,14 @@ public class Profile extends HttpServlet {
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
 		HttpSession session = request.getSession(false);
-		String username = (String)session.getAttribute("username");
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
 		
 		try {
 			Database db = new Database(0);
@@ -54,7 +60,7 @@ public class Profile extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>"
 					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"

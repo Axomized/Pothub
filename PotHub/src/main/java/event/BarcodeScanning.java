@@ -25,7 +25,6 @@ public class BarcodeScanning extends HttpServlet {
 	        if (session != null) {
 	            username = (String)session.getAttribute("username");
 	            //eventName = (String)session.getAttribute("EventName");
-	            session.setAttribute("pinAttempts", 0);
 	        }
 	        else {
 	            response.sendRedirect("/PotHub/Login");

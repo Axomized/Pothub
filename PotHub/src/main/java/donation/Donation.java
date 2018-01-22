@@ -66,7 +66,7 @@ public class Donation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>"
 					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -233,6 +233,7 @@ public class Donation extends HttpServlet {
 			Database db = new Database(2);
 			TemporaryStoreModel tsm =  new TemporaryStoreModel();
 			TemporaryStoreModel tsmCheck = db.getTempStore(username);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			SendEmail se = new SendEmail();
 			HashPIN hp = new HashPIN();
 			ValidateCard vc = new ValidateCard();
