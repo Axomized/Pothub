@@ -20,27 +20,7 @@ import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
-import database.model.AppealModel;
-import database.model.BansModel;
-import database.model.CommentModel;
-import database.model.CommentVoteModel;
-import database.model.DatabaseUserModel;
-import database.model.DonationModel;
-import database.model.EventModel;
-import database.model.FileTableModel;
-import database.model.FoodListModel;
-import database.model.FoodPreferences;
-import database.model.ForumPostModel;
-import database.model.ForumVoteModel;
-import database.model.ImageTableModel;
-import database.model.LoginModel;
-import database.model.LogsModel;
-import database.model.PeopleEventListModel;
-import database.model.PotcastBidModel;
-import database.model.PotcastModel;
-import database.model.ReportModel;
-import database.model.ShoppingLoginModel;
-import database.model.TemporaryStoreModel;
+import database.model.*;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
 import profile.ProfileDonationSearch;
@@ -1040,6 +1020,42 @@ public class Database {
 		}
 		return alem;
 	}
+	// Get eventID from eventName
+	public int getEventIDFromEventName(String eventName) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ps = conn.prepareStatement("SELECT EventID FROM Event WHERE EventName = ?;");
+		ps.setString(1, eventName);
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		int eventID = rs.getInt("EventID");
+		
+		return eventID;
+	}
+	
+	// Get eventID from eventName
+	public boolean isOwner(int eventID, String iGN) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ps = conn.prepareStatement("SELECT iGN FROM Event WHERE EventID = ?;");
+		ps.setInt(1, eventID);
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		String owner = rs.getString("IGN");
+		
+		if(iGN.equals(owner)) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
+	// Set the Event status
+	public void setEventStatus(String eventName, String status) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ps = conn.prepareStatement("UPDATE Event SET Status = ? WHERE EventName = ?;");
+		ps.setString(1, status);
+		ps.setString(2, eventName);
+		
+		executeUpdate(ps);
+	}
 	
 	//For EventofEventPage
 	public EventModel getEventofEventPage(String nameOfEvent) throws SQLException, UnsupportedEncodingException {
@@ -1487,17 +1503,27 @@ public class Database {
 	}
 	
 	//Get number of people confirmed
-	public ArrayList<String> getPeopleEventListConfirm(int eventID) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ?;");
+	public ArrayList<String[]> getPeopleEventListConfirm(int eventID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, Confirmed FROM PeopleEventConfirmList WHERE EventID = ?;");
 		ppstmt.setInt(1, eventID);
 		ResultSet rs = ppstmt.executeQuery();
 		
-		ArrayList<String> als = new ArrayList<String>();
+		ArrayList<String[]> als = new ArrayList<String[]>();
 		while(rs.next()) {
 			String iGN = rs.getString("IGN");
-			als.add(iGN);
+			boolean confirmed = rs.getBoolean("Confirmed");
+			String[] array = {iGN, String.valueOf(confirmed)};
+			als.add(array);
 		}
 		return als;
+	}
+	
+	// Set people in confirm list "Confirmed"
+	public void setPeopleEventListConfirmConfirmed(int eventID, String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE PeopleEventConfirmList SET Confirmed = '1' WHERE EventID = ? AND IGN = ?;");
+		ppstmt.setInt(1, eventID);
+		ppstmt.setString(2, iGN);
+		executeUpdate(ppstmt);
 	}
 	
 	public void close() throws SQLException {

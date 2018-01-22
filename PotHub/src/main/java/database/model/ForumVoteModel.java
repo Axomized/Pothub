@@ -33,10 +33,6 @@ public class ForumVoteModel {
 		this.iGN = iGN;
 	}
 
-	public ForumVoteModel() {
-		super();
-	}
-
 	public void setDate(Date date) {
 		this.date = date;
 	}

@@ -269,6 +269,12 @@ public class EventPage extends HttpServlet {
 	}
 	
 	private String encodeString(String line) throws UnsupportedEncodingException {
-		return URLEncoder.encode(line, "UTF-8");
+		return URLEncoder.encode(line, "UTF-8")
+                .replaceAll("\\+", "%20")
+                .replaceAll("\\%21", "!")
+                .replaceAll("\\%27", "'")
+                .replaceAll("\\%28", "(")
+                .replaceAll("\\%29", ")")
+                .replaceAll("\\%7E", "~");
 	}
 }

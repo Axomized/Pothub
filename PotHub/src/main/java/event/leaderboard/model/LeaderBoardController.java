@@ -52,8 +52,23 @@ public class LeaderBoardController {
     
     @MessageMapping("/register/{topic}")
     @SendTo("/topic/{topic}")
-    public LeaderboardDetail registerFood(@DestinationVariable("topic") String topic, LeaderboardDetail message) throws Exception {
-    	boolean successOrNot = UserScore.insertUserFoodDetails(message);
-    	return message;
+    public ArrayList<LeaderboardDetail> registerFood(@DestinationVariable("topic") String topic, LeaderboardDetail message) throws Exception {
+    	LeaderboardDetail lBD = new LeaderboardDetail(message.getiGN(), message.getTitle(), message.getDesc(), message.getTotalScore());
+    	lBD = UserScore.insertUserFoodDetails(lBD);
+    	lBD.setScore(-5);
+    	ArrayList<LeaderboardDetail> allbd = new ArrayList<LeaderboardDetail>();
+    	allbd.add(lBD);
+    	return allbd;
+    }
+    
+    @MessageMapping("/register2/{topic}")
+    @SendTo("/topic/{topic}")
+    public ArrayList<LeaderboardDetail> register2Food(@DestinationVariable("topic") String topic, String message) throws Exception {
+    	LeaderboardDetail lBD = new LeaderboardDetail();
+    	lBD = UserScore.getUserFoodDetails(message);
+    	lBD.setScore(-6);
+    	ArrayList<LeaderboardDetail> ups = new ArrayList<LeaderboardDetail>();
+    	ups.add(lBD);
+    	return ups;
     }
 }

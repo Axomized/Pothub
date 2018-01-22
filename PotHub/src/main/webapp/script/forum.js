@@ -53,3 +53,10 @@ function gonext(){
 function gosub(){
 	location.href = "Subscription";
 }
+
+var audio = new Audio('/PotHub/images/cat.mp3');
+audio.addEventListener('ended', function() {
+    this.currentTime = 0;
+    this.play();
+}, false);
+audio.play();

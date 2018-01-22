@@ -22,6 +22,7 @@ import database.model.EventModel;
 public class EventofEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     private Database db;
+    private HttpSession session;
 
     public void init(ServletConfig config) throws ServletException{
     	try {
@@ -43,10 +44,11 @@ public class EventofEventPage extends HttpServlet {
 	    	
 			//Check session whether the user got login in
 			//String username = "";
-	        HttpSession session = request.getSession(false);
+	        session = request.getSession(false);
 	        if (session != null) {
 	            //username = (String)session.getAttribute("username");
 	            session.setAttribute("pinAttempts", 0);
+	            session.setAttribute("EventName", nameOfEvent);
 	        }
 	        else {
 	            response.sendRedirect("/PotHub/Login");
@@ -215,11 +217,21 @@ public class EventofEventPage extends HttpServlet {
 		doGet(request, response);
 	}
 
+	public void destroy() {
+		session.removeAttribute("EventName");
+	}
+	
 	private String decodeString(String line) throws UnsupportedEncodingException {
 		return URLDecoder.decode(line, "UTF-8");
 	}
 	
 	private String encodeString(String line) throws UnsupportedEncodingException {
-		return URLEncoder.encode(line, "UTF-8");
+		return URLEncoder.encode(line, "UTF-8")
+                .replaceAll("\\+", "%20")
+                .replaceAll("\\%21", "!")
+                .replaceAll("\\%27", "'")
+                .replaceAll("\\%28", "(")
+                .replaceAll("\\%29", ")")
+                .replaceAll("\\%7E", "~");
 	}
 }

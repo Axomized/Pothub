@@ -176,6 +176,8 @@ body {
 	flex: 1;
 	float: right;
 	position: relative;
+	border-right: 1px solid black;
+	padding-right: 40px;
 }
 
 .userDetailsInfo-container{
@@ -183,6 +185,7 @@ body {
 	top: 0;
 	left: 0;
 	z-index: 1;
+	width: 200px;
 	display: none;
 	padding: 10px 0;
 }
@@ -304,7 +307,7 @@ textarea{
 }
 
 .progressbarbar{
-	width: 87%;
+	width: 0;
 	height: 30px;
 	text-align: center;
 	line-height: 30px;

@@ -92,7 +92,7 @@ public class UserScore {
 		
 		if (!userTotalScore.containsKey(userTo)) {
 			userTotalScore.put(userTo, new BigDecimal(0));
-		}
+		} 
 		if (!userTotalNumber.containsKey(userTo)) {
 			userTotalNumber.put(userTo, new BigDecimal(0));
 		}
@@ -119,12 +119,32 @@ public class UserScore {
 			lBD = userDetails.get(userTo);
 		}
 		
+		if (userTotalScore.isEmpty()){
+			lBD.setTotalScore(new BigDecimal(0));
+			return lBD;
+		}
+		for (Entry<String, BigDecimal> entry : userTotalScore.entrySet()) {
+			
+			for (Map.Entry<String, BigDecimal> entry2 : userTotalNumber.entrySet()) {
+				String userTo2 = entry.getKey();
+				if(entry2.getKey() == userTo2) {
+					if(!entry2.getValue().toString().equals("0")) {
+						BigDecimal score = entry.getValue().divide(entry2.getValue(), 2, BigDecimal.ROUND_HALF_UP);
+						lBD.setTotalScore(score);
+					}else {
+						lBD.setTotalScore(entry2.getValue());
+					}
+					break;
+				}
+			}
+		}
+		
 		lock.unlockRead();
 		
 		return lBD;
 	}
 	
-	public static boolean insertUserFoodDetails(LeaderboardDetail lBD) throws InterruptedException {
+	public static LeaderboardDetail insertUserFoodDetails(LeaderboardDetail lBD) throws InterruptedException {
 		try {
 			String userTo = lBD.getiGN();
 			
@@ -137,13 +157,32 @@ public class UserScore {
 				userDetails.put(userTo, lBD);
 			}
 			
+			if (userTotalScore.isEmpty()){
+				lBD.setTotalScore(new BigDecimal(0));
+				return lBD;
+			}
+			for (Entry<String, BigDecimal> entry : userTotalScore.entrySet()) {
+				
+				for (Map.Entry<String, BigDecimal> entry2 : userTotalNumber.entrySet()) {
+					String userTo2 = entry.getKey();
+					if(entry2.getKey() == userTo2) {
+						if(entry2.getValue().toString().equals("0")) {
+							lBD.setTotalScore(entry2.getValue());
+						}else {
+							BigDecimal score = entry.getValue().divide(entry2.getValue(), 2, BigDecimal.ROUND_HALF_UP);
+							lBD.setTotalScore(score);
+						}
+						break;
+					}
+				}
+			}
+			
 			lock.unlockWrite();
 			
-			return true;
 		}catch(Exception e) {
 			e.printStackTrace();
-			return false;
 		}
+		return lBD;
 	}
 	
 	public String toString() {

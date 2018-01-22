@@ -1,29 +1,28 @@
-var stompClient = null;
-var iGN;
-var eventName;
-var currentScore;
+var stompClient = null, iGN, eventName, currentScore;
 
 function connect(username, topic) {
 	iGN = username;
-	eventName = topic;
+	eventName = encodeURI(topic);
     var socket = new SockJS("https://localhost:8443/ARandomName");
-    var stompClient = Stomp.over(socket);
-    stompClient.connect({}, function (frame) {});
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function aaa() {
+    	console.log("Connected");
+    });
 }
 
-function disconnect() {
+function stompDisconnect() {
     if (stompClient !== null) {
         stompClient.disconnect();
     }
 }
 var start = true;
-$(document).ready(function(){
-	$("#backToBarcodeBtn").click(function(){
-		disconnect();
+$(document).ready(function aaa(){
+	$("#backToBarcodeBtn").click(function aaa() {
+		stompDisconnect();
 		window.location.replace("VideoCamera.html"); //Change to servlet once done
 	});
 	
-	$("#startStreamingBtn").click(function(){
+	$("#startStreamingBtn").click(function aaa() {
 		if(start){
 			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
 				"messageType": "Show", "userToDisplay": iGN
@@ -42,21 +41,28 @@ $(document).ready(function(){
 		}
 	});
 	
-	$("#startVotingBtn").click(function(){
+	$("#startVotingBtn").click(function aaa() {
 		stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
 			"messageType": "Push", "userToDisplay": iGN
 		}));
 	});
 	
-	$("#changePointBtn").click(function(){
+	$("#changePointBtn").click(function aaa() {
 		
 	});
 	
-	$("#endBtn").click(function(){
-		if(confirm("I am sure and I want to end.")){
-			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
-				"messageType": "End", "userToDisplay": iGN
-			}));
+	$("#endBtn").click(function aaa() {
+		if(confirm("Am you sure you want to end?")) {
+			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "End", "userToDisplay": iGN}));
+			// End event db
+			$.ajax({
+				"url": "https://localhost/PotHub/BarcodeScanning",
+				"type": "POST",
+				"data": {"eventName": eventName, "status": "E"},
+				success() {
+					window.location.href = "/PotHub/EventofEvent/" + eventName;
+				}
+			});
 		}
 	});
 });

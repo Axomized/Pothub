@@ -1,16 +1,26 @@
 package event.leaderboard.model;
 
+import java.math.BigDecimal;
+
 public class LeaderboardDetail {
 	private String iGN;
 	private String title;
 	private String desc;
-	private byte[] foodpic;
+	private BigDecimal totalScore;
+	private int score;
 	
-	public LeaderboardDetail(String iGN, String title, String desc, byte[] foodpic) {
+	public LeaderboardDetail(String iGN, String title, String desc) {
+		super();
 		this.iGN = iGN;
 		this.title = title;
 		this.desc = desc;
-		this.foodpic = foodpic;
+	}
+
+	public LeaderboardDetail(String iGN, String title, String desc, BigDecimal totalScore) {
+		this.iGN = iGN;
+		this.title = title;
+		this.desc = desc;
+		this.totalScore = totalScore;
 	}
 
 	public LeaderboardDetail() {
@@ -28,8 +38,12 @@ public class LeaderboardDetail {
 		return desc;
 	}
 
-	public byte[] getFoodpic() {
-		return foodpic;
+	public BigDecimal getTotalScore() {
+		return totalScore;
+	}
+
+	public int getScore() {
+		return score;
 	}
 
 	public void setiGN(String iGN) {
@@ -44,7 +58,11 @@ public class LeaderboardDetail {
 		this.desc = desc;
 	}
 
-	public void setFoodpic(byte[] foodpic) {
-		this.foodpic = foodpic;
+	public void setTotalScore(BigDecimal totalScore) {
+		this.totalScore = totalScore;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }

@@ -57,6 +57,15 @@ function updateTime() {
 				if(minutes <= 0){
 					returnString = "0 Hours 0 Minutes " + seconds + " Seconds";
 					if(seconds <= 0){
+						// End event db
+						$.ajax({
+							"url": "https://localhost/PotHub/BarcodeScanning",
+							"type": "POST",
+							"data": {"eventName": eventName, "status": "E"},
+							success() {
+								window.location.href = "/PotHub/EventofEvent/" + eventName;
+							}
+						});
 						returnString = "Ongoing";
 					}
 				}

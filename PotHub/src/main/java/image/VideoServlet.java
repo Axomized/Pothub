@@ -21,18 +21,18 @@ public class VideoServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
+		final String FILENAME = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
 		try {
 			Database db = new Database(0);
-			FileTableModel fTM = db.getFileTableByFileName(filename);
+			FileTableModel fTM = db.getFileTableByFileName(FILENAME);
 			
-			File file = File.createTempFile(filename, ".tmp");
+			File file = File.createTempFile(FILENAME, ".tmp");
 			
 			if(fTM != null) {
 				FileOutputStream fos = new FileOutputStream(file);
 			    fos.write(fTM.getData());
 			    
-			    response.setHeader("Content-Type", getServletContext().getMimeType(filename));
+			    response.setHeader("Content-Type", getServletContext().getMimeType(FILENAME));
 			    
 				FileInputStream in = new FileInputStream(file);
 				OutputStream out = response.getOutputStream();
@@ -54,8 +54,18 @@ public class VideoServlet extends HttpServlet {
 		
 	}
 
+	// Sorry again... I using this for ending my Event (Wx)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		try {
+			final String EVENTNAME = request.getParameter("eventName");
+			final String STATUS = request.getParameter("status");
+			final Database DB = new Database(2);
+			DB.setEventStatus(EVENTNAME, STATUS);
+			
+			response.getWriter().write("Success");
+		} catch(Exception e) {
+			response.sendRedirect("/PotHub/EventPage");
+		}
 	}
 
 }

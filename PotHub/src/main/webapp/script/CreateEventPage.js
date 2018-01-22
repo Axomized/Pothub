@@ -2,7 +2,7 @@ var hidden = true;
 var googleMapLink;
 const xhttp = new XMLHttpRequest();
 
-xhttp.onreadystatechange = function() {
+xhttp.onreadystatechange = function aaa() {
 	if (this.readyState === 4 && this.status === 200) {
 		if(this.responseText !== null || this.responseText !== ""){
 			if(this.responseText.substring(0, 7) === "Geocode"){
@@ -30,7 +30,7 @@ function showPreview() {
 		var fileupload = document.getElementById("fileUpload");
 		if(fileupload.value.length > 0) {
 			const reader = new FileReader();
-			reader.onload = function a(e) {
+			reader.onload = function aaa(e) {
 				contents.find(".headerImage").attr("src", e.target.result);
 			}
 			reader.readAsDataURL(fileupload.files[0]);
@@ -54,7 +54,7 @@ function showPreview() {
 		var guestDiv = contents.find(".guest");
 		var guestInputValue = $("#guestNameList").val();
 		var guestArray = guestInputValue.split("_");
-		for(j = 0; i < guestArray.length; j++) {
+		for(var j = 0; i < guestArray.length; j++) {
 			var div = $(document.createElement("div"));
 			div.append("<img src=\"../images/cat.png\" alt=\"Guest's Profile Picture\" height=\"50\" width=\"50\"><br>");
 			div.append("<p>" + decodeURI(encodeURI(guestArray.j)) + "</p>");
@@ -62,14 +62,14 @@ function showPreview() {
 		}
 		var eventGallery = contents.find(".event-gallery"); //Iframe"s gallery
 		var input = document.getElementById("upload");
-		for (i = 0; i < input.files.length; i++) {
+		for (var i = 0; i < input.files.length; i++) {
 			if (input.files && input.files.i) 
 			{
 				var reader = new FileReader();
 
-				reader.onload = function a(e) {
+				reader.onload = function aaa(e) {
 					eventGallery.append("<img src=\"" + e.target.result + "\" alt=\"Gallery's pictures\">");
-				}
+				};
 				reader.readAsDataURL(input.files.i);
 			}
 		}
@@ -149,19 +149,19 @@ function validateForm() {
 }
 
 $(function(){
-	$("#closeBtn").click(function(){
+	$("#closeBtn").click(function aaa(){
 		$("#popup-container").hide();
 		hidden = true;
 	});
 	
-	$("#textguestname").bind("input", function () {
+	$("#textguestname").bind("input", function aaa() {
 		$("option").each(function(){
 			if($("#textguestname").val() === $(this).val()){
 				$("#guest-container-right-container").append("<p class=\"right-guest\" onclick=\"addToLeft(this)\">" + $("#textguestname").val() + "</p>");
 				$(this).remove();
 				$("#textguestname").val("");
-				$(".right-guest").each(function(index){
-					if(index == 0){
+				$(".right-guest").each(function aaa(index){
+					if(index === 0){
 						$("#guestNameList").val($(this).text());
 					}else{
 						$("#guestNameList").val($("#guestNameList").val() + "_" + $(this).text());
@@ -172,7 +172,18 @@ $(function(){
 		});
 	});
 
-	$("#postalInput").keyup(function(){
+	$("#postalInput").keyup(function aaa(){
+		var line = $("#postalInput").val();
+		if(line === ""){
+			$("#mainAddress").prop("readonly", false);
+		}else if(line.length > 0){
+			$("#mainAddress").prop("readonly", true);
+			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.send(line);
+		}
+	});
+
+	$("#postalInput").change(function aaa(){
 		var line = $("#postalInput").val();
 		if(line == ""){
 			$("#mainAddress").prop("readonly", false);
@@ -183,18 +194,7 @@ $(function(){
 		}
 	});
 
-	$("#postalInput").change(function(){
-		var line = $("#postalInput").val();
-		if(line == ""){
-			$("#mainAddress").prop("readonly", false);
-		}else if(line.length > 0){
-			$("#mainAddress").prop("readonly", true);
-			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
-			xhttp.send(line);
-		}
-	});
-
-	$("#mainAddress").keyup(function(){
+	$("#mainAddress").keyup(function aaa(){
 		var line = $("#mainAddress").val();
 		if(line == ""){
 			$("#postalInput").prop("readonly", false);
@@ -205,7 +205,7 @@ $(function(){
 		}
 	});
 
-	$("#mainAddress").change(function(){
+	$("#mainAddress").change(function aaa(){
 		var line = $("#mainAddress").val();
 		if(line == ""){
 			$("#postalInput").prop("readonly", false);
@@ -224,9 +224,9 @@ $(function(){
 		{
 			var reader = new FileReader();
 
-			reader.onload = function a(e) {
+			reader.onload = function aaa(e) {
 				$("#chosenThumbnail").attr("src", e.target.result);
-			}
+			};
 			reader.readAsDataURL(input.files[0]);
 		}
 		$("#fileNum").removeAttr("value");
@@ -241,7 +241,9 @@ $(function(){
 		for (var i = 0; i < input.files.length; ++ i) {
 			if (input.files && input.files.i && (ext === "gif" || ext === "png" || ext === "jpeg" || ext === "jpg")) 
 			{
-				reader.onload = function a(e) {
+				var reader = new FileReader();
+				
+				reader.onload = function aaa(e) {
 					$("#gallery").append(
 							"<div class=\"removableImage\" style=\"position:relative;\">" +
 							"<img src=\"" + e.target.result + "\" alt=\"User's pictures\" height=\"100px\" width=\"200px\" onclick=\"removeImg(this)\" >" +

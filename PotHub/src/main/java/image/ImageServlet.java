@@ -20,30 +20,30 @@ public class ImageServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String filename = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
+		final String FILENAME = URLDecoder.decode(request.getPathInfo().substring(1), "UTF-8");
 		try {
 			Database db = new Database(0);
-			ImageTableModel fTM = db.getImageTableByImageName(filename);
+			ImageTableModel fTM = db.getImageTableByImageName(FILENAME);
 			
-			File file = File.createTempFile(filename, ".tmp");
+			File file = File.createTempFile(FILENAME, ".tmp");
 			
 			if(fTM != null) {
-				FileOutputStream fos = new FileOutputStream(file);
-			    fos.write(fTM.getImageData());
+				final FileOutputStream FOS = new FileOutputStream(file);
+				FOS.write(fTM.getImageData());
 			    
-			    response.setHeader("Content-Type", getServletContext().getMimeType(filename));
+			    response.setHeader("Content-Type", getServletContext().getMimeType(FILENAME));
 			    
-				FileInputStream in = new FileInputStream(file);
-				OutputStream out = response.getOutputStream();
+			    final FileInputStream IN = new FileInputStream(file);
+			    final OutputStream OUT = response.getOutputStream();
 
 			       byte[] buf = new byte[1024];
 			       int count = 0;
-			       while ((count = in.read(buf)) >= 0) {
-			         out.write(buf, 0, count);
+			       while ((count = IN.read(buf)) >= 0) {
+			    	   OUT.write(buf, 0, count);
 			      }
-			   fos.close();
-			   out.close();
-			   in.close();
+			   FOS.close();
+			   OUT.close();
+			   IN.close();
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -53,8 +53,27 @@ public class ImageServlet extends HttpServlet {
 		
 	}
 
+	// I lazy create new servlet so using this to get user's profile picture using iGN (Wx)
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		final String IGN = request.getParameter("iGN");
+		try {
+			final Database DB = new Database(0);
+			
+			final String FILENAME = DB.getUserProfilePic(IGN);
+			if(FILENAME == null || "".equals(FILENAME)) {
+				response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write("Empty");
+			} else {
+				response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().write(FILENAME);
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }
