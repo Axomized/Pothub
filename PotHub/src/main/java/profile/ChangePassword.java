@@ -62,7 +62,7 @@ public class ChangePassword extends HttpServlet {
 				+ "				</div>"
 				+ "				<div id='profileDropdownDiv'>"
 				+ "					<a href='Profile'>Profile</a>"
-				+ "					<a href='LoginPage'>Logout</a>"
+				+ "					<a href='Login'>Logout</a>"
 				+ "				</div>"
 				+ "			</div>"
 				+ "		</div>"
@@ -176,40 +176,33 @@ public class ChangePassword extends HttpServlet {
 			String oldPass = request.getParameter("oldPassInput");
 			String newPass = request.getParameter("newPassInput");
 			String confirmPass = request.getParameter("confirmPassInput");
-			String errorMessage = "It didn't go inside.";
 			boolean incorrectPass = false;
 			boolean passReq = false;
 			boolean oldNewSame = false;
 			boolean passNotMatch = false;
+			boolean passChangeSuccess = false;
 			
 			if (validateInputString(oldPass, newPass, confirmPass)) {
-				if ((hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword())) && (!newPass.equals(oldPass) && newPass.length() >= 8) && (confirmPass.equals(newPass))) {
+				if ((hashClass.getHashedPass(oldPass, decodedSalt).equals(lm.getPassword())) && (!newPass.equals(oldPass) && newPass.length() >= 8) && (confirmPass.equals(newPass))) {
 					lmUpdate.setPassword(hashClass.getHashedPass(confirmPass, newSalt));
 					lmUpdate.setSalt(newEncodedSalt);
 					lmUpdate.setEmail(dum.getEmail());
-					db.updateUserPassAndSalt(lmUpdate);
+					if (db.updateUserPassAndSalt(lmUpdate)) {
+						passChangeSuccess = true;
+					}
 					System.out.println("Can change password successfully");
 				}
-				System.out.println(!hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword()));
-				if (!hashClass.getHashedPass(confirmPass, decodedSalt).equals(lm.getPassword())) {
+				if (!hashClass.getHashedPass(oldPass, decodedSalt).equals(lm.getPassword())) {
 					incorrectPass = true;
-					errorMessage = "Password is incorrect.";
-					System.out.println(errorMessage);
 				}
 				if (newPass.equals(oldPass)) {
 					oldNewSame = true;
-					errorMessage = "New password cannot be the same as old one.";
-					System.out.println(errorMessage);
 				}
 				if (newPass.length() < 8) {
 					passReq = true;
-					errorMessage = "Password must have at least 8 characters.";
-					System.out.println(errorMessage);
 				}
 				if (!confirmPass.equals(newPass)) {
 					passNotMatch = true;
-					errorMessage = "Password does not match with the new one.";
-					System.out.println(errorMessage);
 				}
 			}
 			
@@ -243,7 +236,7 @@ public class ChangePassword extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Login'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
@@ -295,8 +288,13 @@ public class ChangePassword extends HttpServlet {
 					+ "								<div id='lower-EditProfileInfoDiv'>"
 					+ "									<span id='editProfileInfoSpan'>Change your password.</span>"
 					+ "								</div>"
-					+ "							</div>"
-					+ "							<form id='changePassForm' autocomplete='off' method='post'>"
+					+ "							</div>");
+					if (passChangeSuccess) {
+						out.print("<div id='updateSuccessDiv'>"
+								+ "	<p>Password changed successfully.</p>"
+								+ "</div>");
+					}
+					out.print("					<form id='changePassForm' autocomplete='off' method='post'>"
 					+ "								<div id='passwordDiv' class='divWrap'>"
 					+ "									<div id='oldPassDiv'>"
 					+ "										<label id='oldPassLabel' for='oldPassInput'>Old password</label>"

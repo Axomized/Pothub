@@ -114,6 +114,8 @@ public class ProfileUpdate {
 			if (updateQuery.substring(updateQuery.length() -1).equals(",")) {
 				updateQuery = updateQuery.substring(0, updateQuery.length() -1);
 			}
+			updateQuery += " WHERE IGN = '" + iGN + "';";
+			System.out.println(updateQuery);
 			
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -126,9 +128,6 @@ public class ProfileUpdate {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		updateQuery += " WHERE IGN = '" + iGN + "';";
-		System.out.println(updateQuery);
 		
 		return updateQuery;
 	}

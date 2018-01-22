@@ -25,7 +25,6 @@ public class Logs extends HttpServlet {
 			LogsSearch logsSearch = new LogsSearch();
 			String iGN = request.getParameter("username");
 			String logType = request.getParameter("selectType");
-			String suspicion = request.getParameter("selectSuspicious");
 			String dateInput = request.getParameter("selectDate");
 			String afterDate = request.getParameter("afterDate");
 			String beforeDate = request.getParameter("beforeDate");
@@ -35,9 +34,6 @@ public class Logs extends HttpServlet {
 			}
 			if (logType != null && !logType.isEmpty()) {
 				logsSearch.setLogType(logType);
-			}
-			if (suspicion != null && !suspicion.isEmpty()) {
-				logsSearch.setSuspicion(suspicion);
 			}
 			if (dateInput != null && !dateInput.isEmpty()) {
 				logsSearch.setDateInput(dateInput);
@@ -116,14 +112,6 @@ public class Logs extends HttpServlet {
 					+ "												<option value='Donation'>Donation</option>"
 					+ "											</select>"
 					+ "										</div>"
-					+ "										<div id='suspiciousDiv' class='searchDiv'>"
-					+ "											<label id='suspiciousLabel' for='selectSuspicious'>Search by suspicion: </label>"
-					+ "											<select id='selectSuspicious' class='searchSelect' name='selectSuspicious'>"
-					+ "												<option selected value='All'>All</option>"
-					+ "												<option value='Yes'>Yes</option>"
-					+ "												<option value='No'>No</option>"
-					+ "											</select>"
-					+ "										</div>"
 					+ "										<div id='dateDiv' class='searchDiv'>"
 					+ "											<label id='dateLabel' for='selectDate'>Search by date:</label>"
 					+ "											<select id='selectDate' class='searchSelect' name='selectDate' onchange='customDateSelect()'>"
@@ -160,7 +148,6 @@ public class Logs extends HttpServlet {
 					+ "									<th>Username</th>"
 					+ "									<th>Type</th>"
 					+ "									<th>Activity</th>"
-					+ "									<th>Suspicious</th>"
 					+ "								</tr>"
 					+ "							</thead>"
 					+ "							<tbody>");
@@ -170,14 +157,8 @@ public class Logs extends HttpServlet {
 								+ "	<td>" + lm.getiPAddress() + "</td>"
 								+ "	<td>" + lm.getiGN() + "</td>"
 								+ " <td>" + lm.getLogType() + "</td>"
-								+ "	<td>" + lm.getLogActivity() + "</td>");
-						if (lm.isSuspicious()) {
-							out.print("<td>Yes</td>");
-						}
-						else {
-							out.print("<td>No</td>");
-						}
-						out.print("</tr>");
+								+ "	<td>" + lm.getLogActivity() + "</td>"
+								+ "</tr>");
 					}
 					out.print("					</tbody>"
 					+ "						</table>"

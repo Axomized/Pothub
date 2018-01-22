@@ -8,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 public class LogsSearch {
 	private String iGN;
 	private String logType;
-	private String suspicion;
 	private String dateInput;
 	private String afterDate;
 	private String beforeDate;
@@ -28,14 +27,6 @@ public class LogsSearch {
 
 	public void setLogType(String logType) {
 		this.logType = logType;
-	}
-
-	public String getSuspicion() {
-		return suspicion;
-	}
-
-	public void setSuspicion(String suspicion) {
-		this.suspicion = suspicion;
 	}
 
 	public String getDateInput() {
@@ -86,9 +77,8 @@ public class LogsSearch {
 		return timestamp;
 	}
 	
-	private boolean checkIfSearch(String iGN, String logType, String suspicion, String dateInput) {
-		if ((iGN != null && !iGN.isEmpty()) || (logType != null && !logType.isEmpty()) || (suspicion != null && !suspicion.isEmpty()) 
-				|| (dateInput != null && !dateInput.isEmpty())) {
+	private boolean checkIfSearch(String iGN, String logType, String dateInput) {
+		if ((iGN != null && !iGN.isEmpty()) || (logType != null && !logType.isEmpty()) || (dateInput != null && !dateInput.isEmpty())) {
 			userSearch = true;
 		}
 		return userSearch;
@@ -97,7 +87,7 @@ public class LogsSearch {
 	public String getSearchQuery() {
 		String searchQuery = "SELECT IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspicious FROM Logs";
 		
-		if (checkIfSearch(iGN, logType, suspicion, dateInput)) {
+		if (checkIfSearch(iGN, logType, dateInput)) {
 			searchQuery += " WHERE";
 			
 			if (iGN != null && !iGN.isEmpty()) {
@@ -105,14 +95,6 @@ public class LogsSearch {
 			}
 			if ((logType != null && !logType.isEmpty()) && !logType.equals("All")) {
 				searchQuery += " LogType = '" + logType + "' AND";
-			}
-			if ((suspicion != null && !suspicion.isEmpty()) && !suspicion.equals("All")) {
-				if (suspicion.equals("Yes")) {
-					searchQuery += " IsSuspicious = '1' AND";
-				}
-				else if (suspicion.equals("No")) {
-					searchQuery += " IsSuspicious = '0' AND";
-				}
 			}
 			if (dateInput != null && !dateInput.isEmpty()) {
 				if (dateInput.equals("Custom")) {

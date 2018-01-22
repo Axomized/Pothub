@@ -347,6 +347,14 @@ body {
 	padding: 0;
 }
 
+#updateSuccessDiv {
+	padding: 10px 8px;
+    margin-top: 10px;
+    color: white;
+    font-size: 15px;
+    background-color: #07bc4c;
+}
+
 .divWrap {
 	background-color: #f3decb;
     padding: 10px 8px;

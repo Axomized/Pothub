@@ -399,9 +399,14 @@ public class Database {
 	}
 	
 	//For profile page - update user's profile information
-	public void updateUserProfile(ProfileUpdate profileUpdate) throws SQLException {
+	public boolean updateUserProfile(ProfileUpdate profileUpdate) throws SQLException {
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement(profileUpdate.getUpdateQuery());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	public LoginModel getUserPassSalt(String email) throws SQLException {
@@ -417,12 +422,17 @@ public class Database {
 	}
 	
 	//For profile page - changing user's passwords
-	public void updateUserPassAndSalt(LoginModel lm) throws SQLException{
+	public boolean updateUserPassAndSalt(LoginModel lm) throws SQLException{
+		boolean success = false;
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Login SET Password = ?, Salt = ? WHERE Email = ?;");
 		ppstmt.setString(1, lm.getPassword());
 		ppstmt.setString(2, lm.getSalt());
 		ppstmt.setString(3, lm.getEmail());
-		ppstmt.executeUpdate();
+		int count = ppstmt.executeUpdate();
+		if (count != 0) {
+			success = true;
+		}
+		return success;
 	}
 	
 	//For donation page
