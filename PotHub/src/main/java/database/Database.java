@@ -243,7 +243,7 @@ public class Database {
 		ppstmt.setString(5, dum.getAddress());
 		ppstmt.setString(6, dum.getUnitNo());
 		ppstmt.setDate(7, new Date(Timestamp.from(Instant.now()).getTime()));
-		ppstmt.setInt(8, 0);
+		ppstmt.setInt(8, 2000);
 		ppstmt.setInt(9, 0);
 		ppstmt.setInt(10, 0);
 		ppstmt.setBoolean(11, false);

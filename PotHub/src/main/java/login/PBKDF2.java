@@ -22,7 +22,7 @@ public class PBKDF2 {
 	
 	public static void main(String [] args) throws NoSuchAlgorithmException, InvalidKeySpecException, FileNotFoundException, ClassNotFoundException, SQLException
 	{
-		//createHash("SwagPower", "swag_power@gmail.com");
+		createHash("JackieChan", "JackieChan@gmail.com");
 	}
 	
 	public static String createHash(String password, String email) throws NoSuchAlgorithmException, InvalidKeySpecException
