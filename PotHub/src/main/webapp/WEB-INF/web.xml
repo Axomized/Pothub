@@ -173,6 +173,12 @@
 		<servlet-class>login.ForgetPassword</servlet-class>
 	</servlet>
 	<servlet>
+		<servlet-name>BarcodeScanning</servlet-name>
+		<display-name>BarcodeScanning</display-name>
+		<description></description>
+		<servlet-class>event.BarcodeScanning</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>ForceChangePassword</servlet-name>
 		<display-name>ForceChangePassword</display-name>
 		<description></description>
@@ -295,6 +301,10 @@
 	<servlet-mapping>
 		<servlet-name>ForgetPassword</servlet-name>
 		<url-pattern>/ForgetPassword</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>BarcodeScanning</servlet-name>
+		<url-pattern>/BarcodeScanning</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>ForceChangePassword</servlet-name>
