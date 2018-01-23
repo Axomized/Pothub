@@ -9,14 +9,20 @@ public class AppealModel {
 	private String message;
 	private boolean approval;
 	private Date dateApproved;
+	private int banID;
 	
-	public AppealModel(int appealID, String iGN, Date receiveDate, String message, boolean approval, Date dateApproved) {
+	public AppealModel(int appealID, String iGN, Date receiveDate, String message, boolean approval, Date dateApproved, int banID) {
 		this.appealID = appealID;
 		this.iGN = iGN;
 		this.receiveDate = receiveDate;
 		this.message = message;
 		this.approval = approval;
 		this.dateApproved = dateApproved;
+		this.setBanID(banID);
+	}
+
+	public AppealModel() {
+		
 	}
 
 	public int getAppealID() {
@@ -65,5 +71,13 @@ public class AppealModel {
 
 	public void setDateApproved(Date dateApproved) {
 		this.dateApproved = dateApproved;
+	}
+
+	public int getBanID() {
+		return banID;
+	}
+
+	public void setBanID(int banID) {
+		this.banID = banID;
 	}
 }

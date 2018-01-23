@@ -20,6 +20,7 @@ import adminSearch.BansSearchObject;
 import adminSearch.DonationSearchObject;
 import adminSearch.RankSearchObject;
 import adminSearch.ReportSearchObject;
+import adminSearch.SearchSanitizer;
 import database.model.*;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
@@ -747,7 +748,7 @@ public class Database {
 	//Appeal
 	public ArrayList<AppealModel> getAppeal() throws SQLException{
 		ArrayList<AppealModel> appeals = new ArrayList<AppealModel>();
-		ResultSet rs = getResultSet("SELECT * FROM Bans LEFT OUTER JOIN Appeal ON Bans.IGN = Appeal.IGN;");
+		ResultSet rs = getResultSet("SELECT * FROM Bans LEFT OUTER JOIN Appeal ON Bans.BanID = Appeal.BanID;");
 		while(rs.next()) {
 			int appealID				= rs.getInt("appealID");
 			String iGN					= rs.getString("IGN");
@@ -755,11 +756,61 @@ public class Database {
 			String message				= rs.getString("message");
 			boolean approval			= rs.getBoolean("approval");
 			Date dateApproved			= rs.getDate("dateApproved");
+			int banID					= rs.getInt("banID");
 			
-			appeals.add(new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved));
+			appeals.add(new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved, banID));
 		}
 		return appeals;
 	}
+	
+	public ArrayList<AppealModel> getAppealsForUser(String ign) throws SQLException{
+		ArrayList<AppealModel> appeals = new ArrayList<AppealModel>();
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Appeal WHERE IGN = ? ");
+		ps.setString(1, SearchSanitizer.sanitise(ign));
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			int appealID				= rs.getInt("appealID");
+			String iGN					= rs.getString("IGN");
+			Date receiveDate			= rs.getDate("receiveDate");
+			String message				= rs.getString("message");
+			boolean approval			= rs.getBoolean("approval");
+			Date dateApproved			= rs.getDate("dateApproved");
+			int banID					= rs.getInt("banID");
+			
+			appeals.add(new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved, banID));
+		}
+		return appeals;
+	}
+	
+	public AppealModel getAppealsByBanID(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Appeal WHERE BanID = ? ");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			int appealID				= rs.getInt("appealID");
+			String iGN					= rs.getString("IGN");
+			Date receiveDate			= rs.getDate("receiveDate");
+			String message				= rs.getString("message");
+			boolean approval			= rs.getBoolean("approval");
+			Date dateApproved			= rs.getDate("dateApproved");
+			int banID					= rs.getInt("banID");
+			
+			return new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved, banID);
+		}
+		return null;
+	}
+	
+	public void addAppeal(AppealModel appeal) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("INSERT INTO Appeal (IGN, receiveDate, message, approval, banID) values (?,?,?,?,?)");
+		ps.setString(1, appeal.getiGN());
+		ps.setDate(2, appeal.getReceiveDate());
+		ps.setString(3, appeal.getMessage());
+		ps.setBoolean(4, appeal.isApproval());
+		ps.setInt(5, appeal.getBanID());
+		
+		ps.executeUpdate();
+	}
+	
 	public void updateAppeal(String sql, AppealModel aM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setDate(1, aM.getReceiveDate());
@@ -826,6 +877,24 @@ public class Database {
 			toRet.add(new BansModel(banID, iGN, startDate, endDate, reason, admin, pardoned));
 		}
 		return toRet;
+	}
+	
+	public BansModel getBansByID(int bID) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT BanID, IGN, startDate, endDate, reason, admin, pardoned FROM Bans WHERE banID = ?");
+		ps.setInt(1, bID);
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			int banID					= rs.getInt("BanID");
+			String iGN					= rs.getString("IGN");
+			Date startDate				= rs.getDate("startDate");
+			Date endDate				= rs.getDate("endDate");
+			String reason				= rs.getString("reason");
+			String admin				= rs.getString("admin");
+			boolean pardoned			= rs.getBoolean("pardoned");
+			return new BansModel(banID, iGN, startDate, endDate, reason, admin, pardoned);
+		}
+		return null;
 	}
 	
 	//Report
