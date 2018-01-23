@@ -3,20 +3,16 @@
 	<head>
 		<meta charset="UTF-8">
 		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-		<!-- Favicon -->
-		<link rel="icon" href="https://localhost/PotHub/images/crab.gif" type="image/gif">
-		<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
-		<link rel="icon" href="http://localhost:8080/PotHub/images/crab.png?v=2" type="image/x-icon">
 		<!-- Page Title -->
-		<title>Default Title</title>
+		<title>Donation Success</title>
 		<!-- Latest compiled and CSS -->
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
-		<script src="../script/DefaultPage.js"></script>
+		<script src="../script/DonationSuccess.js"></script>
 		<!-- My Style Sheet -->
-		<link rel="stylesheet" type="text/css" href="../css/DefaultCss.css" />
+		<link rel="stylesheet" type="text/css" href="../css/DonationSuccess.css" />
 	</head>
 	<body>
 		<!--  Navigation Bar -->
@@ -61,6 +57,20 @@
 		<div id="wrapper">
 			<div id="content-wrapper">
 				<div id="content">
+					<div id="donationWrapDiv">
+						<div id="postDonationDiv">
+							<div id="donationHeaderDiv">
+								<img src="../images/checked.png" id="donationSuccessPic" height="50" width="50"/>
+								<p>Thanks [Placeholder] for your donation!</p>
+							</div>
+							<div id="donationContentDiv">
+								<p>Your donation will certainly contribute in ensuring PotHub becomes a greater platform for people to share their joys in cooking.</p>
+							</div>
+							<div id="donationFooterDiv">
+								<button id="confirmBtn" onclick="toDonation()">Confirm</button>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

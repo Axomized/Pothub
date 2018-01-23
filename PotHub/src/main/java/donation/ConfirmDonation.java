@@ -231,7 +231,7 @@ public class ConfirmDonation extends HttpServlet {
 								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
 							}
 							db.deleteFromTempStore(username);
-							response.sendRedirect("Donation");
+							response.sendRedirect("DonationSuccess");
 							System.out.println("Donation successful");
 						}
 						else {

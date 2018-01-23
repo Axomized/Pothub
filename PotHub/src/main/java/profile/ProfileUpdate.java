@@ -9,6 +9,7 @@ import database.Database;
 
 public class ProfileUpdate {
 	private String iGN;
+	private boolean isFiltered;
 	private String gender;
 	private String contact_No;
 	private String bio;
@@ -27,6 +28,14 @@ public class ProfileUpdate {
 
 	public void setiGN(String iGN) {
 		this.iGN = iGN;
+	}
+
+	public boolean isFiltered() {
+		return isFiltered;
+	}
+
+	public void setFiltered(boolean isFiltered) {
+		this.isFiltered = isFiltered;
 	}
 
 	public String getGender() {
@@ -89,6 +98,13 @@ public class ProfileUpdate {
 		String updateQuery = "UPDATE DatabaseUser SET";
 		try {
 			Database db = new Database(2);
+			
+			if (isFiltered) {
+				updateQuery += " IsFiltered = '1',";
+			}
+			else {
+				updateQuery += " IsFiltered = '0',";
+			}
 			
 			if (gender != null && !gender.isEmpty()) {
 				if (gender.charAt(0) == 'M' || gender.charAt(0) == 'F') {

@@ -35,3 +35,11 @@ function checkSelect() {
 		document.getElementById("updateBtn").style.cursor = "pointer";
 	}
 }
+
+function isBoxChecked() {
+	var checked = document.getElementById("checkFilter").checked;
+	if (checked == true) {
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+	}
+}

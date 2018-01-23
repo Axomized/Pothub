@@ -126,6 +126,14 @@ public class EditProfile extends HttpServlet {
 					+ "							<form id='profileForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
 					+ "								<div id='editProfileDiv' class='row'>"
 					+ "									<div id='userInfoDiv' class='col-sm-9'>"
+					+ "										<div id='filterDiv' class='divWrap'>"
+					+ "											<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>"
+					+ "												<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' value='Yes' onclick='isBoxChecked()'>"
+					+ "												<span class='custom-control-indicator'></span>"
+					+ "												<span class='custom-control-description'>Filter by food preferences</span>"
+					+ "											</label>"
+					+ "											<p id='filterInfoText'>When you check this box, forum posts will be filtered according to your food preferences.</p>"
+					+ "										</div>"
 					+ "										<div id='genderDiv' class='divWrap'>"
 					+ "											<label id='genderLabel' for='genderSelect'>Gender</label>"
 					+ "											<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>");
@@ -219,6 +227,7 @@ public class EditProfile extends HttpServlet {
 		try {
 			Database db = new Database(2);
 			ProfileUpdate profileUpdate = new ProfileUpdate(username);
+			String isFiltered = request.getParameter("checkFilter");
 			String gender = request.getParameter("genderSelect");
 			String contact_No = request.getParameter("contactNoInput");
 			String bio = request.getParameter("bioText");
@@ -229,7 +238,13 @@ public class EditProfile extends HttpServlet {
 			byte[] profilePicByte = IOUtils.toByteArray(profilePicPart.getInputStream());
 			boolean updateProfileSuccess = false;
 			
-			if (validateInputs(gender, contact_No, bio, address, unitNo)) {
+			if (validateInputs(isFiltered, gender, contact_No, bio, address, unitNo)) {
+				if (isFiltered != null && !isFiltered.isEmpty()) {
+					profileUpdate.setFiltered(true);
+				}
+				else {
+					profileUpdate.setFiltered(false);
+				}
 				if (gender != null && !gender.isEmpty()) {
 					profileUpdate.setGender(gender);
 				}
@@ -273,6 +288,7 @@ public class EditProfile extends HttpServlet {
 				System.out.println("All has nothing");
 			}
 			DatabaseUserModel dum = db.getUserProfile(username);
+			System.out.println(dum.isFiltered());
 			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
@@ -365,9 +381,17 @@ public class EditProfile extends HttpServlet {
 								+ "	<p>Updated profile successfully.</p>"
 								+ "</div>");
 					}
-					out.print("								<div id='genderDiv' class='divWrap'>"
-					+ "											<label id='genderLabel' for='genderSelect'>Gender</label>"
-					+ "											<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>");
+					out.println("							<div id='filterDiv' class='divWrap'>"
+							+ "									<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>"
+							+ "										<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' value='Yes' onclick='isBoxChecked()'>"
+							+ "										<span class='custom-control-indicator'></span>"
+							+ "										<span class='custom-control-description'>Filter by food preferences</span>"
+							+ "									</label>"
+							+ "									<p id='filterInfoText'>When you check this box, forum posts will be filtered according to your food preferences.</p>"
+							+ "								</div>"
+							+ "								<div id='genderDiv' class='divWrap'>"
+							+ "									<label id='genderLabel' for='genderSelect'>Gender</label>"
+							+ "									<select id='genderSelect' class='custom-select' name='genderSelect' onchange='checkSelect()'>");
 					if (dum.getGender() == 'M') {
 						out.print("<option value='' selected disabled hidden='true'>Male</option>");
 					}
@@ -443,9 +467,9 @@ public class EditProfile extends HttpServlet {
 		}
 	}
 	
-	private boolean validateInputs(String gender, String contact_No, String bio, String address, String unitNo) {
+	private boolean validateInputs(String isFiltered, String gender, String contact_No, String bio, String address, String unitNo) {
 		boolean isNotNull = false;
-		if ((gender != null && !gender.isEmpty()) || (contact_No != null && !contact_No.isEmpty()) || (bio != null && !bio.isEmpty()) || (address != null && !address.isEmpty() 
+		if ((isFiltered != null && !isFiltered.isEmpty()) || (gender != null && !gender.isEmpty()) || (contact_No != null && !contact_No.isEmpty()) || (bio != null && !bio.isEmpty()) || (address != null && !address.isEmpty() 
 				|| (unitNo != null && !unitNo.isEmpty()))) {
 			isNotNull = true;
 		}

@@ -7,10 +7,10 @@ function hideProfileDropdown() {
 }
 
 function showBehalfName() {
-	var x = document.getElementById("checkYes").checked;
+	var checked = document.getElementById("checkYes").checked;
 	var behalfNameDiv = document.getElementById("behalfNameDiv");
 	
-	if (x == true) {
+	if (checked == true) {
 		behalfNameDiv.style.display = "block";
 		behalfNameDiv.required = true;
 	}

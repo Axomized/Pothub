@@ -225,13 +225,8 @@ body {
 	padding: 10px;
 }
 
-#checkYes {
-	cursor: pointer;
-}
-
 #yesLabel {
 	margin-bottom: 0;
-	cursor: pointer;
 }
 
 .custom-control-indicator {
@@ -391,7 +386,7 @@ body {
 #donateBtn:hover {
 	border: 1px solid #49274a;
 	color: #49274a;
-	background-color: #f3decb;
+	background-color: #f8eee7;
 }
 
 /* Footer */

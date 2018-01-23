@@ -86,6 +86,14 @@
 										<div id="updateSuccessDiv">
 											<p>Profile updated successfully.</p>
 										</div>
+										<div id="filterDiv" class="divWrap">
+											<label id="filterLabel" class="custom-control custom-checkbox" for="checkFilter">
+												<input type="checkbox" id="checkFilter" class="custom-control-input" name="checkFilter" value="Yes" onclick="isBoxChecked()">
+												<span class="custom-control-indicator"></span>
+  												<span class="custom-control-description">Filter by food preferences</span>
+											</label>
+											<p id="filterInfoText">When you check this box, forum posts will be filtered according to your food preferences.</p>
+										</div>
 										<div id="genderDiv" class="divWrap">
 											<label id="genderLabel" for="genderSelect">Gender</label>
 											<select id="genderSelect" class="custom-select" name="genderSelect" onchange="checkSelect()">
@@ -101,6 +109,7 @@
 										<div id="bioDiv" class="divWrap">
 											<label id="bioLabel" for="bioText">Bio</label>
 											<textarea id="bioText" class="inputsForFill" name="bioText" oninput="startedTyping(this)"></textarea>
+											<p id="bioInfoText">Only a maximum of 255 characters.</p>
 										</div>
 										<div id="addressDiv" class="divWrap">
 											<div id="postalCodeDiv">

@@ -20,6 +20,7 @@ public class DatabaseUserModel {
 	private BigDecimal totalDonation;
 	private boolean isPriviledged;
 	private int userPermission;
+	private boolean isFiltered;
 	
 	public DatabaseUserModel() {
 		
@@ -32,7 +33,7 @@ public class DatabaseUserModel {
 	
 	public DatabaseUserModel(String email, String iGN, String contact_No, char gender, String bio, String address, String unitNo,
 			int profilePic, Date lastLogin, Date joinDate, int cookingRank, int points, BigDecimal totalDonation,
-			boolean isPriviledged, int userPermission) {
+			boolean isPriviledged, int userPermission, boolean isFiltered) {
 		this.email = email;
 		this.iGN = iGN;
 		this.contact_No = contact_No;
@@ -48,11 +49,12 @@ public class DatabaseUserModel {
 		this.totalDonation = totalDonation;
 		this.isPriviledged = isPriviledged;
 		this.userPermission = userPermission;
+		this.isFiltered = isFiltered;
 	}
 	
 	//For profile page
 	public DatabaseUserModel(String email, String contact_No, char gender, String bio, String address, String unitNo, 
-			int profilePic, Date joinDate, int cookingRank, int points, BigDecimal totalDonation, boolean isPriviledged) {
+			int profilePic, Date joinDate, int cookingRank, int points, BigDecimal totalDonation, boolean isPriviledged, boolean isFiltered) {
 		this.email = email;
 		this.contact_No = contact_No;
 		this.gender = gender;
@@ -65,6 +67,7 @@ public class DatabaseUserModel {
 		this.points = points;
 		this.totalDonation = totalDonation;
 		this.isPriviledged = isPriviledged;
+		this.isFiltered = isFiltered;
 	}
 	
 	//For event page
@@ -200,6 +203,14 @@ public class DatabaseUserModel {
 		this.userPermission = userPermission;
 	}
 	
+	public boolean isFiltered() {
+		return isFiltered;
+	}
+
+	public void setFiltered(boolean isFiltered) {
+		this.isFiltered = isFiltered;
+	}
+
 	public String dateFormat(Date date) {
 		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
 		return formatter.format(date);

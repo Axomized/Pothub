@@ -95,7 +95,8 @@ public class Database {
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
 			int userPermission			= rs.getInt("UserPermission");
-			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission));
+			boolean isFiltered			= rs.getBoolean("IsFiltered");
+			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission, isFiltered));
 		}
 		return aldum;
 	}
@@ -164,7 +165,8 @@ public class Database {
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
 			int userPermission			= rs.getInt("UserPermission");
-			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission);
+			boolean isFiltered			= rs.getBoolean("IsFiltered");
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission, isFiltered);
 		}
 		return null;
 	}
@@ -216,7 +218,7 @@ public class Database {
 	
 	//For Registration Page
 	public void insertRegistration(DatabaseUserModel dum) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO DatabaseUser(IGN, Email, Contact_No, Gender, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, UserPermission) VALUES(?,?,?,?,?,?,?,?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO DatabaseUser(IGN, Email, Contact_No, Gender, Address, UnitNo, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, UserPermission, IsFiltered) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);");
 		ppstmt.setString(1, dum.getiGN());
 		ppstmt.setString(2, dum.getEmail());
 		ppstmt.setString(3, dum.getContact_No());
@@ -229,6 +231,7 @@ public class Database {
 		ppstmt.setInt(10, 0);
 		ppstmt.setBoolean(11, false);
 		ppstmt.setInt(12, 0);
+		ppstmt.setBoolean(13, false);
 		
 		ppstmt.executeUpdate();
 	}
@@ -292,7 +295,7 @@ public class Database {
 	
 	//For profile page - user's profile information
 	public DatabaseUserModel getUserProfile(String name) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged FROM DatabaseUser WHERE IGN = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, IsFiltered FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
@@ -308,7 +311,8 @@ public class Database {
 			int points					= rs.getInt("Points");
 			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
 			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
-			return new DatabaseUserModel(email, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged);
+			boolean isFiltered			= rs.getBoolean("IsFiltered");
+			return new DatabaseUserModel(email, contact_No, gender, bio, address, unitNo, profilePic, joinDate, cookingRank, points, totalDonation, isPriviledged, isFiltered);
 		}
 		return null;
 	}
@@ -562,7 +566,8 @@ public class Database {
 			BigDecimal totalDonation	= BigDecimal.valueOf(0);
 			boolean isPriviledged		= false;
 			int userPermission			= rs.getInt("UserPermission");
-			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission));
+			boolean isFiltered			= false;
+			aldum.add(new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission, isFiltered));
 		}
 		return aldum;
 	}
