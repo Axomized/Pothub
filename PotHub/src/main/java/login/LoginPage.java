@@ -126,17 +126,15 @@ public class LoginPage extends HttpServlet {
 			    	{
 			    		System.out.println("Login Success!");
 			    		HttpSession session = request.getSession();
-			    		session.setAttribute("username", dum.getiGN());
 			    		
-			    		if (BanChecker.isThisGuyBanned(enteredEmail) == true)
+			    		if (BanChecker.isThisGuyBanned(dum.getiGN()))
 			    		{
-			    			out.println("<script type=\"text/javascript\">");
-							out.println("alert('This account has already been banned.');");
-							out.println("</script>");
-							doGet(request, response);
+			    			session.setAttribute("ign", dum.getiGN());
+			    			response.sendRedirect("AppealPage");
 			    		}
 			    		else 
 			    		{
+			    			session.setAttribute("username", dum.getiGN());
 			    			if (lm.isPasswordResetted() == false)
 				    		{
 			    				out.println("<script type=\"text/javascript\">");
