@@ -44,8 +44,33 @@ public class AppealPage extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if(session==null){
 			response.sendRedirect(request.getHeader("referer"));
+			return;
 		}
 		String ign = (String) session.getAttribute("ign");
+		
+		boolean validUser = false;
+		String messageToShow = "";
+		ArrayList<BansModel> bans = db.getBansForUser(ign);
+		for(BansModel ban : bans){
+			if(ban.getEndDate().getTime()>System.currentTimeMillis()&&!ban.isPardoned()){//Found an active ban
+				if(db.getAppealsByBanID(ban.getBanID())!=null){//Found an active appeal
+					messageToShow = "<h2>You've already sent your appeal. Please wait for it to be reviewed.</h2>";
+					validUser=true;
+				}
+				else{
+					messageToShow = "<h2>You've been banned. Send us an appeal if you believe there has been an error.</h2>"
+							+ "		<form method='POST'>"
+							+ "		<input name='message' type='text'></input>"	
+							+ "		<input type='submit'></input>"	
+							+ "		</form>";
+					validUser=true;
+				}
+			}
+		}
+		
+		if(!validUser){
+			response.sendRedirect(request.getHeader("referer"));
+		}
 		pw.print(
 				"<!DOCTYPE html>"
 		+ " <html>"
@@ -67,21 +92,7 @@ public class AppealPage extends HttpServlet {
 		+ "	<body>"
 		+ "		<div class='container'>");
 		
-		ArrayList<BansModel> bans = db.getBansForUser(ign);
-		for(BansModel ban : bans){
-			if(ban.getEndDate().getTime()>System.currentTimeMillis()&&!ban.isPardoned()){//Found an active ban
-				if(db.getAppealsByBanID(ban.getBanID())!=null){//Found an active appeal
-					pw.append( "	<h2>You've already sent your appeal. Please wait for it to be reviewed.</h2>");
-				}
-				else{
-					pw.append( "	<h2>You've been banned. Send us an appeal if you believe there has been an error.</h2>"
-							+ "		<form method='POST'>"
-							+ "		<input name='message' type='text'></input>"	
-							+ "		<input type='submit'></input>"	
-							+ "		</form>");
-				}
-			}
-		}
+		pw.append(messageToShow);
 		
 		pw.append("	</div>"
 		+ "	<div id='footer'>"

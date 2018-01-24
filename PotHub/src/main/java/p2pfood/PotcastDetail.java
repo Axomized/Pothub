@@ -52,6 +52,7 @@ public class PotcastDetail extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect("Login");
+			return;
 		}
 		else{
 			username=(String) session.getAttribute("username");
@@ -59,8 +60,8 @@ public class PotcastDetail extends HttpServlet {
 		
 		int potcastID=0;
 		if (request.getParameter("potcastID") == null) {
-			System.out.println("Escaping because potcastID is null");
 			response.sendRedirect("p2plist");
+			return;
 		}
 		else{
 			potcastID = Integer.parseInt(request.getParameter("potcastID"));
@@ -75,8 +76,8 @@ public class PotcastDetail extends HttpServlet {
 			DatabaseUserModel dbu = db.getDatabaseUserByIGN(pm.getiGN());
 
 			if (dbu == null){
-				System.out.println("Escaping because dbu is null");
 				response.sendRedirect("p2plist");
+				return;
 			}
 			ArrayList<PotcastBidModel> bids = db.getBidsForPotcast(pm.getPotcastID());
 			if(bids.size()>pm.getMaxBids()){
@@ -250,6 +251,7 @@ public class PotcastDetail extends HttpServlet {
 			Database db = new Database(2);
 			if (session == null) {
 				response.sendRedirect("Login");
+				return;
 			}
 
 			PotcastBidModel pbm = new PotcastBidModel(Integer.parseInt(request.getParameter("potcastID")),

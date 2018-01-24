@@ -42,15 +42,18 @@ public class PotcastList extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		String username ="";
+		String username="";
 		
-		if(session!=null){
-			if(session.getAttribute("username")!=null){
+		if(session!=null&&session.getAttribute("username")!=null){
 			username = (String) session.getAttribute("username");
-			}
 		}
 		else{
 			response.sendRedirect("Login");
+			return;
+		}
+		if(username.equals("")){
+			response.sendRedirect("Login");
+			return;
 		}
 
 		try {
@@ -90,7 +93,23 @@ public class PotcastList extends HttpServlet {
 			}
 		}
 
+
+		PotcastSearchObject pso3 = new PotcastSearchObject();
+		pso3.setPurpose(3);
+		
+		ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
+		ArrayList<String> postalCodes3 = new ArrayList<String>();
+
+		for (PotcastModel ap : top3Potcasts) {
+			postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
+		}
+		
+		String url = MapDistance.mapURLBuilder(postalCodes3,
+				dbu0.getAddress());
+		
+		ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
 		PrintWriter pw = response.getWriter();
+		
 		pw.append("<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='ISO-8859-1'>" + "<meta name='viewport'"
 				+ "	content='width=device-width, initial-scale=1, shrink-to-fit=no'>" + "<!-- Favicon -->"
 				+ "<link rel='icon' href='images/crab.gif' type='image/gif'>"
@@ -144,25 +163,6 @@ public class PotcastList extends HttpServlet {
 				+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
 				+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
 				+ "</ul>" + "</div>" + "</form>" + "</div>" + "</div>" + "</div></div>" + "<h1>Closing soon:</h1>");
-
-			PotcastSearchObject pso3 = new PotcastSearchObject();
-			pso3.setPurpose(3);
-			
-			System.out.println(pso3.getExecutableSQL());
-			db = new Database(0);
-			ArrayList<PotcastModel> top3Potcasts = db.getLatestPotcasts(pso3);
-			ArrayList<String> postalCodes3 = new ArrayList<String>();
-
-			for (PotcastModel ap : top3Potcasts) {
-				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
-			}
-			
-			String url = MapDistance.mapURLBuilder(postalCodes3,
-					dbu0.getAddress());
-			
-			ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
-
-
 			int counter3 = 0;
 			for (PotcastModel ap : top3Potcasts) {
 

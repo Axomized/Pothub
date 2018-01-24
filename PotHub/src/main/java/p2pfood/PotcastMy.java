@@ -47,6 +47,7 @@ public class PotcastMy extends HttpServlet {
 
 		if (session != null) {
 			username = (String) session.getAttribute("username");
+			return;
 		} else {
 			response.sendRedirect("Login");
 		}
