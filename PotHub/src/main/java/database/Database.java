@@ -1150,13 +1150,14 @@ public class Database {
 	
 	//For EventofEventPage
 	public EventModel getEventofEventPage(String nameOfEvent) throws SQLException, UnsupportedEncodingException {
-		PreparedStatement ps = conn.prepareStatement("SELECT EventName, Thumbnail, Description, Date, PostalCode, Venue, Guest, FileList, Status FROM Event WHERE EventName = ?;");
+		PreparedStatement ps = conn.prepareStatement("SELECT EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, Guest, FileList, Status FROM Event WHERE EventName = ?;");
 		ps.setString(1, nameOfEvent);
 		
 		ResultSet rs = ps.executeQuery();
 		EventModel eM = new EventModel();
 		while(rs.next()) {
 			String eventName	= rs.getString("EventName");
+			String iGN			= rs.getString("IGN");
 			int thumbnail		= rs.getInt("Thumbnail");
 			String description	= rs.getString("Description");
 			Timestamp date		= rs.getTimestamp("Date");
@@ -1166,7 +1167,7 @@ public class Database {
 			String fileList		= rs.getString("FileList");
 			String status		= rs.getString("Status");
 			
-			eM = new EventModel(eventName, thumbnail, description, date, postalCode, venue, guest, fileList, status);
+			eM = new EventModel(eventName, iGN, thumbnail, description, date, postalCode, venue, guest, fileList, status);
 		}
 		return eM;
 	}
@@ -1176,7 +1177,7 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT ProfilePic FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, iGN);
 		ResultSet rs = ppstmt.executeQuery();
-		String fileName = "";
+		String fileName = null;
 		while(rs.next()) {
 			int profilePic = rs.getInt("ProfilePic");
 			if(profilePic == 0) {
@@ -1640,7 +1641,37 @@ public class Database {
 		}
 		return als;
 	}
-	
+
+	// Whether IGN is in confirm list
+	public String getWhetherPeopleEventList(int eventID, String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			if(iGN.equals(rs.getString("IGN"))) {
+				return "C";
+			}
+		}
+		
+		ppstmt = conn.prepareStatement("SELECT InvitationPending FROM PeopleEventList WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
+		
+		rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			PeopleEventListModel pELM = new PeopleEventListModel(0, null);
+			pELM.setInvitationPending(rs.getString("InvitationPending"));
+			ArrayList<String> als = pELM.getInvitationPendingArray();
+			
+			for(String s: als) {
+				if(iGN.equals(s)) {
+					return "P";
+				}
+			}
+		}
+		return "N";
+	}
+		
 	// Set people in confirm list "Confirmed"
 	public void setPeopleEventListConfirmConfirmed(int eventID, String iGN) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE PeopleEventConfirmList SET Confirmed = '1' WHERE EventID = ? AND IGN = ?;");

@@ -11,6 +11,12 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class LeaderBoardController {
 
+	@MessageMapping("/scanning/{iGN}")
+    @SendTo("/topic/{iGN}")
+    public boolean updateScore(@DestinationVariable("iGN") String iGN, boolean scanned) throws Exception {
+    	return scanned;
+    }
+	
     @MessageMapping("/update/{topic}")
     @SendTo("/topic/{topic}")
     public ArrayList<UpdatingScore> updateScore(@DestinationVariable("topic") String topic, UserScore message) throws Exception {

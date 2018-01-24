@@ -150,7 +150,7 @@ public class MyEventPage extends HttpServlet {
 				
 				sb.append("				</div>");
 				sb.append("			</div>");
-				sb.append("			<div class='row back-container' onclick='redirectPage(\"" + encodeString(eventName) + "\")'>");
+				sb.append("			<div class='row back-container' onclick='redirectPage(\"" + eventName + "\")'>");
 				sb.append("				<div class='event-layout-title'>");
 				sb.append("					<p>" + decodeString(eventName) + "</p>");
 				sb.append("					<hr>");
@@ -247,15 +247,5 @@ public class MyEventPage extends HttpServlet {
 	
 	private String decodeString(String line) throws UnsupportedEncodingException {
 		return URLDecoder.decode(line, "UTF-8");
-	}
-	
-	private String encodeString(String line) throws UnsupportedEncodingException {
-		return URLEncoder.encode(line, "UTF-8")
-                .replaceAll("\\+", "%20")
-                .replaceAll("\\%21", "!")
-                .replaceAll("\\%27", "'")
-                .replaceAll("\\%28", "(")
-                .replaceAll("\\%29", ")")
-                .replaceAll("\\%7E", "~");
 	}
 }

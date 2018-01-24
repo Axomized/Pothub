@@ -152,7 +152,7 @@
 		<servlet-name>ParticipantLeaderboardPage</servlet-name>
 		<display-name>ParticipantLeaderboardPage</display-name>
 		<description></description>
-		<servlet-class>event.leaderboard.ParticipantLeaderboardPage</servlet-class>
+		<servlet-class>event.ParticipantLeaderboardPage</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>Test2</servlet-name>
@@ -189,6 +189,18 @@
 		<display-name>Subscription</display-name>
 		<description></description>
 		<servlet-class>forum.Subscription</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>ShowBarcode</servlet-name>
+		<display-name>ShowBarcode</display-name>
+		<description></description>
+		<servlet-class>event.ShowBarcode</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>GenerateBarcode</servlet-name>
+		<display-name>GenerateBarcode</display-name>
+		<description></description>
+		<servlet-class>barcode.GenerateBarcode</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>DonationSuccess</servlet-name>
@@ -319,6 +331,14 @@
 	<servlet-mapping>
 		<servlet-name>Subscription</servlet-name>
 		<url-pattern>/Subscription</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>ShowBarcode</servlet-name>
+		<url-pattern>/ShowBarcode</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>GenerateBarcode</servlet-name>
+		<url-pattern>/GenerateBarcode</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>DonationSuccess</servlet-name>

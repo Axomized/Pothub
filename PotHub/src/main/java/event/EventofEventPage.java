@@ -37,21 +37,20 @@ public class EventofEventPage extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String nameOfEvent = request.getPathInfo().substring(1);
-		//System.out.println(nameOfEvent);
+    	String nameOfEvent = encodeString(request.getPathInfo().substring(1));
     	try {
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
-	    	
 			//Check session whether the user got login in
-			//String username = "";
+			String username = "";
 	        session = request.getSession(false);
 	        if (session != null) {
-	            //username = (String)session.getAttribute("username");
+	            username = (String)session.getAttribute("username");
 	            session.setAttribute("EventName", nameOfEvent);
 	        }
 	        else {
 	            response.sendRedirect("/PotHub/Login");
 	        }
+			String status = db.getWhetherPeopleEventList(db.getEventIDFromEventName(nameOfEvent), username);
 			
 	    	ServletOutputStream out = response.getOutputStream();
 			StringBuffer sb = new StringBuffer();
@@ -78,12 +77,12 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<!--  Navigation Bar -->");
 			sb.append("		<div id='header'>");
 			sb.append("			<div id='companyTitle'>");
-			sb.append("				<h1>PotHub</h1>");
+			sb.append("				<p>PotHub</p>");
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
 			sb.append("					<img src='/PotHub/images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
-			sb.append("					<span id='welcomeSpan'>Welcome, [Placeholder]</span>");
+			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
 			sb.append("					<a href='Profile.html'>Profile</a>");
@@ -126,9 +125,37 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("						<div class='event-title'>");
 			sb.append("							<p>" + decodeString(eM.getEventName()) + "</p>");
 			sb.append("						</div>");
-			sb.append("						<div class='event-header-button'>");
-			sb.append("							<button type='button' class='btn btn-success' onclick='changeColor(this)'>Join</button> <!-- Servlet change the text according to status -->");
-			sb.append("						</div>");
+			
+			if(eM.getiGN().equals(username)) {
+				sb.append("						<div class='event-header-button'>");
+				sb.append("							<button class='btn btn-danger' onclick='changeColor(this)'>Delete Event</button> <!-- Servlet change the text according to status -->");
+				sb.append("						</div>");
+				sb.append("						<div class='event-header-button2'>");
+				sb.append("							<button class='btn btn-info' onclick='redirectToInteractiveOwner()'>Barcode Scanning</button> <!-- Servlet change the text according to status -->");
+				sb.append("						</div>");
+			}else {
+				switch(status) {
+				case "C":
+					sb.append("						<div class='event-header-button'>");
+					sb.append("							<button class='btn btn-danger' onclick='changeColor(this)'>Confirmed</button> <!-- Servlet change the text according to status -->");
+					sb.append("						</div>");
+					sb.append("						<div class='event-header-button2'>");
+					sb.append("							<button class='btn btn-info' onclick='redirectToInteractive()'>My Barcode</button> <!-- Servlet change the text according to status -->");
+					sb.append("						</div>");
+					break;
+				case "P":
+					sb.append("						<div class='event-header-button'>");
+					sb.append("							<button class='btn btn-warning' onclick='changeColor(this)'>Pending</button> <!-- Servlet change the text according to status -->");
+					sb.append("						</div>");
+					break;
+				default:
+					sb.append("						<div class='event-header-button'>");
+					sb.append("							<button class='btn btn-success' onclick='changeColor(this)'>Join</button> <!-- Servlet change the text according to status -->");
+					sb.append("						</div>");
+					break;
+				}
+			}
+			
 			sb.append("					</div>");
 			sb.append("				</div>");
 			sb.append("			</div>");

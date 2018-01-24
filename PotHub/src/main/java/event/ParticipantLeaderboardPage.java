@@ -52,7 +52,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("	    <!-- Optional theme -->");
 			sb.append("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
 			sb.append("		<!-- My Style Sheet -->");
-			sb.append("		<link rel='stylesheet' type='text/css' href='../css/Leaderboard.css' />");
+			sb.append("		<link rel='stylesheet' type='text/css' href='css/Leaderboard.css' />");
 			sb.append("	</head>");
 			sb.append("	<body onload=\"connect('" + username + "', '" + eventName + "')\">");
 			sb.append("	<noscript><h2 style='color: #ff0000'>Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable Javascript and reload this page!</h2></noscript>");
@@ -63,7 +63,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
-			sb.append("					<img src='../images/profile.png' height='50' width='50'/>");
+			sb.append("					<img src='images/profile.png' height='50' width='50'/>");
 			sb.append("					<span id='welcomeSpan'>Welcome, [Placeholder]</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
@@ -183,7 +183,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("					</div>");
 			sb.append("					<div id='starVoting'>");
 			sb.append("						<div id='starContainer'>");
-			sb.append("							<img src='../images/fivestar.png' id='starBlackBackground'>");
+			sb.append("							<img src='images/fivestar.png' id='starBlackBackground'>");
 			sb.append("							<div id='starYellowBackground'></div>");
 			sb.append("						</div>");
 			sb.append("						<input type='number' id='starNum' min='0' max='5' step='0.1' value='2.5'>");
@@ -206,8 +206,8 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
 			sb.append("	    <!-- My Own Script -->");
-			sb.append("		<script src='../script/Leaderboard.js'></script>");
-			sb.append("		<script src='../script/VideoParticipant2.js'></script>");
+			sb.append("		<script src='script/Leaderboard.js'></script>");
+			sb.append("		<script src='script/VideoParticipant2.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
 			out.write(sb.toString().getBytes());

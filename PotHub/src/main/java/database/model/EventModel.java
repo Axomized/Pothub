@@ -21,17 +21,18 @@ public class EventModel {
 	private String fileList;
 	private String status;
 	
-	public EventModel(String eventName, int thumbnail, String description, Timestamp date, String postalCode,
+	public EventModel(String eventName, String iGN, int thumbnail, String description, Timestamp date, String postalCode,
 			String venue, String guest, String fileList, String status) {
-		this.eventName = eventName;
-		this.thumbnail = thumbnail;
-		this.description = description;
-		this.date = date;
-		this.postalCode = postalCode;
-		this.venue = venue;
-		this.guest = guest;
-		this.fileList = fileList;
-		this.status = status;
+		this.eventName 		= eventName;
+		this.iGN			= iGN;
+		this.thumbnail 		= thumbnail;
+		this.description 	= description;
+		this.date 			= date;
+		this.postalCode 	= postalCode;
+		this.venue 			= venue;
+		this.guest			= guest;
+		this.fileList 		= fileList;
+		this.status 		= status;
 	}
 
 	public EventModel(int eventID, String eventName, String iGN, int thumbnail, String description, Timestamp date,

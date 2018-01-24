@@ -8,8 +8,21 @@ function changeColor(button) {
 		button.classList.add("btn-success");
 		button.classList.remove("btn-warning");
 		button.innerHTML = "Join";
+	}else{
+		if(confirm("Are you sure you want to leave event?")){
+			button.classList.add("btn-success");
+			button.classList.remove("btn-danger");
+			button.innerHTML = "Join";
+		}
 	}
-	
+}
+
+function redirectToInteractive() {
+	window.location.href = "/PotHub/ShowBarcode";
+}
+
+function redirectToInteractiveOwner() {
+	window.location.href = "/PotHub/BarcodeScanning";
 }
 
 /* Profile */
