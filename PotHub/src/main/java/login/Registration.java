@@ -61,22 +61,23 @@ public class Registration extends HttpServlet {
 		+ "	<body>"
 		+ "		<h1>Create Your Account</h1>"
 		+ "		<form action='Registration' method='POST'>"
-		+ "			<font color='#49274a'>Email:</font>"
-		+ "			<font color=red id='messageEmail'></font>"
+		+ "			<span color='#49274a'>Email:</span>"
+		+ "			<font color=red id='messageEmail'>Please enter a valid email.</font>"
 		+ "			<input type='text' name='email' id='email' placeholder='Enter your email' onfocusout='validateEmail()'>"
-		+ "			<font color='#49274a'>Password:</font>"
-		+ "			<input type='password' name='password' placeholder='Create a password'>"
-		+ "			<font color='#49274a'>Retype Password:</font>"
-		+ "			<input type='password' name='password2' placeholder='Confirm your password'>"
-		+ "			<font color='#49274a'>Name:</font>"
-		+ "			<input type='text' name='name' placeholder='Enter your name'>"
-		+ "			<font color='#49274a'>Contact Number:</font>"
-		+ "			<input type='text' name='contact' placeholder='Enter your phone number'>"
-		+ "			<font color='#49274a'>Postal Code:</font>"
-		+ "			<input type='text' name='address' placeholder='Enter your postal code'>"
-		+ "			<font color='#49274a'>Unit Number:</font>"
-		+ "			<input type='text' name='unitno' placeholder='Enter your unit number'>"		
-		+ "			<font color='#49274a'>Gender:</font>"
+		+ "			<span color='#49274a'>Password:</span>"
+		+ "			<font color=red id='messagePassword'>Password must contain at least 8 characters and one of each of the following: uppercase letter, lowercase letter, number.</font>"
+		+ "			<input type='password' name='password' id='password' placeholder='Create a password'>"
+		+ "			<span color='#49274a'>Retype Password:</span>"
+		+ "			<input type='password' name='password2' id='password2' placeholder='Confirm your password'>"
+		+ "			<span color='#49274a'>Name:</span>"
+		+ "			<input type='text' name='name' id='name' placeholder='Enter your name'>"
+		+ "			<span color='#49274a'>Contact Number:</span>"
+		+ "			<input type='text' name='contact' id='contact' placeholder='Enter your phone number'>"
+		+ "			<span color='#49274a'>Postal Code:</span>"
+		+ "			<input type='text' name='address' id='address' placeholder='Enter your postal code'>"
+		+ "			<span color='#49274a'>Unit Number:</span>"
+		+ "			<input type='text' name='unitno' id='unitno' placeholder='Enter your unit number'>"		
+		+ "			<span color='#49274a'>Gender:</span>"
 		+ "			<select name='gender'>"
 		+ "				<option value='Male'>Male</option>"
 		+ " 			<option value='Female'>Female</option>"
@@ -137,9 +138,7 @@ public class Registration extends HttpServlet {
 					password.length() < 7 ||
 					!password.matches(".*[A-Z].*") || //checks if password has upper case letter
 					!password.matches(".*[a-z].*") || //checks if password has lower case letter
-					!password.matches(".*\\d.*") ||  //checks if password has numbers
-					!password.matches("[a-zA-Z0-9 ]*") || //checks if password has special characters
-					password.contains(" ")) //checks if password contains spaces
+					!password.matches(".*\\d.*")) 	  //checks if password has numbers
 			{
 			
 				out.println("<script type=\"text/javascript\">");

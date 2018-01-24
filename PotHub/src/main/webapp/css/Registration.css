@@ -21,6 +21,10 @@ h1 {
 	color: #94618e;
 }
 
+font {
+	visibility: hidden;
+}
+
 form {
 	margin: 20px auto;
 	width: 320px;
