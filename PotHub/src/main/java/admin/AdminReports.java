@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import adminSearch.ReportSearchObject;
 import database.Database;
@@ -35,6 +36,12 @@ public class AdminReports extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		PrintWriter pw = response.getWriter();
 		
 		ReportSearchObject rso = new ReportSearchObject();
@@ -85,7 +92,7 @@ public class AdminReports extends HttpServlet {
 +"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
-+"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
++"<p id='logout'><a href='Logout'>Logout</a></p>"
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
@@ -212,6 +219,12 @@ public class AdminReports extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		try {
 			Database db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){

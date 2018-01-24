@@ -116,72 +116,60 @@ public class PotcastJoined extends HttpServlet {
 							+ "</span>" + "</div>" + "<div id='profileDropdownDiv'>"
 							+ "<a href='Profile.html'>Profile</a>");
 
-			if (!username.equals("")) {
-				pw.append("<a href='Login?doaction=logout'>Logout</a>");
-			} else {
-				pw.append("<a href='Login'>Login</a>");
-			}
-			
-			pw.append("</div>" 
-					+ "</div>" 
-					+ "</div>" 
-					+ "	<div id='navigation'>"
-					+ "			<ul class='nav navbar-nav'>"
-					+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='html/PrivateMessage.html'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='html/EventPage.html'>Event</a></li>"
-					+ "				<li class='dropdown'>"
-					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
-					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
-					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
-					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
-					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>" + "			        </ul>"
-					+ "			      </li>"
-					+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>" + "			</ul>"
-					+ "		</div>" + "	</div>" + "<div id='wrapper'>" + "<div id='secondHeader'>"
-					+ "<h2>My Potcasts</h2>" 
+			pw.append("<a href='Logout'>Logout</a>");
+			pw.append(
+					"</div>" + "</div>" + "</div>" + "	<div id='navigation'>" + "			<ul class='nav navbar-nav'>"
+							+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
+							+ "				<li id='lprivatemessage'><a href='html/PrivateMessage.html'>Private Message</a></li>"
+							+ "				<li id='levent'><a href='html/EventPage.html'>Event</a></li>"
+							+ "				<li class='dropdown'>"
+							+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
+							+ "			        <ul class='dropdown-menu'>"
+							+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+							+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+							+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+							+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
+							+ "			        </ul>" + "			      </li>"
+							+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>"
+							+ "			</ul>" + "		</div>" + "	</div>" + "<div id='wrapper'>"
+							+ "<div id='secondHeader'>" + "<h2>My Potcasts</h2>"
 
-					+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" 
-					+ "<form method='get'>"
-					+ "<input type='text' name='title'></input><input type='submit'></input>"
-					+ "<p id='toggleSpan'>More Options</p>" + "<div id='hidableSearchBlock'>" + "<p>Sort Results By: </p>"
-					+ "<div id='search'>" + "<div id='radios'>" + "<ul>"
-					+ "<li><input type='radio' name='searchOption' id='radioActiveBids' value='bids'></input><label for='radioActiveBids'>Active Bids</label></li>"
-					+ "<li><input type='radio' name='searchOption' id='radioClosingTime' value='closingTime'></input><label for='radioClosingTime'>Bid Closing Time</label></li>"
-					+ "<li><input type='radio' name='searchOption' id='radioPickupTime' value='pickupTime'></input><label for='radioPickupTime'>Pickup Time</label></li>"
-					+ "<li><input type='radio' name='searchOption' id='radioPrice' value='price'></input><label for='radioPrice'>Price</label></li>"
-					+ "<li><input type='radio' name='searchOption' id='radioCR' value='cookingRank'></input><label for='radioCR'>Cooking Rating</label></li>"
-					+ "</ul>" + "</div>" + "<div id='radios2'>" + "<ul>"
-					+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
-					+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
-					+ "</ul>" + "</div>" + "</form>" 
-					+ "</div></div></div></div>");
-					
+							+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" + "<form method='get'>"
+							+ "<input type='text' name='title'></input><input type='submit'></input>"
+							+ "<p id='toggleSpan'>More Options</p>" + "<div id='hidableSearchBlock'>"
+							+ "<p>Sort Results By: </p>" + "<div id='search'>" + "<div id='radios'>" + "<ul>"
+							+ "<li><input type='radio' name='searchOption' id='radioActiveBids' value='bids'></input><label for='radioActiveBids'>Active Bids</label></li>"
+							+ "<li><input type='radio' name='searchOption' id='radioClosingTime' value='closingTime'></input><label for='radioClosingTime'>Bid Closing Time</label></li>"
+							+ "<li><input type='radio' name='searchOption' id='radioPickupTime' value='pickupTime'></input><label for='radioPickupTime'>Pickup Time</label></li>"
+							+ "<li><input type='radio' name='searchOption' id='radioPrice' value='price'></input><label for='radioPrice'>Price</label></li>"
+							+ "<li><input type='radio' name='searchOption' id='radioCR' value='cookingRank'></input><label for='radioCR'>Cooking Rating</label></li>"
+							+ "</ul>" + "</div>" + "<div id='radios2'>" + "<ul>"
+							+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
+							+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
+							+ "</ul>" + "</div>" + "</form>" + "</div></div></div></div>");
+
 			ArrayList<PotcastModel> potcastsJoined = db.getJoinedPotcasts(username);
-			
+
 			ArrayList<String> postalCodes = new ArrayList<String>();
 
 			for (PotcastModel ap : potcastsJoined) {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
-			
-			String url = MapDistance.mapURLBuilder(postalCodes, 
-					dbu0.getAddress());
-			
+
+			String url = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
+
 			ArrayList<String> distances = MapDistance.getJsonFromURL(url);
-			
-			int counter=0;
-			for(PotcastModel ap : potcastsJoined){
-				pw.append("<a href='p2pdetail?potcastID="+ap.getPotcastID()+"'>");
-				
-				if(ap.getPickupTime().getTime()<System.currentTimeMillis()){
-					pw.append( "<div id='displayUnit' class='inactive'>");
+
+			int counter = 0;
+			for (PotcastModel ap : potcastsJoined) {
+				pw.append("<a href='p2pdetail?potcastID=" + ap.getPotcastID() + "'>");
+
+				if (ap.getPickupTime().getTime() < System.currentTimeMillis()) {
+					pw.append("<div id='displayUnit' class='inactive'>");
+				} else {
+					pw.append("<div id='displayUnit' class='active'>");
 				}
-				else{
-					pw.append( "<div id='displayUnit' class='active'>");
-				}
-				
+
 				pw.append("<div id='thumbnailBox'>");
 				pw.append("<img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
@@ -213,9 +201,8 @@ public class PotcastJoined extends HttpServlet {
 				pw.append(", " + distances.get(counter) + "</div></div></a>");
 				counter++;
 			}
-			
-					pw.append("</div>" 
-					+ "<div id='footer'>"
+
+			pw.append("</div>" + "<div id='footer'>"
 					+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>" + "<p>We like food</p>"
 					+ "<p>" + "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 					+ "</p>" + "</div>" + "</body>" + "</html>");
@@ -233,7 +220,7 @@ public class PotcastJoined extends HttpServlet {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
-	
+
 	private static String TimestampToDateTime(Timestamp toChange) {
 		Date date = new Date(toChange.getTime());
 		DateFormat formatter = new SimpleDateFormat("MM.dd HH:mm");

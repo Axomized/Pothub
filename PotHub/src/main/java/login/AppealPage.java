@@ -135,7 +135,7 @@ public class AppealPage extends HttpServlet {
 			}
 		}
 		AppealModel appeal = new AppealModel();
-		appeal.setApproval(false);
+		appeal.setApproval(0);
 		appeal.setBanID(banID);
 		appeal.setiGN(ign);
 		appeal.setMessage(message);

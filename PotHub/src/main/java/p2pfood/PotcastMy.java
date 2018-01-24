@@ -116,7 +116,7 @@ public class PotcastMy extends HttpServlet {
 							+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
 							+ "<span id='welcomeSpan'>Welcome, [Placeholder]</span>" + "</div>"
 							+ "<div id='profileDropdownDiv'>" + "<a href='Profile.html'>Profile</a>"
-							+ "<a href='Login'>Logout</a>" + "</div>" + "</div>" + "</div>"
+							+ "<a href='Logout'>Logout</a>" + "</div>" + "</div>" + "</div>"
 							+ "	<div id='navigation'>" + "		<div class='container-fluid'>"
 							+ "			<ul class='nav navbar-nav'>"
 							+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
@@ -153,19 +153,19 @@ public class PotcastMy extends HttpServlet {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 
-			ArrayList<String> distances = MapDistance.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress()));
-			
+			ArrayList<String> distances = MapDistance
+					.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress()));
+
 			int counter = 0;
 			for (PotcastModel pot : pots) {
 				DatabaseUserModel dbu = db.getDatabaseUserByIGN(pot.getiGN());
-				pw.append("<a href='p2pdetail?potcastID="+pot.getPotcastID()+"'><div id='displayUnit' ");
-				if(System.currentTimeMillis()>pot.getPickupTime().getTime()){
-						pw.append("class='inactive'>");
-				}
-				else{
+				pw.append("<a href='p2pdetail?potcastID=" + pot.getPotcastID() + "'><div id='displayUnit' ");
+				if (System.currentTimeMillis() > pot.getPickupTime().getTime()) {
+					pw.append("class='inactive'>");
+				} else {
 					pw.append("class='active'>");
 				}
-						pw.append("<div id='thumbnailBox'><img height=150 width=150 src='/PotHub/Image/"
+				pw.append("<div id='thumbnailBox'><img height=150 width=150 src='/PotHub/Image/"
 						+ db.getImageByImageID(pot.getPicture()) + "'></div>" + "<div id='column1'>"
 						+ "<div class='row1 foodTitle'>" + pot.getTitle() + "</div>" + "<div class='row1'>"
 						+ pot.getiGN() + ", " + pot.getStartingCR() + "</div></div>" + "<div id='column2'>"
@@ -190,10 +190,10 @@ public class PotcastMy extends HttpServlet {
 				counter++;
 			}
 
-			pw.append("</div></div><div id='footer'>" + "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
-					+ "<p>We like food</p>" + "<p>"
-					+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>" + "</p>"
-					+ "</div>" + "</body>" + "</html>");
+			pw.append("</div></div><div id='footer'>"
+					+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>" + "<p>We like food</p>"
+					+ "<p>" + "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
+					+ "</p>" + "</div>" + "</body>" + "</html>");
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

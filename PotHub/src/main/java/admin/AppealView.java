@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.AppealModel;
@@ -34,6 +35,12 @@ public class AppealView extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		String subjectUser = request.getParameter("user");
 		String appealID = request.getParameter("appealID");
 
@@ -61,7 +68,7 @@ public class AppealView extends HttpServlet {
 						+ "<a href='AdminDonations'>Donations</a>" + "</li>" + "<li>"
 						+ "<a href='AdminRanks'>Forum Control</a>" + "</li>" + "<li>"
 						+ "<a href='AdminReports'>Reports</a>" + "</li>" + "</ul>"
-						+ "<p id='logout'><a href='AdminLogin'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
+						+ "<p id='logout'><a href='Logout'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
 						+ "<div id='content-wrapper'>" + "<h1>Showing appeal #" + appealID + " from " + subjectUser
 						+ "</h1>");
 		Database db;

@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import adminSearch.BansSearchObject;
 import database.Database;
@@ -38,6 +39,12 @@ public class BanHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		BansSearchObject bso = new BansSearchObject();
 		String userSubject = "User";
 		if(request.getParameter("user")!=null){
@@ -72,7 +79,7 @@ public class BanHistory extends HttpServlet {
 +"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
-+"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
++"<p id='logout'><a href='Logout'>Logout</a></p>"
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"

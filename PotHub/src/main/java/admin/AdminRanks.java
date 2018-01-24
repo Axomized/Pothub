@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import adminSearch.RankSearchObject;
 import database.Database;
@@ -38,6 +39,12 @@ public class AdminRanks extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		RankSearchObject rso = new RankSearchObject();
 		
 		if(request.getParameter("username")!=null){
@@ -82,7 +89,7 @@ public class AdminRanks extends HttpServlet {
 +"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
-+"<p id='logout'><a href='AdminLogin'>Logout</a></p>"
++"<p id='logout'><a href='Logout'>Logout</a></p>"
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"
@@ -190,6 +197,12 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		
 		try {
 			Database db = new Database(2);
 			if(request.getParameter("toChange")!=null||Integer.parseInt(request.getParameter("toChange"))<=2||Integer.parseInt(request.getParameter("toChange"))>=0){

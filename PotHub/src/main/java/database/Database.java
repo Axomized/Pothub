@@ -171,6 +171,32 @@ public class Database {
 		return null;
 	}
 	
+	public DatabaseUserModel getDatabaseUserByEmail(String theEmail) throws SQLException {
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM DatabaseUser WHERE email = ?");
+		ps.setString(1, theEmail);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String email 				= rs.getString("Email");
+			String iGN					= rs.getString("IGN");
+			String contact_No			= rs.getString("Contact_No");
+			char gender					= rs.getString("Gender").charAt(0);
+			String bio					= rs.getString("Bio");
+			String address				= rs.getString("Address");
+			String unitNo				= rs.getString("UnitNo");
+			int profilePic				= rs.getInt("ProfilePic");
+			Date lastLogin				= rs.getDate("LastLogin");
+			Date joinDate				= rs.getDate("JoinDate");
+			int cookingRank				= rs.getInt("CookingRank");
+			int points					= rs.getInt("Points");
+			BigDecimal totalDonation	= rs.getBigDecimal("TotalDonation");
+			boolean isPriviledged		= rs.getBoolean("IsPriviledged");
+			int userPermission			= rs.getInt("UserPermission");
+			boolean isFiltered			= rs.getBoolean("IsFiltered");
+			return new DatabaseUserModel(email, iGN, contact_No, gender, bio, address, unitNo, profilePic, lastLogin, joinDate, cookingRank, points, totalDonation, isPriviledged, userPermission, isFiltered);
+		}
+		return null;
+	}
+	
 	public int getDatabaseUserRank(String ign) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement("SELECT CookingRank FROM DatabaseUser WHERE IGN = ?");
 		ps.setString(1, ign);

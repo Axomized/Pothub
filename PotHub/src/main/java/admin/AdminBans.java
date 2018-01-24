@@ -11,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import adminSearch.BansSearchObject;
 import database.Database;
@@ -38,6 +39,11 @@ public class AdminBans extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
 		BansSearchObject bso = new BansSearchObject();
 
 		if (request.getParameter("username") != null) {
@@ -82,7 +88,7 @@ public class AdminBans extends HttpServlet {
 						+ "<a href='AdminDonations'>Donations</a>" + "</li>" + "<li>"
 						+ "<a href='AdminRanks'>Forum Control</a>" + "</li>" + "<li>"
 						+ "<a href='AdminReports'>Reports</a>" + "</li>" + "</ul>"
-						+ "<p id='logout'><a href='AdminLogin'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
+						+ "<p id='logout'><a href='Logout'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
 						+ "<div id='content-wrapper'>" + "<div id='tableWrapper'>"
 						+ "<table class='table table-striped tablesorter' id='myTable'>" + "<thead>" + "<tr>"
 						+ "<th>Username</th>" + "<th>Ban Reason</th>" + "<th>Ban Date</th>" + "<th>Ban End</th>"
@@ -161,6 +167,6 @@ public class AdminBans extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		response.sendRedirect("AdminBans");
+		doGet(request, response);
 	}
 }
