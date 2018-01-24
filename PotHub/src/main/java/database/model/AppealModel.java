@@ -2,16 +2,19 @@ package database.model;
 
 import java.sql.Date;
 
+//0 is undecided
+//1 is accepted
+//2 is ignored
 public class AppealModel {
 	private int appealID;
 	private String iGN;
 	private Date receiveDate;
 	private String message;
-	private boolean approval;
+	private int approval;
 	private Date dateApproved;
 	private int banID;
 	
-	public AppealModel(int appealID, String iGN, Date receiveDate, String message, boolean approval, Date dateApproved, int banID) {
+	public AppealModel(int appealID, String iGN, Date receiveDate, String message, int approval, Date dateApproved, int banID) {
 		this.appealID = appealID;
 		this.iGN = iGN;
 		this.receiveDate = receiveDate;
@@ -19,6 +22,10 @@ public class AppealModel {
 		this.approval = approval;
 		this.dateApproved = dateApproved;
 		this.setBanID(banID);
+	}
+	
+	public String toString(){
+		return appealID + " " + iGN  + " " + receiveDate + " " + message + " " + approval + " " + dateApproved + " " + banID;
 	}
 
 	public AppealModel() {
@@ -41,7 +48,7 @@ public class AppealModel {
 		return message;
 	}
 
-	public boolean isApproval() {
+	public int getApproval() {
 		return approval;
 	}
 
@@ -65,7 +72,7 @@ public class AppealModel {
 		this.message = message;
 	}
 
-	public void setApproval(boolean approval) {
+	public void setApproval(int approval) {
 		this.approval = approval;
 	}
 

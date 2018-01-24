@@ -365,6 +365,14 @@ input {
 td form{
 	display:inline;
 }
+
+form{
+	display:inline;
+}
+
+form button{
+	border-radius:4px;
+}
 /* Footer */
 
 #footer p { margin: 15px 0; }

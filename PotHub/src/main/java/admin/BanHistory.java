@@ -115,11 +115,14 @@ try {
 	}
 	for(AppealModel apl:appeals){
 		pw.append("<tr>");
-		if(apl.isApproval()){
+		if(apl.getApproval()==2){
 			pw.append("<td>Approved Appeal</td>");
 		}
-		else{
+		else if(apl.getApproval()==1){
 			pw.append("<td>Denied Appeal</td>");
+		}
+		else{
+			pw.append("<td>Pending Appeal</td>");
 		}
 		pw.append("<td>"+apl.getMessage()+"</td>");
 		pw.append("<td>"+apl.getReceiveDate()+"</td>");

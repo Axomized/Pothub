@@ -757,7 +757,7 @@ public class Database {
 			String iGN					= rs.getString("IGN");
 			Date receiveDate			= rs.getDate("receiveDate");
 			String message				= rs.getString("message");
-			boolean approval			= rs.getBoolean("approval");
+			int approval				= rs.getInt("approval");
 			Date dateApproved			= rs.getDate("dateApproved");
 			int banID					= rs.getInt("banID");
 			
@@ -776,7 +776,7 @@ public class Database {
 			String iGN					= rs.getString("IGN");
 			Date receiveDate			= rs.getDate("receiveDate");
 			String message				= rs.getString("message");
-			boolean approval			= rs.getBoolean("approval");
+			int approval				= rs.getInt("approval");
 			Date dateApproved			= rs.getDate("dateApproved");
 			int banID					= rs.getInt("banID");
 			
@@ -786,7 +786,7 @@ public class Database {
 	}
 	
 	public AppealModel getAppealsByBanID(int id) throws SQLException{
-		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Appeal WHERE BanID = ? ");
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Appeal WHERE banID = ? ");
 		ps.setInt(1, id);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
@@ -794,7 +794,25 @@ public class Database {
 			String iGN					= rs.getString("IGN");
 			Date receiveDate			= rs.getDate("receiveDate");
 			String message				= rs.getString("message");
-			boolean approval			= rs.getBoolean("approval");
+			int approval				= rs.getInt("approval");
+			Date dateApproved			= rs.getDate("dateApproved");
+			int banID					= rs.getInt("banID");
+			
+			return new AppealModel(appealID,iGN, receiveDate, message, approval, dateApproved, banID);
+		}
+		return null;
+	}
+	
+	public AppealModel getAppealsByAppealID(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Appeal WHERE AppealID = ? ");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			int appealID				= rs.getInt("appealID");
+			String iGN					= rs.getString("IGN");
+			Date receiveDate			= rs.getDate("receiveDate");
+			String message				= rs.getString("message");
+			int approval				= rs.getInt("approval");
 			Date dateApproved			= rs.getDate("dateApproved");
 			int banID					= rs.getInt("banID");
 			
@@ -808,7 +826,7 @@ public class Database {
 		ps.setString(1, appeal.getiGN());
 		ps.setDate(2, appeal.getReceiveDate());
 		ps.setString(3, appeal.getMessage());
-		ps.setBoolean(4, appeal.isApproval());
+		ps.setInt(4, appeal.getApproval());
 		ps.setInt(5, appeal.getBanID());
 		
 		ps.executeUpdate();
@@ -818,10 +836,18 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setDate(1, aM.getReceiveDate());
 		ppstmt.setString(2, aM.getMessage());
-		ppstmt.setBoolean(3, aM.isApproval());
+		ppstmt.setInt(3, aM.getApproval());
 		ppstmt.setDate(4, aM.getDateApproved());
 
 		executeUpdate(ppstmt);
+	}
+	
+	public void verdictOnAppeal(int appealID, int verdict) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE appeal SET approval = ?, dateApproved = ? WHERE appealID = ?");
+		ppstmt.setInt(1, verdict);
+		ppstmt.setDate(2, new Date(System.currentTimeMillis()));
+		ppstmt.setInt(3, appealID);
+		ppstmt.executeUpdate();
 	}
 	
 	//Bans
@@ -1006,6 +1032,12 @@ public class Database {
 	
 	public void pardonUser(String iGN) throws SQLException{
 		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Bans SET pardoned='true' WHERE IGN = ?");
+		ppstmt.setString(1, iGN);
+		executeUpdate(ppstmt);
+	}
+	
+	public void ignoreUser(String iGN) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE Bans SET pardoned='false' WHERE IGN = ?");
 		ppstmt.setString(1, iGN);
 		executeUpdate(ppstmt);
 	}
