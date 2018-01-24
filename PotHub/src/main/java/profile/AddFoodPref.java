@@ -22,6 +22,15 @@ public class AddFoodPref extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String username = "";
+		HttpSession session = request.getSession(false);
+		if (session != null) {
+			username = (String)session.getAttribute("username");
+		}
+		else {
+			response.sendRedirect("Login");
+		}
+		
 		PrintWriter out = response.getWriter();
 		out.print("<!DOCTYPE html>"
 				+ "<html>"
@@ -48,7 +57,7 @@ public class AddFoodPref extends HttpServlet {
 				+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 				+ "				<div id='profilePic'>"
 				+ "					<img src='images/profile.png' height='50' width='50'/>"
-				+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+				+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
 				+ "				</div>"
 				+ "				<div id='profileDropdownDiv'>"
 				+ "					<a href='Profile'>Profile</a>"
@@ -60,14 +69,20 @@ public class AddFoodPref extends HttpServlet {
 				+ "			<ul>"
 				+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 				+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-				+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+				+ "				<li class='dropdown'>"
+				+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+				+ "					<ul class='dropdown-menu'>"
+				+ "						<li><a href='EventPage'>Events</a></li>"
+				+ "						<li><a href='MyEventPage'>My Events</a></li>"
+				+ "					</ul>"
+				+ "				</li>"
 				+ "				<li class='dropdown'>"
 				+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 				+ "			        <ul class='dropdown-menu'>"
-				+ "			          <li><a href='#'>Active PotCasts</a></li>"
-				+ "			          <li><a href='#'>Start a PotCast</a></li>"
-				+ "			          <li><a href='#'>My PotCast</a></li>"
-				+ "			          <li><a href='#'>Joined PotCast</a></li>"
+				+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+				+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+				+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+				+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 				+ "			        </ul>"
 				+ "			      </li>"
 				+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"

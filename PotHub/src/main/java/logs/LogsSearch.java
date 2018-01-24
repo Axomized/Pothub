@@ -1,8 +1,8 @@
 package logs;
 
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LogsSearch {
@@ -54,20 +54,25 @@ public class LogsSearch {
 	}
 
 	private Timestamp selectToTimestamp(String selectString) {
-		LocalDateTime localDateTime = LocalDateTime.now();
+		LocalDate localDate = LocalDate.now();
 		Timestamp timestamp = null;
 		if (selectString.equals("Yesterday")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(1));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(1));
 		}
 		else if (selectString.equals("Last 7 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(7));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(7));
 		}
 		else if (selectString.equals("Last 30 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(30));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(30));
 		}
 		else if (selectString.equals("Last 90 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(90));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(90));
 		}
+		return timestamp;
+	}
+	
+	private Timestamp getCurrentDateTime() {
+		Timestamp timestamp = Timestamp.from(Instant.now());
 		return timestamp;
 	}
 	
@@ -85,7 +90,7 @@ public class LogsSearch {
 	}
 	
 	public String getSearchQuery() {
-		String searchQuery = "SELECT IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspicious FROM Logs";
+		String searchQuery = "SELECT IGN, LogDate, IPAddress, LogType, LogActivity FROM Logs";
 		
 		if (checkIfSearch(iGN, logType, dateInput)) {
 			searchQuery += " WHERE";
@@ -107,7 +112,8 @@ public class LogsSearch {
 				else {
 					Timestamp timestamp = selectToTimestamp(dateInput);
 					if (timestamp != null) {
-						searchQuery += " LogDate > '" + timestamp + "' AND";
+						Timestamp currentDateTime = getCurrentDateTime();
+						searchQuery += " LogDate > '" + timestamp + "' AND LogDate <  '" + currentDateTime + "' AND";
 					}
 				}
 			}
@@ -120,7 +126,7 @@ public class LogsSearch {
 			searchQuery = searchQuery.substring(0, searchQuery.length() - 6);
 		}
 		
-		searchQuery += ";";
+		searchQuery += " ORDER BY LogID;";
 		System.out.println(searchQuery);
 		
 		return searchQuery;

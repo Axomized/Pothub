@@ -439,6 +439,12 @@ body {
 	background-color: #f8eee7;
 }
 
+.errorMsg {
+	color: #f74225;
+	text-align: left;
+	font-weight: 600;
+}
+
 /* Footer */
 
 #footer p { 

@@ -89,14 +89,20 @@ public class ConfirmDonation extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -216,9 +222,11 @@ public class ConfirmDonation extends HttpServlet {
 									db.updateIsPrivileged(true, tsm.getTemporaryOnBehalf());
 								}
 								lm.setiGN(username);
+								lm.setLogDate(Timestamp.from(Instant.now()));
 								lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
 								lm.setLogType("Donation");
 								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
+								db.insertLogs(lm);
 							}
 							else {
 								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
@@ -226,9 +234,11 @@ public class ConfirmDonation extends HttpServlet {
 									db.updateIsPrivileged(true, username);
 								}
 								lm.setiGN(username);
+								lm.setLogDate(Timestamp.from(Instant.now()));
 								lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
 								lm.setLogType("Donation");
 								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
+								db.insertLogs(lm);
 							}
 							db.deleteFromTempStore(username);
 							response.sendRedirect("DonationSuccess");
@@ -317,14 +327,20 @@ public class ConfirmDonation extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"

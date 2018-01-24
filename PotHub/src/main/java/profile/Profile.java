@@ -72,14 +72,20 @@ public class Profile extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -229,7 +235,7 @@ public class Profile extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		doGet(request, response);
 	}
 
 }

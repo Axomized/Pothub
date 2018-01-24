@@ -1,14 +1,16 @@
 package profile;
 
+import java.io.FileNotFoundException;
 import java.math.BigDecimal;
+import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class ProfileDonationSearch {
 	private String onBehalf;
-	private BigDecimal donation_Amount;
+	private BigDecimal donationAmount;
 	private String dateInput;
 	private String afterDate;
 	private String beforeDate;
@@ -21,12 +23,12 @@ public class ProfileDonationSearch {
 		this.onBehalf = onBehalf;
 	}
 
-	public BigDecimal getDonation_Amount() {
-		return donation_Amount;
+	public BigDecimal getDonationAmount() {
+		return donationAmount;
 	}
 
-	public void setDonation_Amount(BigDecimal donation_Amount) {
-		this.donation_Amount = donation_Amount;
+	public void setDonationAmount(BigDecimal donationAmount) {
+		this.donationAmount = donationAmount;
 	}
 
 	public String getDateInput() {
@@ -54,20 +56,25 @@ public class ProfileDonationSearch {
 	}
 
 	private Timestamp selectToTimestamp(String selectString) {
-		LocalDateTime localDateTime = LocalDateTime.now();
+		LocalDate localDate = LocalDate.now();
 		Timestamp timestamp = null;
 		if (selectString.equals("Yesterday")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(1));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(1));
 		}
 		else if (selectString.equals("Last 7 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(7));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(7));
 		}
 		else if (selectString.equals("Last 30 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(30));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(30));
 		}
 		else if (selectString.equals("Last 90 days")) {
-			timestamp = Timestamp.valueOf(localDateTime.minusDays(90));
+			timestamp = Timestamp.valueOf(localDate.atStartOfDay().minusDays(90));
 		}
+		return timestamp;
+	}
+	
+	private Timestamp getCurrentDateTime() {
+		Timestamp timestamp = Timestamp.from(Instant.now());
 		return timestamp;
 	}
 	
@@ -78,10 +85,10 @@ public class ProfileDonationSearch {
 	}
 	
 	public String getSearchQuery() {
-		String searchQuery = "SELECT Donation_Date, Donation_Amount, OnBehalf FROM Donation WHERE IGN = ?";
+		String searchQuery = "SELECT DonationDate, DonationAmount, OnBehalf FROM Donation WHERE IGN = ?";
 		
-		if (donation_Amount != null && !(donation_Amount.compareTo(BigDecimal.ZERO) == 0)) {
-			searchQuery += " AND Donation_Amount = '" + donation_Amount + "'";
+		if (donationAmount != null && !(donationAmount.compareTo(BigDecimal.ZERO) == 0)) {
+			searchQuery += " AND DonationAmount = '" + donationAmount + "'";
 		}
 		if (onBehalf != null && !onBehalf.isEmpty()) {
 			searchQuery += " AND OnBehalf = '" + onBehalf + "'";
@@ -91,27 +98,25 @@ public class ProfileDonationSearch {
 				if ((afterDate != null && !afterDate.isEmpty()) && (beforeDate != null && !beforeDate.isEmpty())) {
 					Timestamp afterDateTmp = stringToTimestamp(afterDate);
 					Timestamp beforeDateTmp = stringToTimestamp(beforeDate);
-					searchQuery += " AND Donation_Date > " + afterDateTmp + " AND Donation_Date < " + beforeDateTmp;
+					searchQuery += " AND DonationDate > DATEADD(day, 1, '" + afterDateTmp + "') AND DonationDate < '" + beforeDateTmp + "'";
 				}
 			}
 			else {
 				Timestamp timestamp = selectToTimestamp(dateInput);
 				if (timestamp != null) {
-					searchQuery += " AND Donation_Date > " + timestamp;
-				}
-				else {
-					System.out.println("ProfileDonationSearch - (Else: Line 98)");
+					Timestamp currentDateTime = getCurrentDateTime();
+					searchQuery += " AND DonationDate > '" + timestamp + "' AND DonationDate < '" + currentDateTime + "'";
 				}
 			}
 		}
 		
-		searchQuery += ";";
+		searchQuery += " ORDER BY DonationID;";
 		System.out.println(searchQuery);
 		
 		return searchQuery;
 	}
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws FileNotFoundException, ClassNotFoundException, SQLException {
 		
 	}
 }

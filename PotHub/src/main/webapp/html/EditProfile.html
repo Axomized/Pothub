@@ -35,7 +35,13 @@
 			<ul>
 				<li id="lhome"><a href="Forum.html">Home</a></li>
 				<li id="lprivatemessage"><a href="PrivateMessage.html">Private Message</a></li>
-				<li id="levent"><a href="EventPage.html">Event</a></li>
+				<li class="dropdown">
+		        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Event</a>
+			        <ul class="dropdown-menu">
+			        	<li><a href="EventPage.html">Events</a></li>
+		        		<li><a href="MyEventPage.html">My Events</a></li>
+			        </ul>
+		    	</li>
 				<li class="dropdown">
 			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Potcast</a>
 			        <ul class="dropdown-menu">
@@ -88,7 +94,7 @@
 										</div>
 										<div id="filterDiv" class="divWrap">
 											<label id="filterLabel" class="custom-control custom-checkbox" for="checkFilter">
-												<input type="checkbox" id="checkFilter" class="custom-control-input" name="checkFilter" value="Yes" onclick="isBoxChecked()">
+												<input type="checkbox" id="checkFilter" class="custom-control-input" name="checkFilter" onclick="isBoxChecked()">
 												<span class="custom-control-indicator"></span>
   												<span class="custom-control-description">Filter by food preferences</span>
 											</label>
@@ -104,17 +110,19 @@
 										</div>
 										<div id="contactNoDiv" class="divWrap">
 											<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
-											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" oninput="startedTyping(this), onlyNumbers(this)">
+											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" maxlength="8" oninput="startedTyping(this), onlyNumbers(this)">
+											<div class="errorMsg">Only a maximum of 8 numbers.</div>
 										</div>
 										<div id="bioDiv" class="divWrap">
 											<label id="bioLabel" for="bioText">Bio</label>
-											<textarea id="bioText" class="inputsForFill" name="bioText" oninput="startedTyping(this)"></textarea>
-											<p id="bioInfoText">Only a maximum of 255 characters.</p>
+											<textarea id="bioText" class="inputsForFill" name="bioText" maxlength="255" oninput="startedTyping(this)"></textarea>
+											<div id="bioInfoText">Only a maximum of 255 characters.</div>
 										</div>
 										<div id="addressDiv" class="divWrap">
 											<div id="postalCodeDiv">
 												<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
-												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" oninput="startedTyping(this), onlyNumbers(this)">
+												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" maxlength="6" oninput="startedTyping(this), onlyNumbers(this)">
+												<div class="errorMsg">Only a maximum of 6 numbers.</div>
 											</div>
 											<div id="unitNoDiv" class="innerDiv">
 												<label id="unitNoLabel" for="unitNoInput">Unit Number</label>

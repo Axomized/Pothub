@@ -78,14 +78,20 @@ public class EditProfile extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -127,9 +133,14 @@ public class EditProfile extends HttpServlet {
 					+ "								<div id='editProfileDiv' class='row'>"
 					+ "									<div id='userInfoDiv' class='col-sm-9'>"
 					+ "										<div id='filterDiv' class='divWrap'>"
-					+ "											<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>"
-					+ "												<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' value='Yes' onclick='isBoxChecked()'>"
-					+ "												<span class='custom-control-indicator'></span>"
+					+ "											<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>");
+					if (dum.isFiltered()) {
+						out.print("<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' checked onclick='isBoxChecked()'>");
+					}
+					else {
+						out.print("<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' onclick='isBoxChecked()'>");
+					}
+					out.print("										<span class='custom-control-indicator'></span>"
 					+ "												<span class='custom-control-description'>Filter by food preferences</span>"
 					+ "											</label>"
 					+ "											<p id='filterInfoText'>When you check this box, forum posts will be filtered according to your food preferences.</p>"
@@ -153,7 +164,8 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>"
+					+ "											<div id='bioInfoText'>Only a maximum of 255 characters.</div>"
 					+ "										</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
@@ -237,6 +249,9 @@ public class EditProfile extends HttpServlet {
 			String profilePicName = Paths.get(profilePicPart.getSubmittedFileName()).getFileName().toString();
 			byte[] profilePicByte = IOUtils.toByteArray(profilePicPart.getInputStream());
 			boolean updateProfileSuccess = false;
+			boolean contact_NoError = false;
+			boolean bioError = false;
+			boolean addressError = false;
 			
 			if (validateInputs(isFiltered, gender, contact_No, bio, address, unitNo)) {
 				if (isFiltered != null && !isFiltered.isEmpty()) {
@@ -248,32 +263,32 @@ public class EditProfile extends HttpServlet {
 				if (gender != null && !gender.isEmpty()) {
 					profileUpdate.setGender(gender);
 				}
-				else {
-					System.out.println("Nothing for gender");
-				}
 				if (contact_No != null && !contact_No.isEmpty()) {
-					profileUpdate.setContact_No(contact_No);
-				}
-				else {
-					System.out.println("Nothing for contact");
+					if (contact_No.length() == 8 && contact_No.matches("\\d+")) {
+						profileUpdate.setContact_No(contact_No);
+					}
+					else {
+						contact_NoError = true;
+					}
 				}
 				if (bio != null && !bio.isEmpty()) {
-					profileUpdate.setBio(bio);
-				}
-				else {
-					System.out.println("Nothing for bio");
+					if (bio.length() <= 255) {
+						profileUpdate.setBio(bio);
+					}
+					else {
+						bioError = true;
+					}
 				}
 				if (address != null && !address.isEmpty()) {
-					profileUpdate.setAddress(address);
-				}
-				else {
-					System.out.println("Nothing for address");
+					if (address.length() == 6 && address.matches("\\d+")) {
+						profileUpdate.setAddress(address);
+					}
+					else {
+						addressError = true;
+					}
 				}
 				if (unitNo != null && !unitNo.isEmpty()) {
 					profileUpdate.setUnitNo(unitNo);
-				}
-				else {
-					System.out.println("Nothing for unitNo");
 				}
 				if (profilePicName != null && !profilePicName.isEmpty()) {
 					profileUpdate.setProfilePicName(profilePicName);
@@ -288,7 +303,6 @@ public class EditProfile extends HttpServlet {
 				System.out.println("All has nothing");
 			}
 			DatabaseUserModel dum = db.getUserProfile(username);
-			System.out.println(dum.isFiltered());
 			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
@@ -328,14 +342,20 @@ public class EditProfile extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -382,9 +402,14 @@ public class EditProfile extends HttpServlet {
 								+ "</div>");
 					}
 					out.println("							<div id='filterDiv' class='divWrap'>"
-							+ "									<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>"
-							+ "										<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' value='Yes' onclick='isBoxChecked()'>"
-							+ "										<span class='custom-control-indicator'></span>"
+							+ "									<label id='filterLabel' class='custom-control custom-checkbox' for='checkFilter'>");
+					if (dum.isFiltered()) {
+						out.print("<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' checked onclick='isBoxChecked()'>");
+					}
+					else {
+						out.print("<input type='checkbox' id='checkFilter' class='custom-control-input' name='checkFilter' onclick='isBoxChecked()'>");
+					}
+							out.print("								<span class='custom-control-indicator'></span>"
 							+ "										<span class='custom-control-description'>Filter by food preferences</span>"
 							+ "									</label>"
 							+ "									<p id='filterInfoText'>When you check this box, forum posts will be filtered according to your food preferences.</p>"
@@ -404,17 +429,29 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + dum.getContact_No() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
-					+ "										</div>"
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + dum.getContact_No() + "' oninput='startedTyping(this), onlyNumbers(this)'>");
+					if (contact_NoError) {
+						out.print("<div class='errorMsg'>Only a maximum of 8 numbers.</div>");
+					}
+					out.print("								</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>"
-					+ "										</div>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>");
+					if (bioError) {
+						out.print("<div id='bioInfoText' style='color: #f74225; font-weight: 600;'>Only a maximum of 255 characters.</div>");
+					}
+					else {
+						out.print("<div id='bioInfoText'>Only a maximum of 255 characters.</div>");
+					}
+					out.print("								</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
 					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + dum.getAddress() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
-					+ "											</div>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + dum.getAddress() + "' oninput='startedTyping(this), onlyNumbers(this)'>");
+					if (addressError) {
+						out.print("<div class='errorMsg'>Only a maximum of 6 numbers.</div>");
+					}
+					out.print("									</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
 					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
 					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + dum.getUnitNo() + "' oninput='startedTyping(this)'>"

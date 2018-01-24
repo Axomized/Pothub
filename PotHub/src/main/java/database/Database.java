@@ -375,10 +375,10 @@ public class Database {
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
-			Timestamp donation_Date		= rs.getTimestamp("Donation_Date");
-			BigDecimal donation_Amount	= rs.getBigDecimal("Donation_Amount");
+			Timestamp donationDate		= rs.getTimestamp("DonationDate");
+			BigDecimal donationAmount	= rs.getBigDecimal("DonationAmount");
 			String onBehalf				= rs.getString("OnBehalf");
-			userDonationList.add(new DonationModel(donation_Date, donation_Amount, onBehalf));
+			userDonationList.add(new DonationModel(donationDate, donationAmount, onBehalf));
 		}
 		return userDonationList;
 	}
@@ -513,21 +513,19 @@ public class Database {
 			String iPAddress 		= rs.getString("IPAddress");
 			String logType 			= rs.getString("LogType");
 			String logActivity 		= rs.getString("LogActivity");
-			boolean isSuspicious 	= rs.getBoolean("IsSuspicious");
-			logsList.add(new LogsModel(iGN, logDate, iPAddress, logType, logActivity, isSuspicious));
+			logsList.add(new LogsModel(iGN, logDate, iPAddress, logType, logActivity));
 		}
 		return logsList;
 	}
 	
 	//For logs page
 	public void insertLogs(LogsModel lm) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Logs(IGN, LogDate, IPAddress, LogType, LogActivity, IsSuspcious) VALUES(?,?,?,?,?,?);");
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Logs(IGN, LogDate, IPAddress, LogType, LogActivity) VALUES(?,?,?,?,?);");
 		ppstmt.setString(1, lm.getiGN());
 		ppstmt.setTimestamp(2, lm.getLogDate());
 		ppstmt.setString(3, lm.getiPAddress());
 		ppstmt.setString(4, lm.getLogType());
 		ppstmt.setString(5, lm.getLogActivity());
-		ppstmt.setBoolean(6, lm.isSuspicious());
 		ppstmt.executeUpdate();
 	}
 	

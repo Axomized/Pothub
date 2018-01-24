@@ -78,7 +78,13 @@ public class Donation extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
@@ -102,7 +108,7 @@ public class Donation extends HttpServlet {
 					+ "							<div class='thatLine'></div>"
 					+ "							<div id='onBehalfCheckDiv'>"
 					+ "								<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
-					+ "									<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' onclick='showBehalfName()'>"
+					+ "									<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' onclick='showBehalfName()'>"
 					+ "									<span class='custom-control-indicator'></span>"
 					+ "  								<span class='custom-control-description'>Yes</span>"
 					+ "								</label>"
@@ -251,6 +257,7 @@ public class Donation extends HttpServlet {
 			String hashedPIN = hp.getHashedPIN(pinNo, salt);
 			boolean behalfNameError = false;
 			boolean donateAmtError = false;
+			boolean cardNameError = false;
 			boolean cardNoError = false;
 			boolean securityCodeError = false;
 			boolean fillInputError = false;
@@ -259,7 +266,7 @@ public class Donation extends HttpServlet {
 				db.deleteFromTempStore(username);
 				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
 					if (behalfName != null && !behalfName.isEmpty()) {
-						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
+						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (ccName.matches("^[a-zA-Z ]*$")) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);
@@ -277,6 +284,9 @@ public class Donation extends HttpServlet {
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;
 						}
+						if (!(ccName.matches("^[a-zA-Z ]*$"))) {
+							cardNameError = true;
+						}
 						if (!(vc.validateCCNo(ccNumber))) {
 							cardNoError = true;
 						}
@@ -285,7 +295,7 @@ public class Donation extends HttpServlet {
 						}
 					}
 					else {
-						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
+						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (ccName.matches("^[a-zA-Z ]*$")) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);
@@ -299,6 +309,9 @@ public class Donation extends HttpServlet {
 						}
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;
+						}
+						if (!(ccName.matches("^[a-zA-Z ]*$"))) {
+							cardNameError = true;
 						}
 						if (!(vc.validateCCNo(ccNumber))) {
 							cardNoError = true;
@@ -315,7 +328,7 @@ public class Donation extends HttpServlet {
 			else {
 				if (validateInputString(donateAmt, ccName, ccNumber, ccMonth, ccYear, securityCode)) {
 					if (behalfName != null && !behalfName.isEmpty()) {
-						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
+						if ((checkUserExists(behalfName, db) && (new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (ccName.matches("^[a-zA-Z ]*$")) && (vc.validateCCNo(ccNumber)) && (vc.validateCode(ccNumber, securityCode)))) {
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);
@@ -333,6 +346,9 @@ public class Donation extends HttpServlet {
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;
 						}
+						if (!(ccName.matches("^[a-zA-Z ]*$"))) {
+							cardNameError = true;
+						}
 						if (!(vc.validateCCNo(ccNumber))) {
 							cardNoError = true;
 						}
@@ -341,7 +357,7 @@ public class Donation extends HttpServlet {
 						}
 					}
 					else {
-						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
+						if ((new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0) && (ccName.matches("^[a-zA-Z ]*$")) && (vc.validateCCNo(ccNumber)) && vc.validateCode(ccNumber, securityCode)) {
 							tsm.setiGN(username);
 							tsm.setTemporaryAmount(new BigDecimal(donateAmt));
 							tsm.setTemporaryOnBehalf(behalfName);
@@ -355,6 +371,9 @@ public class Donation extends HttpServlet {
 						}
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;
+						}
+						if (!(ccName.matches("^[a-zA-Z ]*$"))) {
+							cardNameError = true;
 						}
 						if (!(vc.validateCCNo(ccNumber))) {
 							cardNoError = true;
@@ -407,14 +426,20 @@ public class Donation extends HttpServlet {
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
 					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+					+ "				<li class='dropdown'>"
+					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "					<ul class='dropdown-menu'>"
+					+ "						<li><a href='EventPage'>Events</a></li>"
+					+ "						<li><a href='MyEventPage'>My Events</a></li>"
+					+ "					</ul>"
+					+ "				</li>"
 					+ "				<li class='dropdown'>"
 					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
-					+ "			          <li><a href='#'>Active PotCasts</a></li>"
-					+ "			          <li><a href='#'>Start a PotCast</a></li>"
-					+ "			          <li><a href='#'>My PotCast</a></li>"
-					+ "			          <li><a href='#'>Joined PotCast</a></li>"
+					+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+					+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+					+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+					+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 					+ "			        </ul>"
 					+ "			      </li>"
 					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -432,7 +457,7 @@ public class Donation extends HttpServlet {
 					if (behalfNameError) {
 						out.print("<div id='onBehalfCheckDiv'>"
 								+ "	<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
-								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' checked onclick='showBehalfName()'>"
+								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' checked onclick='showBehalfName()'>"
 								+ "		<span class='custom-control-indicator'></span>"
 								+ "		<span class='custom-control-description'>Yes</span>"
 								+ "	</label>"
@@ -451,7 +476,7 @@ public class Donation extends HttpServlet {
 					else {
 						out.print("<div id='onBehalfCheckDiv'>"
 								+ "	<label id='yesLabel' class='custom-control custom-checkbox' for='checkYes'>"
-								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' value='Yes' onclick='showBehalfName()'>"
+								+ "		<input type='checkbox' id='checkYes' class='custom-control-input' name='checkYes' onclick='showBehalfName()'>"
 								+ "		<span class='custom-control-indicator'></span>"
 								+ "		<span class='custom-control-description'>Yes</span>"
 								+ "	</label>"
@@ -482,8 +507,11 @@ public class Donation extends HttpServlet {
 					+ "							<div id='nameInputDiv' class='flexDiv'>"
 					+ "								<div class='centerDiv'>"
 					+ "									<label id='nameLabel' class='inputLabel' for='nameInput'>Name</label>"
-					+ "									<input type='text' id='nameInput' name='nameInput' required>"
-					+ "								</div>"
+					+ "									<input type='text' id='nameInput' name='nameInput' required>");
+					if (cardNameError) {
+						out.print("<div class='errorMsg'>Only letters.</div>");
+					}
+					out.print("						</div>"
 					+ "							</div>"
 					+ "							<div id='cardInputDiv' class='flexDiv'>"
 					+ "								<div class='centerDiv'>"

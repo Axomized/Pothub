@@ -6,6 +6,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 
 public class ProfileUpdate {
 	private String iGN;
@@ -98,6 +99,7 @@ public class ProfileUpdate {
 		String updateQuery = "UPDATE DatabaseUser SET";
 		try {
 			Database db = new Database(2);
+			DatabaseUserModel dum = db.getUserProfile(iGN);
 			
 			if (isFiltered) {
 				updateQuery += " IsFiltered = '1',";
@@ -106,25 +108,27 @@ public class ProfileUpdate {
 				updateQuery += " IsFiltered = '0',";
 			}
 			
-			if (gender != null && !gender.isEmpty()) {
+			if ((gender != null && !gender.isEmpty()) && (gender.charAt(0) != dum.getGender())) {
 				if (gender.charAt(0) == 'M' || gender.charAt(0) == 'F') {
 					updateQuery += " Gender = '" + gender.charAt(0) + "',";
 				}
 			}
-			if (contact_No != null && !contact_No.isEmpty()) {
+			if ((contact_No != null && !contact_No.isEmpty()) && (!contact_No.equals(dum.getContact_No()))) {
 				updateQuery += " Contact_No = '" + contact_No + "',";
 			}
-			if (bio != null && !bio.isEmpty()) {
+			if ((bio != null && !bio.isEmpty()) && (!bio.equals(dum.getBio()))) {
 				updateQuery += " Bio = '" + bio + "',";
 			}
-			if (address != null && !address.isEmpty()) {
+			if ((address != null && !address.isEmpty()) && (!address.equals(dum.getAddress()))) {
 				updateQuery += " Address = '" + address + "',";
 			}
-			if (unitNo != null && !unitNo.isEmpty()) {
+			if ((unitNo != null && !unitNo.isEmpty()) && (!unitNo.equals(dum.getUnitNo()))) {
 				updateQuery += " UnitNo = '" + unitNo + "',";
 			}
-			if (profilePicName != null && !profilePicName.isEmpty() && profilePicByte != null) {
-				updateQuery += " ProfilePic = '" + db.addPictureWithDupeCheck(profilePicName, profilePicByte) + "',";
+			if ((profilePicName != null && !profilePicName.isEmpty()) && (profilePicByte != null)) {
+				if (db.addPictureWithDupeCheck(profilePicName, profilePicByte) != dum.getProfilePic()) {
+					updateQuery += " ProfilePic = '" + db.addPictureWithDupeCheck(profilePicName, profilePicByte) + "',";
+				}
 			}
 			
 			if (updateQuery.substring(updateQuery.length() -1).equals(",")) {

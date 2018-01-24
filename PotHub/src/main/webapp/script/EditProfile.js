@@ -38,7 +38,7 @@ function checkSelect() {
 
 function isBoxChecked() {
 	var checked = document.getElementById("checkFilter").checked;
-	if (checked == true) {
+	if (checked == true || checked == false) {
 		document.getElementById("updateBtn").disabled = false;
 		document.getElementById("updateBtn").style.cursor = "pointer";
 	}

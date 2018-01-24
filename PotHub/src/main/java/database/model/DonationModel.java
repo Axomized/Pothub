@@ -2,6 +2,8 @@ package database.model;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class DonationModel {
 	private int donationID;
@@ -66,5 +68,12 @@ public class DonationModel {
 
 	public void setOnBehalf(String onBehalf) {
 		this.onBehalf = onBehalf;
+	}
+	
+	public String converTimestamp(Timestamp timestamp) {
+		LocalDateTime datetime = timestamp.toLocalDateTime();
+		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
+		String dateString = datetime.format(format);
+		return dateString;
 	}
 }
