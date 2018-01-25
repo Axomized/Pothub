@@ -1,9 +1,6 @@
 package event;
 
 import java.io.IOException;
-import java.sql.SQLException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -13,53 +10,45 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 
-public class ShowBarcode extends HttpServlet {
+public class OwnerLeaderboardPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+       
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		final HttpSession SESSION = request.getSession(false);
-		
-		String username = "";
-		String eventName = "";
-		if(SESSION != null) {
-			username = (String)SESSION.getAttribute("username");
-			eventName = (String)SESSION.getAttribute("EventName");
-	    }else {
-	    	response.sendRedirect("/PotHub/Login");
-	    }
-        
 		try {
-			Database DB = new Database(0);
-			ArrayList<String[]> alsa = new ArrayList<String[]>();
-			alsa = DB.getPeopleEventListConfirm(DB.getEventIDFromEventName(eventName));
-			for(String[] s: alsa) {
-				if(s[0].equals(username)) {
-					if(Boolean.parseBoolean(s[1])) {
-						response.sendRedirect("/PotHub/ParticipantLeaderboardPage");
-					}
-				}
-			}
-			
+			String username = "";
+			String eventName = "";
+	        HttpSession session = request.getSession(false);
+	        if (session != null) {
+	            username = (String)session.getAttribute("username");
+	            eventName = (String)session.getAttribute("EventName");
+	        }
+	        else {
+	            response.sendRedirect("/PotHub/Login");
+	        }
+	        
+	        final Database DB = new Database(0);
+	        
 	        ServletOutputStream out = response.getOutputStream();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<!DOCTYPE html>");
 			sb.append("<html>");
 			sb.append("	<head>");
 			sb.append("		<meta charset='UTF-8'>");
-			sb.append("		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>");
+			sb.append("		<meta name='viewport' content='width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1'>");
+			sb.append("		<title>The Streamer</title>");
 			sb.append("		<!-- Favicon -->");
 			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.gif' type='image/gif'>");
 			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.png?v=2' type='image/x-icon'>");
 			sb.append("		<!-- Page Title -->");
-			sb.append("		<title>Barcode</title>");
+			sb.append("		<title>Default Title</title>");
 			sb.append("		<!-- Latest compiled and CSS -->");
 			sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 			sb.append("		<!-- Optional theme -->");
 			sb.append("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
 			sb.append("		<!-- My Style Sheet -->");
-			sb.append("		<link rel='stylesheet' type='text/css' href='css/ShowBarcode.css' />");
+			sb.append("		<link rel='stylesheet' type='text/css' href='css/VideoOwner.css' />");
 			sb.append("	</head>");
-			sb.append("	<body onload=\"connect('" + username + "')\">");
+			sb.append("	<body onload=\"connect('" + username + "', '" + eventName + "')\">");
 			sb.append("		<!--  Navigation Bar -->");
 			sb.append("		<div id='header'>");
 			sb.append("			<div id='companyTitle'>");
@@ -100,33 +89,62 @@ public class ShowBarcode extends HttpServlet {
 			sb.append("				</ul>");
 			sb.append("		</div>");
 			sb.append("		<div id='wrapper'>");
-			sb.append("			<img src='/PotHub/GenerateBarcode'>");
+			sb.append("			<div>");
+			sb.append("				<button id='backToBarcodeBtn' class='btn btn-warning'>Barcode Scanning</button>");
+			sb.append("				<button id='startStreamingBtn' class='btn btn-success'>Start Streaming</button>");
+			sb.append("				<button id='startVotingBtn' class='btn btn-info'>Start Voting</button>");
+			sb.append("				<!--  <button id='changePointBtn' class='btn btn-primary'>Change current score</button>  -->");
+			sb.append("				<button id='endBtn' class='btn btn-danger'>End Event</button>");
+			sb.append("			</div>");
+			sb.append("			<div id='videoDiv'></div>");
+			sb.append("			<div id='voteDiv' class='row'>");
+			
+			final int EVENTID = DB.getEventIDFromEventName(eventName);
+			for(String[] s: DB.getPeopleEventListConfirm(EVENTID)) {
+				if(Boolean.parseBoolean(s[1])) {
+					sb.append("				<div class='voteDivContent'>");
+					
+					final String FILENAME = DB.getUserProfilePic(s[0]);
+					if(FILENAME == null || FILENAME.isEmpty()) {
+						sb.append("					<img src='/PotHub/images/cat.png' alt='Users Profile Picture' width='50' height='50'>");
+					}else {
+						sb.append("					<img src='/PotHub/Image/" + FILENAME + "' alt='Users Profile Picture' width='50' height='50'>");
+					}
+					sb.append("					<p>" + s[0] + "</p>");
+					sb.append("				</div>");
+				}
+			}
+			
+			
+			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='footer'>");
 			sb.append("			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>");
 			sb.append("			<p>We like food</p>");
 			sb.append("			<p>");
-			sb.append("				<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a");
-			sb.append("					href='#'>Support</a>");
+			sb.append("				<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>");
 			sb.append("			</p>");
 			sb.append("		</div>");
 			sb.append("		");
-			sb.append("		<!-- Latest compiled minified SockJS Script -->");
+			sb.append("	  	<!-- Latest compiled minified Jquery Script -->");
+			sb.append("	    <script src='https://code.jquery.com/jquery-3.2.1.min.js' integrity='sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=' crossorigin='anonymous'></script>");
+			sb.append("	    <!-- Latest compiled minified SockJS Script -->");
 			sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js'></script>");
 			sb.append("	    <!-- Latest compiled minified STOMP Script -->");
 			sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js'></script>");
-			sb.append("		<!-- Optional Scripts for Bootstrap -->");
-			sb.append("		<script src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>");
-			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>");
-			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>");
-			sb.append("		<!-- My Own Script -->");
-			sb.append("		<script src='script/ShowBarcode.js'></script>");
+			sb.append("	    <!-- RTCMultiConnection -->");
+			sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js'></script>");
+			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
+			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
+			sb.append("	    <!-- My Own Script -->");
+			sb.append("	    <script src='script/VideoOwner.js'></script>");
+			sb.append("	  	<script src='script/VideoParticipant.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
 			out.write(sb.toString().getBytes());
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			
+			out.close();
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}

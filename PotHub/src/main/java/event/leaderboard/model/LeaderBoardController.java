@@ -46,6 +46,9 @@ public class LeaderBoardController {
     			UpdatingScore us3 = new UpdatingScore(message.getUserToDisplay(), new BigDecimal(-3));
     			al3.add(us3);
     			return al3;
+    		case "Clear":
+    			UserScore.resetScore();
+    			return null;
     		case "End":
     			ArrayList<UpdatingScore> al4 = new ArrayList<UpdatingScore>();
     			UpdatingScore us4 = new UpdatingScore(message.getUserToDisplay(), new BigDecimal(-4));
@@ -56,9 +59,9 @@ public class LeaderBoardController {
     	}
     }
     
-    @MessageMapping("/register/{topic}")
-    @SendTo("/topic/{topic}")
-    public ArrayList<LeaderboardDetail> registerFood(@DestinationVariable("topic") String topic, LeaderboardDetail message) throws Exception {
+    @MessageMapping("/register/{topic}/{iGN}")
+    @SendTo("/topic/{topic}/{iGN}")
+    public ArrayList<LeaderboardDetail> registerFood(@DestinationVariable("topic") String topic, @DestinationVariable("iGN") String iGN, LeaderboardDetail message) throws Exception {
     	LeaderboardDetail lBD = new LeaderboardDetail(message.getiGN(), message.getTitle(), message.getDesc(), message.getTotalScore());
     	lBD = UserScore.insertUserFoodDetails(lBD);
     	lBD.setScore(-5);
@@ -67,9 +70,9 @@ public class LeaderBoardController {
     	return allbd;
     }
     
-    @MessageMapping("/register2/{topic}")
-    @SendTo("/topic/{topic}")
-    public ArrayList<LeaderboardDetail> register2Food(@DestinationVariable("topic") String topic, String message) throws Exception {
+    @MessageMapping("/register2/{topic}/{iGN}")
+    @SendTo("/topic/{topic}/{iGN}")
+    public ArrayList<LeaderboardDetail> register2Food(@DestinationVariable("topic") String topic, @DestinationVariable("iGN") String iGN, String message) throws Exception {
     	LeaderboardDetail lBD = new LeaderboardDetail();
     	lBD = UserScore.getUserFoodDetails(message);
     	lBD.setScore(-6);

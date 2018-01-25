@@ -81,7 +81,7 @@ function onSuccessScanning(barcodeResult){
 }
 
 function stopRecording(){
-	window.location.href = "/PotHub/html/VideoOwner.html";
+	window.location.href = "/PotHub/OwnerLeaderboardPage";
 }
 
 xhttp.onreadystatechange = function aaa() {

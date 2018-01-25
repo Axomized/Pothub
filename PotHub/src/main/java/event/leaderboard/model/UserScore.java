@@ -2,6 +2,8 @@ package event.leaderboard.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.TreeMap;
@@ -83,6 +85,14 @@ public class UserScore {
 			}
 		}
 		lock.unlockRead();
+		
+		// Sort to highest score first
+		Collections.sort(alups, new Comparator<UpdatingScore>(){
+			@Override
+			public int compare(UpdatingScore o1, UpdatingScore o2) {
+				return o2.getScore().compareTo(o1.getScore());
+			}
+		});
 		
 		return alups;
 	}
@@ -183,6 +193,15 @@ public class UserScore {
 			e.printStackTrace();
 		}
 		return lBD;
+	}
+	
+	public static void resetScore() throws InterruptedException {
+		lock.lockWrite();
+		
+		userTotalScore.clear();
+		userTotalNumber.clear();
+		
+		lock.unlockWrite();
 	}
 	
 	public String toString() {

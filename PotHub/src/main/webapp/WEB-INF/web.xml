@@ -5,6 +5,12 @@
 <web-app>
 	<display-name>Archetype Created Web Application</display-name>
 	<servlet>
+		<servlet-name>OwnerLeaderboardPage</servlet-name>
+		<display-name>OwnerLeaderboardPage</display-name>
+		<description></description>
+		<servlet-class>event.OwnerLeaderboardPage</servlet-class>
+	</servlet>
+	<servlet>
 		<servlet-name>EventPage</servlet-name>
 		<display-name>EventPage</display-name>
 		<description></description>
@@ -367,6 +373,10 @@
 	<servlet-mapping>
 		<servlet-name>DonationSuccess</servlet-name>
 		<url-pattern>/DonationSuccess</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>OwnerLeaderboardPage</servlet-name>
+		<url-pattern>/OwnerLeaderboardPage</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
 		<servlet-name>VerifyRecaptcha</servlet-name>

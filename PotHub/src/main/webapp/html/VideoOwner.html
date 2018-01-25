@@ -1,28 +1,104 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="utf-8">
+		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1">
 		<title>The Streamer</title>
-		<style>
-			#localVideo {
-				width: 300px;
-				height: 300px;
-				position: absolute;
-				bottom: 15px;
-				right: 15px;
-			}
-		</style>
+		<!-- Favicon -->
+		<link rel="icon" href="https://localhost/PotHub/images/crab.gif" type="image/gif">
+		<link rel="icon" href="https://localhost/PotHub/images/crab.png?v=2" type="image/x-icon">
+		<!-- Page Title -->
+		<title>Default Title</title>
+		<!-- Latest compiled and CSS -->
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+		<!-- Optional theme -->
+		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
+		<!-- My Style Sheet -->
+		<link rel="stylesheet" type="text/css" href="../css/VideoOwner.css" />
 	</head>
-	<body onload="connect('Poof', 'Tea Party')">
-		<div>
-			<button id="backToBarcodeBtn">Barcode Scanning</button>
-			<button id="startStreamingBtn">Start Streaming</button>
-			<button id="startVotingBtn">Start Voting</button>
-			<button id="changePointBtn">Change current score</button>
-			<button id="endBtn">End Event</button>
+	<body onload="connect('JackieChan', 'Tea Party')">
+		<!--  Navigation Bar -->
+		<div id="header">
+			<div id="companyTitle">
+				<p>PotHub</p>
+			</div>
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()" onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
+					<img src="../images/profile.png" height="50" width="50"/>
+					<span id="welcomeSpan">Welcome, [Placeholder]</span>
+				</div>
+				<div id="profileDropdownDiv">
+					<a href="/PotHub/Profile">Profile</a>
+					<a href="/PotHub/Login">Logout</a>
+				</div>
+			</div>
 		</div>
-		<div id="videoDiv"></div>
+		<div id="navigation">
+			<ul>
+				<li id="lhome"><a href="/PotHub/Forum">Home</a></li>
+				<li id="lprivatemessage"><a href="#01">Private Message</a></li>
+				<li class="dropdown">
+		        	<a class="dropdown-toggle" data-toggle="dropdown" href="#">Event</a>
+			        <ul class="dropdown-menu">
+			        	<li><a href="/PotHub/EventPage">Events</a></li>
+		        		<li><a href="/PotHub/MyEventPage">My Events</a></li>
+			        </ul>
+		    	</li>
+				<li class="dropdown">
+			        <a class="dropdown-toggle" data-toggle="dropdown" href="#">Potcast</a>
+			        <ul class="dropdown-menu">
+			          <li><a href="#">Active PotCasts</a></li>
+			          <li><a href="#">Start a PotCast</a></li>
+			          <li><a href="#">My PotCast</a></li>
+			          <li><a href="#">Joined PotCast</a></li>
+			        </ul>
+			      </li>
+				<li id="ldonate"><a href="Donation.html">Donate</a></li>
+			</ul>
+		</div>
+		<div id="wrapper">
+			<div>
+				<button id="backToBarcodeBtn" class="btn btn-warning">Barcode Scanning</button>
+				<button id="startStreamingBtn" class="btn btn-success">Start Streaming</button>
+				<button id="startVotingBtn" class="btn btn-info">Start Voting</button>
+				<!--  <button id="changePointBtn" class="btn btn-primary">Change current score</button>  -->
+				<button id="endBtn" class="btn btn-danger">End Event</button>
+			</div>
+			<div id="videoDiv"></div>
+			<div id="voteDiv" class="row">
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+				<div class="voteDivContent">
+					<img src="../images/cat.png" width="50" height="50">
+					<p>Cat</p>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>
+			<p>We like food</p>
+			<p>
+				<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
+			</p>
+		</div>
 		
 	  	<!-- Latest compiled minified Jquery Script -->
 	    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>

@@ -2,7 +2,7 @@ var stompClient = null, iGN, eventName, currentScore;
 
 function connect(username, topic) {
 	iGN = username;
-	eventName = encodeURI(topic);
+	eventName = topic;
     var socket = new SockJS("https://localhost:8443/ARandomName");
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function aaa() {
@@ -27,7 +27,7 @@ $(document).ready(function aaa(){
 			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
 				"messageType": "Show", "userToDisplay": iGN
 			}));
-			connectToStream(iGN, eventName);
+			connectToStream(eventName, iGN);
 			$(this).text("Stop Streaming");
 			$("#videoDiv").show();
 			start = false;
@@ -41,14 +41,26 @@ $(document).ready(function aaa(){
 		}
 	});
 	
+	var open = false;
 	$("#startVotingBtn").click(function aaa() {
-		stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
-			"messageType": "Push", "userToDisplay": iGN
-		}));
+		if(open){
+			$("#voteDiv").hide();
+			open = false;
+		}else{
+			$("#voteDiv").show();
+			open = true;
+		}
+	});
+	
+	$(".voteDivContent").click(function aaa() {
+		var iGN = $(this).children().eq(1).text();
+		if(confirm("Prompt voting on " + iGN + "?")){
+			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "Push", "userToDisplay": iGN}));
+		}
 	});
 	
 	$("#changePointBtn").click(function aaa() {
-		
+		stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "Clear", "userToDisplay": iGN}));
 	});
 	
 	$("#endBtn").click(function aaa() {

@@ -6,6 +6,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
@@ -39,6 +40,7 @@ public class EventofEventPage extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	String nameOfEvent = encodeString(request.getPathInfo().substring(1));
     	try {
+    		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
 			//Check session whether the user got login in
 			String username = "";
@@ -85,33 +87,33 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
-			sb.append("					<a href='Profile.html'>Profile</a>");
-			sb.append("					<a href='LoginPage.html'>Logout</a>");
+			sb.append("					<a href='/PotHub/Profile'>Profile</a>");
+			sb.append("					<a href='/PotHub/Logout'>Logout</a>");
 			sb.append("				</div>");
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='navigation'>");
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul class='nav navbar-nav'>");
-			sb.append("					<li id='lhome'><a href='Forum.html'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='PrivateMesage.html'>Private Message</a></li>");
+			sb.append("					<li id='lhome'><a href='/PotHub/Forum'>Home</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
-			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
-			sb.append("				        <ul class='dropdown-menu'>");
-			sb.append("				        	<li><a href='/PotHub/EventPage'>Events</a></li>");
-			sb.append("				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
-			sb.append("				        </ul>");
-			sb.append("			    	</li>");
+			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+			sb.append("			        	<ul class='dropdown-menu'>");
+			sb.append("			        		<li><a href='/PotHub/EventPage'>Events</a></li>");
+			sb.append("		        			<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
+			sb.append("			        	</ul>");
+			sb.append("		    		</li>");
 			sb.append("					<li class='dropdown'>");
-			sb.append("				        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>");
-			sb.append("				        <ul class='dropdown-menu'>");
-			sb.append("				          <li><a href='#'>Active PotCasts</a></li>");
-			sb.append("				          <li><a href='#'>Start a PotCast</a></li>");
-			sb.append("				          <li><a href='#'>My PotCast</a></li>");
-			sb.append("				          <li><a href='#'>Joined PotCast</a></li>");
-			sb.append("				        </ul>");
-			sb.append("				      </li>");
-			sb.append("					<li id='ldonate'><a href='Donation.html'>Donate</a></li>");
+			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
+			sb.append("			        	<ul class='dropdown-menu'>");
+			sb.append("			          		<li><a href='/PotHub/p2plist'>Active PotCasts</a></li>");
+			sb.append("			          		<li><a href='/PotHub/p2preg'>Start a PotCast</a></li>");
+			sb.append("			         	 	<li><a href='/PotHub/p2pmy'>My PotCast</a></li>");
+			sb.append("			          		<li><a href='/PotHub/p2pjoined'>Joined PotCast</a></li>");
+			sb.append("			        	</ul>");
+			sb.append("			      	</li>");
+			sb.append("					<li id='ldonate'><a href='/PotHub/Donation'>Donate</a></li>");
 			sb.append("				</ul>");
 			sb.append("			</div>");
 			sb.append("		</div>");
@@ -175,7 +177,7 @@ public class EventofEventPage extends HttpServlet {
 				for(String s:guestArray) {
 					sb.append("							<div>");
 					if(db.getUserProfilePic(s) != null)
-						sb.append("								<img src='/PotHub/Image/" + db.getUserProfilePic(s) + "' alt='Guest's Profile Picture' height='50' width='50'><br>");
+						sb.append("								<img src='/PotHub/Image/" + db.getUserProfilePic(s) + "' alt='Guests Profile Picture' height='50' width='50'><br>");
 					else
 						sb.append("								<img src='/PotHub/images/cat.png' alt='crab picture' height='50' width='50'><br>");
 					sb.append("								<p>" + decodeString(s) + "</p>");
@@ -209,7 +211,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("							<p>" + parts[0] + "</p>");
 			sb.append("							<p>" + parts[1] + "</p><br>");
 			sb.append("							<p><b>Date and Time</b></p>");
-			sb.append("							<p>" + eM.getDate() + "</p>");
+			sb.append("							<p>" + dateFormat.format(eM.getDate()) + "</p>");
 			sb.append("						</div>");
 			sb.append("					</div>");
 			sb.append("				</div>");

@@ -25,7 +25,7 @@ public class MyEventPage extends HttpServlet {
 
     public void init(ServletConfig config) throws ServletException{
     	try {
-			db = new Database(0);
+			db = new Database(2);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
@@ -60,7 +60,7 @@ public class MyEventPage extends HttpServlet {
 		sb.append("		<!--  Navigation Bar -->");
 		sb.append("		<div id='header'>");
 		sb.append("			<div id='companyTitle'>");
-		sb.append("				<h1>PotHub</h1>");
+		sb.append("				<p>PotHub</p>");
 		sb.append("			</div>");
 		sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 		sb.append("				<div id='profilePic'>");
@@ -68,33 +68,33 @@ public class MyEventPage extends HttpServlet {
 		sb.append("					<span id='welcomeSpan'>Welcome, [Placeholder]</span>");
 		sb.append("				</div>");
 		sb.append("				<div id='profileDropdownDiv'>");
-		sb.append("					<a href='Profile.html'>Profile</a>");
-		sb.append("					<a href='LoginPage.html'>Logout</a>");
+		sb.append("					<a href='/PotHub/Profile'>Profile</a>");
+		sb.append("					<a href='/PotHub/Logout'>Logout</a>");
 		sb.append("				</div>");
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("		<div id='navigation'>");
-		sb.append("			<ul>");
-		sb.append("				<li id='lhome'><a href='Forum.html'>Home</a></li>");
-		sb.append("				<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
-		sb.append("				<li class='dropdown'>");
-		sb.append("		        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
-		sb.append("			        <ul class='dropdown-menu'>");
-		sb.append("			        	<li><a href='/PotHub/EventPage'>Events</a></li>");
-		sb.append("			        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
-		sb.append("			        </ul>");
-		sb.append("		    	</li>");
-		sb.append("				<li class='dropdown'>");
-		sb.append("			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
-		sb.append("			        <ul class='dropdown-menu'>");
-		sb.append("			          <li><a href='#'>Active PotCasts</a></li>");
-		sb.append("			          <li><a href='#'>Start a PotCast</a></li>");
-		sb.append("			          <li><a href='#'>My PotCast</a></li>");
-		sb.append("			          <li><a href='#'>Joined PotCast</a></li>");
-		sb.append("			        </ul>");
-		sb.append("			     </li>");
-		sb.append("				<li id='ldonate'><a href='Donation.html'>Donate</a></li>");
-		sb.append("			</ul>");
+		sb.append("				<ul class='nav navbar-nav'>");
+		sb.append("					<li id='lhome'><a href='/PotHub/Forum'>Home</a></li>");
+		sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
+		sb.append("					<li class='dropdown'>");
+		sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+		sb.append("			        	<ul class='dropdown-menu'>");
+		sb.append("			        		<li><a href='/PotHub/EventPage'>Events</a></li>");
+		sb.append("		        			<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
+		sb.append("			        	</ul>");
+		sb.append("		    		</li>");
+		sb.append("					<li class='dropdown'>");
+		sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
+		sb.append("			        	<ul class='dropdown-menu'>");
+		sb.append("			          		<li><a href='/PotHub/p2plist'>Active PotCasts</a></li>");
+		sb.append("			          		<li><a href='/PotHub/p2preg'>Start a PotCast</a></li>");
+		sb.append("			         	 	<li><a href='/PotHub/p2pmy'>My PotCast</a></li>");
+		sb.append("			          		<li><a href='/PotHub/p2pjoined'>Joined PotCast</a></li>");
+		sb.append("			        	</ul>");
+		sb.append("			      	</li>");
+		sb.append("					<li id='ldonate'><a href='/PotHub/Donation'>Donate</a></li>");
+		sb.append("				</ul>");
 		sb.append("		</div>");
 		sb.append("		<div id='popup-container'>");
 		sb.append("			<div id='popup'>");
@@ -118,8 +118,13 @@ public class MyEventPage extends HttpServlet {
 		
 		ArrayList<EventModel> eMAL;
 		try {
-			HttpSession session = request.getSession(false);
-    		String currentIGN = (String)session.getAttribute("username");
+			final HttpSession SESSION = request.getSession(false);
+			String username = "";
+			if(SESSION != null) {
+				username = (String)SESSION.getAttribute("username");
+			}else {
+				response.sendRedirect("/PotHub/Login");
+			}
     		
 			eMAL = db.getEventModelForMyEventPage();
 			
@@ -127,66 +132,74 @@ public class MyEventPage extends HttpServlet {
 				String eventName = eM.getEventName();
 				String[] parts = decodeString(eM.getVenue()).split("\\`");
 				
-				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(\"" + db.getUserPriviledge(eM.getiGN()) + "\")'>Create Event</button>");
-				sb.append("			<div id='content-container'>");
-				sb.append("		<div class='content'>");
-				sb.append("			<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='crab picture'>");
-				sb.append("			<div class='row front-container'>");
-				sb.append("				<div class='title'>");
-				sb.append("					<div class='hostedOrNot'>");
-				sb.append("						<p><b>" + hostOrNot(eM.getiGN(), currentIGN)+ "</b></p>");
-				sb.append("					</div>");
-				sb.append("					<p>" + decodeString(eM.getEventName()) + "</p>");
-				sb.append("				</div>");
-				sb.append("				<div class='timeleft'>");
-				
 				if(eM.getStatus().equals("E")) {
-					System.out.println(eM.getStatus());
-					sb.append("				<p class='time'>Ended</p>");
-				}else{
-					System.out.println(eM.getStatus());
-					sb.append("				<p class='time'>" + getRemaining(eM.getDate()) + "</p>");
+					if(System.currentTimeMillis() - eM.getDate().getTime() > 86400000) {
+						db.setEventStatus(eventName, "Z");
+					}
 				}
 				
-				sb.append("				</div>");
-				sb.append("			</div>");
-				sb.append("			<div class='row back-container' onclick='redirectPage(\"" + eventName + "\")'>");
-				sb.append("				<div class='event-layout-title'>");
-				sb.append("					<p>" + decodeString(eventName) + "</p>");
-				sb.append("					<hr>");
-				sb.append("				</div>");
-				sb.append("				<div class='event-layout-desc'>");
-				sb.append("					<p><b>Description</b></p>");
-				sb.append("					<p>" + decodeString(eM.getDescription()) + "</p>");
-				sb.append("				</div>");
-				sb.append("				<div class='event-layout-location'>");
-				sb.append("					<p><b>Location</b></p>");
-				sb.append("					<p>" + parts[0] + ", " + parts[1] + "</p>");
-				sb.append("				</div>");
+				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(\"" + db.getUserPriviledge(eM.getiGN()) + "\")'>Create Event</button>");
+				sb.append("			<div id='content-container'>");
 				
-				if(!eM.getGuestArray().isEmpty()) {
-					sb.append("			<div class='event-layout-guest'>");
-					sb.append("				<div>");
-					sb.append("					<p><b>Guest</b></p>");
+				if(!eM.getStatus().equals("Z") && System.currentTimeMillis() - eM.getDate().getTime() < 86400000) {
+					sb.append("		<div class='content'>");
+					sb.append("			<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='crab picture'>");
+					sb.append("			<div class='row front-container'>");
+					sb.append("				<div class='title'>");
+					sb.append("					<div class='hostedOrNot'>");
+					sb.append("						<p><b>" + hostOrNot(eM.getiGN(), username)+ "</b></p>");
+					sb.append("					</div>");
+					sb.append("					<p>" + decodeString(eM.getEventName()) + "</p>");
+					sb.append("				</div>");
+					sb.append("				<div class='timeleft'>");
+					
+					if(eM.getStatus().equals("E")) {
+						sb.append("				<p class='time'>Ended</p>");
+					}else if(eM.getStatus().equals("H") || eM.getStatus().equals("O")){
+						sb.append("				<p class='time'>" + getRemaining(eM.getDate()) + "</p>");
+					}
+					
+					sb.append("				</div>");
+					sb.append("			</div>");
+					sb.append("			<div class='row back-container' onclick='redirectPage(\"" + eventName + "\")'>");
+					sb.append("				<div class='event-layout-title'>");
+					sb.append("					<p>" + decodeString(eventName) + "</p>");
+					sb.append("					<hr>");
+					sb.append("				</div>");
+					sb.append("				<div class='event-layout-desc'>");
+					sb.append("					<p><b>Description</b></p>");
+					sb.append("					<p>" + decodeString(eM.getDescription()) + "</p>");
+					sb.append("				</div>");
+					sb.append("				<div class='event-layout-location'>");
+					sb.append("					<p><b>Location</b></p>");
+					sb.append("					<p>" + parts[0] + ", " + parts[1] + "</p>");
 					sb.append("				</div>");
 					
-					for(String s:eM.getGuestArray()) {
-						sb.append("			<div class='event-layout-guest-guest'>");
+					if(!eM.getGuestArray().isEmpty()) {
+						sb.append("			<div class='event-layout-guest'>");
+						sb.append("				<div>");
+						sb.append("					<p><b>Guest</b></p>");
+						sb.append("				</div>");
 						
-						String fileName = db.getUserProfilePic(s);
-						if(fileName != null) {
-							sb.append("			<img src='/PotHub/Image/" + fileName + "' alt='cat picture' height='50' width='50'><br>");
-						}else {
-							sb.append("			<img src='images/cat.png' alt='cat picture' height='50' width='50'><br>");
+						for(String s:eM.getGuestArray()) {
+							sb.append("			<div class='event-layout-guest-guest'>");
+							
+							String fileName = db.getUserProfilePic(s);
+							if(fileName != null) {
+								sb.append("			<img src='/PotHub/Image/" + fileName + "' alt='cat picture' height='50' width='50'><br>");
+							}else {
+								sb.append("			<img src='images/cat.png' alt='cat picture' height='50' width='50'><br>");
+							}
+							
+							sb.append("				<p>" + decodeString(s) + "</p>");
+							sb.append("			</div>");
 						}
-						
-						sb.append("				<p>" + decodeString(s) + "</p>");
 						sb.append("			</div>");
 					}
+					
 					sb.append("			</div>");
 				}
 				
-				sb.append("			</div>");
 				sb.append("		</div>");
 			}
 		} catch (SQLException e) {

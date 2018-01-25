@@ -6,44 +6,21 @@ var iceServer = [];
 
 // Starts connection to socket
 function startConnection(){
-	var polling = setInterval(function() {
-		connection.connect(roomID);
-	}, 3000);
-	
 	var connection = new RTCMultiConnection();
 	
 	connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
 
-	connection.autoCloseEntireSession = true;
-	
-	connection.codecs.video = "H264";
-	var stunServer = {url: "stun:119.74.135.44:6666"};
-	var iceServers = [stunServer];
-	for(var i=0;i<iceServer.length;i++){
-		iceServers.push(iceServer.i);
-	}
-
-	connection.iceServers = iceServers;
-	
-	connection.session = {audio: true,video: true,oneway: true};
-	
 	connection.sdpConstraints.mandatory = {
-	    OfferToReceiveAudio: false,
-	    OfferToReceiveVideo: false
+			"OfferToReceiveAudio": false,
+			"OfferToReceiveVideo": false
 	};
 	
 	connection.userid = localUsername;
-	connection.checkPresence(roomID, function(isRoomEists, roomID) {
-		if(isRoomEists) {
-			connection.join(roomID, function(){});
-		}
-		else {
-			console.log(roomID + " Room not opened yet.");
-		}
-	});
+	connection.videosContainer = document.getElementById("videos-container");
+
+	connection.join(roomID);
 	
-	connection.onstream = function(event){
-		$("#videoDiv").show();
+	connection.onstream = function aaa(event) {
 		var video = event.mediaElement;
 		video.autoplay = true;
 		video.controls = false;
@@ -63,8 +40,9 @@ function startConnection(){
 		
 		connection.onstreamended = function () {
 			$("#videoDiv").children().remove();
+			window.videoDiv.hide();
 		};
-	}
+	};
 }
 
 function connectToStream(username, topic){

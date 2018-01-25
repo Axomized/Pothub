@@ -116,33 +116,33 @@ public class EventPage extends HttpServlet {
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
-			sb.append("					<a href='Profile.html'>Profile</a>");
-			sb.append("					<a href='Login'>Logout</a>");
+			sb.append("					<a href='/PotHub/Profile'>Profile</a>");
+			sb.append("					<a href='/PotHub/Logout'>Logout</a>");
 			sb.append("				</div>");
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='navigation'>");
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul class='nav navbar-nav'>");
-			sb.append("					<li id='lhome'><a href='Forum.html'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='PrivateMesage.html'>Private Message</a></li>");
+			sb.append("					<li id='lhome'><a href='/PotHub/Forum'>Home</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
-			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
-			sb.append("				        	<li><a href='/PotHub/EventPage'>Events</a></li>");
-			sb.append("				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
+			sb.append("			        		<li><a href='/PotHub/EventPage'>Events</a></li>");
+			sb.append("		        			<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
 			sb.append("			        	</ul>");
-			sb.append("			    	</li>");
+			sb.append("		    		</li>");
 			sb.append("					<li class='dropdown'>");
-			sb.append("				        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>");
-			sb.append("				        <ul class='dropdown-menu'>");
-			sb.append("				          <li><a href='#'>Active PotCasts</a></li>");
-			sb.append("				          <li><a href='#'>Start a PotCast</a></li>");
-			sb.append("				          <li><a href='#'>My PotCast</a></li>");
-			sb.append("				          <li><a href='#'>Joined PotCast</a></li>");
-			sb.append("				        </ul>");
-			sb.append("				      </li>");
-			sb.append("					<li id='ldonate'><a href='Donation.html'>Donate</a></li>");
+			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
+			sb.append("			        	<ul class='dropdown-menu'>");
+			sb.append("			          		<li><a href='/PotHub/p2plist'>Active PotCasts</a></li>");
+			sb.append("			          		<li><a href='/PotHub/p2preg'>Start a PotCast</a></li>");
+			sb.append("			         	 	<li><a href='/PotHub/p2pmy'>My PotCast</a></li>");
+			sb.append("			          		<li><a href='/PotHub/p2pjoined'>Joined PotCast</a></li>");
+			sb.append("			        	</ul>");
+			sb.append("			      	</li>");
+			sb.append("					<li id='ldonate'><a href='/PotHub/Donation'>Donate</a></li>");
 			sb.append("				</ul>");
 			sb.append("			</div>");
 			sb.append("		</div>");
@@ -156,7 +156,7 @@ public class EventPage extends HttpServlet {
 	    			continue;
 	    		}
 	    		
-	    		if(eM.getStatus().equals("E")) {
+	    		if(eM.getStatus().equals("E") || eM.getStatus().equals("Z")) {
 	    			continue;
 	    		}
 	    		
@@ -231,7 +231,7 @@ public class EventPage extends HttpServlet {
 				
 				String fileName = db.getUserProfilePic(iGN);
 				if(fileName != null) {
-					sb.append("						<img src='/PotHub/Image/" + fileName + "' alt='User\'s Profile Picture'>");
+					sb.append("						<img src='/PotHub/Image/" + fileName + "' alt='Users Profile Picture'>");
 				}else {
 					sb.append("						<img src='images/cat.png' alt='cat picture'>");
 				}

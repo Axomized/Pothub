@@ -1,4 +1,4 @@
-var stompClient = null, iGN, eventName, currentArray = [];
+var stompClient = null, iGN, eventName, currentArray = [], videoDiv = $("#videoDiv");
 
 function stompDisconnect () {
 	if (stompClient !== null) {
@@ -105,7 +105,7 @@ $("#starBlackBackground").click(function aaa(e) {
 
 $("#voteBtn").click(function aaa () {
 	var userFrom = iGN;
-	var userTo = $("#userIGN").text();
+	var userTo = $("#popupIGN").text();
 	var score = $("#starNum").val();
 	var topic = eventName;
 	sendVote(userFrom, userTo, score, topic);
@@ -124,20 +124,26 @@ function checkJson(obj1, obj2) {
 };
 
 // ProgressBar animation
-function changeAndAnimateBar(index, score){
-	$(".right-bottom-container").eq(index).css("width", score);
+function changeAndAnimateBar(index, width, score){
+	var childofchildofchildofchild = $(".right-bottom-leaderboard-container").eq(index).children().eq(2).children().eq(0).children().eq(0)
+	childofchildofchildofchild.css("width", width + "%");
+	childofchildofchildofchild.text((score * 2) + " / 10");
 }
 
 // Display New Bar
-var currentTotalRank = currentArray.length + 1;
-function displayBar(userTo, score){
+var currentTotalRank = 0;
+function displayBar(userTo, score, index){
 	var div = document.createElement("div"); 	// right-bottom-leaderboard-container row
 	div.className = "right-bottom-leaderboard-container row";
 	var div1 = document.createElement("div"); 	// right-bottom-ranking
 	div1.className = "right-bottom-ranking";
 	var p1 = document.createElement("p"); 		// <p></p>
 	var b1 = document.createElement("b"); 		// <b></b>
-	var content1 = document.createTextNode(currentTotalRank);
+	if(index != null){
+		var content1 = document.createTextNode((Number(index) + 1));
+	}else{
+		var content1 = document.createTextNode(currentTotalRank);
+	}
 	b1.appendChild(content1); 	// <b>1</b>
 	p1.appendChild(b1);			// <p><b>1</b></p>
 	div1.appendChild(p1);		// <div class="right-bottom-ranking"> <p><b>1</b></p> </div>
@@ -171,23 +177,29 @@ function displayBar(userTo, score){
 	div4.className = "progressbar";
 	var div5 = document.createElement("div"); 	// progressbarbar
 	div5.className = "progressbarbar";
-	var content3 = document.createTextNode(score + " / 10");
+	div5.style.width = (score * 20) + "%";
+	var content3 = document.createTextNode((score * 2) + " / 10");
 	div5.appendChild(content3);
 	div4.appendChild(div5);
 	div3.appendChild(div4);
 	div.appendChild(div3);
 	$(div).click(function(){
-		if($("#displayName").val() !== userTo){
-			stompClient.send("/app/register2/" + eventName, {}, userTo);
+		if($("#displayName").val() !== userTo){ // Check the one he clicked is not showing on the left already
+			stompClient.send("/app/register2/" + eventName + "/" + iGN, {}, userTo);
 		}
 		displayUsersDetail(userTo);
 	});
-	$(".right-bottom-container").append(div);
+	if(index != null){
+		$(".right-bottom-container").children("div").eq(index).after(div);
+		$(".right-bottom-container").children("div").eq(index).remove();
+	}else {
+		$(".right-bottom-container").append(div);
+	}
 	currentTotalRank++;
 }
 
 function displayUsersDetail(lbd) {
-	if(iGN !== null && iGN !== "") {
+	if(lbd.title !== null && lbd.title !== "") {
 		var iGN = lbd.iGN;
 		var title = lbd.title;
 		var desc = lbd.desc;
@@ -225,21 +237,58 @@ function displayUsersDetail(lbd) {
 
 //Process json to see whether to display or animate
 function displayAndAnimateBar(json) {
+	currentTotalRank = currentArray.length + 1
+	//Display top 3 (Not working yet)
+	$("1stPlace").children().eq(0).children().eq(0).attr("src", "https://localhost/PotHub/images/cat.png");
+	/*
+	for(v in json){
+		if(v < 3){
+			//console.log(json[v].userTo);
+			// Get User Profile Picture
+			$.ajax({
+				"url": "https://localhost/PotHub/Image",
+				"type": "POST",
+				"data": {"iGN" : json[v].userTo},
+				success(res) {
+					switch(v){
+						case 0:
+							$("#1stPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							break;
+						case 1:
+							$("#2ndPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							break;
+						case 2:
+							$("3rdPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							break;
+					}
+				}
+			});
+		}else{
+			break;
+		}
+	}
+	*/
 	// Check difference
 	var different = checkJson(currentArray, json);
 	for(i in different){
-		if(!currentArray.hasOwnProperty(i)){
-			var userTo = different[i].userTo;
-			var score = different[i].score;
-			displayBar(userTo, score);
-		} else {
-			var currentArrayName = []; // ["Blackpepper3", "MikeHock"]
-			for(j in currentArray){
-				currentArrayName.push(currentArray[i].userTo);
+		var diff = different[i];
+		if(Object.keys(currentArray).length > i) {
+			var curr = currentArray[i];
+			if(diff.userTo === curr.userTo) {	// If the user same row as previous (1st....1st)
+				if(diff.score !== curr.score) {			// If the user score have changed (1st, 4......1st, 4.5)
+					var width = diff.score * 20;
+					changeAndAnimateBar(i, width, diff.score);
+				}
+			}else {
+				var userTo = diff.userTo;
+				var score = diff.score;
+				displayBar(userTo, score, i);
 			}
-
-			var index = currentArrayName.indexOf(different[i].userTo);
-			changeAndAnimateBar(index, different[i].score);
+		}
+		else {
+			var userTo = diff.userTo;
+			var score = diff.score;
+			displayBar(userTo, score, null);
 		}
 	}
 	currentArray = different;
@@ -271,7 +320,15 @@ function displayLeaderboardDetails(lbd){
 // Vote
 function startVotingDisplay(userTo) {
 	$("#popupIGN").text(userTo);
-	$
+	// Get User Profile Picture
+	$.ajax({
+		"url": "https://localhost/PotHub/Image",
+		"type": "POST",
+		"data": {"iGN" : userTo},
+		success(res) {
+			$("#popupPicture").attr("src", "https://localhost/PotHub/Image/" + res);
+		}
+	});
 	document.getElementById("popupBackground").style.display = "block";
 }
 
@@ -286,6 +343,7 @@ function hideStreamAsIfNotStreaming () {
 }
 
 function showStreamAsIfStreaming () {
+	connectToStream(iGN, eventName);
 	$("#videoDiv").show();
 }
 
@@ -328,16 +386,26 @@ $("#registerBtn").click(function aaa () {
 	}
 	
 	var foodDetail = {iGN, title, desc};
-	stompClient.send("/app/register/" + eventName, {}, JSON.stringify(foodDetail));
+	stompClient.send("/app/register/" + eventName + "/" + iGN, {}, JSON.stringify(foodDetail));
 });
 
 // Connect
 function connect(username, topic) {
 	iGN = username;
-	eventName = encodeURI(topic);
+	eventName = topic;
 	var socket = new SockJS("https://localhost:8443/ARandomName");
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function aaa () {
+		stompClient.subscribe("/topic/" + eventName + "/" + iGN, function aaa(socketReply) {
+			var array = JSON.parse(socketReply.body);
+			if(array.length>0) {
+				if(array[0].score===-5) { // On successful register (A register)
+					displayLeaderboardDetails(array[0]);
+				}else if(array[0].score===-6){ 	// Left side sidebar display onclick (A click on B)
+					displayUsersDetail(array[0]);
+				}
+			}
+		});
 		stompClient.subscribe("/topic/" + eventName, function aaa(socketReply) {
 			try{
 				var array = JSON.parse(socketReply.body);
@@ -350,10 +418,6 @@ function connect(username, topic) {
 						showStreamAsIfStreaming();
 					}else if(array[0].score===-4) { // "End"
 						countDownAndRedirectToEndPage();
-					}else if(array[0].score===-5) { // On successful register
-						displayLeaderboardDetails(array[0]);
-					}else if(array[0].score===-6){ 	// Left side sidebar display onclick
-						displayUsersDetail(array[0])
 					}else {							// On receiving normal info
 						displayAndAnimateBar(array);
 					}
@@ -365,8 +429,6 @@ function connect(username, topic) {
 		// Get the current score
 		stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "Retrieve", "userToDisplay": username}));
 	});
-
-	connectToStream(username, eventName);
 }
 
 // Profile
