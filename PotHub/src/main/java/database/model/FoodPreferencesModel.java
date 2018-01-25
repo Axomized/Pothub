@@ -1,15 +1,15 @@
 package database.model;
 
-public class FoodPreferences {
+public class FoodPreferencesModel {
 	private String iGN;
 	private String foodPref;
 	
-	public FoodPreferences(String iGN, String foodPref) {
+	public FoodPreferencesModel(String iGN, String foodPref) {
 		this.iGN = iGN;
 		this.foodPref = foodPref;
 	}
 	
-	public FoodPreferences(String foodPref) {
+	public FoodPreferencesModel(String foodPref) {
 		this.foodPref = foodPref;
 	}
 

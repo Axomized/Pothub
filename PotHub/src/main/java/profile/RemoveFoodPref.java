@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
-import database.model.FoodPreferences;
+import database.model.FoodPreferencesModel;
 
 public class RemoveFoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -33,7 +33,7 @@ public class RemoveFoodPref extends HttpServlet {
 		
 		try {
 			Database db = new Database(0);
-			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref(username);
+			ArrayList<FoodPreferencesModel> foodPrefList = db.getFoodPref(username);
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -127,7 +127,7 @@ public class RemoveFoodPref extends HttpServlet {
 					+ "										<span id='foodPrefSpan'>Blacklist of Food</span>"
 					+ "									</div>"
 					+ "									<div id='foodListDiv' class='row'>");
-					for (FoodPreferences fp : foodPrefList) {
+					for (FoodPreferencesModel fp : foodPrefList) {
 						out.print("<div class='foodDiv col-sm-3'>"
 								+ "	<label class='custom-control custom-checkbox foodLabel'>"
 								+ "		<input type='checkbox' class='custom-control-input' name='foodChosen' value='" + fp.getFoodPref() + "'>"

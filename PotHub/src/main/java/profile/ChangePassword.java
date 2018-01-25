@@ -189,7 +189,7 @@ public class ChangePassword extends HttpServlet {
 			boolean passChangeSuccess = false;
 			
 			if (validateInputString(oldPass, newPass, confirmPass)) {
-				if ((hashClass.getHashedPass(oldPass, decodedSalt).equals(lm.getPassword())) && (!newPass.equals(oldPass) && newPass.length() >= 8) && (confirmPass.equals(newPass))) {
+				if ((hashClass.getHashedPass(oldPass, decodedSalt).equals(lm.getPassword())) && (!newPass.equals(oldPass) && newPass.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")) && (confirmPass.equals(newPass))) {
 					lmUpdate.setPassword(hashClass.getHashedPass(confirmPass, newSalt));
 					lmUpdate.setSalt(newEncodedSalt);
 					lmUpdate.setEmail(dum.getEmail());
@@ -204,7 +204,7 @@ public class ChangePassword extends HttpServlet {
 				if (newPass.equals(oldPass)) {
 					oldNewSame = true;
 				}
-				if (newPass.length() < 8) {
+				if (!newPass.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=\\S+$).{8,}$")) {
 					passReq = true;
 				}
 				if (!confirmPass.equals(newPass)) {
@@ -242,7 +242,7 @@ public class ChangePassword extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='Login'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
@@ -322,7 +322,7 @@ public class ChangePassword extends HttpServlet {
 						out.print("<div class='errorMsg'>New password cannot be the same as old one.</div>");
 					}
 					if (passReq) {
-						out.print("<div class='errorMsg'>Password must have at least 8 characters.</div>");
+						out.print("<div class='errorMsg'>Password must have at least 8 characters and contain at least a number, lower and upper character.</div>");
 					}
 					out.print("							</div>"
 					+ "									<div id='confirmPassDiv' class='innerDiv'>"

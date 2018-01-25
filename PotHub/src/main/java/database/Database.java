@@ -319,6 +319,19 @@ public class Database {
 		ppstmt.executeUpdate();
 	}
 	
+	//For profile page - user's food preferences
+	public ArrayList<FoodListModel> getFoodList(String type) throws SQLException {
+		ArrayList<FoodListModel> foodList = new ArrayList<FoodListModel>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Food FROM FoodList WHERE FoodType = ?;");
+		ppstmt.setString(1, type);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			String food = rs.getString("Food");
+			foodList.add(new FoodListModel(food));
+		}
+		return foodList;
+	}
+	
 	//For profile page - user's profile information
 	public DatabaseUserModel getUserProfile(String name) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Contact_No, Gender, Bio, Address, UnitNo, ProfilePic, JoinDate, CookingRank, Points, TotalDonation, IsPriviledged, IsFiltered FROM DatabaseUser WHERE IGN = ?;");
@@ -366,14 +379,14 @@ public class Database {
 	}
 	
 	//For profile page - user's food preferences
-	public ArrayList<FoodPreferences> getFoodPref(String name) throws SQLException {
-		ArrayList<FoodPreferences> foodPrefList = new ArrayList<FoodPreferences>();
+	public ArrayList<FoodPreferencesModel> getFoodPref(String name) throws SQLException {
+		ArrayList<FoodPreferencesModel> foodPrefList = new ArrayList<FoodPreferencesModel>();
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT FoodPref FROM FoodPreferences WHERE IGN = ?");
 		ppstmt.setString(1, name);
 		ResultSet rs = ppstmt.executeQuery();
 		while (rs.next()) {
 			String foodPref = rs.getString("FoodPref");
-			foodPrefList.add(new FoodPreferences(foodPref));
+			foodPrefList.add(new FoodPreferencesModel(foodPref));
 		}
 		return foodPrefList;
 	}
@@ -1545,7 +1558,7 @@ public class Database {
 	}
 		
 	//FoodPreferences
-	public void updateFoodPreferences(String sql, FoodPreferences fP) throws SQLException { 
+	public void updateFoodPreferences(String sql, FoodPreferencesModel fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fP.getiGN());
 		ppstmt.setString(2, fP.getFoodPref());

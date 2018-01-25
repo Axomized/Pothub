@@ -7,6 +7,10 @@ public class FoodListModel {
 	public FoodListModel() {
 		
 	}
+	
+	public FoodListModel(String food) {
+		this.food = food;
+	}
 
 	public FoodListModel(String food, String foodType) {
 		this.food = food;

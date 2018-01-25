@@ -127,7 +127,7 @@ public class Donation extends HttpServlet {
 					+ "							<div class='flexDiv'>"
 					+ "								<div class='centerDiv'>"
 					+ "									<label id='donateLabel' class='inputLabel' for='donateAmt'>How much would you like to donate?</label>"
-					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0' max='2000' step='0.01' placeholder='0.00' required>"
+					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0.01' max='2000' step='0.01' placeholder='0.00' required>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "						</div>"
@@ -496,7 +496,7 @@ public class Donation extends HttpServlet {
 					+ "							<div class='flexDiv'>"
 					+ "								<div class='centerDiv'>"
 					+ "									<label id='donateLabel' class='inputLabel' for='donateAmt'>How much would you like to donate?</label>"
-					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0' max='2000' step='0.01' placeholder='0.00' required>");
+					+ "									<input type='number' id='donateAmt' name='donateAmt' min='0.01' max='2000' step='0.01' placeholder='0.00' required>");
 					if (donateAmtError) {
 						out.print("<div class='errorMsg'>You can only donate a maximum of $2000.</div>");
 					}

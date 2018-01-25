@@ -81,7 +81,7 @@ public class ConfirmDonation extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
@@ -185,7 +185,7 @@ public class ConfirmDonation extends HttpServlet {
 			Database db = new Database(2);
 			TemporaryStoreModel tsm = db.getTempStore(username);
 			DonationModel dm = new DonationModel();
-			DatabaseUserModel dum = db.getUserProfile(username);
+			
 			LogsModel lm = new LogsModel();
 			HashPIN hp = new HashPIN();
 			
@@ -218,7 +218,8 @@ public class ConfirmDonation extends HttpServlet {
 							if (tsm.getTemporaryOnBehalf() != null && !tsm.getTemporaryOnBehalf().isEmpty()) {
 								DatabaseUserModel dumOnBehalf = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								db.updateTotalDonation(dumOnBehalf.getTotalDonation().add(tsm.getTemporaryAmount()), tsm.getTemporaryOnBehalf());
-								if ((dumOnBehalf.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumOnBehalf.isPriviledged())) {
+								DatabaseUserModel dumOnBehalfAfter = db.getUserProfile(tsm.getTemporaryOnBehalf());
+								if (dumOnBehalfAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
 									db.updateIsPrivileged(true, tsm.getTemporaryOnBehalf());
 								}
 								lm.setiGN(username);
@@ -229,8 +230,10 @@ public class ConfirmDonation extends HttpServlet {
 								db.insertLogs(lm);
 							}
 							else {
+								DatabaseUserModel dum = db.getUserProfile(username);
 								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
-								if ((dum.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dum.isPriviledged())) {
+								DatabaseUserModel dumAfter = db.getUserProfile(username);
+								if (dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
 									db.updateIsPrivileged(true, username);
 								}
 								lm.setiGN(username);
@@ -242,7 +245,6 @@ public class ConfirmDonation extends HttpServlet {
 							}
 							db.deleteFromTempStore(username);
 							response.sendRedirect("DonationSuccess");
-							System.out.println("Donation successful");
 						}
 						else {
 							incorrectPIN = true;
@@ -319,7 +321,7 @@ public class ConfirmDonation extends HttpServlet {
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"

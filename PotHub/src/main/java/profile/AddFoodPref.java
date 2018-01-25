@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
-import database.model.FoodPreferences;
+import database.model.FoodPreferencesModel;
 
 public class AddFoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -458,9 +458,9 @@ public class AddFoodPref extends HttpServlet {
 		
 		try {
 			Database db = new Database(2);
-			ArrayList<FoodPreferences> foodPrefList = db.getFoodPref(username);
+			ArrayList<FoodPreferencesModel> foodPrefList = db.getFoodPref(username);
 			ArrayList<String> foodList = new ArrayList<String>();
-			for (FoodPreferences fp : foodPrefList) {
+			for (FoodPreferencesModel fp : foodPrefList) {
 				foodList.add(fp.getFoodPref());
 			}
 			boolean contains = false;
