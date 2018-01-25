@@ -81,19 +81,27 @@ public class PotcastRegister extends HttpServlet {
 			pw.append("<a href='Logout'>Logout</a>");
 
 			pw.append("</div>" + "</div>" + "</div>" + "	<div id='navigation'>"
-					+ "		<div class='container-fluid'>" + "			<ul class='nav navbar-nav'>"
-					+ "				<li id='lhome'><a href='html/Forum.html'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='html/PrivateMessage.html'>Private Message</a></li>"
-					+ "				<li id='levent'><a href='html/EventPage.html'>Event</a></li>"
+					+ "		<div class='container-fluid'>" 
+					+ "<ul class='nav navbar-nav'>"
+					+ "				<li id='lhome'>"
+					+ "				<a href='Forum'>Home</a></li>"
 					+ "				<li class='dropdown'>"
-					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
+					+ "			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
+					+ "			        	<ul class='dropdown-menu'>"
+					+ "				        	<li><a href='/PotHub/EventPage'>Events</a></li>"
+					+ "				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>"
+					+ "			        	</ul>"
+					+ "			    	</li>"
+					+ "				<li class='dropdown'>"
+					+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>"
 					+ "			        <ul class='dropdown-menu'>"
 					+ "			          <li><a href='p2plist'>Active Potcasts</a></li>"
 					+ "			          <li><a href='p2preg'>Start a Potcast</a></li>"
 					+ "			          <li><a href='p2pmy'>My Potcast</a></li>"
 					+ "			          <li><a href='p2pjoined'>Joined Potcast</a></li>" + "			        </ul>"
 					+ "			      </li>"
-					+ "				<li id='ldonate'><a href='html/Donation.html'>Donate</a></li>" + "			</ul>"
+					+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>" 
+					+ "			</ul>" 	
 					+ "		</div>" + "	</div>");
 
 			boolean postPermission = false;
