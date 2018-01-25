@@ -354,6 +354,29 @@ td button:hover {
 }
 /*Table end*/
 
+textarea {
+	width: 250px;
+	height: 60px;
+    width: 100%;
+    padding: 6px 10px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+    font-size:14px;
+}
+
+input[type=submit]{
+	padding: 5px;
+	font-size:16px;
+	background: #94618e;
+	color: #f8eee7;
+	border: 0px;
+	border-radius:5px;
+	margin-top: 5px;
+}
+
 input {
 	margin-bottom: 10px;
 }
@@ -414,6 +437,7 @@ input {
 	font-size:2em;
 	margin-left: 420px;
 	width:50%;
+	margin-top:100px;
 }
 
 #foodTitle {
@@ -436,6 +460,23 @@ input {
 	background-color:#f3decb;
 	padding:10px;
 	border-radius:10px;
+}
+
+#foodBits2 {
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
+	width:45%;
+	display:inline-block;
+}
+
+#foodBits2b {
+	margin-left:10%;
+	background-color:#f3decb;
+	padding:10px;
+	border-radius:10px;
+	width:45%;
+	display:inline-block;
 }
 
 #foodPrice {
@@ -518,10 +559,14 @@ button {
 	display:none;
 	float:left;
 	list-style:none;
-	background-color:#f3decb;
 	border-radius:10px;
 	margin-top:10px;
+	margin-bottom: 20px;
 	width: 100%;
+}
+
+#descHead {
+	font-size: 1.25em;
 }
 
 button {

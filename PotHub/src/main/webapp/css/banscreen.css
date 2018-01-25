@@ -373,6 +373,10 @@ form{
 form button{
 	border-radius:4px;
 }
+
+a button{
+	border-radius:4px;
+}
 /* Footer */
 
 #footer p { margin: 15px 0; }

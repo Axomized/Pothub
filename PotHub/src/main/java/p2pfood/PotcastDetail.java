@@ -170,7 +170,7 @@ public class PotcastDetail extends HttpServlet {
 						}
 					}
 					
-					if(relevantReports.size()<=2&&doesNotExist){
+					if(relevantReports.size()<=2&&doesNotExist&&!pm.getiGN().equals(username)){
 					pw.append( "<button id='reportButton' onclick='showReportables();'><img src='images/flag.png' height=30 width=30></button>"
 					+ "<div id='reportOptions'>" 
 					+ "<form method='post' action='reportHandler' id='reportList'>"
@@ -178,7 +178,7 @@ public class PotcastDetail extends HttpServlet {
 					+ "<input name='evidence' value='"
 					+ pm.getPotcastID()
 					+ "' type='hidden'></input>"
-					+ "<input name='reason' type='text'></input>"
+					+ "<textarea name='reason' maxlength='100' required></textarea>"
 					+ "<input type='submit'></input>"
 					+ "</form>"
 					+ "</div>");
@@ -191,18 +191,23 @@ public class PotcastDetail extends HttpServlet {
 					+ pm.getTitle() + " -by "+pm.getiGN()+"</p>" + "</div>" + "<div id='foodPrice'>");
 
 			if (pm.getMaxBids() < bids.size()) {
-				pw.append("<p>" + bids.get(bids.size() - pm.getMaxBids()).getBidAmount() + "</p>" + "</div>"
-						+ "<div id='foodDesc'>" + "<p>" + pm.getDescription() + "</p>" + "</div>"
-						+ "<div id='foodBits'>");
-				pw.append(pm.getMaxBids() + "/" + pm.getMaxBids() + " Bids, closing ");
+				pw.append("<p>Price: $" + bids.get(bids.size() - pm.getMaxBids()).getBidAmount() + "</p></div>"
+						+ "<div id='foodDesc'>" + "<p id='descHead'>Description: </p><p>" + pm.getDescription() + "</p>" + "</div>"
+						+ "<div id='foodBits2'><p>");
+				pw.append(pm.getMaxBids() + "/" + pm.getMaxBids() 
+				+ "Bids</p></div><div id='foodBits2b'><p>Closing at ");
 			} else {
-				pw.append("<p>" + pm.getMinBid() + "</p>" + "</div>" + "<div id='foodDesc'>" + "<p>"
-						+ pm.getDescription() + "</p>" + "</div>" + "<div id='foodBits'>");
-				pw.append(bids.size() + "/" + pm.getMaxBids() + " Bids, closing ");
+				pw.append("<p>Price: $" + pm.getMinBid() + "</p>" + "</div>" 
+						+ "<div id='foodDesc'>" + "<p id='descHead'>Description: </p><p>"
+						+ pm.getDescription() + "</p></div>" 
+						+ "<div id='foodBits2'><p>");
+				pw.append(bids.size() + "/" + pm.getMaxBids() 
+				+ "Bids</p></div><div id='foodBits2b'><p>Closing at ");
 			}
 
 			pw.append(timestampToDateTime(pm.getBidStopTime()) + "</p>" + "</div>" + "<div id='foodBits'>"
-					+ "<p>Pickup " + timestampToDateTime(pm.getPickupTime()) + "</p>" + "</div>" + "<div id='foodDesc'>"
+					+ "<p>Pickup at " + timestampToDateTime(pm.getPickupTime()) + "</p>" + "</div>" 
+					+ "<div id='foodDesc'><p>Address: </p>"
 					+ "<p>" + dbu.getUnitNo() + ", Singapore " + dbu.getAddress() + "</p>" + "</div>"
 					+ "<div id='foodBuyers'>" + "<p>Buyers: </p>" + "<ul>");
 			for (PotcastBidModel bid : bids) {

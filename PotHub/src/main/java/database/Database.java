@@ -1137,8 +1137,8 @@ public class Database {
 		while(rs.next()) {
 			int donationID				= rs.getInt("DonationID");
 			String iGN					= rs.getString("IGN");
-			Timestamp donationDate		= rs.getTimestamp("donation_Date");
-			BigDecimal donationAmount	= rs.getBigDecimal("donation_amount");
+			Timestamp donationDate		= rs.getTimestamp("donationDate");
+			BigDecimal donationAmount	= rs.getBigDecimal("donationamount");
 			String onBehalf				= rs.getString("onBehalf");
 			
 			donations.add(new DonationModel(donationID, iGN, donationDate, donationAmount, onBehalf));

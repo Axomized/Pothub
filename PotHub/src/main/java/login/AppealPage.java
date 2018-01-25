@@ -58,9 +58,12 @@ public class AppealPage extends HttpServlet {
 					validUser=true;
 				}
 				else{
-					messageToShow = "<h2>You've been banned. Send us an appeal if you believe there has been an error.</h2>"
+					messageToShow = "<h2>You've been banned for: "
+							+ ban.getReason()
+							+ "</h2>"
+							+ "<p>Send us an appeal if you believe there has been an error.</p>"
 							+ "		<form method='POST'>"
-							+ "		<input name='message' type='text'></input>"	
+							+ "		<textarea cols='35' rows='8' maxlength='500' autofocus name='message' required></textarea>"	
 							+ "		<input type='submit'></input>"	
 							+ "		</form>";
 					validUser=true;
@@ -145,7 +148,7 @@ public class AppealPage extends HttpServlet {
 		
 		PrintWriter out = response.getWriter();
 		out.println("<script type=\"text/javascript\">");
-		out.println("alert('Thanks for your appeal. We\'ll get back to you soon.');");
+		out.println("alert('Thanks for your appeal. We will get back to you soon.');");
 		out.println("window.location.href = 'Login'");
 		out.println("</script>");
 		}

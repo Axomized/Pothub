@@ -158,7 +158,6 @@ try {
 } catch (SQLException e) {
 	e.printStackTrace();
 } catch (ClassNotFoundException e) {
-	// TODO Auto-generated catch block
 	e.printStackTrace();
 } 
 if((bans.size()+appeals.size())==0){

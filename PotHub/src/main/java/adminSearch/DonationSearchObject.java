@@ -28,16 +28,16 @@ public class DonationSearchObject implements SearchObject{
 	@Override
 	public String getExecutableSQL() {
 		String queryToBuild=
-				"SELECT TOP "+MAXRETURNS+" donationID, IGN, donation_date, donation_amount, onBehalf "
+				"SELECT TOP "+MAXRETURNS+" donationID, IGN, donationdate, donationamount, onBehalf "
 				+"FROM Donation ";
 		
 		queryToBuild +=
-		"WHERE (donation_date BETWEEN '"
+		"WHERE (donationdate BETWEEN '"
 				
 		+this.donationDateOpen.toString()
 		+"' AND '"
 		+this.donationDateClose.toString()
-		+"') AND (donation_amount BETWEEN "
+		+"') AND (donationamount BETWEEN "
 		+this.donationAmountOpen
 		+" AND "
 		+this.donationAmountClose
