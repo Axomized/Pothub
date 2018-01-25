@@ -46,9 +46,9 @@ public class PotcastJoined extends HttpServlet {
 
 		if (session != null) {
 			username = (String) session.getAttribute("username");
-			return;
 		} else {
 			response.sendRedirect("Login");
+			return;
 		}
 
 		try {
@@ -151,14 +151,16 @@ public class PotcastJoined extends HttpServlet {
 			ArrayList<PotcastModel> potcastsJoined = db.getJoinedPotcasts(username);
 
 			ArrayList<String> postalCodes = new ArrayList<String>();
-
+			ArrayList<String> distances = new ArrayList<String>();
 			for (PotcastModel ap : potcastsJoined) {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 
+			if(potcastsJoined.size()>0){
 			String url = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
 
-			ArrayList<String> distances = MapDistance.getJsonFromURL(url);
+			distances = MapDistance.getJsonFromURL(url);
+			}
 
 			int counter = 0;
 			for (PotcastModel ap : potcastsJoined) {

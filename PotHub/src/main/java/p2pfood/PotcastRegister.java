@@ -51,9 +51,9 @@ public class PotcastRegister extends HttpServlet {
 
 		if (session != null) {
 			username = (String) session.getAttribute("username");
-			return;
 		} else {
 			response.sendRedirect("Login");
+			return;
 		}
 
 		try {
@@ -69,7 +69,7 @@ public class PotcastRegister extends HttpServlet {
 					+ "	<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>"
 					+ "	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>"
 					+ "<!-- Optional theme -->" + "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
-					+ "<!-- My Own Script -->" + "<script src='script/p2plist.js'></script>" + "<!-- My Style Sheet -->"
+					+ "<!-- My Own Script -->" + "<script src='script/p2preg.js'></script>" + "<!-- My Style Sheet -->"
 					+ "<link rel='stylesheet' type='text/css' href='css/p2preg.css' />" + "</head>" + "<body>"
 					+ "	<!--  Navigation Bar -->" + "		<div id='header'>" + "<div id='companyTitle'>"
 					+ "<h1>PotHub</h1>" + "</div>"
@@ -103,8 +103,6 @@ public class PotcastRegister extends HttpServlet {
 					permissionCounter = 1;
 				}
 				if (db.getNumberOfPotcastsFrom(username) < 1 + permissionCounter) {
-					System.out.println(permissionCounter);
-					System.out.println(db.getNumberOfPotcastsFrom(username));
 					postPermission = true;
 				}
 
@@ -118,7 +116,7 @@ public class PotcastRegister extends HttpServlet {
 						+ "<div class='formElement'>" + "<p>Food title</p>"
 						+ "<input type='text' class='long' name='title' required></input>" + "</div>"
 						+ "<div class='formElement'>" + "<p>Description</p>"
-						+ "<input type='text' id='descBox' name='description' required></input>" + "</div>"
+						+ "<textarea name='description' required maxlength='255'></textarea>" + "</div>"
 
 						+ "<div class='formElement'>" + "<p>Portions available</p>"
 						+ "<input type='number' name='portions' required></input>" + "<p>Starting Price Per Portion</p>"

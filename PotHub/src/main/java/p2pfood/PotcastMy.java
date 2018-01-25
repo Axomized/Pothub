@@ -47,9 +47,9 @@ public class PotcastMy extends HttpServlet {
 
 		if (session != null) {
 			username = (String) session.getAttribute("username");
-			return;
 		} else {
 			response.sendRedirect("Login");
+			return;
 		}
 
 		PotcastSearchObject pso = new PotcastSearchObject();
@@ -154,7 +154,8 @@ public class PotcastMy extends HttpServlet {
 			}
 
 			ArrayList<String> distances = MapDistance
-					.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress()));
+					.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes, 
+							dbu0.getAddress()));
 
 			int counter = 0;
 			for (PotcastModel pot : pots) {

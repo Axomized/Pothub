@@ -54,7 +54,7 @@ public class PotcastSearchObject{
 					toRet+=" WHERE title LIKE '%"+this.title+"%' AND IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
 				}
 				else{
-					toRet+=" WHERE IGN='"+ign+"' AND bidStopTime > '"+rightNow+"'";
+					toRet+=" WHERE IGN='"+ign+"'";
 				}
 				if(this.orderBy.length()>0){
 					toRet+=" ORDER BY "+this.orderBy+" ";
@@ -107,7 +107,7 @@ public class PotcastSearchObject{
 			+ " WHERE";
 			
 			if(this.title.length()>0){
-				toRet+=" title LIKE '%"+this.title+"%' AND bidStopTime > '"+rightNow+"'";
+				toRet+=" title LIKE '%"+this.title+"%'";
 			}
 			else{
 				toRet+=" bidStopTime > '"+rightNow+"'";
