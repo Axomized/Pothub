@@ -95,7 +95,7 @@ public class discussion extends HttpServlet {
 						+ "		</div>"
 						+ "		<div id='wrapper'>"
 						+ "			<div id='content-wrapper'>"
-						+ "				<div id='content' style='width:150%;'>");
+						+ "				<div id='content' style='width:98%;'>");
 						
 						
 						
@@ -116,8 +116,8 @@ public class discussion extends HttpServlet {
 						+ "							<div id='date'>" + qw.getDate() + "</div>"
 						+ "						</div>"
 						+ "						<div>"
-						+ "							<p></p>"//for displaying text
-						+ "							<p><a href=''></a></p>");// for displaying URL);
+						//+ "							<p></p>"//for displaying text
+						+ "							<p><a href='" + qw.getForumURL() + "'></a></p>");// for displaying URL);
 						
 						
 						
@@ -168,7 +168,9 @@ public class discussion extends HttpServlet {
 						
 						
 						out.println(
-						  "					<div>"
+						  "					</div>"
+						+ "				</div>"
+						+ "					<div id='firstly'>"
 						+ "						<form action='discussion' method='POST'>"	
 						+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
 						+ "						<input type='hidden' name='jesus' value='" + ddd  + "'>"
@@ -223,9 +225,8 @@ public class discussion extends HttpServlet {
 						
 						out.println(
 											
-						  "					</div>"
-						+ "				</div>"
-						+ "			</div>"
+						 
+						  "			</div>"
 						+ "		</div>"
 						+ "		<div id='footer'>"
 						+ "			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>"

@@ -8,28 +8,17 @@ function hideProfileDropdown() {
 
 function upfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	alert("upvoted by 111 from" + h);
+	alert("upvoted by 11 from" + h);
+	document.getElementById("yesorno").value = "up";
 	document.getElementById("gonext").submit();
 	
 }
 
 function downfirst(){
 	var h = document.getElementById("firstcount").innerHTML;
-	alert("downvoted by 111 from" + h);
+	alert("downvoted by 11 from" + h);
+	document.getElementById("yesorno").value = "down";
 	document.getElementById("gonext").submit();
-}
-
-function upsecond(){
-	var h = document.getElementById("secondcount").innerHTML;
-	var p = parseInt(h);
-	var i = (p + 1);
-	document.getElementById("secondcount").innerHTML = i;
-}
-
-function downsecond(){
-	var h = document.getElementById("secondcount").innerHTML;
-	var i = (h-1);
-	document.getElementById("secondcount").innerHTML = i;
 }
 
 function showsth(){
@@ -54,9 +43,14 @@ function gosub(){
 	location.href = "Subscription";
 }
 
-var audio = new Audio('/PotHub/images/cat.mp3');
+
+var audio = new Audio('/PotHub/images/jj.mp3');
 audio.addEventListener('ended', function() {
-    this.currentTime = 0;
-    this.play();
+	var audio = new Audio('/PotHub/images/cat.mp3');
+	audio.addEventListener('ended', function() {
+		this.currentTime = 0;
+	    this.play();
+	}, false);
+    audio.play();
 }, false);
 audio.play();

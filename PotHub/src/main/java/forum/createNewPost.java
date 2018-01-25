@@ -56,6 +56,7 @@ public class createNewPost extends HttpServlet {
 				+ "		<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>"
 				+ "		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>"
 				+ "		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>"
+				+ "		<script src='https://www.google.com/recaptcha/api.js'></script>"
 				+ "		<!-- Optional theme -->"
 				+ "		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 				+ "		<!-- My Own Script -->"
@@ -134,16 +135,16 @@ public class createNewPost extends HttpServlet {
 				/*+"					    <p id='text1' style='display:none;'>Enter your text here: <textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='words'></textarea>"
 				+"						<i onclick='closeT()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"*/
-				+"					  	<p id='video1' style='display:none;'>Submit your video here: <input type='file' name='vid' '>"
+				+"					  	<p id='video1' style='display:none;'>Submit your video here: <input type='file' name='vid' accept='.mp4, .webm, .ogg'>"
 				+"						<i onclick='closeV()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='image1' style='display:none;'>Submit your picture here: <input type='file' name='pic123' '>"
+				+"					  	<p id='image1' style='display:none;'>Submit your picture here: <input type='file' name='pic123' accept='.png, .jpeg, .jpg, .gif''>"
 				+"						<i onclick='closeI()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
 				+"					  	<p id='link1' style='display:none;' >Enter the url here: <input type='url' name='link'>"
 				+"						<i onclick='closeU()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='file1' style='display:none;'>Submit your file here: <input type='file' name='file69' '>"
+				+"					  	<p id='file1' style='display:none;'>Submit your file here: <input type='file' name='file69' accept='.txt, .docx'>"
 				+"						<i onclick='closeF()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
 				+"					  </div>"	
@@ -152,10 +153,11 @@ public class createNewPost extends HttpServlet {
 				+ "					  <div class='form-group'>"
 				+ "					  <div id='attachingfile'>"
 				+ "					  	<p>Set thumbnail picture *</p>"
-				+ "					  	 <input type='file' name='iconpic' id='needit'>"
+				+ "					  	 <input type='file' name='iconpic' id='needit' accept='.png, .jpeg, .jpg, .gif'>"
 				+ "					  </div>"
 				+ "					  <div>"
-				+ "					  <input type='submit' id='postBtn' onclick='return submitting()' value='Post/Submit' style='cursor:pointer;' class='btn'>"
+				+  "				  <div class='g-recaptcha' data-callback='recaptchaCallback' data-sitekey='6LdoEUIUAAAAAFPLD3IhU98g25qAWdFezJEnOD0f'></div>"
+				+ "					  <input type='submit' id='postBtn' onclick='return submitting()' value='Post/Submit' style='cursor:pointer;' class='btn' disabled>"
 				+ "					  <input type='button' id='cancelBtn' formaction='Forum' value='Cancel' style='cursor:pointer;' class='btn'>"
 				+ "					  </div>"
 				+ "					  </div>"
@@ -186,6 +188,11 @@ public class createNewPost extends HttpServlet {
 		else {
 			response.sendRedirect("Login");
 		}
+		// get reCAPTCHA request param
+		String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
+		System.out.println(gRecaptchaResponse);
+		boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+		System.out.println("Captcha Verify:" + verify);//checking the captcha
 		String haha = "";
 		PrintWriter out = response.getWriter();
 		String forumT = request.getParameter("Forumtitle");
@@ -200,6 +207,7 @@ public class createNewPost extends HttpServlet {
 			int checks = 1;
 			int checking = db.getFileCount();
 			ForumPostModel fp = new ForumPostModel();
+			fp.setForumURL(url);
 			fp.setDate(timestamp);
 			fp.setDescription(forumD);
 			fp.setFileAttachment(null); //set as id of file
@@ -214,12 +222,6 @@ public class createNewPost extends HttpServlet {
 			fp.setForumNormalText(words);
 			}
 			*/
-			if(url.isEmpty() || url.equals("")) {
-				fp.setForumURL(null);
-			}
-			else {
-			fp.setForumURL(url);
-			}
 			
 			
 			//for picture upload

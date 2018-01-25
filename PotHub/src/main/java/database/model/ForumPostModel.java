@@ -27,7 +27,7 @@ public class ForumPostModel {
 		this.fileAttachment = fileAttachment;
 		this.ForumNormalText = forumNormalText;
 		this.ForumURL = forumURL;
-	}
+		}
 
 
 	public String getForumNormalText() {

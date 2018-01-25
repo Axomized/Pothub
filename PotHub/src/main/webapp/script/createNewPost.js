@@ -67,3 +67,8 @@ function closeU(){
 function closeF(){
 	document.getElementById("file1").style.display = "none";
 }
+
+function recaptchaCallback(){
+	document.getElementById("postBtn").disabled = false;
+	
+	}
