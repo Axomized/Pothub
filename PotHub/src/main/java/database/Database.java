@@ -609,6 +609,25 @@ public class Database {
 		return aldum;
 	}
 	
+	public int getDatabaseUserPoints(String ignn) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Points FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, ignn);
+		int point = 0;
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			point = rs.getInt("Points");	
+		}
+		return point;
+	}
+	
+	public void addDatabaseUserPoints(int pointt, String ignn) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE DatabaseUser SET Points = ? WHERE IGN = ?;");
+		ppstmt.setInt(1, pointt);
+		ppstmt.setString(2, ignn);
+		
+		executeUpdate(ppstmt);
+	}
+	
 	public void updateDatabaseUser(String sql, DatabaseUserModel dUM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, dUM.getEmail());
@@ -1350,6 +1369,36 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
+	public void insertSubscription(SubscriptionModel sm) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Subscription(IGN, Subscriber) VALUES (?,?);");
+		ppstmt.setString(1, sm.getIGN());
+		ppstmt.setString(2, sm.getSubs());
+		executeUpdate(ppstmt);
+	}
+	
+	public void deleteSubscription(SubscriptionModel sm) throws SQLException { 
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM Subscription WHERE IGN = ? AND Subscriber = ? ;");
+		ppstmt.setString(1, sm.getIGN());
+		ppstmt.setString(2, sm.getSubs());
+		executeUpdate(ppstmt);
+	}
+	
+	public ArrayList<SubscriptionModel> getSubscriptionModel() throws SQLException {
+		ArrayList<SubscriptionModel> g = new ArrayList<SubscriptionModel>();
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM Subscription;");
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			SubscriptionModel p = new SubscriptionModel();
+			String gn = rs.getString("IGN");
+			String subs = rs.getString("Subscriber");
+			p.setIGN(gn);
+			p.setSubs(subs);
+			g.add(p);
+			
+		}
+		return g;
+	}
+	
 	public int getFileCount() throws SQLException{
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT MAX(FileID) as maxCount from FileTable;");
 		ResultSet rs = ppstmt.executeQuery();
@@ -1362,7 +1411,6 @@ public class Database {
 	public String getFileTableID(String fileName) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT FileID FROM FileTable WHERE FileName = ?;");
 		ppstmt.setString(1, fileName);
-		
 		ResultSet rs = ppstmt.executeQuery();
 		rs.next();
 		String fileID	= rs.getString("FileID");
@@ -1558,7 +1606,7 @@ public class Database {
 	}
 		
 	//FoodPreferences
-	public void updateFoodPreferences(String sql, FoodPreferencesModel fP) throws SQLException { 
+	public void updateFoodPreferences(String sql, FoodPreferencesModel fP) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fP.getiGN());
 		ppstmt.setString(2, fP.getFoodPref());
@@ -1567,6 +1615,22 @@ public class Database {
 	}
 	
 	//ForumPostModel
+	public int getVotes(int postID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Upvotes FROM ForumPost WHERE PostID = ?;");
+		ppstmt.setInt(1, postID);
+		ResultSet rs = ppstmt.executeQuery();
+		rs.next();
+		int postid1	= rs.getInt("Upvotes");
+		return postid1;
+	}
+	
+	public void updateVotes(int votesnum, int postID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("UPDATE ForumPost SET Upvotes = ? WHERE PostID = ?;");
+		ppstmt.setInt(1, votesnum);
+		ppstmt.setInt(2, postID);
+		executeUpdate(ppstmt);
+	}
+	
 	public void updateForumPost(String sql, ForumPostModel fP) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
 		ppstmt.setString(1, fP.getThread());
@@ -1582,7 +1646,7 @@ public class Database {
 	
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
-		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID desc");
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID DESC;");
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String thread = rs.getString("Thread");
@@ -1671,6 +1735,18 @@ public class Database {
 		return votes;
 	}
 	
+	public boolean getWhetherCanVoteForumVoteModel(String iGN, int postID) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM ForumVote WHERE IGN = ? AND POSTID = ?;");
+		ppstmt.setString(1, iGN);
+		ppstmt.setInt(2, postID);
+		ResultSet rs = ppstmt.executeQuery();
+		if(rs.next()) {
+			return false; // Got duplicate
+		}else {
+			return true; // Dont have (Can vote)
+		}
+	}
+	
 	//PeopleEventListModel
 	public void updatePeopleEventList(String sql, PeopleEventListModel pELM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);
@@ -1710,7 +1786,7 @@ public class Database {
 		}
 		return als;
 	}
-
+	
 	// Whether IGN is in confirm list
 	public String getWhetherPeopleEventList(int eventID, String iGN) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ?;");
@@ -1753,22 +1829,15 @@ public class Database {
 		conn.close();
 	}
 	
-	/*
+	
 	public static void main(String[] arg0) throws ClassNotFoundException, SQLException, IOException, NoSuchAlgorithmException{
 		Database db = new Database(2);
-		File file = new File("C:\\Users\\Wei Xuan\\Desktop\\mountain.jpeg");
-		InputStream in = new FileInputStream(file);
-		String fileName = file.getName();
-		byte[] fileData = IOUtils.toByteArray(in);
-		float fileSize = file.length();
-		
-		System.out.println(fileName);
-		System.out.println(fileData);
-		System.out.println(fileSize);
-		
-		System.out.println(db.addPictureWithDupeCheck(fileName, fileData));
+		SubscriptionModel sss = new SubscriptionModel();
+		sss.setIGN("lalalala");
+		sss.setSubs("paowkfjfooooooooooooooooooooo");
+		db.deleteSubscription(sss);
 	}
-	*/
+	
 	/*
 	 * private void getFileAttachment(){ Database db = new Database(0);
 	 * PreparedStatement ps =
