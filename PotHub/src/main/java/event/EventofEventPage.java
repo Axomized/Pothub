@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.EventModel;
 
@@ -50,7 +52,7 @@ public class EventofEventPage extends HttpServlet {
 	            session.setAttribute("EventName", nameOfEvent);
 	        }
 	        else {
-	            response.sendRedirect("/PotHub/Login");
+	            response.sendRedirect("Login");
 	        }
 			String status = db.getWhetherPeopleEventList(db.getEventIDFromEventName(nameOfEvent), username);
 			
@@ -62,8 +64,8 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<meta charset='UTF-8'>");
 			sb.append("		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>");
 			sb.append("		<!-- Favicon -->");
-			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.gif' type='image/gif'>");
-			sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.png?v=2' type='image/x-icon'>");
+			sb.append("		<link rel='icon' href='../images/crab.gif' type='image/gif'>");
+			sb.append("		<link rel='icon' href='../images/crab.png?v=2' type='image/x-icon'>");
 			sb.append("		<!-- Page Title -->");
 			sb.append("		<title>" + decodeString(eM.getEventName()) + "</title>");
 			sb.append("		<!-- Latest compiled and CSS -->");
@@ -71,9 +73,9 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<!-- Optional theme -->");
 			sb.append("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
 			sb.append("		<!-- My Script -->");
-			sb.append("		<script src='/PotHub/script/EventofEventPage.min.js' defer></script>");
+			sb.append("		<script src='../script/EventofEventPage.min.js' defer></script>");
 			sb.append("		<!-- My Style Sheet -->");
-			sb.append("		<link rel='stylesheet' type='text/css' href='/PotHub/css/EventofEventCss.css' />");
+			sb.append("		<link rel='stylesheet' type='text/css' href='../css/EventofEventCss.css' />");
 			sb.append("	</head>");
 			sb.append("	<body>");
 			sb.append("		<!--  Navigation Bar -->");
@@ -83,37 +85,42 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
-			sb.append("					<img src='/PotHub/images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
+			String currentProfilePic = db.getUserProfilePic(username);
+			if(currentProfilePic != null) {
+				sb.append("				<img src='../Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+			}else {
+				sb.append("				<img src='../images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
+			}
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
-			sb.append("					<a href='/PotHub/Profile'>Profile</a>");
-			sb.append("					<a href='/PotHub/Logout'>Logout</a>");
+			sb.append("					<a href='../Profile'>Profile</a>");
+			sb.append("					<a href='../Logout'>Logout</a>");
 			sb.append("				</div>");
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='navigation'>");
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul class='nav navbar-nav'>");
-			sb.append("					<li id='lhome'><a href='/PotHub/Forum'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
+			sb.append("					<li id='lhome'><a href='../Forum'>Home</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='#'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
 			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
-			sb.append("			        		<li><a href='/PotHub/EventPage'>Events</a></li>");
-			sb.append("		        			<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
+			sb.append("			        		<li><a href='../EventPage'>Events</a></li>");
+			sb.append("		        			<li><a href='../MyEventPage'>My Events</a></li>");
 			sb.append("			        	</ul>");
 			sb.append("		    		</li>");
 			sb.append("					<li class='dropdown'>");
 			sb.append("			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
-			sb.append("			          		<li><a href='/PotHub/p2plist'>Active PotCasts</a></li>");
-			sb.append("			          		<li><a href='/PotHub/p2preg'>Start a PotCast</a></li>");
-			sb.append("			         	 	<li><a href='/PotHub/p2pmy'>My PotCast</a></li>");
-			sb.append("			          		<li><a href='/PotHub/p2pjoined'>Joined PotCast</a></li>");
+			sb.append("			          		<li><a href='../p2plist'>Active PotCasts</a></li>");
+			sb.append("			          		<li><a href='../p2preg'>Start a PotCast</a></li>");
+			sb.append("			         	 	<li><a href='../p2pmy'>My PotCast</a></li>");
+			sb.append("			          		<li><a href='../p2pjoined'>Joined PotCast</a></li>");
 			sb.append("			        	</ul>");
 			sb.append("			      	</li>");
-			sb.append("					<li id='ldonate'><a href='/PotHub/Donation'>Donate</a></li>");
+			sb.append("					<li id='ldonate'><a href='../Donation'>Donate</a></li>");
 			sb.append("				</ul>");
 			sb.append("			</div>");
 			sb.append("		</div>");
@@ -121,7 +128,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		  	<div class='row'>");
 			sb.append("				<div class='event-header'>");
 			sb.append("					<div class='event-header-image'>");
-			sb.append("						<img src='/PotHub/Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
+			sb.append("						<img src='../Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
 			sb.append("					</div>");
 			sb.append("					<div class='event-header-title-gradient'>");
 			sb.append("						<div class='event-title'>");
@@ -177,9 +184,9 @@ public class EventofEventPage extends HttpServlet {
 				for(String s:guestArray) {
 					sb.append("							<div>");
 					if(db.getUserProfilePic(s) != null)
-						sb.append("								<img src='/PotHub/Image/" + db.getUserProfilePic(s) + "' alt='Guests Profile Picture' height='50' width='50'><br>");
+						sb.append("								<img src='../Image/" + db.getUserProfilePic(s) + "' alt='Guests Profile Picture' height='50' width='50'><br>");
 					else
-						sb.append("								<img src='/PotHub/images/cat.png' alt='crab picture' height='50' width='50'><br>");
+						sb.append("								<img src='../images/cat.png' alt='crab picture' height='50' width='50'><br>");
 					sb.append("								<p>" + decodeString(s) + "</p>");
 					sb.append("							</div>");
 				}
@@ -195,7 +202,7 @@ public class EventofEventPage extends HttpServlet {
 			if(!galleryArray.isEmpty()) {
 				for(int s:galleryArray) {
 					String fileName = db.getImageByImageID(s);
-					sb.append("				<img src='/PotHub/Image/" + fileName + "' alt='Gallery Images'>");
+					sb.append("				<img src='../Image/" + fileName + "' alt='Gallery Images'>");
 				}
 			}
 			String[] parts = decodeString(eM.getVenue()).split("\\`");
@@ -237,7 +244,7 @@ public class EventofEventPage extends HttpServlet {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			response.sendRedirect("/PotHub/EventPage");
+			response.sendRedirect("EventPage");
 		}
     }
 
@@ -250,7 +257,7 @@ public class EventofEventPage extends HttpServlet {
 	}
 	
 	private String decodeString(String line) throws UnsupportedEncodingException {
-		return URLDecoder.decode(line, "UTF-8");
+		return Encode.forHtml(URLDecoder.decode(line, "UTF-8"));
 	}
 	
 	private String encodeString(String line) throws UnsupportedEncodingException {

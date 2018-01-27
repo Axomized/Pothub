@@ -59,11 +59,11 @@ function updateTime() {
 					if(seconds <= 0){
 						// End event db
 						$.ajax({
-							"url": "https://localhost/PotHub/BarcodeScanning",
+							"url": "BarcodeScanning",
 							"type": "POST",
 							"data": {"eventName": eventName, "status": "E"},
 							success() {
-								window.location.href = "/PotHub/EventofEvent/" + eventName;
+								window.location.href = "EventofEvent/" + eventName;
 							}
 						});
 						returnString = "Ongoing";
@@ -84,7 +84,7 @@ function getTime(){
 
 function checkPriviledge(isPriviledged){
 	if(isPriviledged === "true"){
-		window.location.href = "/PotHub/CreateEventPage";
+		window.location.href = "CreateEventPage";
 	}else{
 		$("#popup-container").show();
 	}

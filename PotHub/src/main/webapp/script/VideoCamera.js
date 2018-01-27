@@ -26,7 +26,7 @@ function startScanning() {
 		var ctx = canvas.getContext("2d");
 		ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 		var dataurl = canvas.toDataURL("image/png", 1);
-		xhttp.open("POST", "/PotHub/ProcessImage", true);
+		xhttp.open("POST", "ProcessImage", true);
 		xhttp.setRequestHeader("Content-Type", "application/upload");
 		xhttp.send(dataurl);
 	}, 500);
@@ -35,7 +35,7 @@ function startScanning() {
 function onSuccessScanning(barcodeResult){
 	// Set user to confirmed on db
 	$.ajax({
-		"url": "https://localhost/PotHub/BarcodeScanning",
+		"url": "BarcodeScanning",
 		"type": "POST",
 		"data": {"eventName": eventName, "iGN" : barcodeResult},
 		success() {
@@ -50,18 +50,18 @@ function onSuccessScanning(barcodeResult){
 					var img = document.createElement("img");
 					// Get User Profile Picture
 					$.ajax({
-						"url": "https://localhost/PotHub/Image",
+						"url": "Image",
 						"type": "POST",
 						"data": {"iGN" : barcodeResult},
 						success(res) {
 							if(res === "Empty"){
-								img.src = "https://localhost/PotHub/images/cat.png";
+								img.src = "images/cat.png";
 							}else {
-								img.src = "https://localhost/PotHub/Image/" + res;
+								img.src = "Image/" + res;
 							}
 						}
 					});
-					img.alt = "User's Profile Picture";
+					img.alt = "Users Profile Picture";
 					img.style.height = "50px";
 					img.style.width = "50px";
 					p.appendChild(pco);
@@ -71,7 +71,7 @@ function onSuccessScanning(barcodeResult){
 					var num = $("#numLeft").text().substring(0, 1);
 					num -= 1;
 					$("#numLeft").text(num + " have not scanned");
-					var audio = new Audio('/PotHub/images/sound.mp3');
+					var audio = new Audio('images/sound.mp3');
 					audio.play();
 					stompClient.send("/topic/" + barcodeResult, {}, barcodeResult);
 				}
@@ -81,7 +81,7 @@ function onSuccessScanning(barcodeResult){
 }
 
 function stopRecording(){
-	window.location.href = "/PotHub/OwnerLeaderboardPage";
+	window.location.href = "OwnerLeaderboardPage";
 }
 
 xhttp.onreadystatechange = function aaa() {

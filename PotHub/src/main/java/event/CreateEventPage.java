@@ -44,9 +44,8 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("		<meta charset='UTF-8'>");
 		sb.append("		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>");
 		sb.append("		<!-- Favicon -->");
-		sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.gif' type='image/gif'>");
-		sb.append("		<link rel='icon' href='https://localhost/PotHub/images/crab.png?v=2' type='image/x-icon'>");
-		sb.append("		<link rel='icon' href='http://localhost:8080/PotHub/images/crab.png?v=2' type='image/x-icon'>");
+		sb.append("		<link rel='icon' href='images/crab.gif' type='image/gif'>");
+		sb.append("		<link rel='icon' href='images/crab.png?v=2' type='image/x-icon'>");
 		sb.append("		<!-- Page Title -->");
 		sb.append("		<title>Create Event Page</title>");
 		sb.append("		<!-- Latest compiled and CSS -->");
@@ -65,90 +64,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("			</div>");
 		sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 		sb.append("				<div id='profilePic'>");
-		sb.append("					<img src='images/profile.png' alt='profilePicture' height='50' width='50'/>");
-		sb.append("					<span id='welcomeSpan'>Welcome, [Placeholder]</span>");
-		sb.append("				</div>");
-		sb.append("				<div id='profileDropdownDiv'>");
-		sb.append("					<a href='/PotHub/Profile'>Profile</a>");
-		sb.append("					<a href='/PotHub/Logout'>Logout</a>");
-		sb.append("				</div>");
-		sb.append("			</div>");
-		sb.append("		</div>");
-		sb.append("		<div id='navigation'>");
-		sb.append("			<ul>");
-		sb.append("				<li id='lhome'><a href='/PotHub/Forum'>Home</a></li>");
-		sb.append("				<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
-		sb.append("				<li class='dropdown'>");
-		sb.append("		        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
-		sb.append("			        <ul class='dropdown-menu'>");
-		sb.append("			        	<li><a href='/PotHub/EventPage'>Events</a></li>");
-		sb.append("		        		<li><a href='/PotHub/MyEventPage'>My Events</a></li>");
-		sb.append("			        </ul>");
-		sb.append("		    	</li>");
-		sb.append("				<li class='dropdown'>");
-		sb.append("			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
-		sb.append("			        <ul class='dropdown-menu'>");
-		sb.append("			          <li><a href='/PotHub/p2plist'>Active PotCasts</a></li>");
-		sb.append("			          <li><a href='/PotHub/p2preg'>Start a PotCast</a></li>");
-		sb.append("			          <li><a href='/PotHub/p2pmy'>My PotCast</a></li>");
-		sb.append("			          <li><a href='/PotHub/p2pjoined'>Joined PotCast</a></li>");
-		sb.append("			        </ul>");
-		sb.append("			      </li>");
-		sb.append("				<li id='ldonate'><a href='/PotHub/Donation'>Donate</a></li>");
-		sb.append("			</ul>");
-		sb.append("		</div>");
-		sb.append("		<div id='wrapper'>");
-		sb.append("			<form method='post' enctype='multipart/form-data' onsubmit='return validateForm()'>");
-		sb.append("				<div id='thumbnail-container' class='form-group'>");
-		sb.append("					<p><b>Thumbnail</b><span class='requiredInput'>*</span></p>");
-		sb.append("					<div id='thumbnail-container-container'>");
-		sb.append("						<img src='images/wood.jpeg' alt='crab' height='100' width='200' id='chosenThumbnail'>");
-		sb.append("						<div id='thumbnail-container-buttons'>");
-		sb.append("							<input type='button' class='btn' value='Select' onclick='showDefault()'> or");
-		sb.append("							<input type='file' class='form-control-file' accept='image/*' id='fileUpload' name='thumbnailUpload'>");
-		sb.append("							<input type='hidden' id='fileNum' name='DefaultNumber' value='1'>");
-		sb.append("						</div>");
-		sb.append("					</div>");
-		sb.append("					<div id='default-thumbnail'>");
-		sb.append("						<img src='images/wood.jpeg' alt='crab' height='50' width='100' onclick='changeThumbnail(this, 4)'>");
-		sb.append("						<img src='images/blue.jpeg' alt='food' height='50' width='100' onclick='changeThumbnail(this, 5)'>");
-		sb.append("						<img src='images/mountain.jpeg' alt='SomeKoreanStar' height='50' width='100' onclick='changeThumbnail(this, 6)'>");
-		sb.append("					</div>");
-		sb.append("				</div>");
-		sb.append("				<div id='eventname-container' class='row form-group'>");
-		sb.append("					<div id='eventname' class='col form-group'>");
-		sb.append("						<p><b>Event Name</b><span class='requiredInput'>*</span></p>");
-		sb.append("						<input type='text' class='form-control' name='EventName' id='eventName' required>");
-		sb.append("					</div>");
-		sb.append("					<div id='maxamtofppt' class='col form-group'>");
-		sb.append("						<p><b>Max Participants</b><span class='requiredInput'>*</span></p>");
-		sb.append("						<input type='number' class='form-control' name='MaxAmtPpt' min='1' max='1000' required>");
-		sb.append("					</div>");
-		sb.append("					<div id='autoaccept' class='col form-group'>");
-		sb.append("						<p><b>Auto Accept Request</b></p>");
-		sb.append("						<input type='checkbox' class='form-check-input' name='AutoAccept'>");
-		sb.append("					</div>");
-		sb.append("					<div id='postalcode' class='col form-group'>");
-		sb.append("						<p><b>Postal Code</b><span class='requiredInput'>*</span></p>");
-		sb.append("						<input type='text' id='postalInput' class='form-control' name='PostalCode'>");
-		sb.append("					</div>");
-		sb.append("					<div id='eventaddress' class='col form-group'>");
-		sb.append("						<p><b>Address</b><span class='requiredInput'>*</span></p>");
-		sb.append("						<input type='text' class='form-control' id='mainAddress' name='Address'><br>");
-		sb.append("						<input type='text' class='form-control' id='additionalAddress' name='AdditionalAddress'>");
-		sb.append("					</div>");
-		sb.append("				</div>");
-		sb.append("				<div id='description-container' class='form-group row'>");
-		sb.append("					<p><b>Description</b></p>");
-		sb.append("					<textarea id='description' class='form-control' placeholder='Type here...' name='EventDesc'></textarea>");
-		sb.append("				</div>");
-		sb.append("				<div id='guest-container' class='form-group'>");
-		sb.append("					<p><b>Guest</b></p>");
-		sb.append("					<div>");
-		sb.append("						<div id='guest-container-left-container'>");
-		sb.append("							<input type='text' id='textguestname' list='guestnamelist' autocomplete='off' class='form-control'>");
-		sb.append("							<input type='hidden' id='guestNameList' name='GuestName'>");
-		sb.append("							<datalist id='guestnamelist'>");
+		
 		header = sb.toString().getBytes();
 		sb.delete(0, sb.length());
 		
@@ -187,7 +103,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("			<div id='popup-container'>");
 		sb.append("				<i class='fa fa-window-close fa-3x' aria-hidden='true' id='closeBtn'></i>");
 		sb.append(				"<div id='closeBtnDiv'></div>");
-		sb.append("				<iframe src='/PotHub/html/EventofEventPage.html' id='iframeEvent'></iframe>");
+		sb.append("				<iframe src='html/EventofEventPage.html' id='iframeEvent'></iframe>");
 		sb.append("			</div>");
 		sb.append("		</div>");
 		sb.append("		<div id='footer'>");
@@ -211,8 +127,9 @@ public class CreateEventPage extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 	        HttpSession session = request.getSession(false);
+	        String username = "";
 	        if (session != null) {
-	            
+	        	username = (String)session.getAttribute("username");
 	        }
 	        else {
 	            response.sendRedirect("Login");
@@ -223,6 +140,97 @@ public class CreateEventPage extends HttpServlet {
 			ServletOutputStream out = response.getOutputStream();
 			out.write(header);
 			StringBuffer sb = new StringBuffer();
+			String currentProfilePic = db.getUserProfilePic(username);
+			if(currentProfilePic != null) {
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+			}else {
+				sb.append("					<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
+			}
+			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
+			sb.append("				</div>");
+			sb.append("				<div id='profileDropdownDiv'>");
+			sb.append("					<a href='Profile'>Profile</a>");
+			sb.append("					<a href='Logout'>Logout</a>");
+			sb.append("				</div>");
+			sb.append("			</div>");
+			sb.append("		</div>");
+			sb.append("		<div id='navigation'>");
+			sb.append("			<div class='container-fluid'>");
+			sb.append("				<ul>");
+			sb.append("					<li id='lhome'><a href='Forum'>Home</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
+			sb.append("					<li class='dropdown'>");
+			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+			sb.append("			        	<ul class='dropdown-menu'>");
+			sb.append("			        		<li><a href='EventPage'>Events</a></li>");
+			sb.append("		        			<li><a href='MyEventPage'>My Events</a></li>");
+			sb.append("			        	</ul>");
+			sb.append("		    		</li>");
+			sb.append("					<li class='dropdown'>");
+			sb.append("			       	 	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Potcast</a>");
+			sb.append("			        	<ul class='dropdown-menu'>");
+			sb.append("			          		<li><a href='p2plist'>Active PotCasts</a></li>");
+			sb.append("			          		<li><a href='p2preg'>Start a PotCast</a></li>");
+			sb.append("			          		<li><a href='p2pmy'>My PotCast</a></li>");
+			sb.append("			          		<li><a href='p2pjoined'>Joined PotCast</a></li>");
+			sb.append("			       		</ul>");
+			sb.append("			      	</li>");
+			sb.append("					<li id='ldonate'><a href='Donation'>Donate</a></li>");
+			sb.append("				</ul>");
+			sb.append("			</div>");
+			sb.append("		</div>");
+			sb.append("		<div id='wrapper'>");
+			sb.append("			<form method='post' enctype='multipart/form-data' onsubmit='return validateForm()'>");
+			sb.append("				<div id='thumbnail-container' class='form-group'>");
+			sb.append("					<p><b>Thumbnail</b><span class='requiredInput'>*</span></p>");
+			sb.append("					<div id='thumbnail-container-container'>");
+			sb.append("						<img src='images/wood.jpeg' alt='crab' height='100' width='200' id='chosenThumbnail'>");
+			sb.append("						<div id='thumbnail-container-buttons'>");
+			sb.append("							<input type='button' class='btn' value='Select' onclick='showDefault()'> or");
+			sb.append("							<input type='file' class='form-control-file' accept='image/*' id='fileUpload' name='thumbnailUpload'>");
+			sb.append("							<input type='hidden' id='fileNum' name='DefaultNumber' value='1'>");
+			sb.append("						</div>");
+			sb.append("					</div>");
+			sb.append("					<div id='default-thumbnail'>");
+			sb.append("						<img src='images/wood.jpeg' alt='crab' height='50' width='100' onclick='changeThumbnail(this, 4)'>");
+			sb.append("						<img src='images/blue.jpeg' alt='food' height='50' width='100' onclick='changeThumbnail(this, 5)'>");
+			sb.append("						<img src='images/mountain.jpeg' alt='SomeKoreanStar' height='50' width='100' onclick='changeThumbnail(this, 6)'>");
+			sb.append("					</div>");
+			sb.append("				</div>");
+			sb.append("				<div id='eventname-container' class='row form-group'>");
+			sb.append("					<div id='eventname' class='col form-group'>");
+			sb.append("						<p><b>Event Name</b><span class='requiredInput'>*</span></p>");
+			sb.append("						<input type='text' class='form-control' name='EventName' id='eventName' required>");
+			sb.append("					</div>");
+			sb.append("					<div id='maxamtofppt' class='col form-group'>");
+			sb.append("						<p><b>Max Participants</b><span class='requiredInput'>*</span></p>");
+			sb.append("						<input type='number' class='form-control' name='MaxAmtPpt' min='1' max='1000' required>");
+			sb.append("					</div>");
+			sb.append("					<div id='autoaccept' class='col form-group'>");
+			sb.append("						<p><b>Auto Accept Request</b></p>");
+			sb.append("						<input type='checkbox' class='form-check-input' name='AutoAccept'>");
+			sb.append("					</div>");
+			sb.append("					<div id='postalcode' class='col form-group'>");
+			sb.append("						<p><b>Postal Code</b><span class='requiredInput'>*</span></p>");
+			sb.append("						<input type='text' id='postalInput' class='form-control' name='PostalCode'>");
+			sb.append("					</div>");
+			sb.append("					<div id='eventaddress' class='col form-group'>");
+			sb.append("						<p><b>Address</b><span class='requiredInput'>*</span></p>");
+			sb.append("						<input type='text' class='form-control' id='mainAddress' name='Address'><br>");
+			sb.append("						<input type='text' class='form-control' id='additionalAddress' name='AdditionalAddress'>");
+			sb.append("					</div>");
+			sb.append("				</div>");
+			sb.append("				<div id='description-container' class='form-group row'>");
+			sb.append("					<p><b>Description</b></p>");
+			sb.append("					<textarea id='description' class='form-control' placeholder='Type here...' name='EventDesc'></textarea>");
+			sb.append("				</div>");
+			sb.append("				<div id='guest-container' class='form-group'>");
+			sb.append("					<p><b>Guest</b></p>");
+			sb.append("					<div>");
+			sb.append("						<div id='guest-container-left-container'>");
+			sb.append("							<input type='text' id='textguestname' list='guestnamelist' autocomplete='off' class='form-control'>");
+			sb.append("							<input type='hidden' id='guestNameList' name='GuestName'>");
+			sb.append("							<datalist id='guestnamelist'>");
 			for(String s:db.getDatabaseUserIGN()) {
 				sb.append("<option>" + s + "</option>");
 			}
@@ -235,7 +243,7 @@ public class CreateEventPage extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
-			response.sendRedirect("/PotHub/Login");
+			response.sendRedirect("Login");
 		}
 	}
 
@@ -304,7 +312,7 @@ public class CreateEventPage extends HttpServlet {
 		    eM.setStatus("H");
 		    db.insertCreateEvent(eM);
 		    
-		    response.sendRedirect("/PotHub/MyEventPage");
+		    response.sendRedirect("MyEventPage");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

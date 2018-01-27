@@ -14,12 +14,8 @@ xhttp.onreadystatechange = function aaa() {
 	}
 };
 
-function showProfileDropdown() {
-	document.getElementById("profileDropdownDiv").style.display = "block";
-}
-
-function hideProfileDropdown() {
-	document.getElementById("profileDropdownDiv").style.display = "none";
+function htmlEncode(value){
+	return $('<div/>').text(value).html();
 }
 
 // For Iframe"s script
@@ -49,15 +45,15 @@ function showPreview() {
 			}
 			contents.find(".headerImage").attr("src", src);
 		}
-		contents.find(".title").text(decodeURI(encodeURI($("#eventName").val())));
-		contents.find(".desc").text(decodeURI(encodeURI($("#description").val())));
+		contents.find(".title").text(htmlEncode($("#eventName").val()));
+		contents.find(".desc").text(htmlEncode($("#description").val()));
 		var guestDiv = contents.find(".guest");
 		var guestInputValue = $("#guestNameList").val();
 		var guestArray = guestInputValue.split("_");
 		for(var j = 0; i < guestArray.length; j++) {
 			var div = $(document.createElement("div"));
-			div.append("<img src=\"../images/cat.png\" alt=\"Guest's Profile Picture\" height=\"50\" width=\"50\"><br>");
-			div.append("<p>" + decodeURI(encodeURI(guestArray.j)) + "</p>");
+			div.append("<img src=\"../images/cat.png\" alt=\"Guests Profile Picture\" height=\"50\" width=\"50\"><br>");
+			div.append("<p>" + htmlEncode(guestArray.j) + "</p>");
 			guestDiv.append(div);
 		}
 		var eventGallery = contents.find(".event-gallery"); //Iframe"s gallery
@@ -68,15 +64,15 @@ function showPreview() {
 				var reader = new FileReader();
 
 				reader.onload = function aaa(e) {
-					eventGallery.append("<img src=\"" + e.target.result + "\" alt=\"Gallery's pictures\">");
+					eventGallery.append("<img src=\"" + e.target.result + "\" alt=\"Gallerys pictures\">");
 				};
 				reader.readAsDataURL(input.files.i);
 			}
 		}
 		var googleMapLink = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBksQSICQgS5CoCf49IyTtozR8R198pTS0&q=" + encodeURI($("#mainAddress").val());
 		var googleMap = contents.find("#googleMap").attr("src", googleMapLink);
-		var address = encodeURI($("#mainAddress").val() + ", " + $("#additionalAddress").val());
-		contents.find(".venue").text(decodeURI(address));
+		var address = htmlEncode($("#mainAddress").val() + ", " + $("#additionalAddress").val());
+		contents.find(".venue").text(address);
 		var timedate = $("#eventDate").val() + " " + $("#timeinput").val();
 		contents.find(".time").text(timedate);
 		$("#popup-container").show();
@@ -178,7 +174,7 @@ $(function(){
 			$("#mainAddress").prop("readonly", false);
 		}else if(line.length > 0){
 			$("#mainAddress").prop("readonly", true);
-			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.open("POST", "GoogleGeocoding", true);
 			xhttp.send(line);
 		}
 	});
@@ -189,7 +185,7 @@ $(function(){
 			$("#mainAddress").prop("readonly", false);
 		}else if(line.length > 0){
 			$("#mainAddress").prop("readonly", true);
-			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.open("POST", "GoogleGeocoding", true);
 			xhttp.send(line);
 		}
 	});
@@ -200,7 +196,7 @@ $(function(){
 			$("#postalInput").prop("readonly", false);
 		}else if(line.length > 0){
 			$("#postalInput").prop("readonly", true);
-			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.open("POST", "GoogleGeocoding", true);
 			xhttp.send(line);
 		}
 	});
@@ -211,7 +207,7 @@ $(function(){
 			$("#postalInput").prop("readonly", false);
 		}else if(line.length > 0){
 			$("#postalInput").prop("readonly", true);
-			xhttp.open("POST", "/PotHub/GoogleGeocoding", true);
+			xhttp.open("POST", "GoogleGeocoding", true);
 			xhttp.send(line);
 		}
 	});
@@ -246,7 +242,7 @@ $(function(){
 				reader.onload = function aaa(e) {
 					$("#gallery").append(
 							"<div class=\"removableImage\" style=\"position:relative;\">" +
-							"<img src=\"" + e.target.result + "\" alt=\"User's pictures\" height=\"100px\" width=\"200px\" onclick=\"removeImg(this)\" >" +
+							"<img src=\"" + e.target.result + "\" alt=\"Users pictures\" height=\"100px\" width=\"200px\" onclick=\"removeImg(this)\" >" +
 							"<div style=\"position:absolute;top:0;left:0;width:200px;height:100px;z-index:1;background-color:rgba(155,155,155,0.5);display:none\"></div>" +
 					"</div>");
 
@@ -268,3 +264,12 @@ $(function(){
 		showDefault();
 	});
 });
+
+// Profile
+function showProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "block";
+}
+
+function hideProfileDropdown() {
+	document.getElementById("profileDropdownDiv").style.display = "none";
+}

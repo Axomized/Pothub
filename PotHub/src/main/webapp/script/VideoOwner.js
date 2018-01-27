@@ -19,7 +19,7 @@ var start = true;
 $(document).ready(function aaa(){
 	$("#backToBarcodeBtn").click(function aaa() {
 		stompDisconnect();
-		window.location.replace("VideoCamera.html"); //Change to servlet once done
+		window.location.replace("BarcodeScanning"); //Change to servlet once done
 	});
 	
 	$("#startStreamingBtn").click(function aaa() {
@@ -68,11 +68,11 @@ $(document).ready(function aaa(){
 			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "End", "userToDisplay": iGN}));
 			// End event db
 			$.ajax({
-				"url": "https://localhost/PotHub/BarcodeScanning",
+				"url": "BarcodeScanning",
 				"type": "POST",
 				"data": {"eventName": eventName, "status": "E"},
 				success() {
-					window.location.href = "/PotHub/EventofEvent/" + eventName;
+					window.location.href = "EventofEvent/" + eventName;
 				}
 			});
 		}

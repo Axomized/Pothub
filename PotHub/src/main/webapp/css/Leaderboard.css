@@ -1,11 +1,11 @@
 @CHARSET "ISO-8859-1";
 
 html {
+	height: 100%;
 	margin: 0;
 	padding: 0;
 	color: #aaaaaa;
 	background-color: #f8eee7;
-	height: 100%;
 	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
 }
 
@@ -54,7 +54,6 @@ body {
 	text-align: center; 
 	background-color: #f3decb;
 }
-
 /* Header */
 
 #header p { 
@@ -88,7 +87,7 @@ body {
 	background-color: #f8eee7;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 3;
 }
 
 #profileDropdownDiv a {
@@ -142,6 +141,10 @@ body {
 
 #navigation a:hover, #navigation a:active {
 	color: #94618e;
+}
+
+.navbar-nav{
+	display: inline;
 }
 
 .dropdown-menu > li{

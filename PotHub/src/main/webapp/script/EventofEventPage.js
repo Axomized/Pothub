@@ -18,11 +18,11 @@ function changeColor(button) {
 }
 
 function redirectToInteractive() {
-	window.location.href = "/PotHub/ShowBarcode";
+	window.location.href = "ShowBarcode";
 }
 
 function redirectToInteractiveOwner() {
-	window.location.href = "/PotHub/BarcodeScanning";
+	window.location.href = "BarcodeScanning";
 }
 
 /* Profile */

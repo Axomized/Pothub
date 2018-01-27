@@ -146,6 +146,10 @@ body {
 	color: #94618e;
 }
 
+.navbar-nav{
+	display: inline;
+}
+
 .dropdown-menu > li{
 	width: 120px;
 	background: #49274a;

@@ -154,11 +154,11 @@ function displayBar(userTo, score, index){
 	var img1 = document.createElement("img"); 	// <img/>
 	// Get User Profile Picture
 	$.ajax({
-		"url": "https://localhost/PotHub/Image",
+		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : userTo},
 		success(res) {
-			img1.src = "https://localhost/PotHub/Image/" + res;
+			img1.src = "Image/" + res;
 		}
 	});
 	var p2 = document.createElement("p"); 		// <p></p>
@@ -207,11 +207,11 @@ function displayUsersDetail(lbd) {
 		
 		// Get User Profile Picture
 		$.ajax({
-			"url": "https://localhost/PotHub/Image",
+			"url": "Image",
 			"type": "POST",
 			"data": {"iGN" : iGN},
 			success(res) {
-				$("#displayImage").attr("src", "https://localhost/PotHub/Image/" + res);
+				$("#displayImage").attr("src", "Image/" + res);
 			}
 		});
 		$("#displayName").text(decodeURI(title));
@@ -221,11 +221,11 @@ function displayUsersDetail(lbd) {
 	}else {
 		// Get User Profile Picture
 		$.ajax({
-			"url": "https://localhost/PotHub/Image",
+			"url": "Image",
 			"type": "POST",
 			"data": {"iGN" : iGN},
 			success(res) {
-				$("#displayImage").attr("src", "https://localhost/PotHub/Image/" + res);
+				$("#displayImage").attr("src", "Image/" + res);
 			}
 		});
 		$("#displayName").text("User never register");
@@ -239,26 +239,26 @@ function displayUsersDetail(lbd) {
 function displayAndAnimateBar(json) {
 	currentTotalRank = currentArray.length + 1
 	//Display top 3 (Not working yet)
-	$("1stPlace").children().eq(0).children().eq(0).attr("src", "https://localhost/PotHub/images/cat.png");
+	$("1stPlace").children().eq(0).children().eq(0).attr("src", "images/cat.png");
 	/*
 	for(v in json){
 		if(v < 3){
 			//console.log(json[v].userTo);
 			// Get User Profile Picture
 			$.ajax({
-				"url": "https://localhost/PotHub/Image",
+				"url": "https://webapp-180126154704.azurewebsites.net/Image",
 				"type": "POST",
 				"data": {"iGN" : json[v].userTo},
 				success(res) {
 					switch(v){
 						case 0:
-							$("#1stPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							$("#1stPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
 							break;
 						case 1:
-							$("#2ndPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							$("#2ndPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
 							break;
 						case 2:
-							$("3rdPlace").children("div").children("img").attr("src", "https://localhost/PotHub/Image/" + res);
+							$("3rdPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
 							break;
 					}
 				}
@@ -303,11 +303,11 @@ function displayLeaderboardDetails(lbd){
 	
 	// Get User Profile Picture
 	$.ajax({
-		"url": "https://localhost/PotHub/Image",
+		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : iGN},
 		success(res) {
-			$("#displayImage").attr("src", "https://localhost/PotHub/Image/" + res);
+			$("#displayImage").attr("src", "Image/" + res);
 		}
 	});
 	$("#displayName").text(decodeURI(title));
@@ -322,11 +322,11 @@ function startVotingDisplay(userTo) {
 	$("#popupIGN").text(userTo);
 	// Get User Profile Picture
 	$.ajax({
-		"url": "https://localhost/PotHub/Image",
+		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : userTo},
 		success(res) {
-			$("#popupPicture").attr("src", "https://localhost/PotHub/Image/" + res);
+			$("#popupPicture").attr("src", "Image/" + res);
 		}
 	});
 	document.getElementById("popupBackground").style.display = "block";

@@ -1,7 +1,7 @@
 package database;
 
-import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -14,8 +14,8 @@ public class EncryptionTesting {
 		ArrayList<String> scannerArray = new ArrayList<String>(); 
 		AES aes = null;
 
-		File file = new File(System.getProperty("user.home") + "/Documents/GitHub/PotHub/PotHub/src/main/java/database/TomatoFactoryPlans.txt");
-		Scanner sc = new Scanner(file);
+		InputStream is = getClass().getResourceAsStream("TomatoFactoryPlans.txt");
+		Scanner sc = new Scanner(is);
 		while (sc.hasNextLine()) {
 			String line = sc.nextLine();
 			scannerArray.add(line);

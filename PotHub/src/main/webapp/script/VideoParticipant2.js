@@ -10,10 +10,19 @@ function startConnection(){
 	
 	connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
 
+	var constraints;
+	//if a user is using a mobile browser
+	if(jQuery.browser.mobile){
+	    constraints = {"audio":true, "video": {"facingMode":"user"}};
+	}else {
+		constraints = {"audio":true, "video":{"width":1280,"height":720}};
+	}
+	
 	connection.sdpConstraints.mandatory = {
 			"OfferToReceiveAudio": false,
 			"OfferToReceiveVideo": false
 	};
+	connection.mediaConstraints = constraints;
 	
 	connection.userid = localUsername;
 	connection.videosContainer = document.getElementById("videos-container");

@@ -3,7 +3,7 @@ function connect(iGN) {
 	stompClient = Stomp.over(socket);
 	stompClient.connect({}, function (frame) {
 		stompClient.subscribe("/topic/" + iGN, function aaa() {
-			window.location.href = "/PotHub/ParticipantLeaderboardPage";
+			window.location.href = "ParticipantLeaderboardPage";
 		});
 	});
 }

@@ -57,7 +57,6 @@ body {
 	text-align: center; 
 	background-color: #f3decb;
 }
-
 /* Header */
 
 #header p { 
@@ -146,6 +145,10 @@ body {
 
 #navigation a:hover, #navigation a:active {
 	color: #94618e;
+}
+
+.navbar-nav{
+	display: inline;
 }
 
 .dropdown-menu > li{
