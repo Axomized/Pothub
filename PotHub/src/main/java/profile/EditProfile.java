@@ -181,7 +181,7 @@ public class EditProfile extends HttpServlet {
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
 					}
 					else {
 						out.print("<img src='images/profile.png' height='150' width='150'/>");
@@ -461,7 +461,7 @@ public class EditProfile extends HttpServlet {
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/PotHub/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
 					}
 					else {
 						out.print("<img src='images/profile.png' height='150' width='150'/>");
