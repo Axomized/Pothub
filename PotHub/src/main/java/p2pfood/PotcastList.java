@@ -118,7 +118,16 @@ public class PotcastList extends HttpServlet {
 					+ "	<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'></script>"
 					+ "<!-- Optional theme -->" + "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 					+ "<!-- My Own Script -->" + "<script src='script/p2plist.js'></script>" + "<!-- My Style Sheet -->"
-					+ "<link rel='stylesheet' type='text/css' href='css/p2plist.css' />" + "</head>" + "<body>"
+					+ "<link rel='stylesheet' type='text/css' href='css/p2plist.css' />" 
+					+ "    <style>"
+					+ "      #map {"
+					+ "        height: 1000px;"
+					+ "        width: 1500px;"
+					+ "        margin: 50px;"	
+					+ "        border-radius: 20px;"	
+					+ "      }"
+					+ "    </style>"
+					+ "</head>" + "<body>"
 					+ "	<!--  Navigation Bar -->" + "		<div id='header'>" + "<div id='companyTitle'>"
 					+ "<h1>PotHub</h1>" + "</div>"
 					+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
@@ -163,7 +172,10 @@ public class PotcastList extends HttpServlet {
 					+ "</ul>" + "</div>" + "<div id='radios2'>" + "<ul>"
 					+ "<li><input type='radio' name='searchOrder' id='radioAscend' value='asc'></input><label for='radioAscend'>Ascending</label></li>"
 					+ "<li><input type='radio' name='searchOrder' id='radioDescend' value='desc'></input><label for='radioDescend'>Descending</label></li>"
-					+ "</ul>" + "</div>" + "</form>" + "</div>" + "</div>" + "</div></div>" + "<h1>Closing soon:</h1>");
+					+ "</ul>" + "</div>" + "</form>" + "</div>" + "</div>" + "</div></div>" 
+					+ "<button onclick=openNav()>Open Map</button>");
+					pw.append( "<h1>Closing soon:</h1>");
+			
 			int counter3 = 0;
 			for (PotcastModel ap : top3Potcasts) {
 
@@ -248,11 +260,101 @@ public class PotcastList extends HttpServlet {
 			}
 
 			pw.append("</div>"
+					
++ "<div id='myNav' class='overlay'>"
++ "<a href='javascript:void(0)' class='closebtn' onclick='closeNav()'>&times;</a>"
++ "    <div id='map'></div>"
++ "</div>"
++ "    <script>"
++ "      function initMap() {"
++ "        var bounds = new google.maps.LatLngBounds;"
++ "        var markersArray = [];"
++ ""
++ "        var origin1 = 'Singapore 556748';"
++ ""
++ "        var destinationIcon = 'https://chart.googleapis.com/chart?' +"
++ "            'chst=d_map_pin_letter&chld=D|FF0000|000000';"
++ "        var originIcon = 'https://chart.googleapis.com/chart?' +"
++ "            'chst=d_map_pin_letter&chld=O|FFFF00|000000';"
++ "        var map = new google.maps.Map(document.getElementById('map'), {"
++ "          center: {lat: 1.29, lng: 103.85},"
++ "          zoom: 8"
++ "        });"
++ "        var geocoder = new google.maps.Geocoder;"
++ ""
++ "        var service = new google.maps.DistanceMatrixService;"
++ "        service.getDistanceMatrix({"
++ "          origins: [origin1],"
++ "          destinations: [");
+			
+			boolean notFirst=false;
+			System.out.println(postalCodes);
+			for(String postCode : postalCodes){
+				if(notFirst){
+					pw.append(",");
+				}
+				pw.append("'Singapore "+postCode+"'");
+				notFirst=true;
+			}
+			
+pw.append("],"
++ "          travelMode: 'DRIVING',"
++ "          unitSystem: google.maps.UnitSystem.METRIC,"
++ "          avoidHighways: false,"
++ "          avoidTolls: false"
++ "        }, function(response, status) {"
++ "          if (status !== 'OK') {"
++ "            alert('Error was: ' + status);"
++ "          } else {"
++ "            var originList = response.originAddresses;"
++ "            var destinationList = response.destinationAddresses;"
++ "            deleteMarkers(markersArray);"
++ ""
++ "            var showGeocodedAddressOnMap = function(asDestination) {"
++ "              var icon = asDestination ? destinationIcon : originIcon;"
++ "              return function(results, status) {"
++ "                if (status === 'OK') {"
++ "                  map.fitBounds(bounds.extend(results[0].geometry.location));"
++ "                  markersArray.push(new google.maps.Marker({"
++ "                    map: map,"
++ "                    position: results[0].geometry.location,"
++ "                    icon: icon"
++ "                  }));"
++ "                } else {"
++ "                  alert('Geocode was not successful due to: ' + status);"
++ "                }"
++ "              };"
++ "            };"
++ ""
++ "            for (var i = 0; i < originList.length; i++) {"
++ "              var results = response.rows[i].elements;"
++ "              geocoder.geocode({'address': originList[i]},"
++ "                  showGeocodedAddressOnMap(false));"
++ "              for (var j = 0; j < results.length; j++) {"
++ "                geocoder.geocode({'address': destinationList[j]},"
++ "                    showGeocodedAddressOnMap(true));"
++ "              }"
++ "            }"
++ "          }"
++ "        });"
++ "      }"
++ ""
++ "      function deleteMarkers(markersArray) {"
++ "        for (var i = 0; i < markersArray.length; i++) {"
++ "          markersArray[i].setMap(null);"
++ "        }"
++ "        markersArray = [];"
++ "      }"
++ "    </script>"
++ "    <script async defer "
++ "    src='https://maps.googleapis.com/maps/api/js?key=AIzaSyDmftQ7JHdzj22y3wlP01IH_LlTgFQ3JOE&callback=initMap'>"
++ "    </script>"
 
 					+ "<div id='footer'>" + "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
 					+ "<p>We like food</p>" + "<p>"
 					+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>" + "</p>"
-					+ "</div>" + "</body>" + "</html>");
+					+ "</div>" 
+					+"</body>" + "</html>");
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
