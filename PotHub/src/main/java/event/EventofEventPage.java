@@ -52,7 +52,7 @@ public class EventofEventPage extends HttpServlet {
 	            session.setAttribute("EventName", nameOfEvent);
 	        }
 	        else {
-	            response.sendRedirect("Login");
+	            response.sendRedirect("../Login");
 	        }
 			String status = db.getWhetherPeopleEventList(db.getEventIDFromEventName(nameOfEvent), username);
 			
@@ -137,7 +137,7 @@ public class EventofEventPage extends HttpServlet {
 			
 			if(eM.getiGN().equals(username)) {
 				sb.append("						<div class='event-header-button'>");
-				sb.append("							<button class='btn btn-danger' onclick='changeColor(this)'>Delete Event</button> <!-- Servlet change the text according to status -->");
+				sb.append("							<button class='btn btn-danger' onclick=\"changeColor(this); closeEvent('" + nameOfEvent + "')\">Delete Event</button> <!-- Servlet change the text according to status -->");
 				sb.append("						</div>");
 				sb.append("						<div class='event-header-button2'>");
 				sb.append("							<button class='btn btn-info' onclick='redirectToInteractiveOwner()'>Barcode Scanning</button> <!-- Servlet change the text according to status -->");
@@ -146,7 +146,7 @@ public class EventofEventPage extends HttpServlet {
 				switch(status) {
 				case "C":
 					sb.append("						<div class='event-header-button'>");
-					sb.append("							<button class='btn btn-danger' onclick='changeColor(this)'>Confirmed</button> <!-- Servlet change the text according to status -->");
+					sb.append("							<button class='btn btn-danger' onclick=\"changeColor(this); removeConfirmRequest('" + nameOfEvent + "', '" + username + "'')\">Confirmed</button> <!-- Servlet change the text according to status -->");
 					sb.append("						</div>");
 					sb.append("						<div class='event-header-button2'>");
 					sb.append("							<button class='btn btn-info' onclick='redirectToInteractive()'>My Barcode</button> <!-- Servlet change the text according to status -->");
@@ -154,12 +154,12 @@ public class EventofEventPage extends HttpServlet {
 					break;
 				case "P":
 					sb.append("						<div class='event-header-button'>");
-					sb.append("							<button class='btn btn-warning' onclick='changeColor(this)'>Pending</button> <!-- Servlet change the text according to status -->");
+					sb.append("							<button class='btn btn-warning' onclick=\"changeColor(this); removePendingRequest('" + nameOfEvent + "', '" + username + "')\">Pending</button> <!-- Servlet change the text according to status -->");
 					sb.append("						</div>");
 					break;
 				default:
 					sb.append("						<div class='event-header-button'>");
-					sb.append("							<button class='btn btn-success' onclick='changeColor(this)'>Join</button> <!-- Servlet change the text according to status -->");
+					sb.append("							<button class='btn btn-success' onclick=\"changeColor(this); sendJoinRequest('" + nameOfEvent + "', '" + username + "')\">Join</button> <!-- Servlet change the text according to status -->");
 					sb.append("						</div>");
 					break;
 				}
@@ -244,16 +244,51 @@ public class EventofEventPage extends HttpServlet {
 			e.printStackTrace();
 		} catch (NullPointerException e) {
 			e.printStackTrace();
-			response.sendRedirect("EventPage");
+			response.sendRedirect("../EventPage");
 		}
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		String type = request.getParameter("Type");
+		if(type.isEmpty() || type == null) {
+			doGet(request, response);
+		}else {
+			try {
+				final Database DB = new Database(2);
+				String eventName = request.getParameter("eventName");
+				String username = "";
+				switch(type) {
+					case "Close":
+						DB.setEventStatus(eventName, "Z");
+						break;
+					case "RemoveConfirm":
+						username = request.getParameter("iGN");
+						DB.deletePeopleEventConfirmList(DB.getEventIDFromEventName(eventName), username);
+						break;
+					case "RemovePending":
+						username = request.getParameter("iGN");
+						break;
+					case "Join":
+						username = request.getParameter("iGN");
+						DB.insertPeopleEventConfirmList(DB.getEventIDFromEventName(eventName), username);
+						break;
+				}
+				
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 	public void destroy() {
-		session.removeAttribute("EventName");
+		try {
+			session.removeAttribute("EventName");
+			db.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private String decodeString(String line) throws UnsupportedEncodingException {

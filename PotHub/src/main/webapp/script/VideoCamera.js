@@ -38,7 +38,7 @@ function onSuccessScanning(barcodeResult){
 		"url": "BarcodeScanning",
 		"type": "POST",
 		"data": {"eventName": eventName, "iGN" : barcodeResult},
-		success() {
+		success: function aaa() {
 			$("li").each(function(index) {
 				name = $(this).text();
 				if(name === barcodeResult){
@@ -53,7 +53,7 @@ function onSuccessScanning(barcodeResult){
 						"url": "Image",
 						"type": "POST",
 						"data": {"iGN" : barcodeResult},
-						success(res) {
+						success: function aaa(res) {
 							if(res === "Empty"){
 								img.src = "images/cat.png";
 							}else {

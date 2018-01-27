@@ -11,7 +11,7 @@ function redirectPage(eventName) {
 }
 
 function updateTime() {
-	$(".time").each(function a() {
+	$(".time").each(function aaa() {
 		if( $(this).text() !== "Ended" && $(this).text() !== "Ongoing") {
 			var returnString;
 			var seconds;
@@ -62,7 +62,7 @@ function updateTime() {
 							"url": "BarcodeScanning",
 							"type": "POST",
 							"data": {"eventName": eventName, "status": "E"},
-							success() {
+							success: function aaa() {
 								window.location.href = "EventofEvent/" + eventName;
 							}
 						});
@@ -79,7 +79,7 @@ function updateTime() {
 }
 
 function getTime(){
-	setInterval(function(){ updateTime();}, 1000);
+	setInterval(function aaa(){ updateTime();}, 1000);
 }
 
 function checkPriviledge(isPriviledged){

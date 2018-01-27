@@ -1771,6 +1771,22 @@ public class Database {
 		return new ArrayList<String>();
 	}
 	
+	public void insertPeopleEventConfirmList(int eventID, String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES (?,?,'0');");
+		ppstmt.setInt(1, eventID);
+		ppstmt.setString(2, iGN);
+		
+		executeUpdate(ppstmt);
+	}
+	
+	public void deletePeopleEventConfirmList(int eventID, String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("DELETE FROM PeopleEventConfirmList WHERE EventID = ? AND IGN  = ?;");
+		ppstmt.setInt(1, eventID);
+		ppstmt.setString(2, iGN);
+		
+		executeUpdate(ppstmt);
+	}
+	
 	//Get number of people confirmed
 	public ArrayList<String[]> getPeopleEventListConfirm(int eventID) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN, Confirmed FROM PeopleEventConfirmList WHERE EventID = ?;");

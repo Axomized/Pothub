@@ -48,7 +48,6 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("		<link rel='stylesheet' type='text/css' href='css/Leaderboard.css' />");
 			sb.append("	</head>");
 			sb.append("	<body onload=\"connect('" + username + "', '" + eventName + "')\">");
-			sb.append("	<noscript><h2 style='color: #ff0000'>Seems your browser doesn't support Javascript! Websocket relies on Javascript being enabled. Please enable Javascript and reload this page!</h2></noscript>");
 			sb.append("		<!--  Navigation Bar -->");
 			sb.append("		<div id='header'>");
 			sb.append("			<div id='companyTitle'>");
@@ -110,10 +109,14 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("				<div id='left-right-container'>");
 			sb.append("					<div class='userDetailsInfo-container'>");
 			sb.append("						<div class='left-container-picture'>");
-			sb.append("							<img id='displayImage' src='images/crab.jpg'>");
+			if(currentProfilePic != null) {
+				sb.append("						<img id='displayImage' src='Image/" + currentProfilePic + "'>");
+			}else {
+				sb.append("						<img id='displayImage' src='images/crab.jpg'>");
+			}
 			sb.append("						</div>");
 			sb.append("						<div class='left-container-title'>");
-			sb.append("							<p><b id='displayName'></b></p>");
+			sb.append("							<p><b id='displayName'>" + username + "</b></p>");
 			sb.append("							<p id='displayIGN'>Cooked by: </p>");
 			sb.append("						</div>");
 			sb.append("						<div class='left-container-points'>");
@@ -141,19 +144,19 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("				<div class='right-top-container'>");
 			sb.append("					<div class='right-top-topthree-container' id='2ndPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src=''>");
+			sb.append("							<img src='' id='2ndPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>2nd</p>");
 			sb.append("					</div>");
 			sb.append("					<div class='right-top-topthree-container' id='1stPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src=''>");
+			sb.append("							<img src='' id='1stPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>1st</p>");
 			sb.append("					</div>");
 			sb.append("					<div class='right-top-topthree-container' id='3rdPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src=''>");
+			sb.append("							<img src='' id='3rdPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>3rd</p>");
 			sb.append("					</div>");
@@ -193,8 +196,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("					</div>");
 			sb.append("				</div>");
 			sb.append("			</div>");
-			sb.append("			<div id='videoDiv'>");
-			sb.append("			</div>");
+			sb.append("			<div id='videoDiv'></div>");
 			sb.append("		</div>");
 			sb.append("		<div id='footer'>");
 			sb.append("			<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved.</p>");
@@ -215,8 +217,8 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
 			sb.append("	    <!-- My Own Script -->");
-			sb.append("		<script src='script/Leaderboard.js'></script>");
-			sb.append("		<script src='script/VideoParticipant2.js'></script>");
+			sb.append("		<script src='script/Leaderboard.min.js'></script>");
+			sb.append("		<script src='script/VideoParticipant2.min.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
 			out.write(sb.toString().getBytes());

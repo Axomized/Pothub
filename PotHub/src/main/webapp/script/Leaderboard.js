@@ -157,7 +157,7 @@ function displayBar(userTo, score, index){
 		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : userTo},
-		success(res) {
+		success: function aaa(res) {
 			img1.src = "Image/" + res;
 		}
 	});
@@ -210,7 +210,7 @@ function displayUsersDetail(lbd) {
 			"url": "Image",
 			"type": "POST",
 			"data": {"iGN" : iGN},
-			success(res) {
+			success: function aaa(res) {
 				$("#displayImage").attr("src", "Image/" + res);
 			}
 		});
@@ -224,7 +224,7 @@ function displayUsersDetail(lbd) {
 			"url": "Image",
 			"type": "POST",
 			"data": {"iGN" : iGN},
-			success(res) {
+			success: function aaa(res) {
 				$("#displayImage").attr("src", "Image/" + res);
 			}
 		});
@@ -239,26 +239,24 @@ function displayUsersDetail(lbd) {
 function displayAndAnimateBar(json) {
 	currentTotalRank = currentArray.length + 1
 	//Display top 3 (Not working yet)
-	$("1stPlace").children().eq(0).children().eq(0).attr("src", "images/cat.png");
-	/*
 	for(v in json){
 		if(v < 3){
 			//console.log(json[v].userTo);
 			// Get User Profile Picture
 			$.ajax({
-				"url": "https://webapp-180126154704.azurewebsites.net/Image",
+				"url": "Image",
 				"type": "POST",
 				"data": {"iGN" : json[v].userTo},
-				success(res) {
-					switch(v){
+				success: function aaa(res) {
+					switch(parseInt(v)){
 						case 0:
-							$("#1stPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
+							$("#1stPlaceImage").attr("src", "Image/" + res);
 							break;
 						case 1:
-							$("#2ndPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
+							$("#2ndPlaceImage").attr("src", "Image/" + res);
 							break;
 						case 2:
-							$("3rdPlace").children("div").children("img").attr("src", "https://webapp-180126154704.azurewebsites.net/Image/" + res);
+							$("3rdPlaceImage").attr("src", "Image/" + res);
 							break;
 					}
 				}
@@ -267,7 +265,7 @@ function displayAndAnimateBar(json) {
 			break;
 		}
 	}
-	*/
+	
 	// Check difference
 	var different = checkJson(currentArray, json);
 	for(i in different){
@@ -306,7 +304,7 @@ function displayLeaderboardDetails(lbd){
 		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : iGN},
-		success(res) {
+		success: function aaa(res) {
 			$("#displayImage").attr("src", "Image/" + res);
 		}
 	});
@@ -325,7 +323,7 @@ function startVotingDisplay(userTo) {
 		"url": "Image",
 		"type": "POST",
 		"data": {"iGN" : userTo},
-		success(res) {
+		success: function aaa(res) {
 			$("#popupPicture").attr("src", "Image/" + res);
 		}
 	});
@@ -334,7 +332,8 @@ function startVotingDisplay(userTo) {
 
 // End
 function countDownAndRedirectToEndPage () {
-
+	stompDisconnect();
+	window.location.href = "EventOfEventPage/" + encodeURI(eventName);
 }
 
 // Video Stream

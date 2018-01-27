@@ -89,7 +89,7 @@ function connectToStream(eventName, username) {
 		"headers": {
 			"Authorization": "Basic " + btoa("ARandomUsername123:e72a0a98-f13e-11e7-9ec5-117660593455")
 		},
-		success(res) {
+		success: function aaa(res) {
 			iceServer = res.v.iceServers;
 			startConnection(eventName, username);
 		}

@@ -145,8 +145,8 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
 			sb.append("	    <!-- My Own Script -->");
-			sb.append("	    <script src='script/VideoOwner.js'></script>");
-			sb.append("	  	<script src='script/VideoParticipant.js'></script>");
+			sb.append("	    <script src='script/VideoOwner.min.js'></script>");
+			sb.append("	  	<script src='script/VideoParticipant.min.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
 			out.write(sb.toString().getBytes());

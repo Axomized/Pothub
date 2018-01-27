@@ -170,7 +170,7 @@ public class BarcodeScanning extends HttpServlet {
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>");
 			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>");
 			sb.append("		<!-- My Own Script -->");
-			sb.append("		<script src='script/VideoCamera.js'></script>");
+			sb.append("		<script src='script/VideoCamera.min.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
 			out.write(sb.toString().getBytes());

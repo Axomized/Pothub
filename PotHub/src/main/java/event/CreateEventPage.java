@@ -52,7 +52,7 @@ public class CreateEventPage extends HttpServlet {
 		sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 		sb.append("		<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/css/bootstrap-datepicker.standalone.css' integrity='sha256-P1wC4IE9L+kzf2qwueaK/jdj186d/Q05Q8ITF9vr9Ok=' crossorigin='anonymous' />");
 		sb.append("		<!-- My Own Script -->");
-		sb.append("		<script src='script/CreateEventPage.js' defer></script>");
+		sb.append("		<script src='script/CreateEventPage.min.js' defer></script>");
 		sb.append("		<!-- My Style Sheet -->");
 		sb.append("		<link rel='stylesheet' type='text/css' href='css/CreateEventPage.css' />");
 		sb.append("	</head>");

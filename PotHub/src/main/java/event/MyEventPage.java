@@ -63,7 +63,7 @@ public class MyEventPage extends HttpServlet {
 			sb.append("		<!-- Latest compiled and CSS -->");
 			sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 			sb.append("		<!-- My Own Script -->");
-			sb.append("		<script src='script/MyEventPage.js' defer></script>");
+			sb.append("		<script src='script/MyEventPage.min.js' defer></script>");
 			sb.append("		<!-- My Style Sheet -->");
 			sb.append("		<link rel='stylesheet' type='text/css' href='css/MyEventPage.css' />");
 			sb.append("	</head>");

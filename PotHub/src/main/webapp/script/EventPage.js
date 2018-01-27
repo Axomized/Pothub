@@ -1,5 +1,5 @@
 function redirectPage(eventName) {
-	window.location.href = "EventofEventPage/${eventName}";
+	window.location.href = "EventofEventPage/" + eventName;
 }
 
 $(function a() {

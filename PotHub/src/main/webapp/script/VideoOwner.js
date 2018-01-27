@@ -71,7 +71,7 @@ $(document).ready(function aaa(){
 				"url": "BarcodeScanning",
 				"type": "POST",
 				"data": {"eventName": eventName, "status": "E"},
-				success() {
+				success: function aaa() {
 					window.location.href = "EventofEvent/" + eventName;
 				}
 			});
