@@ -107,7 +107,9 @@ public class PotcastDetail extends HttpServlet {
 			}
 			
 			for(PotcastBidModel bid : bids){
-				if(bid.getRating() != null && bid.getiGN().equals(username)){
+				System.out.println(bid.getRating());
+				System.out.println(bid.getiGN());
+				if(!bid.getRating().equals("") && bid.getiGN().equals(username)){
 					canRate = false;
 				}
 			}
@@ -144,7 +146,7 @@ public class PotcastDetail extends HttpServlet {
 					+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
 					+ "<span id='welcomeSpan'>Welcome, "+username+"</span>" + "</div>"
-					+ "<div id='profileDropdownDiv'>" + "<a href='html/Profile.html'>Profile</a>"
+					+ "<div id='profileDropdownDiv'>" + "<a href='Profile'>Profile</a>"
 					+ "<a href='Logout'>Logout</a>" + "</div>" + "</div>" + "</div>"
 					+ "	<div id='navigation'>" + "		<div class='container-fluid'>"
 					+ "<ul class='nav navbar-nav'>"
@@ -195,7 +197,7 @@ public class PotcastDetail extends HttpServlet {
 					+ "' id='foodPicture'>" + "<iframe src='//www.google.com/maps/embed/v1/place?" + "&zoom=15"
 					+ "&key=AIzaSyDmftQ7JHdzj22y3wlP01IH_LlTgFQ3JOE" + "&q=Singapore," + dbu.getAddress()
 					+ "' id='foodPicture'></iframe>" + "</div>" + "<div id='foodText'>" + "<div id='foodTitle'>" + "<p>"
-					+ pm.getTitle() + " -by "+pm.getiGN()+"</p>" + "</div>" + "<div id='foodPrice'>");
+					+ pm.getTitle() + " by "+pm.getiGN()+"</p>" + "</div>" + "<div id='foodPrice'>");
 
 			if (pm.getMaxBids() < bids.size()) {
 				pw.append("<p>Price: $" + bids.get(bids.size() - pm.getMaxBids()).getBidAmount() + "</p></div>"
@@ -234,8 +236,8 @@ public class PotcastDetail extends HttpServlet {
 					if(canRate){
 						pw.append("<div id='foodDesc'><form method='post' action='RatingHandler' target = '_blank'>"
 								+ "<input type='hidden' name='potcastID' value='"+pm.getPotcastID()+"'></input>"
-								+ "<input type='range' min='0' max='10' value='5' name='rating'></input>"
-								+ "<button>Bid!</button>" 
+								+ "<input type='number' min='0' max='10' value='5' name='rating'></input>"
+								+ "<button>Send Rating!</button>" 
 								+ "</form></div>");
 					}
 					pw.append("</div>");

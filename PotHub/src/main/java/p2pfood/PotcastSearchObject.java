@@ -97,7 +97,7 @@ public class PotcastSearchObject{
 		}
 		
 		if(this.purpose==3){
-			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime > '"+rightNow+"' ORDER BY bidStopTime DESC";
+			return "SELECT TOP 3 * FROM Potcast WHERE bidStopTime > '"+rightNow+"' ORDER BY bidStopTime ASC";
 		}
 		
 		if(this.purpose==4){

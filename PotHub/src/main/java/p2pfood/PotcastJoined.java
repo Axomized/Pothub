@@ -111,14 +111,12 @@ public class PotcastJoined extends HttpServlet {
 							+ "<h1>PotHub</h1>" + "</div>"
 							+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 							+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
-							+ "<span id='welcomeSpan'>Welcome, [Placeholder]</span>" + "</div>"
-							+ "<div id='profileDropdownDiv'>" + "<span id='welcomeSpan'>Welcome, " + username
-							+ "</span>" + "</div>" + "<div id='profileDropdownDiv'>"
-							+ "<a href='Profile.html'>Profile</a>");
+							+ "<span id='welcomeSpan'>Welcome, " + username + "</span>" + "</div>"
+							+ "<div id='profileDropdownDiv'>" + "<a href='Profile'>Profile</a>");
 
-			pw.append("<a href='Logout'>Logout</a>");
-			pw.append(
-					"</div>" + "</div>" + "</div>" + "	<div id='navigation'>" 
+							pw.append("<a href='Logout'>Logout</a>");
+
+							pw.append("</div>" + "</div>" + "</div>" + "	<div id='navigation'>" 
 							+ "<ul class='nav navbar-nav'>"
 							+ "				<li id='lhome'>"
 							+ "				<a href='Forum'>Home</a></li>"
