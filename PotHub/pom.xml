@@ -89,6 +89,11 @@
 			<artifactId>javax.json</artifactId>
 			<version>1.0.2</version>
 		</dependency>
+		<dependency>
+			<groupId>com.google.apis</groupId>
+			<artifactId>google-api-services-safebrowsing</artifactId>
+			<version>v4-rev42-1.23.0</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<finalName>PotHub</finalName>

@@ -141,10 +141,11 @@ public class Forum extends HttpServlet {
 							DatabaseUserModel dumm = new DatabaseUserModel();
 							
 							ArrayList<String> checkingg = new ArrayList<String>();
-							int po = 1;
 							
-							for(ForumPostModel qw: fa){	//This do what? Get All forum? yup and print 1 by 1
+							
+							for(ForumPostModel qw: fa){	
 								int count = 0;
+								int po = 1;
 								for(CommentModel df: cmm) {
 									if(qw.getPostID() == df.getPostID()) {
 										count ++;
@@ -234,7 +235,7 @@ public class Forum extends HttpServlet {
 						
 						
 						if (dumm.getProfilePic() != 0) {
-							out.print("<img src='/PotHub/Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
+							out.print("<img src='/Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
 						}
 						else {
 							out.print("<img src='images/profile.png' height='70' width='70'/>");

@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.CommentModel;
+import database.model.DatabaseUserModel;
 import database.model.FileTableModel;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
@@ -134,6 +135,7 @@ public class Subscription extends HttpServlet {
 						try {
 							Database db = new Database(2);
 							ArrayList<SubscriptionModel> sm = new ArrayList<SubscriptionModel>();
+							
 							sm = db.getSubscriptionModel();
 							for(SubscriptionModel a:sm) {
 								if(username.equals(a.getSubs())) {
@@ -149,9 +151,50 @@ public class Subscription extends HttpServlet {
 							for(String s:naming) {
 								out.println(
 										"		<form id='thisis' action='Subscription2' method='get'>"
-										+ "			<div class='everyone' onclick=\"filter('" + s + "')\">"
-										+ "			<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
-										+ "			<div>" + s + "</div>"
+										+ "			<div class='everyone' onclick=\"filter('" + s + "')\">");
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								try {
+								Database k = new Database(2);
+								DatabaseUserModel dumm = new DatabaseUserModel();
+								dumm = k.getUserProfile(s);
+								
+								
+								if (dumm.getProfilePic() != 0) {
+									
+									
+								}
+								else {
+									out.print("<div><img src='images/profile.png' height='70' width='70'/></div>");
+								}
+								}
+								catch (ClassNotFoundException e) {
+									e.printStackTrace();
+								} catch (SQLException e) {
+									e.printStackTrace();
+								}
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								out.println(
+										//  "			<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
+										  "			<div>" + s + "</div>"
 										+ "			<input id='omgosh' type='hidden' name='jjk' />"
 										+ " 		</div>"
 										+ "		</form><hr>");
