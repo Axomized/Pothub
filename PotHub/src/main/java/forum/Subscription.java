@@ -170,6 +170,7 @@ public class Subscription extends HttpServlet {
 								
 								if (dumm.getProfilePic() != 0) {
 									
+										out.print("<div><img src='/Image/" + k.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70' style='border-radius:50%;' /></div>");
 									
 								}
 								else {
