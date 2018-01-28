@@ -82,7 +82,7 @@ public class discussion extends HttpServlet {
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
 						+ "				<a href='Profile'>Profile</a>"
-						+ "				<a href='LoginPage'>Logout</a>"
+						+ "				<a href='Logout'>Logout</a>"
 						+ "			</div>"
 						+ "		</div>"	
 						

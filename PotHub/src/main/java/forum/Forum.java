@@ -89,7 +89,7 @@ public class Forum extends HttpServlet {
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
 						+ "				<a href='Profile'>Profile</a>"
-						+ "				<a href='LoginPage'>Logout</a>"
+						+ "				<a href='Logout'>Logout</a>"
 						+ "			</div>"
 						+ "		</div>"	
 						
@@ -198,7 +198,7 @@ public class Forum extends HttpServlet {
 						}
 						else {
 						ftm = dbms.getFileTableByFileID(qw.getPicture());
-						out.println("<img src='/PotHub/Video/" +  ftm.getFileName() + "' height='80' width='80' />");
+						out.println("<img src='Video/" +  ftm.getFileName() + "' height='80' width='80' />");
 						}
 						
 						

@@ -88,15 +88,9 @@ body
 	color:#49274a;
 }
 
-#companyTitle {
+#companyTitle{
 	float: left;
 	padding-top: 10px;
-}
-
-#profilePic {
-	padding: 10px 20px;
-	float: right;
-	text-align: center;
 }
 
 #profilePicWrapDiv {
@@ -142,6 +136,7 @@ body
 	display: block;
 	padding-top: 5px;
 }
+
 /* Navigation */
 
 #navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
@@ -170,8 +165,13 @@ body
 	color: #94618e;
 }
 
-#attachingfile{
-	margin-bottom:3%;
+.navbar-nav{
+	display: inline;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
 }
 
 /* Footer */
