@@ -14,6 +14,7 @@ html {
 }
 
 /* Structure */
+
 body {
 	margin: 0;
 	float: left;
@@ -40,12 +41,6 @@ body {
 	float: left;
 	width: 100%;
 	margin: 0;
-	position: relative;
-	padding-bottom: 10vh;
-}
-
-#content {
-	padding: 0 20px;
 }
 
 #footer {
@@ -58,6 +53,7 @@ body {
 }
 
 /* Header */
+
 #header p { 
 	font-size: 30px;
 	padding: 15px 0 10px 20px; 
@@ -85,11 +81,11 @@ body {
 	display: none;
 	position: absolute;
 	top: 100%;
-	right: 0%;
+	right: 0;
 	background-color: #f8eee7;
     min-width: 160px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 3;
 }
 
 #profileDropdownDiv a {
@@ -111,6 +107,47 @@ body {
 #welcomeSpan {
 	display: block;
 	padding-top: 5px;
+}
+
+/* Navigation */
+
+#navigation ul { 
+	float: left; 
+	list-style-type: none; 
+	margin: 0; 
+	padding: 0; 
+	background: none; 
+	border-width: 0; 
+}
+
+#navigation li { 
+	float: left; 
+}
+
+#navigation a {
+	float: left;
+	display: block;
+	padding: 5px 10px; 
+	text-decoration: none;
+}
+
+#navigation a:link, #navigation a:visited {
+	color: #f3decb;
+	font-weight: bold;
+	text-transform: uppercase;
+}
+
+#navigation a:hover, #navigation a:active {
+	color: #94618e;
+}
+
+.navbar-nav{
+	display: inline;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
 }
 
 /* Navigation */
@@ -197,9 +234,7 @@ body {
 }
 
 #createButton{
-	position: absolute;
-	bottom: 20px;
-	right: 20px;
+	float: right;
 	font-size: 18px;
 	z-index: 2;
 }

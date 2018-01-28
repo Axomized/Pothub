@@ -24,17 +24,13 @@ $(document).ready(function aaa(){
 	
 	$("#startStreamingBtn").click(function aaa() {
 		if(start){
-			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
-				"messageType": "Show", "userToDisplay": iGN
-			}));
+			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "Show", "userToDisplay": iGN}));
 			connectToStream(eventName, iGN);
 			$(this).text("Stop Streaming");
 			$("#videoDiv").show();
 			start = false;
 		}else{
-			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({
-				"messageType": "Hide", "userToDisplay": iGN
-			}));
+			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "Hide", "userToDisplay": iGN}));
 			$(this).text("Start Streaming");
 			$("#videoDiv").hide();
 			start = true;
@@ -66,6 +62,12 @@ $(document).ready(function aaa(){
 	$("#endBtn").click(function aaa() {
 		if(confirm("Am you sure you want to end?")) {
 			stompClient.send("/app/other/" + eventName, {}, JSON.stringify({"messageType": "End", "userToDisplay": iGN}));
+			// Add points to those who joined
+			$.ajax({
+				"url": "ParticipantLeaderboardPage",
+				"type": "POST",
+				"data": {"eventName": eventName}
+			});
 			// End event db
 			$.ajax({
 				"url": "BarcodeScanning",
@@ -75,6 +77,7 @@ $(document).ready(function aaa(){
 					window.location.href = "EventofEvent/" + eventName;
 				}
 			});
+			
 		}
 	});
 });

@@ -8,7 +8,8 @@ var iceServer = [];
 function startConnection(){
 	var connection = new RTCMultiConnection();
 	
-	connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
+	//connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
+	connection.socketURL = "https://localhost:9001/";
 
 	var constraints;
 	//if a user is using a mobile browser
@@ -27,6 +28,12 @@ function startConnection(){
 	connection.userid = localUsername;
 	connection.videosContainer = document.getElementById("videos-container");
 
+	/*
+	var iceServers = [];
+	for(var i=0;i<iceServer.length;i++) {
+		iceServers.push(iceServer.i);
+	}
+	*/
 	connection.join(roomID);
 	
 	connection.onstream = function aaa(event) {

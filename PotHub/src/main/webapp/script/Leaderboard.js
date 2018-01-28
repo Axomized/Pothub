@@ -317,17 +317,19 @@ function displayLeaderboardDetails(lbd){
 
 // Vote
 function startVotingDisplay(userTo) {
-	$("#popupIGN").text(userTo);
-	// Get User Profile Picture
-	$.ajax({
-		"url": "Image",
-		"type": "POST",
-		"data": {"iGN" : userTo},
-		success: function aaa(res) {
-			$("#popupPicture").attr("src", "Image/" + res);
-		}
-	});
-	document.getElementById("popupBackground").style.display = "block";
+	if(userTo !== iGN){
+		$("#popupIGN").text(userTo);
+		// Get User Profile Picture
+		$.ajax({
+			"url": "Image",
+			"type": "POST",
+			"data": {"iGN" : userTo},
+			success: function aaa(res) {
+				$("#popupPicture").attr("src", "Image/" + res);
+			}
+		});
+		document.getElementById("popupBackground").style.display = "block";
+	}
 }
 
 // End

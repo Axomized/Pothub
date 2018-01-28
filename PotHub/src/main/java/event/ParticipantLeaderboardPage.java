@@ -1,6 +1,7 @@
 package event;
 
 import java.io.IOException;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
@@ -75,7 +76,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul class='nav navbar-nav'>");
 			sb.append("					<li id='lhome'><a href='Forum'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
 			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
@@ -231,8 +232,21 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 		
 	}
 
+	// On End ( Add points )
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
+		String eventName = request.getParameter("eventName");
+		if(eventName == null || eventName.isEmpty()) {
+			doGet(request, response);
+		}else {
+			try {
+				final Database DB = new Database(2);
+				DB.addParticipationPoints(DB.getEventIDFromEventName(eventName));
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }

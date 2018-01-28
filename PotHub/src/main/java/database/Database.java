@@ -1285,6 +1285,7 @@ public class Database {
 	public boolean getUserPriviledge(String iGN) throws SQLException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT isPriviledged FROM DatabaseUser WHERE IGN = ?;");
 		ppstmt.setString(1, iGN);
+		
 		boolean isPriviledged = false;
 		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
@@ -1832,6 +1833,22 @@ public class Database {
 		}
 		return "N";
 	}
+	
+	// Whether IGN is in confirm list
+		public void addParticipationPoints(int eventID) throws SQLException {
+			PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ? AND Confirmed = 'true';");
+			ppstmt.setInt(1, eventID);
+			
+			ResultSet rs = ppstmt.executeQuery();
+			while(rs.next()) {
+				PreparedStatement ppstmt1 = conn.prepareStatement("SELECT Points FROM Database WHERE IGN = ?;");
+				ppstmt1.setString(1, rs.getString("IGN"));
+				PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Database SET Points = ? WHERE iGN = ?;");
+				ppstmt2.setInt(1, (rs.getInt("Points") + 10));
+				ppstmt2.setString(2, rs.getString("IGN"));
+				executeUpdate(ppstmt2);
+			}
+		}
 		
 	// Set people in confirm list "Confirmed"
 	public void setPeopleEventListConfirmConfirmed(int eventID, String iGN) throws SQLException {

@@ -1,28 +1,232 @@
-<!DOCTYPE html>
-<html>
+<html class="fa-events-icons-ready">
 	<head>
-		<meta charset="UTF-8">
-		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>
-		<title>Move the red box</title>
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.1.4/sockjs.min.js" integrity="sha256-KWJavOowudybFMUCd547Wvd/u8vUg/2g0uSWYU5Ae+w=" crossorigin="anonymous"></script>
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js" integrity="sha256-nkP8cj5xaTdWK/BsZl+57ZCE/Y/i4UNtbNTpgH+6Taw=" crossorigin="anonymous"></script>
-		<style>
-			#redBox{
-				position: absolute;
-				top: 50;
-				left: 50;
-				width: 100px;
-				height: 100px;
-				background-color: red;
-			}
-		</style>
-		<!-- My Own Script -->
-		<script src="../script/Boxes.js"></script>
+	<meta charset="UTF-8">
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Favicon -->
+	<link rel="icon" href="images/crab.gif" type="image/gif">
+	<link rel="icon" href="images/crab.png?v=2" type="image/x-icon">
+	<!-- Page Title -->
+	<title>My Events</title>
+	<!-- Latest compiled and CSS -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+		integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ"
+		crossorigin="anonymous">
+	<!-- My Own Script -->
+	<script src="script/MyEventPage.min.js" defer=""></script>
+	<!-- My Style Sheet -->
+	<link rel="stylesheet" type="text/css" href="css/MyEventPage.css">
 	</head>
-	<body onload="connect()">
-		<span id="mouseCoor"></span>
-		<div id="redBox">
+	<body onload="getTime()">
+		<!--  Navigation Bar -->
+		<div id="header">
+			<div id="companyTitle">
+				<p>PotHub</p>
+			</div>
+			<div id="profilePicWrapDiv" onmouseover="showProfileDropdown()"
+				onmouseout="hideProfileDropdown()">
+				<div id="profilePic">
+					<img src="Image/0c0e37e74f727876dfded1fa083a8e0982e3c9e5.jp"
+						alt="ProfilePicture" height="50" width="50"> <span
+						id="welcomeSpan">Welcome, Blackpepper3</span>
+				</div>
+				<div id="profileDropdownDiv" style="display: none;">
+					<a href="Profile">Profile</a> <a href="Logout">Logout</a>
+				</div>
+			</div>
 		</div>
+		<div id="navigation">
+			<div class="container-fluid">
+				<ul class="nav navbar-nav">
+					<li id="lhome"><a href="Forum">Home</a></li>
+					<li id="lprivatemessage"><a href="#01">Private Message</a></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Event</a>
+						<ul class="dropdown-menu">
+							<li><a href="EventPage">Events</a></li>
+							<li><a href="MyEventPage">My Events</a></li>
+						</ul></li>
+					<li class="dropdown"><a class="dropdown-toggle"
+						data-toggle="dropdown" href="#">Potcast</a>
+						<ul class="dropdown-menu">
+							<li><a href="p2plist">Active PotCasts</a></li>
+							<li><a href="p2preg">Start a PotCast</a></li>
+							<li><a href="p2pmy">My PotCast</a></li>
+							<li><a href="p2pjoined">Joined PotCast</a></li>
+						</ul></li>
+					<li id="ldonate"><a href="Donation">Donate</a></li>
+				</ul>
+			</div>
+		</div>
+		<div id="popup-container">
+			<div id="popup">
+				<div id="popup-title">
+					<p>
+						<b>Ways to get privilege</b>
+					</p>
+				</div>
+				<div id="popup-icons" class="row">
+					<div class="col-sm-6">
+						<p>
+							<b>Being active on Forums</b>
+						</p>
+						<img src="images/forumIcon.png" alt="Forum Icon" width="100"
+							height="100">
+					</div>
+					<div class="col-sm-6">
+						<p>
+							<b>Donating to fund the website</b>
+						</p>
+						<img src="images/donationIcon.png" alt="Donation Icon" width="100"
+							height="100">
+					</div>
+				</div>
+				<i class="fa fa-times-circle-o fa-2x" aria-hidden="true"
+					id="closeBtn"></i>
+			</div>
+		</div>
+		<div id="wrapper">
+			<button class="btn btn-success" id="createButton" onclick="checkPriviledge('true')">Create Event</button>
+			<div id="content-container"></div>
+			<button class="btn btn-success" id="createButton" onclick="checkPriviledge('true')">Create Event</button>
+			<div id="content-container">
+				<div class="content">
+					<img src="Image/5ed65fb2fe35a11818aa57b73e8285adc0831c09jpe"
+						alt="crab picture">
+					<div class="row front-container" style="display: none;">
+						<div class="title">
+							<div class="hostedOrNot">
+								<p>
+									<b></b>
+								</p>
+							</div>
+							<p>Food Competition</p>
+						</div>
+						<div class="timeleft">
+							<p class="time">74 Hours 31 Minutes 12 Seconds</p>
+						</div>
+					</div>
+					<div class="row back-container"
+						onclick="redirectPage(&quot;Food%20Competition&quot;)"
+						style="display: block;">
+						<div class="event-layout-title">
+							<p>Food Competition</p>
+							<hr>
+						</div>
+						<div class="event-layout-desc">
+							<p>
+								<b>Description</b>
+							</p>
+							<p>Will you be the next champion?</p>
+						</div>
+						<div class="event-layout-location">
+							<p>
+								<b>Location</b>
+							</p>
+							<p>316B Anchorvale Link, Singapore 542316, Multi-purpose Hall</p>
+						</div>
+						<div class="event-layout-guest">
+							<div>
+								<p>
+									<b>Guest</b>
+								</p>
+							</div>
+							<div class="event-layout-guest-guest">
+								<img src="images/cat.png" alt="cat picture" height="50" width="50"><br>
+								<p>ClumsySana</p>
+							</div>
+							<div class="event-layout-guest-guest">
+								<img src="images/cat.png" alt="cat picture" height="50" width="50"><br>
+								<p>DabDahyun</p>
+							</div>
+							<div class="event-layout-guest-guest">
+								<img src="images/cat.png" alt="cat picture" height="50" width="50"><br>
+								<p>TzuyuMyBae</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="btn btn-success" id="createButton" onclick="checkPriviledge('true')">Create Event</button>
+				<div id="content-container">
+					<div class="content">
+						<img src="Image/5b68c4a633d76e06e0e3e6e7ac3e150e8303bedcjpe"
+							alt="crab picture">
+						<div class="row front-container" style="display: none;">
+							<div class="title">
+								<div class="hostedOrNot">
+									<p>
+										<b></b>
+									</p>
+								</div>
+								<p>Tea Party</p>
+							</div>
+							<div class="timeleft">
+								<p class="time">7958 Hours 1 Minutes 12 Seconds</p>
+							</div>
+						</div>
+						<div class="row back-container"
+							onclick="redirectPage(&quot;Tea%20Party&quot;)"
+							style="display: block;">
+							<div class="event-layout-title">
+								<p>Tea Party</p>
+								<hr>
+							</div>
+							<div class="event-layout-desc">
+								<p>
+									<b>Description</b>
+								</p>
+								<p>Lots of tea to choose from!</p>
+							</div>
+							<div class="event-layout-location">
+								<p>
+									<b>Location</b>
+								</p>
+								<p>Block 931A Carpark, Singapore, #07-312</p>
+							</div>
+							<div class="event-layout-guest">
+								<div>
+									<p>
+										<b>Guest</b>
+									</p>
+								</div>
+								<div class="event-layout-guest-guest">
+									<img src="images/cat.png" alt="cat picture" height="50"
+										width="50"><br>
+									<p>slut</p>
+								</div>
+								<div class="event-layout-guest-guest">
+									<img src="images/cat.png" alt="cat picture" height="50"
+										width="50"><br>
+									<p>mygf</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="footer">
+				<p>Copyright © 2017 – 2018 PotHub. All rights reserved.</p>
+				<p>We like food</p>
+				<p>
+					<a href="#">Terms of Service</a> | <a href="#">Privacy</a> | <a href="#">Support</a>
+				</p>
+			</div>
+			<!-- Optional Script -->
+			<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
+			<script src="https://code.jquery.com/jquery-3.2.1.min.js"
+				integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+				crossorigin="anonymous"></script>
+			<!-- Optional Scripts for Bootstrap -->
+			<script
+				src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"
+				integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb"
+				crossorigin="anonymous"></script>
+			<script
+				src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+				integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+				crossorigin="anonymous"></script>
+		</div>
+		<link rel="stylesheet" href="https://use.fontawesome.com/aff6d7353c.css" media="all">
 	</body>
 </html>

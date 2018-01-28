@@ -6,7 +6,8 @@ window.enableAdapter = true;
 
 // Starts connection to the socket
 function startConnection(eventName, username) {
-	connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
+	//connection.socketURL = "https://rtcmulticonnection.herokuapp.com:443/";
+	connection.socketURL = "https://localhost:9001/";
 
 	var constraints;
 	//if a user is using a mobile browser
@@ -32,7 +33,7 @@ function startConnection(eventName, username) {
 	connection.videosContainer = document.getElementById("videos-container");
 
 	/*
-	var iceServers = [stunServer];
+	var iceServers = [];
 	for(var i=0;i<iceServer.length;i++) {
 		iceServers.push(iceServer.i);
 	}

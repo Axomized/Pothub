@@ -146,7 +146,7 @@ public class EventofEventPage extends HttpServlet {
 				switch(status) {
 				case "C":
 					sb.append("						<div class='event-header-button'>");
-					sb.append("							<button class='btn btn-danger' onclick=\"changeColor(this); removeConfirmRequest('" + nameOfEvent + "', '" + username + "'')\">Confirmed</button> <!-- Servlet change the text according to status -->");
+					sb.append("							<button class='btn btn-danger' onclick=\"changeColor(this); removeConfirmRequest('" + nameOfEvent + "', '" + username + "')\">Confirmed</button> <!-- Servlet change the text according to status -->");
 					sb.append("						</div>");
 					sb.append("						<div class='event-header-button2'>");
 					sb.append("							<button class='btn btn-info' onclick='redirectToInteractive()'>My Barcode</button> <!-- Servlet change the text according to status -->");

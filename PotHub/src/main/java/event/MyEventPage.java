@@ -94,7 +94,7 @@ public class MyEventPage extends HttpServlet {
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul class='nav navbar-nav'>");
 			sb.append("					<li id='lhome'><a href='Forum'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='#01'>Private Message</a></li>");
+			sb.append("					<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
 			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");
@@ -134,7 +134,6 @@ public class MyEventPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='wrapper'>");
-			
 			eMAL = db.getEventModelForMyEventPage();
 			
 			for(EventModel eM:eMAL) {
@@ -146,9 +145,7 @@ public class MyEventPage extends HttpServlet {
 						db.setEventStatus(eventName, "Z");
 					}
 				}
-				
-				sb.append("			<button class='btn btn-success' id='createButton' onclick='checkPriviledge(\"" + db.getUserPriviledge(eM.getiGN()) + "\")'>Create Event</button>");
-				sb.append("			<div id='content-container'>");
+				sb.append("		<div id='content-container'>");
 				
 				if(!eM.getStatus().equals("Z") && System.currentTimeMillis() - eM.getDate().getTime() < 86400000) {
 					sb.append("		<div class='content'>");
@@ -209,9 +206,9 @@ public class MyEventPage extends HttpServlet {
 					sb.append("			</div>");
 				}
 				
-				sb.append("		</div>");
+				sb.append("			</div>");
 			}
-		
+			sb.append("			<button class='btn btn-success' id='createButton' onclick=\"checkPriviledge('" + db.getUserPriviledge(username) + "')\">Create Event</button>");
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div id='footer'>");
