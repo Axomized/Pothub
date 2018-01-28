@@ -1,0 +1,137 @@
+@CHARSET "ISO-8859-1";
+
+html {
+	margin: 0;
+	padding: 0;
+	color: #aaaaaa;
+	background-color: #f8eee7;
+	font: normal 12px "Trebuchet MS", "Lucida Grande", Verdana, Georgia, Sans-Serif;
+}
+
+body {
+	margin: 0;
+	float: left;
+	width: 100%;
+	background-color: #f8eee7;
+}
+
+/* Html Elements */
+.container{
+	width: 100%;
+	height: 100%;
+	margin: 0 auto;
+	margin-top: 80px;
+	padding: 40px;
+	text-align: center;
+	box-sizing: border-box;
+	border-radius: 5px;
+	transition: .5s;
+}
+
+.container img{
+	width: 120px;
+	height: 120px;
+	margin-top: -60px;
+	margin-bottom: 30px;
+	border-radius: 50%;
+}
+
+h2{
+	margin: 0;
+	padding: 0 0 20px;
+	color: #94618e;
+	text-align: center;
+}
+
+input{
+	height: 45px;
+	width: 300px;
+	font-size: 18px;
+	margin-bottom:20px;
+}
+
+.form-input input[type="text"],
+.form-input input[type="password"]
+{
+	border:none;
+	border-bottom: 2px solid #49274a;
+	outline: none;
+	height: 40px;
+	background: transparent;
+	font-size: 16px;
+	padding-left: 20px;
+	box-sizing: border-box;
+}
+
+.form-input input[type="text"]:active{
+	padding-bottom: 20px;
+}
+
+.form-input input[type="password"]:active{
+	padding-bottom: 20px;
+}
+
+.form-input{
+	position: relative;
+	text-align: center;
+}
+
+.form-input span{
+	position: relative;
+	left: 15px;
+	color: #262626;
+}
+
+.form-input input[type="submit"]
+{
+	margin-left: 20px;
+	border: none;
+	outline: none;
+	height: 40px;
+	font-size: 16px;
+	background: #49274a;
+	color: #f3decb;
+	border-radius: 20px;
+	cursor: pointer;
+}
+
+.form-input input[type="submit"]:hover {
+	color: #49274a;
+	background: #f8eee7;
+	border: 1px solid #49274a;
+}
+
+.form-input a{
+	color: #49274a;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: center;
+	display: block;
+	margin-left: 20px;
+}
+
+.g-recaptcha{
+	margin-left: auto;
+    margin-right: auto;
+    width: 304px;	
+}
+
+/* Footer */
+
+#footer
+{
+	clear: both;
+	float: left;
+	width: 100%;
+	color: #888888;
+	text-align: center;
+	background-color: #f3decb;
+}
+
+#footer p { margin: 15px 0; }
+
+#footer a:link { color: #888888; font-weight: bold; text-decoration:  none;}
+
+#footer a:visited { color: #666666; font-weight: bold;}
+
+#footer a:hover, #footer a:active { color: #666666;}

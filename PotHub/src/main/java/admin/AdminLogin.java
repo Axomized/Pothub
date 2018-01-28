@@ -59,7 +59,8 @@ public class AdminLogin extends HttpServlet {
 		+ "		<!-- My Own Script -->"
 		+ "		<!-- <script src='../script/'></script> -->"
 		+ "		<!-- My Style Sheet -->"
-		+ "	<link rel='stylesheet' type='text/css' href='css/LoginPage.css' />"
+		+ "	<link rel='stylesheet' type='text/css' href='css/AdminPage.css' />"
+		+ " <script src='https://www.google.com/recaptcha/api.js'></script>"
 		+ "	</head>"
 		+ "	<body>"
 		+ "		<div class='container'>"
@@ -81,6 +82,7 @@ public class AdminLogin extends HttpServlet {
 		+ "					<input type='submit' name='submit' value='LOGIN'>"
 		+ "				</div>"
 		+ "			</div>"
+		+ " <div class='g-recaptcha' data-sitekey='6Ldq7EIUAAAAANNbKYrxspUbr9X6eN1r6y2sHDxb'></div>"
 		+ "		</form>"
 		+ "		<div class='form-input'>"
 		+ "		<a href='/PotHub/Registration'>Create Account</a>"
@@ -142,6 +144,14 @@ public class AdminLogin extends HttpServlet {
 			    		}
 			    		else 
 			    		{
+			    			
+			    			// get reCAPTCHA request param
+			    			String gRecaptchaResponse = request
+			    					.getParameter("g-recaptcha-response");
+			    			System.out.println(gRecaptchaResponse);
+			    			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+			    			
+			    			if(verify){
 				    		session.setMaxInactiveInterval(900);
 			    			session.setAttribute("user", dum.getiGN());
 			    			if (!lm.isPasswordResetted())
@@ -151,6 +161,15 @@ public class AdminLogin extends HttpServlet {
 			    				out.println("window.location.href = 'AdminGeneral'");
 			    				out.println("</script>");
 				    		}
+			    			}
+			    			else{
+						    	System.out.println("Captcha fail!");
+						    	out.println("<script type=\"text/javascript\">");
+								out.println("alert('Invalid username or password.');");
+								out.println("</script>");
+								doGet(request, response);
+								return;
+			    			}
 			    		}
 			    	}
 			    	
@@ -161,6 +180,7 @@ public class AdminLogin extends HttpServlet {
 						out.println("alert('Invalid username or password.');");
 						out.println("</script>");
 						doGet(request, response);
+						return;
 				    }
 			    }
 			    
@@ -171,6 +191,7 @@ public class AdminLogin extends HttpServlet {
 					out.println("alert('Invalid username or password.');");
 					out.println("</script>");
 					doGet(request, response);
+					return;
 			    }
 				
 			 
