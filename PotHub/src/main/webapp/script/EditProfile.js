@@ -22,10 +22,19 @@ function onlyNumbers(inputsForFilled) {
 }
 
 function checkFile() {
-	if (document.getElementById("profilePicFile").value != null) {
+	var src = document.getElementById("profilePicFile");
+	var target = document.getElementById("profilePicThumbnail");
+	
+	if (src.value != null) {
 		document.getElementById("updateBtn").disabled = false;
 		document.getElementById("updateBtn").style.cursor = "pointer";
 	}
+	
+	var fr = new FileReader();
+	fr.onload = function() {
+		target.src = fr.result;
+	}
+	fr.readAsDataURL(src.files[0]);
 }
 
 function checkSelect() {

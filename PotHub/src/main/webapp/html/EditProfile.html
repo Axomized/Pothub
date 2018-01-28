@@ -110,7 +110,7 @@
 										</div>
 										<div id="contactNoDiv" class="divWrap">
 											<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
-											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" maxlength="8" oninput="startedTyping(this), onlyNumbers(this)">
+											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" maxlength="8" oninput="startedTyping(this); onlyNumbers(this)">
 											<div class="errorMsg">Only a maximum of 8 numbers.</div>
 										</div>
 										<div id="bioDiv" class="divWrap">
@@ -121,7 +121,7 @@
 										<div id="addressDiv" class="divWrap">
 											<div id="postalCodeDiv">
 												<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
-												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" maxlength="6" oninput="startedTyping(this), onlyNumbers(this)">
+												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" maxlength="6" oninput="startedTyping(this); onlyNumbers(this)">
 												<div class="errorMsg">Only a maximum of 6 numbers.</div>
 											</div>
 											<div id="unitNoDiv" class="innerDiv">
@@ -132,7 +132,7 @@
 									</div>
 									<div id="userPicDiv" class="col-sm-3">
 										<div id="profileImgDiv">
-											<img src="../images/profile.png" height="150" width="150"/>
+											<img src="../images/profile.png" id="profilePicThumbnail" height="150" width="150"/>
 										</div>
 										<div id="editProfileImgDiv">
 											<label id="profilePicLabel" for="profilePicFile">

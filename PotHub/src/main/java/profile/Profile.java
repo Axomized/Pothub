@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.DatabaseUserModel;
 
@@ -179,7 +181,7 @@ public class Profile extends HttpServlet {
 					+ "								</div>"
 					+ "								<div class='thatLine'></div>"
 					+ "								<div id='lower-ContactDiv'>"
-					+ "									<span id='contactSpan'>" + dum.getContact_No() + "</span>"
+					+ "									<span id='contactSpan'>" + Encode.forHtml(dum.getContact_No()) + "</span>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div id='bioDiv'>"
@@ -188,7 +190,7 @@ public class Profile extends HttpServlet {
 					+ "								</div>"
 					+ "								<div class='thatLine'></div>"
 					+ "								<div id='lower-BioDiv'>"
-					+ "									<p>" + dum.getBio() + "</p>"
+					+ "									<p>" + Encode.forHtml(dum.getBio()) + "</p>"
 					+ "								</div>"
 					+ "							</div>"
 					+ "							<div id='addressDiv'>"
@@ -199,11 +201,11 @@ public class Profile extends HttpServlet {
 					+ "								<div id='lower-AddressDiv'>"
 					+ "									<div id='postalCodeDiv'>"
 					+ "										<span id='psSpan'>Postal Code</span>"
-					+ "										<span id='postalCodeSpan'>" + dum.getAddress() + "</span>"
+					+ "										<span id='postalCodeSpan'>" + Encode.forHtml(dum.getAddress()) + "</span>"
 					+ "									</div>"
 					+ "									<div id='unitNoDiv'>"
 					+ "										<span id='unSpan'>Unit Number</span>"
-					+ "										<span id='unitNoSpan'>" + dum.getUnitNo() + "</span>"
+					+ "										<span id='unitNoSpan'>" + Encode.forHtml(dum.getUnitNo()) + "</span>"
 					+ "									</div>"
 					+ "								</div>"
 					+ "							</div>"

@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.compress.utils.IOUtils;
+import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.DatabaseUserModel;
@@ -160,31 +161,31 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + dum.getContact_No() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='startedTyping(this); onlyNumbers(this)'>"
 					+ "										</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>"
 					+ "											<div id='bioInfoText'>Only a maximum of 255 characters.</div>"
 					+ "										</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
 					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + dum.getAddress() + "' oninput='startedTyping(this), onlyNumbers(this)'>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='startedTyping(this); onlyNumbers(this)'>"
 					+ "											</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
 					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + dum.getUnitNo() + "' oninput='startedTyping(this)'>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>"
 					+ "											</div>"
 					+ "										</div>"
 					+ "									</div>"
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='150' width='150'/>");
+						out.print("<img src='images/profile.png' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					out.print("								</div>"
 					+ "										<div id='editProfileImgDiv'>"
@@ -429,14 +430,14 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + dum.getContact_No() + "' oninput='startedTyping(this), onlyNumbers(this)'>");
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='startedTyping(this); onlyNumbers(this)'>");
 					if (contact_NoError) {
 						out.print("<div class='errorMsg'>Only a maximum of 8 numbers.</div>");
 					}
 					out.print("								</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + dum.getBio() + "</textarea>");
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>");
 					if (bioError) {
 						out.print("<div id='bioInfoText' style='color: #f74225; font-weight: 600;'>Only a maximum of 255 characters.</div>");
 					}
@@ -447,24 +448,24 @@ public class EditProfile extends HttpServlet {
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
 					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + dum.getAddress() + "' oninput='startedTyping(this), onlyNumbers(this)'>");
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='startedTyping(this); onlyNumbers(this)'>");
 					if (addressError) {
 						out.print("<div class='errorMsg'>Only a maximum of 6 numbers.</div>");
 					}
 					out.print("									</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
 					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + dum.getUnitNo() + "' oninput='startedTyping(this)'>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>"
 					+ "											</div>"
 					+ "										</div>"
 					+ "									</div>"
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='150' width='150'/>");
+						out.print("<img src='images/profile.png' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					out.print("								</div>"
 					+ "										<div id='editProfileImgDiv'>"
