@@ -9,7 +9,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -20,7 +19,9 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.compress.utils.IOUtils;
+import org.springframework.web.util.HtmlUtils;
 
+import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.PotcastModel;
 
@@ -131,8 +132,8 @@ public class PotcastRegister extends HttpServlet {
 						+ "<input type='number' name ='ppp' required></input>" + "</div>"
 
 						+ "<div class='formElement'>" + "<p>Bid closing time</p>"
-						+ "<input type='datetime-local' name='bidStopTime' required></input>" + "<p>Collection time</p>"
-						+ "<input type='datetime-local' name='pickupTime' required></input>" + "</div>"
+						+ "<input type='datetime-local' name='bidStopTime' required value='"+TimestampConverter.longToDateTimeString(System.currentTimeMillis())+"'></input>" + "<p>Collection time</p>"
+						+ "<input type='datetime-local' name='pickupTime' required value='"+TimestampConverter.longToDateTimeString(System.currentTimeMillis())+"'></input>" + "</div>"
 
 						+ "<div class='formElement'>" + "<p>Picture</p>"
 						+ "<input type='file' name='picture' accept='image/*' required></input>" + "</div>"
@@ -172,28 +173,30 @@ public class PotcastRegister extends HttpServlet {
 			PotcastModel pcm = new PotcastModel();
 			if (request.getParameter("title") != null && request.getParameter("description") != null
 					&& request.getParameter("portions") != null && request.getParameter("ppp") != null
-					&& request.getParameter("bidStopTime") != null && request.getParameter("pickupTime") != null) {
+					&& request.getParameter("bidStopTime") != null && request.getParameter("pickupTime") != null
+					&& SearchSanitizer.sanitise(request.getParameter("title")).length()>0) {
+				// Timestamps
+				Timestamp ts1 = TimestampConverter.stringToTimestamp(request.getParameter("bidStopTime"));
+				Timestamp ts2 = TimestampConverter.stringToTimestamp(request.getParameter("pickupTime"));
+				
+				if(ts1.getTime()<ts2.getTime()
+						&&ts1.getTime()>System.currentTimeMillis()
+						&&ts2.getTime()>System.currentTimeMillis()
+						&&Integer.parseInt(request.getParameter("portions"))>0
+						&&Integer.parseInt(request.getParameter("portions"))<100
+						&&Integer.parseInt(request.getParameter("ppp"))<1000
+						&&Integer.parseInt(request.getParameter("ppp"))>0){
 
 				pcm.setiGN((String) session.getAttribute("username"));
-				pcm.setTitle(request.getParameter("title"));
-				pcm.setDescription(request.getParameter("description"));
+				pcm.setTitle(SearchSanitizer.sanitise(request.getParameter("title")));
+				pcm.setDescription(encodeDescription(request.getParameter("description")));
 				pcm.setMaxBids(Integer.parseInt(request.getParameter("portions")));
 				pcm.setMinBid(Integer.parseInt(request.getParameter("ppp")));
 
 				pcm.setStartingCR(db.getCookingRankFrom((String) session.getAttribute("username")));
 
-				SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm");
-
-				// Timestamps
-				try {
-					Timestamp ts1 = new Timestamp(f.parse(request.getParameter("bidStopTime")).getTime());
-					Timestamp ts2 = new Timestamp(f.parse(request.getParameter("pickupTime")).getTime());
-
 					pcm.setBidStopTime(ts1);
 					pcm.setPickupTime(ts2);
-				} catch (ParseException e) {
-					e.printStackTrace();
-				}
 
 				// Image upload
 				Part filePart = request.getPart("picture");
@@ -206,14 +209,39 @@ public class PotcastRegister extends HttpServlet {
 				// TODO: Add sanitizer for description
 				System.out.println(pcm);
 				db.addPotcast(pcm);
+				
+				PrintWriter out = response.getWriter();
+		    	out.println("<script type=\"text/javascript\">");
+				out.println("alert('Success!');");
+				out.println("</script>");
+				}			
+				else{
+					PrintWriter out = response.getWriter();
+			    	out.println("<script type=\"text/javascript\">");
+					out.println("alert('Invalid input, Please try again.');");
+					out.println("</script>");
+				}
+				}
+			else{
+				PrintWriter out = response.getWriter();
+		    	out.println("<script type=\"text/javascript\">");
+				out.println("alert('Invalid input. Please try again.');");
+				out.println("</script>");
 			}
-		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException e1) {
-			e1.printStackTrace();
+		} catch (ClassNotFoundException | SQLException | NoSuchAlgorithmException | ParseException e1) {
+			PrintWriter out = response.getWriter();
+	    	out.println("<script type=\"text/javascript\">");
+			out.println("alert('Invalid input! Please try again.');");
+			out.println("</script>");
 		}
 		doGet(request, response);
 	}
 
 	private String encodeString(String line) throws UnsupportedEncodingException {
 		return URLEncoder.encode(line, "UTF-8");
+	}
+	
+	private String encodeDescription(String line){
+		return HtmlUtils.htmlEscape(line);
 	}
 }

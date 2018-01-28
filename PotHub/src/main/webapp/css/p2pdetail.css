@@ -29,7 +29,7 @@ h4 { font-size: 20px; }
 
 h5, h6 { font-size: 17px; }
 
-p { margin: 0; }
+p { margin: 0; word-wrap: break-word;}
 
 ul { list-style-type: square; }
 
@@ -489,6 +489,7 @@ input {
 
 #foodBuyers {
 	margin-top:20px;
+	margin-bottom:50px;
 	background-color:#f3decb;
 	padding:10px;
 	border-radius:10px;

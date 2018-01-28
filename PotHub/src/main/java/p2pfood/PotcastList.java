@@ -270,7 +270,7 @@ public class PotcastList extends HttpServlet {
 + "        var bounds = new google.maps.LatLngBounds;"
 + "        var markersArray = [];"
 + ""
-+ "        var origin1 = 'Singapore 556748';"
++ "        var origin1 = 'Singapore "+dbu0.getAddress()+"';"
 + ""
 + "        var destinationIcon = 'https://chart.googleapis.com/chart?' +"
 + "            'chst=d_map_pin_letter&chld=D|FF0000|000000';"
