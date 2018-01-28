@@ -69,30 +69,43 @@ public class discussion extends HttpServlet {
 						+ "	</head>"
 						+ "	<body>"
 						+ "		<!--  Navigation Bar -->"
-						+ "		<div id='header'>"
-						+ "			<div id='companyTitle'>"
-						+ "				<h1>PotHub</h1>"
-						+ "			</div>"
+						+ "	<!--  Navigation Bar -->"
+						+ "	<div id='header'>"
+						+ "		<div id='companyTitle'>"
+						+ "			<h1>PotHub</h1>"
+						+ "		</div>"
+						
 						+ "		<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 						+ "			<div id='profilePic'>"
 						+ "				<img src='images/profile.png' height='50' width='50'/>"
-						+ "				<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+						+ "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
-						+ "				<a href='html/Profile.html'>Profile</a>"
-						+ "				<a href='html/LoginPage.html'>Logout</a>"
+						+ "				<a href='Profile'>Profile</a>"
+						+ "				<a href='LoginPage'>Logout</a>"
 						+ "			</div>"
 						+ "		</div>"	
-						+ "		</div>"
-						+ "		<div id='navigation'>"
-						+ "			<ul>"
-						+ "				<li id='lhome'><a href='#00'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='#01'>Private Message</a></li>"
-						+ "				<li id='levent'><a href='#02'>Event</a></li>"
-						+ "				<li id='lpeer2peer'><a href='#03'>Peer-2-Peer</a></li>"
-						+ "				<li id='ldonate'><a href='#04'>Donate</a></li>"
+						
+						+ "	</div>"
+						+ "	<div id='navigation'>"
+						+ "		<div class='container-fluid'>"
+						+ "			<ul class='nav navbar-nav'>"
+						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
+						+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
+						+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
+						+ "				<li class='dropdown'>"
+						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
+						+ "			        <ul class='dropdown-menu'>"
+						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+						+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+						+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+						+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
+						+ "			        </ul>"
+						+ "			      </li>"
+						+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
 						+ "			</ul>"
 						+ "		</div>"
+						+ "	</div>"
 						+ "		<div id='wrapper'>"
 						+ "			<div id='content-wrapper'>"
 						+ "				<div id='content' style='width:98%;'>");
@@ -135,10 +148,10 @@ public class discussion extends HttpServlet {
 								int extensionPos = fileName.lastIndexOf('.');
 								String ext = fileName.substring(extensionPos);
 								if(ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".gif")) {
-									out.println("<img src='/PotHub/Video/" +  fileName + "' width='200' height='200' />");
+									out.println("<img src='Video/" +  fileName + "' width='200' height='200' />");
 								}
 								else if(ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".webm") || ext.equalsIgnoreCase(".ogg")) {
-									out.println("<video src='/PotHub/Video/" +  fileName + "' autoplay loop controls width='200' height='200'/>");
+									out.println("<video src='Video/" +  fileName + "' autoplay loop controls width='200' height='200'/>");
 									out.println("</div></div>");
 								}
 								/*else {

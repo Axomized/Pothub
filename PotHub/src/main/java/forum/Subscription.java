@@ -102,10 +102,10 @@ public class Subscription extends HttpServlet {
 						+ "				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
-						+ "			          <li><a href='#'>Active PotCasts</a></li>"
-						+ "			          <li><a href='#'>Start a PotCast</a></li>"
-						+ "			          <li><a href='#'>My PotCast</a></li>"
-						+ "			          <li><a href='#'>Joined PotCast</a></li>"
+						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+						+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+						+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+						+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 						+ "			        </ul>"
 						+ "			      </li>"
 						+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -170,7 +170,7 @@ public class Subscription extends HttpServlet {
 								
 								if (dumm.getProfilePic() != 0) {
 									
-										out.print("<div><img src='/Image/" + k.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70' style='border-radius:50%;' /></div>");
+										out.print("<div><img src='Image/" + k.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70' style='border-radius:50%;' /></div>");
 									
 								}
 								else {
@@ -299,7 +299,7 @@ public class Subscription extends HttpServlet {
 						}
 						else {
 						ftm = dbms.getFileTableByFileID(qw.getPicture());
-						out.println("<img src='/PotHub/Video/" +  ftm.getFileName() + "' height='80' width='80' />");
+						out.println("<img src='Video/" +  ftm.getFileName() + "' height='80' width='80' />");
 						}
 						
 						

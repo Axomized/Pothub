@@ -103,10 +103,10 @@ public class Forum extends HttpServlet {
 						+ "				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
-						+ "			          <li><a href='#'>Active PotCasts</a></li>"
-						+ "			          <li><a href='#'>Start a PotCast</a></li>"
-						+ "			          <li><a href='#'>My PotCast</a></li>"
-						+ "			          <li><a href='#'>Joined PotCast</a></li>"
+						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
+						+ "			          <li><a href='p2preg'>Start a PotCast</a></li>"
+						+ "			          <li><a href='p2pmy'>My PotCast</a></li>"
+						+ "			          <li><a href='p2pjoined'>Joined PotCast</a></li>"
 						+ "			        </ul>"
 						+ "			      </li>"
 						+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>"
@@ -235,7 +235,7 @@ public class Forum extends HttpServlet {
 						
 						
 						if (dumm.getProfilePic() != 0) {
-							out.print("<img src='/Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
+							out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
 						}
 						else {
 							out.print("<img src='images/profile.png' height='70' width='70'/>");

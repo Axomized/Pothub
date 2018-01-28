@@ -88,7 +88,7 @@ body
 	color:#49274a;
 }
 
-#companyTitle {
+#companyTitle{
 	float: left;
 	padding-top: 10px;
 }
@@ -163,6 +163,15 @@ body
 #navigation a:active
 {
 	color: #94618e;
+}
+
+.navbar-nav{
+	display: inline;
+}
+
+.dropdown-menu > li{
+	width: 120px;
+	background: #49274a;
 }
 
 /* Footer */
