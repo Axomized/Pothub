@@ -105,21 +105,7 @@ public class PotcastRegister extends HttpServlet {
 					+ "			</ul>" 	
 					+ "		</div>" + "	</div>");
 
-			boolean postPermission = false;
-			int permissionCounter = 0;
-			try {
-				if (db.getPrivilegeForIGN(username)) {
-					permissionCounter = 1;
-				}
-				if (db.getNumberOfPotcastsFrom(username) < 1 + permissionCounter) {
-					postPermission = true;
-				}
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-
-			if (postPermission) {
+			if(db.getNumberOfPotcastsFrom(username)<1&&db.getUserPriviledge(username)){
 				pw.append("<div id='wrapper'>" + "<div id='secondHeader'>" + "<h2>Start a Potcast</h2>" + "</div>"
 						+ "<form method='post' method='post' enctype='multipart/form-data'>" + "<div id='form'>"
 						+ "<div class='formElement'>" + "<p>Food title</p>"
@@ -207,7 +193,6 @@ public class PotcastRegister extends HttpServlet {
 				pcm.setPicture(db.addPictureWithDupeCheck(fileName, thumbnailBytes));
 
 				// TODO: Add sanitizer for description
-				System.out.println(pcm);
 				db.addPotcast(pcm);
 				
 				PrintWriter out = response.getWriter();

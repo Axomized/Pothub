@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.PotcastBidModel;
@@ -58,7 +59,7 @@ public class PotcastMy extends HttpServlet {
 		pso.setPurpose(1);
 
 		if (request.getParameter("title") != null) {
-			pso.setTitle(request.getParameter("title"));
+			pso.setTitle(SearchSanitizer.sanitise(SearchSanitizer.trimTo(request.getParameter("title"),64)));
 		}
 		if (request.getParameter("searchOption") != null) {
 			pso.setOrderBy(request.getParameter("searchOption"));

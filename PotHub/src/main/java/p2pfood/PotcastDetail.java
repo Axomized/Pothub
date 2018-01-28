@@ -88,6 +88,10 @@ public class PotcastDetail extends HttpServlet {
 			if(System.currentTimeMillis()>pm.getBidStopTime().getTime()){
 				canBid=false;
 			}
+			
+			if(!db.getPrivilegeForIGN(username)){
+				canBid=false;
+			}
 			for(PotcastBidModel bid : bids){
 				if(bid.getiGN().equals(username)){
 					canBid=false;
@@ -229,7 +233,8 @@ public class PotcastDetail extends HttpServlet {
 						+ "<button>Bid!</button>" 
 						+ "</form></div>");
 					}
-					else if (request.getParameter("response") != null) {
+					if (request.getParameter("response") != null) {
+						System.out.println(request.getParameter("response"));
 						pw.append("<div id='foodDesc'><p>"+SearchSanitizer.sanitise(request.getParameter("response")) + "</p></div>");
 					}
 					
@@ -251,6 +256,7 @@ public class PotcastDetail extends HttpServlet {
 		} catch (ClassNotFoundException e) {
 			response.sendRedirect("p2plist");
 		} catch (Exception e) {
+			
 		}
 	}
 
@@ -260,6 +266,7 @@ public class PotcastDetail extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		if(request.getParameter("potcastID")!=null){
 		try {
 			HttpSession session = request.getSession(false);
 			Database db = new Database(2);
@@ -267,15 +274,27 @@ public class PotcastDetail extends HttpServlet {
 				response.sendRedirect("Login");
 				return;
 			}
-
+			if(Long.parseLong(request.getParameter("amount"))>0&&Long.parseLong(request.getParameter("amount"))<1000){
+			
 			PotcastBidModel pbm = new PotcastBidModel(Integer.parseInt(request.getParameter("potcastID")),
 					(String) session.getAttribute("username"),
 					BigDecimal.valueOf(Long.parseLong(request.getParameter("amount"))), "0");
 
 			response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID") + "&response='" + db.addPotcastBid(pbm)+"'");
+			return;
+			}
+			else{
+				response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID") + "&response='Please give a valid number!'");
+				return;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID"));
+			response.sendRedirect("p2pdetail?potcastID=" + request.getParameter("potcastID") + "&response='Error! Please try again!'");
+			return;
+		}
+		}
+		else{
+			response.sendRedirect("p2plist");
 		}
 	}
 
