@@ -150,42 +150,6 @@ body {
 	background: #49274a;
 }
 
-/* Navigation */
-#navigation ul { 
-	float: left; 
-	list-style-type: none; 
-	margin: 0; 
-	padding: 0; 
-	background: none; 
-	border-width: 0; 
-}
-
-#navigation li { 
-	float: left; 
-}
-
-#navigation a {
-	float: left;
-	display: block;
-	padding: 5px 10px; 
-	text-decoration: none;
-}
-
-#navigation a:link, #navigation a:visited {
-	color: #f3decb;
-	font-weight: bold;
-	text-transform: uppercase;
-}
-
-#navigation a:hover, #navigation a:active {
-	color: #94618e;
-}
-
-.dropdown-menu > li{
-	width: 120px;
-	background: #49274a;
-}
-
 /* Event */
 #popup-container{
 	position: fixed;

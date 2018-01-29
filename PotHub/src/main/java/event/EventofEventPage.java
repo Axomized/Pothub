@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -40,8 +41,8 @@ public class EventofEventPage extends HttpServlet {
     }
     
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-    	String nameOfEvent = encodeString(request.getPathInfo().substring(1));
     	try {
+    		String nameOfEvent = encodeString(request.getPathInfo().substring(1));
     		SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
 			EventModel eM = db.getEventofEventPage(nameOfEvent);
 			//Check session whether the user got login in
@@ -71,9 +72,9 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<!-- Latest compiled and CSS -->");
 			sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 			sb.append("		<!-- Optional theme -->");
-			sb.append("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
+			sb.append("		<script defer src='https://use.fontawesome.com/aff6d7353c.js'></script>");
 			sb.append("		<!-- My Script -->");
-			sb.append("		<script src='../script/EventofEventPage.min.js' defer></script>");
+			sb.append("		<script src='../script/EventofEventPage.js' defer></script>");
 			sb.append("		<!-- My Style Sheet -->");
 			sb.append("		<link rel='stylesheet' type='text/css' href='../css/EventofEventCss.css' />");
 			sb.append("	</head>");
@@ -125,17 +126,32 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("		</div>");
 			sb.append("		<div class='container-fluid' id='wrapper'>");
-			sb.append("		  	<div class='row'>");
-			sb.append("				<div class='event-header'>");
-			sb.append("					<div class='event-header-image'>");
-			sb.append("						<img src='../Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
+			sb.append("			<div id='popup-container'>");
+			sb.append("				<div id='popup'>");
+			sb.append("					<div id='popup-title'>");
+			sb.append("						<p><b>Report Event</b>");
 			sb.append("					</div>");
-			sb.append("					<div class='event-header-title-gradient'>");
-			sb.append("						<div class='event-title'>");
-			sb.append("							<p>" + decodeString(eM.getEventName()) + "</p>");
-			sb.append("						</div>");
-			
+			sb.append("					<div id='popup-icons'>");
+			sb.append("						<label class='radio-inline'><input type='radio' name='report' value='Sexual/Offensive content'> Sexual/Offensive content</label><br>");
+			sb.append("						<label class='radio-inline'><input type='radio' name='report' value='Harmful or abusive content'> Harmful or abusive content</label><br>");
+			sb.append("						<label class='radio-inline'><input type='radio' name='report' value='Promotes terrorism'> Promotes terrorism</label><br>");
+			sb.append("						<label class='radio-inline'><input type='radio' name='report' value='Spam/Misleading'> Spam/Misleading</label><br>");
+			sb.append("						<label class='radio-inline'><input type='radio' name='report' value='Others'> Others</label><br>");
+			sb.append("						<input type='text' class='form-control' name='othersText' id='othersText' placeholder='Type here...'>");
+			sb.append("					</div>");
+			sb.append("					<i class='fa fa-times-circle-o fa-2x' aria-hidden='true' id='closeBtn'></i>");
 			if(eM.getiGN().equals(username)) {
+				sb.append("				</div>");
+				sb.append("			</div>");
+				sb.append("		  	<div class='row'>");
+				sb.append("				<div class='event-header'>");
+				sb.append("					<div class='event-header-image'>");
+				sb.append("						<img src='../Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
+				sb.append("					</div>");
+				sb.append("					<div class='event-header-title-gradient'>");
+				sb.append("						<div class='event-title'>");
+				sb.append("							<p>" + decodeString(eM.getEventName()) + "</p>");
+				sb.append("						</div>");
 				sb.append("						<div class='event-header-button'>");
 				sb.append("							<button class='btn btn-danger' onclick=\"changeColor(this); closeEvent('" + nameOfEvent + "')\">Delete Event</button> <!-- Servlet change the text according to status -->");
 				sb.append("						</div>");
@@ -143,6 +159,18 @@ public class EventofEventPage extends HttpServlet {
 				sb.append("							<button class='btn btn-info' onclick='redirectToInteractiveOwner()'>Barcode Scanning</button> <!-- Servlet change the text according to status -->");
 				sb.append("						</div>");
 			}else {
+				sb.append("					<button onclick=\"reportEvent('" + db.getEventIDFromEventName(nameOfEvent) + "', '" + username + "', '" + eM.getiGN() + "')\" class='btn'>Submit</button>");
+				sb.append("				</div>");
+				sb.append("			</div>");
+				sb.append("		  	<div class='row'>");
+				sb.append("				<div class='event-header'>");
+				sb.append("					<div class='event-header-image'>");
+				sb.append("						<img src='../Image/" + db.getImageByImageID(eM.getThumbnail()) + "' alt='Thumbnail'>");
+				sb.append("					</div>");
+				sb.append("					<div class='event-header-title-gradient'>");
+				sb.append("						<div class='event-title'>");
+				sb.append("							<p>" + decodeString(eM.getEventName()) + "</p>");
+				sb.append("						</div>");
 				switch(status) {
 				case "C":
 					sb.append("						<div class='event-header-button'>");
@@ -165,6 +193,9 @@ public class EventofEventPage extends HttpServlet {
 				}
 			}
 			
+			sb.append("								<div class='event-header-button3'>");
+			sb.append("									<button class='btn btn-danger' id='reportBtn'><i class='fa fa-flag'></i></button>");
+			sb.append("								</div>");
 			sb.append("					</div>");
 			sb.append("				</div>");
 			sb.append("			</div>");
@@ -232,7 +263,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("			</p>");
 			sb.append("		</div>");
 			sb.append("		<!-- Optional Scripts for Bootstrap -->");
-			sb.append("		<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js' integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n' crossorigin='anonymous'></script>");
+			sb.append("		<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js' integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb' crossorigin='anonymous'></script>");
 			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js' integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn' crossorigin='anonymous'></script>");
 			sb.append("	</body>");

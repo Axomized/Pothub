@@ -4,9 +4,10 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.sql.Date;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -20,6 +21,7 @@ import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.EventModel;
+import database.model.ReportModel;
 
 public class EventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -263,8 +265,34 @@ public class EventPage extends HttpServlet {
 		out.write(footer);
 		out.close();
 	}
+	
+	// Report event
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
+		try {
+			final Database DB = new Database(1);
+			String type = request.getParameter("Type");
+			if(type.isEmpty() || type == null) {
+				doGet(request, response);
+			}else {
+				String eventID 		= request.getParameter("eventID");
+				String iGN 			= request.getParameter("iGN");
+				String eventOwner 	= request.getParameter("eventOwner");
+				Date timenow = new Date(System.currentTimeMillis());
+				ReportModel rM = new ReportModel();
+				if("Others".equals(type)) {
+					String other = request.getParameter("Other");
+					rM = new ReportModel(0, iGN, eventOwner, "Event", timenow, Integer.parseInt(eventID), other, 0);
+				}else {
+					rM = new ReportModel(0, iGN, eventOwner, "Event", timenow, Integer.parseInt(eventID), type, 0);
+				}
+				DB.addReport(rM);
+				//ReportModel(String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence, String reason, int guiltyOrNot)
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void destroy() {

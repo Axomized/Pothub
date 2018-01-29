@@ -65,6 +65,62 @@ function redirectToInteractiveOwner() {
 	window.location.href = "../BarcodeScanning";
 }
 
+function showReport() {
+	$("#popup-container").show();
+}
+
+function hideReport() {
+	$("#popup-container").hide();
+}
+
+function reportEvent(eventID, iGN, eventOwner) {
+	var nameOfRadio = $('input[type=radio]:checked').val();
+	if(nameOfRadio == undefined) {
+		alert("Please select one reason.");
+	}else if(nameOfRadio === "Others") {
+		var othersText = $("#othersText").val();
+		if(othersText === null || othersText === ""){
+			othersText = "Others";
+		}
+		if(confirm("Are you sure?")) {
+			$.ajax({
+				"url": "../EventPage",
+				"type": "POST",
+				"data": {"eventID": eventID, "iGN" : iGN, "eventOwner": eventOwner, "Type": "Others", "Other": othersText},
+				success: function(){
+					alert("Report success.");
+					hideReport();
+				}
+			});
+		}
+	}else {
+		if(confirm("Are you sure?")) {
+			$.ajax({
+				"url": "../EventPage",
+				"type": "POST",
+				"data": {"eventID": eventID, "iGN" : iGN, "eventOwner": eventOwner, "Type": nameOfRadio},
+				success: function(){
+					alert("Report success.");
+					hideReport();
+				}
+			});
+		}
+	}
+}
+
+$(document).ready(function() {
+	$("#reportBtn").click(function(){showReport();});
+	$("#closeBtn").click(function(){hideReport();});
+	$("input").on("change", function() {
+		var nameOfRadio = $('input[type=radio]:checked').val();
+		if(nameOfRadio === "Others") {
+			$("#othersText").show();
+		} else{
+			$("#othersText").hide();
+		}
+	});
+});
+
 /* Profile */
 
 function showProfileDropdown() {
