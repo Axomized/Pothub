@@ -393,10 +393,6 @@
 		<servlet-name>Subscription2</servlet-name>
 		<url-pattern>/Subscription2</url-pattern>
 	</servlet-mapping>
-	<servlet-mapping>
-		<servlet-name>LoginPage</servlet-name>
-		<url-pattern></url-pattern>
-	</servlet-mapping>
 	<session-config>
 		<session-timeout>15</session-timeout>
 	</session-config>
