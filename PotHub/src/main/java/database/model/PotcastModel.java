@@ -17,12 +17,13 @@ public class PotcastModel {
 	private int minBid;
 	private int startingCR;
 	private int picture;
+	private boolean startCookingEmail;
 	
 	public PotcastModel(){
 		
 	}
 	public PotcastModel(String iGN, int potcastID, String title, String description, int maxBids, Timestamp bidStopTime2,
-			Timestamp pickupTime2, int minBid, int startingCR, int picture) {
+			Timestamp pickupTime2, int minBid, int startingCR, int picture, boolean startCookingEmail) {
 		this.iGN=iGN;
 		this.potcastID = potcastID;
 		this.title = title;
@@ -33,6 +34,7 @@ public class PotcastModel {
 		this.minBid = minBid;
 		this.startingCR = startingCR;
 		this.picture = picture;
+		this.startCookingEmail = startCookingEmail;
 	}
 	
 	public String toString() {
@@ -125,5 +127,11 @@ public class PotcastModel {
 	}
 	public void setiGN(String iGN) {
 		this.iGN = iGN;
+	}
+	public boolean isStartCookingEmail() {
+		return startCookingEmail;
+	}
+	public void setStartCookingEmail(boolean startCookingEmail) {
+		this.startCookingEmail = startCookingEmail;
 	}
 }

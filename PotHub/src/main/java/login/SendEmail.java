@@ -8,6 +8,7 @@ import javax.mail.internet.*;
 import com.sun.mail.smtp.SMTPTransport;
 
 import database.model.ForgetPasswordModel;
+import potcastTalk.Email;
 
 
 public class SendEmail {
@@ -23,6 +24,7 @@ public class SendEmail {
 		String body = fpm.getNewPassword();
 		sendEmail(USER_NAME, PASSWORD, recipientEmail, SUBJECT, body);
 	}
+	@SuppressWarnings("restriction")
 	public static void sendEmail(String username, String password, String recipientEmail, String subject, String body) throws AddressException, MessagingException {
         Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
         final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
@@ -66,7 +68,41 @@ public class SendEmail {
         t.close();
     }
 	
-		
+	@SuppressWarnings("restriction")
+	public static void sendEmail(Email email) throws AddressException, MessagingException {
+        Security.addProvider(new com.sun.net.ssl.internal.ssl.Provider());
+        final String SSL_FACTORY = "javax.net.ssl.SSLSocketFactory";
+
+        // Get a Properties object
+        Properties props = System.getProperties();
+        props.setProperty("mail.smtps.host", "smtp.gmail.com");
+        props.setProperty("mail.smtp.socketFactory.class", SSL_FACTORY);
+        props.setProperty("mail.smtp.socketFactory.fallback", "false");
+        props.setProperty("mail.smtp.port", "465");
+        props.setProperty("mail.smtp.socketFactory.port", "465");
+        props.setProperty("mail.smtps.auth", "true");
+
+        props.put("mail.smtps.quitwait", "false");
+
+        Session session = Session.getInstance(props, null);
+
+        // -- Create a new message --
+        final MimeMessage msg = new MimeMessage(session);
+
+        // -- Set the FROM and TO fields --
+        msg.setFrom(new InternetAddress(USER_NAME + "@gmail.com"));
+        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email.getRecipientEmail(), false));
+
+        msg.setSubject(email.getSubject());
+        msg.setText(email.getBody(), "utf-8");
+        msg.setSentDate(new Date());
+
+        SMTPTransport t = (SMTPTransport)session.getTransport("smtps");
+
+        t.connect("smtp.gmail.com", USER_NAME, PASSWORD);
+        t.sendMessage(msg, msg.getAllRecipients());      
+        t.close();
+    }
 	
 	public static String getRandomPassword() {
         String PASSWORDCHARS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";

@@ -237,6 +237,13 @@
 		<description></description>
 		<servlet-class>forum.Subscription2</servlet-class>
 	</servlet>
+		<servlet>
+		<servlet-name>TalkTimer</servlet-name>
+		<display-name>TalkTimer</display-name>
+		<description></description>
+		<servlet-class>potcastTalk.TalkTimer</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>

@@ -135,6 +135,16 @@ public class Database {
 		return null;
 	}
 	
+	public String getEmailByIGN(String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email FROM DatabaseUser WHERE IGN = ?;");
+		ppstmt.setString(1, iGN);
+		ResultSet rs = ppstmt.executeQuery();
+		while (rs.next()) {
+			return rs.getString("email");
+		}
+		return null;
+	}
+	
 	public boolean getPrivilegeForIGN(String ign) throws SQLException{
 		PreparedStatement pptstmt = conn.prepareStatement("SELECT isPriviledged FROM databaseUser WHERE IGN = ?");
 		pptstmt.setString(1, ign);
@@ -654,18 +664,19 @@ public class Database {
 		ArrayList<PotcastModel> potcasts = new ArrayList<PotcastModel>();
 		ResultSet rs = getResultSet(pso.getExecutableSQL());
 		while(rs.next()) {
-			String iGN			= rs.getString("iGN");
-			int potcastID		= rs.getInt("potcastID");
-			String title 		= rs.getString("title");
-			String description	= rs.getString("description");
-			int maxBids			= rs.getInt("maxBids");
-			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
-			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
-			int minBid			= rs.getInt("minBid");
-			int startingCR		= rs.getInt("startingCR");
-			int picture 		= rs.getInt("picture");
+			String iGN					= rs.getString("iGN");
+			int potcastID				= rs.getInt("potcastID");
+			String title 				= rs.getString("title");
+			String description			= rs.getString("description");
+			int maxBids					= rs.getInt("maxBids");
+			Timestamp bidStopTime		= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime		= rs.getTimestamp("pickupTime");
+			int minBid					= rs.getInt("minBid");
+			int startingCR				= rs.getInt("startingCR");
+			int picture 				= rs.getInt("picture");
+			boolean startCookingEmail	= rs.getBoolean("startCookingEmail");
 			potcasts.add(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
-					pickupTime, minBid, startingCR, picture));
+					pickupTime, minBid, startingCR, picture, startCookingEmail));
 		}
 		return potcasts;
 	}
@@ -676,20 +687,47 @@ public class Database {
 		
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
-			String iGN			= rs.getString("iGN");
-			int potcastID		= rs.getInt("potcastID");
-			String title 		= rs.getString("title");
-			String description	= rs.getString("description");
-			int maxBids			= rs.getInt("maxBids");
-			Timestamp bidStopTime	= rs.getTimestamp("bidStopTime");
-			Timestamp pickupTime	= rs.getTimestamp("pickupTime");
-			int minBid			= rs.getInt("minBid");
-			int startingCR		= rs.getInt("startingCR");
-			int picture 		= rs.getInt("picture");
+			String iGN					= rs.getString("iGN");
+			int potcastID				= rs.getInt("potcastID");
+			String title 				= rs.getString("title");
+			String description			= rs.getString("description");
+			int maxBids					= rs.getInt("maxBids");
+			Timestamp bidStopTime		= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime		= rs.getTimestamp("pickupTime");
+			int minBid					= rs.getInt("minBid");
+			int startingCR				= rs.getInt("startingCR");
+			int picture 				= rs.getInt("picture");
+			boolean startCookingEmail	= rs.getBoolean("startCookingEmail");
 			return(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
-					pickupTime, minBid, startingCR, picture));
+					pickupTime, minBid, startingCR, picture, startCookingEmail));
 		}
 		return null;
+	}
+	
+	public ArrayList<PotcastModel> getPotcastStartCookingEmail() throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Potcast WHERE startCookingEmail = ? AND bidStopTime > ?");
+		ps.setBoolean(1, false);
+		ps.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+		
+		ArrayList<PotcastModel> potcasts = new ArrayList<PotcastModel>();
+		
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			String iGN					= rs.getString("iGN");
+			int potcastID				= rs.getInt("potcastID");
+			String title 				= rs.getString("title");
+			String description			= rs.getString("description");
+			int maxBids					= rs.getInt("maxBids");
+			Timestamp bidStopTime		= rs.getTimestamp("bidStopTime");
+			Timestamp pickupTime		= rs.getTimestamp("pickupTime");
+			int minBid					= rs.getInt("minBid");
+			int startingCR				= rs.getInt("startingCR");
+			int picture 				= rs.getInt("picture");
+			boolean startCookingEmail	= rs.getBoolean("startCookingEmail");
+			potcasts.add(new PotcastModel(iGN, potcastID, title, description, maxBids, bidStopTime,
+					pickupTime, minBid, startingCR, picture, startCookingEmail));
+		}
+		return potcasts;
 	}
 	
 	public void updateBid(String ign, int potcastID, int rating) throws SQLException{
@@ -802,6 +840,15 @@ public class Database {
 		ps.setTimestamp(7, pcm.getPickupTime());
 		ps.setInt(8, pcm.getStartingCR());
 		ps.setInt(9, pcm.getPicture());
+		
+		ps.executeUpdate();
+	}
+	
+	//Potcast Add
+	public void setPotcastEmailAsSend(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("UPDATE potcast set StartCookingEmail = ? WHERE potcastID = ?");
+		ps.setBoolean(1, true);
+		ps.setInt(2, id);
 		
 		ps.executeUpdate();
 	}

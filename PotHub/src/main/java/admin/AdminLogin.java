@@ -114,7 +114,6 @@ public class AdminLogin extends HttpServlet {
 		
 			String enteredEmail = request.getParameter("username");
 			String enteredPassword = request.getParameter("password");
-			
 			try 
 			{
 				Database db = new Database(0);
@@ -148,7 +147,6 @@ public class AdminLogin extends HttpServlet {
 			    			// get reCAPTCHA request param
 			    			String gRecaptchaResponse = request
 			    					.getParameter("g-recaptcha-response");
-			    			System.out.println(gRecaptchaResponse);
 			    			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
 			    			
 			    			if(verify){
