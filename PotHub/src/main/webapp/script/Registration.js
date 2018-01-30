@@ -3,7 +3,7 @@ function validateEmail() {
     var atpos = email.indexOf("@");
     var dotpos = email.lastIndexOf(".");
     
-    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length || email == "") 
+    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) 
     {
 		document.getElementById("messageEmail").style.visibility = "visible";
 	}
@@ -14,16 +14,24 @@ function validateEmail() {
 
 }
 
+function hasLowerCase(str) {
+	if(str.toUpperCase != str){
+		return true;
+	}
+	else
+		return false;
+}
+
 function validatePassword() {
-//	var password = document.getElementById("password").value;
-//	
-//	if (values.password.length < 8 || !password.match("^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$"))
-//	{
-//		document.getElementById("messagePassword").style.visibility = "visible";
-//	}
-//	else
-//	{
-//		document.getElementById("messagePassword").style.visibility = "hidden";		
-//	}
+	var password = document.getElementById("password").value;
+	
+	if (password.length<8)
+	{
+		document.getElementById("messagePassword").style.visibility = "visible";
+	}
+	else
+	{
+		document.getElementById("messagePassword").style.visibility = "hidden";		
+	}
 }
 

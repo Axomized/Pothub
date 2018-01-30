@@ -65,7 +65,7 @@ public class Registration extends HttpServlet {
 		+ "			<font color=red id='messageEmail'>Please enter a valid email.</font>"
 		+ "			<input type='text' name='email' id='email' placeholder='Enter your email' onfocusout='validateEmail()'>"
 		+ "			<span color='#49274a'>Password:</span>"
-		+ "			<font color=red id='messagePassword'>Password must contain at least 8 characters and one of each of the following: uppercase letter, lowercase letter, number.</font>"
+		+ "			<font color=red id='messagePassword'>Please enter a valid email.</font>"
 		+ "			<input type='password' name='password' id='password' placeholder='Create a password'>"
 		+ "			<span color='#49274a'>Retype Password:</span>"
 		+ "			<input type='password' name='password2' id='password2' placeholder='Confirm your password'>"

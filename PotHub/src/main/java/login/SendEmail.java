@@ -12,8 +12,8 @@ import potcastTalk.Email;
 
 
 public class SendEmail {
-	public static String USER_NAME = "aspjproject1";  // GMail user name (just the part before "@gmail.com")
-	public static String PASSWORD = "AspjProject1234567890"; // GMail password
+	public static String USER_NAME = "pothubaspj";  // GMail user name (just the part before "@gmail.com")
+	public static String PASSWORD = "ITP292-03"; // GMail password
 	public static String SUBJECT ="PotHub Password Reset";
 	String newPassword;
 	
@@ -38,14 +38,6 @@ public class SendEmail {
         props.setProperty("mail.smtp.socketFactory.port", "465");
         props.setProperty("mail.smtps.auth", "true");
 
-        /*
-        If set to false, the QUIT command is sent and the connection is immediately closed. If set 
-        to true (the default), causes the transport to wait for the response to the QUIT command.
-
-        ref :   http://java.sun.com/products/javamail/javadocs/com/sun/mail/smtp/package-summary.html
-                http://forum.java.sun.com/thread.jspa?threadID=5205249
-                smtpsend.java - demo program from javamail
-        */
         props.put("mail.smtps.quitwait", "false");
 
         Session session = Session.getInstance(props, null);

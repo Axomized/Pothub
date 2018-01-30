@@ -60,9 +60,9 @@ public class ForceChangePassword extends HttpServlet {
 						+"		<body>"
 						+"			<h1>Reset Password</h1>"
 						+"			<form method='post' action='ForceChangePassword'>"
-						+"				<font color='#49274a'>New password:</font>"
+						+"				<span color='#49274a'>New Password:</span>"
 						+"				<input type='password' name='password' placeholder='Enter new password'>"
-						+"				<font color='#49274a'>Retye new password:</font>"			
+						+"				<span color='#49274a'>Retye New Password:</span>"			
 						+"				<input type='password' name='password2' placeholder='Confirm new password'>"
 						+"				<input type='submit' name='submit' value='SUBMIT'>"
 						+"			</form>"
@@ -102,8 +102,9 @@ public class ForceChangePassword extends HttpServlet {
 				db.updateChangedPassword(PBKDF2.toHex(hash), email);
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully changed your password!');");
-				out.println("window.location.href = 'Forum'");
-				out.println("</script>");			} catch (ClassNotFoundException | SQLException e) {
+				out.println("window.location.href = 'Login'");
+				out.println("</script>");			
+			} catch (ClassNotFoundException | SQLException e) {
 				e.printStackTrace();
 			} catch (NoSuchAlgorithmException e) {
 				// TODO Auto-generated catch block
