@@ -10,45 +10,37 @@ html {
 
 /* Structure */
 
-body {
+body
+{
 	margin: 0;
 	float: left;
 	width: 100%;
 	background-color: #f8eee7;
 }
 
-#header {
+#header
+{
 	float: left;
 	width: 100%;
 	clear: both;
 	background: #f3decb;
 }
 
-#navigation {
+#wrapper{
+	float: left;
+	clear: both;
+}
+
+#navigation
+{
 	float: left;
 	width: 100%; 
 	color: #f3decb;
 	background: #49274a;
 }
 
-#wrapper {
-	clear: both;
-	float: left;
-	width: 100%;
-	margin: 10px 0;
-	text-align: center;
-}
-
-#content-wrapper {
-	clear: both;
-	width: 60%;
-}
-
-#content {
-	padding: 0 20px;
-}
-
-#footer {
+#footer
+{
 	clear: both;
 	float: left;
 	width: 100%; 
@@ -66,9 +58,8 @@ body {
 	font-weight: 500;
 }
 
-#companyTitle {
+#companyTitle{
 	float: left;
-	padding-top: 10px;
 }
 
 #profilePicWrapDiv {
@@ -87,10 +78,10 @@ body {
 	display: none;
 	position: absolute;
 	top: 100%;
-	right: 0%;
+	right: 0;
 	background-color: #f8eee7;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -117,34 +108,34 @@ body {
 
 /* Navigation */
 
-#navigation ul { 
-	float: left; 
-	list-style-type: none; 
-	margin: 0; 
-	padding: 0; 
-	background: none; 
-	border-width: 0; 
-}
+#navigation ul { float: left; list-style-type: none; margin: 0; padding: 0; background: none; border-width: 0; }
 
-#navigation li { 
-	float: left; 
-}
+#navigation li { float: left; }
 
-#navigation a {
+#navigation a
+{
 	float: left;
 	display: block;
 	padding: 5px 10px; 
 	text-decoration: none;
 }
 
-#navigation a:link, #navigation a:visited {
+#navigation a:link,
+#navigation a:visited
+{
 	color: #f3decb;
 	font-weight: bold;
 	text-transform: uppercase;
 }
 
-#navigation a:hover, #navigation a:active {
+#navigation a:hover,
+#navigation a:active
+{
 	color: #94618e;
+}
+
+.navbar-nav{
+	display: inline;
 }
 
 .dropdown-menu > li{

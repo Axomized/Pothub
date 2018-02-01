@@ -193,8 +193,14 @@ public class EventModel {
 
 	public void setFileListArray(ArrayList<String> fileList) {
 		String line = "";
-		for(String s: fileList)
-			line += s;
+		boolean first = true;
+		for(String s: fileList) {
+			if(first) {
+				line = s;
+			}else {
+				line += "_" + s;
+			}
+		}
 		this.fileList = line;
 	}
 	

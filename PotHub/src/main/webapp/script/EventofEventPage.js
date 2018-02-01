@@ -52,9 +52,15 @@ function sendJoinRequest(eventName, username) {
 	$.ajax({
 		"url": "EventofEventPage",
 		"type": "POST",
-		"data": {"Type": "Join", "eventName" : eventName, "iGN": username}
+		"data": {"Type": "Join", "eventName" : eventName, "iGN": username},
+		success: function aaa(res) {
+			if(res) {
+				location.reload(); // Reload the page cause I lazy retype some codes
+			}else {
+				alert("Maximum participants entered.");
+			}
+		}
 	});
-	location.reload(); // Reload the page cause I lazy retype some codes
 }
 
 function redirectToInteractive() {

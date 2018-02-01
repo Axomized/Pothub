@@ -56,14 +56,13 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
-
+			
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
 				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
-			
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
@@ -145,19 +144,19 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("				<div class='right-top-container'>");
 			sb.append("					<div class='right-top-topthree-container' id='2ndPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src='' id='2ndPlaceImage'>");
+			sb.append("							<img id='2ndPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>2nd</p>");
 			sb.append("					</div>");
 			sb.append("					<div class='right-top-topthree-container' id='1stPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src='' id='1stPlaceImage'>");
+			sb.append("							<img id='1stPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>1st</p>");
 			sb.append("					</div>");
 			sb.append("					<div class='right-top-topthree-container' id='3rdPlace'>");
 			sb.append("						<div class='right-top-topthree-picture'>");
-			sb.append("							<img src='' id='3rdPlaceImage'>");
+			sb.append("							<img id='3rdPlaceImage'>");
 			sb.append("						</div>");
 			sb.append("						<p>3rd</p>");
 			sb.append("					</div>");
@@ -217,6 +216,9 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js'></script>");
 			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
+			sb.append("		<!-- Bootstrap js -->");
+			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>");
+			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>");
 			sb.append("	    <!-- My Own Script -->");
 			sb.append("		<script src='script/Leaderboard.min.js'></script>");
 			sb.append("		<script src='script/VideoParticipant2.min.js'></script>");

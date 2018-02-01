@@ -33,14 +33,13 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			sb.append("<!DOCTYPE html>");
 			sb.append("<html>");
 			sb.append("	<head>");
-			sb.append("		<meta charset='UTF-8'>");
-			sb.append("		<meta name='viewport' content='width=device-width, user-scalable=yes, initial-scale=1, maximum-scale=1'>");
-			sb.append("		<title>The Streamer</title>");
+			sb.append("	    <meta charset='UTF-8'>");
+			sb.append("		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>");
 			sb.append("		<!-- Favicon -->");
 			sb.append("		<link rel='icon' href='images/crab.gif' type='image/gif'>");
 			sb.append("		<link rel='icon' href='images/crab.png?v=2' type='image/x-icon'>");
 			sb.append("		<!-- Page Title -->");
-			sb.append("		<title>Default Title</title>");
+			sb.append("		<title>Leaderboard Owner</title>");
 			sb.append("		<!-- Latest compiled and CSS -->");
 			sb.append("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css' integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ' crossorigin='anonymous'>");
 			sb.append("		<!-- Optional theme -->");
@@ -56,7 +55,7 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
-
+			
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
 				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
@@ -144,6 +143,9 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			sb.append("	    <script src='https://cdnjs.cloudflare.com/ajax/libs/webrtc-adapter/6.0.4/adapter.min.js'></script>");
 			sb.append("		<script src='https://rawgit.com/muaz-khan/RTCMultiConnection/master/dist/RTCMultiConnection.min.js'></script>");
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js'></script>");
+			sb.append("		<!-- Bootstrap js -->");
+			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>");
+			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>");
 			sb.append("	    <!-- My Own Script -->");
 			sb.append("	    <script src='script/VideoOwner.min.js'></script>");
 			sb.append("	  	<script src='script/VideoParticipant.min.js'></script>");
@@ -153,6 +155,7 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			
 			out.close();
 		}catch(Exception e) {
+			response.sendRedirect("Login");
 			e.printStackTrace();
 		}
 	}

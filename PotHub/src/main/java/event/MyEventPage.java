@@ -137,6 +137,9 @@ public class MyEventPage extends HttpServlet {
 			eMAL = db.getEventModelForMyEventPage();
 			
 			for(EventModel eM:eMAL) {
+				if(!db.getWhetherPeopleEventList(eM.getEventID(), username).equals("C") && !eM.getiGN().equals(username)) {
+					continue;
+				}
 				String eventName = eM.getEventName();
 				String[] parts = decodeString(eM.getVenue()).split("\\`");
 				

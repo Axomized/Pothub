@@ -159,7 +159,7 @@ public class EventofEventPage extends HttpServlet {
 				sb.append("							<button class='btn btn-info' onclick='redirectToInteractiveOwner()'>Barcode Scanning</button> <!-- Servlet change the text according to status -->");
 				sb.append("						</div>");
 			}else {
-				sb.append("					<button onclick=\"reportEvent('" + db.getEventIDFromEventName(nameOfEvent) + "', '" + username + "', '" + eM.getiGN() + "')\" class='btn'>Submit</button>");
+				sb.append("					<button onclick=\"reportEvent('" + db.getEventIDFromEventName(nameOfEvent) + "', '" + username + "', '" + eM.getiGN() + "')\" class='btn btn-success'>Submit</button>");
 				sb.append("				</div>");
 				sb.append("			</div>");
 				sb.append("		  	<div class='row'>");

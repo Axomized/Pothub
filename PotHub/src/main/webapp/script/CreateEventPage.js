@@ -48,25 +48,35 @@ function showPreview() {
 		contents.find(".title").text(htmlEncode($("#eventName").val()));
 		contents.find(".desc").text(htmlEncode($("#description").val()));
 		var guestDiv = contents.find(".guest");
+		guestDiv.children().each(function(index){
+			if(index != 0){
+				$(this).remove();
+			}
+		});
 		var guestInputValue = $("#guestNameList").val();
 		var guestArray = guestInputValue.split("_");
-		for(var j = 0; i < guestArray.length; j++) {
+		for(var j = 0; j < guestArray.length; j++) {
 			var div = $(document.createElement("div"));
 			div.append("<img src=\"../images/cat.png\" alt=\"Guests Profile Picture\" height=\"50\" width=\"50\"><br>");
-			div.append("<p>" + htmlEncode(guestArray.j) + "</p>");
+			div.append("<p>" + htmlEncode(guestArray[j]) + "</p>");
 			guestDiv.append(div);
 		}
 		var eventGallery = contents.find(".event-gallery"); //Iframe"s gallery
+		eventGallery.children().each(function(index){
+			if(index != 0){
+				$(this).remove();
+			}
+		});
 		var input = document.getElementById("upload");
 		for (var i = 0; i < input.files.length; i++) {
-			if (input.files && input.files.i) 
+			if (input.files && input.files[i]) 
 			{
 				var reader = new FileReader();
 
 				reader.onload = function aaa(e) {
 					eventGallery.append("<img src=\"" + e.target.result + "\" alt=\"Gallerys pictures\">");
 				};
-				reader.readAsDataURL(input.files.i);
+				reader.readAsDataURL(input.files[i]);
 			}
 		}
 		var googleMapLink = "https://www.google.com/maps/embed/v1/place?key=AIzaSyBksQSICQgS5CoCf49IyTtozR8R198pTS0&q=" + encodeURI($("#mainAddress").val());
@@ -108,6 +118,14 @@ function addToLeft(text){
 	text.remove();
 	var string = text.innerHTML;
 	$("#guestnamelist").append("<option>" + string + "</option>");
+	$(".right-guest").each(function aaa(index){
+		if(index === 0){
+			$("#guestNameList").val($(this).text());
+		}else{
+			$("#guestNameList").val($("#guestNameList").val() + "_" + $(this).text());
+		}
+
+	});
 }
 
 function validateForm() {
@@ -212,7 +230,7 @@ $(function(){
 		}
 	});
 
-	$("#fileUpload").change(function a() {
+	$("#fileUpload").change(function aaa() {
 		var input = this;
 		var url = $(this).val();
 		var ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
@@ -230,12 +248,12 @@ $(function(){
 		showDefault();
 	});
 
-	$("#upload").change(function a() {
+	$("#upload").change(function aaa() {
 		var input = this;
 		var url = $(this).val();
 		var ext = url.substring(url.lastIndexOf(".") + 1).toLowerCase();
 		for (var i = 0; i < input.files.length; ++ i) {
-			if (input.files && input.files.i && (ext === "gif" || ext === "png" || ext === "jpeg" || ext === "jpg")) 
+			if (input.files && input.files[i] && (ext === "gif" || ext === "png" || ext === "jpeg" || ext === "jpg")) 
 			{
 				var reader = new FileReader();
 				
@@ -257,7 +275,7 @@ $(function(){
 						$(this).children("div").css("display", "none");
 					});
 				}
-				reader.readAsDataURL(input.files.i);
+				reader.readAsDataURL(input.files[i]);
 			}
 		}
 		open = true;

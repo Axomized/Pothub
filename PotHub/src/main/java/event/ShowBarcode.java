@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.microsoft.sqlserver.jdbc.SQLServerException;
+
 import database.Database;
 
 public class ShowBarcode extends HttpServlet {
@@ -48,8 +50,8 @@ public class ShowBarcode extends HttpServlet {
 			sb.append("		<meta charset='UTF-8'>");
 			sb.append("		<meta name='viewport' content='width=device-width, initial-scale=1, shrink-to-fit=no'>");
 			sb.append("		<!-- Favicon -->");
-			sb.append("		<link rel='icon' href='https://localhostimages/crab.gif' type='image/gif'>");
-			sb.append("		<link rel='icon' href='https://localhostimages/crab.png?v=2' type='image/x-icon'>");
+			sb.append("		<link rel='icon' href='images/crab.gif' type='image/gif'>");
+			sb.append("		<link rel='icon' href='images/crab.png?v=2' type='image/x-icon'>");
 			sb.append("		<!-- Page Title -->");
 			sb.append("		<title>Barcode</title>");
 			sb.append("		<!-- Latest compiled and CSS -->");
@@ -67,7 +69,7 @@ public class ShowBarcode extends HttpServlet {
 			sb.append("			</div>");
 			sb.append("			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>");
 			sb.append("				<div id='profilePic'>");
-			
+
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
 				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
@@ -75,6 +77,7 @@ public class ShowBarcode extends HttpServlet {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
 			
+			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
 			sb.append("				<div id='profileDropdownDiv'>");
 			sb.append("					<a href='Profile'>Profile</a>");
@@ -136,6 +139,10 @@ public class ShowBarcode extends HttpServlet {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			response.sendRedirect("Login");
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			response.sendRedirect("Login");
 		}
 	}
 

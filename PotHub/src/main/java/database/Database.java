@@ -1378,7 +1378,7 @@ public class Database {
 	}
 	
 	//CreateEvent
-	public void insertCreateEvent(EventModel eM) throws SQLException { 
+	public void insertCreateEvent(EventModel eM) throws SQLException, UnsupportedEncodingException { 
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Event(EventName, IGN, Thumbnail, Description, Date, PostalCode, Venue, AutoAccept, Max_No_People, Guest, FileList, Status) VALUES (?,?,?,?,?,?,?,?,?,?,?,?);");
 		ppstmt.setString(1, eM.getEventName());
 		ppstmt.setString(2, eM.getiGN());
@@ -1393,6 +1393,16 @@ public class Database {
 		ppstmt.setString(11, eM.getFileList());
 		ppstmt.setString(12, eM.getStatus());
 
+		ArrayList<String> als = eM.getGuestArray();
+		for(String s: als) {
+			PreparedStatement ppstmt1 = conn.prepareStatement("INSET INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES(?,?,?);");
+			ppstmt1.setInt(1, eM.getEventID());
+			ppstmt1.setString(2, s);
+			ppstmt1.setBoolean(3, false);
+			
+			executeUpdate(ppstmt1);
+		}
+		
 		executeUpdate(ppstmt);
 	}
 	
@@ -1832,12 +1842,27 @@ public class Database {
 		return new ArrayList<String>();
 	}
 	
-	public void insertPeopleEventConfirmList(int eventID, String iGN) throws SQLException {
-		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES (?,?,'0');");
+	public boolean insertPeopleEventConfirmList(int eventID, String iGN) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Count(*) FROM PeopleEventConfirmList WHERE EventID = ?;");
 		ppstmt.setInt(1, eventID);
 		ppstmt.setString(2, iGN);
 		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			int numberOfCurrentPpt = rs.getInt(1);
+			PreparedStatement ppstmt1 = conn.prepareStatement("SELECT Max_No_People FROM Event WHERE EventID = ?;");
+			ppstmt1.setInt(1, eventID);
+			ResultSet rs1 = ppstmt.executeQuery();
+			if(numberOfCurrentPpt >= rs1.getInt("Max_No_People")) {
+				return false;
+			}
+		}
+		PreparedStatement ppstmt1 = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES (?,?,'0');");
+		ppstmt1.setInt(1, eventID);
+		ppstmt1.setString(2, iGN);
+		
 		executeUpdate(ppstmt);
+		return true;
 	}
 	
 	public void deletePeopleEventConfirmList(int eventID, String iGN) throws SQLException {
