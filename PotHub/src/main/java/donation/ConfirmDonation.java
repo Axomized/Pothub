@@ -40,6 +40,7 @@ public class ConfirmDonation extends HttpServlet {
 		
 		try {
 			Database db = new Database(0);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			TemporaryStoreModel tsmCheck = db.getTempStore(username);
 			Timestamp currentTime = Timestamp.from(Instant.now());
 			boolean resendPIN = false;
@@ -75,9 +76,14 @@ public class ConfirmDonation extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -88,7 +94,6 @@ public class ConfirmDonation extends HttpServlet {
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"
@@ -183,9 +188,9 @@ public class ConfirmDonation extends HttpServlet {
 		
 		try {
 			Database db = new Database(2);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			TemporaryStoreModel tsm = db.getTempStore(username);
 			DonationModel dm = new DonationModel();
-			
 			LogsModel lm = new LogsModel();
 			HashPIN hp = new HashPIN();
 			
@@ -202,11 +207,8 @@ public class ConfirmDonation extends HttpServlet {
 					    builder.append(s);
 					}
 					String pinNumber = builder.toString();
-					System.out.println("PIN number entered: " + pinNumber);
 					String iGN = tsm.getiGN();
 					String hashedPIN = hp.getHashedPIN(pinNumber, hp.getDecodedSalt(tsm.getTemporarySalt()));
-					System.out.println("Hashed user 	PIN: " + hashedPIN);
-					System.out.println("Hashed database PIN: " + tsm.getTemporaryPIN());
 					
 					if (currentTime.before(tsm.getTemporaryTime())) {
 						if (hashedPIN.equals(tsm.getTemporaryPIN())) {
@@ -230,7 +232,7 @@ public class ConfirmDonation extends HttpServlet {
 								db.insertLogs(lm);
 							}
 							else {
-								DatabaseUserModel dum = db.getUserProfile(username);
+								
 								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
 								DatabaseUserModel dumAfter = db.getUserProfile(username);
 								if (dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
@@ -250,12 +252,10 @@ public class ConfirmDonation extends HttpServlet {
 							incorrectPIN = true;
 							errorMessage = "PIN is incorrect.";
 							session.setAttribute("pinAttempts", pinAttempts++);
-							System.out.println("Number of PIN attempts: " + pinAttempts);
 							
 							if (pinAttempts > 2) {
 								resendPIN = true;
 								errorMessage = "Please click to send a new PIN.";
-								System.out.println("PIN attempts cannot be more than 3");
 							}
 							else {
 								session.setAttribute("pinAttempts", pinAttempts++);
@@ -265,7 +265,6 @@ public class ConfirmDonation extends HttpServlet {
 					else {
 						resendPIN = true;
 						errorMessage = "PIN has expired. Click to send a new PIN.";
-						System.out.println("PIN expired");
 					}
 				}
 				else if (request.getParameter("resendBtn") != null && !request.getParameter("resendBtn").isEmpty()) {
@@ -283,12 +282,12 @@ public class ConfirmDonation extends HttpServlet {
 					tsmResend.setTemporaryTime(tsmResend.getTime5MinsLater());
 					if (db.updateTempStore(tsmResend)) {
 						se.sendEmail("dr.que9@gmail.com", pinNo);
+						//se.sendEmail(dum.getEmail(), pinNo);
 					}
-					System.out.println("Resend PIN successful");
 				}
 			}
 			else {
-				System.out.println("No entry in TemporaryStore");
+				response.sendRedirect("DonationSuccess");
 			}
 			
 			PrintWriter out = response.getWriter();
@@ -315,9 +314,14 @@ public class ConfirmDonation extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
@@ -328,7 +332,6 @@ public class ConfirmDonation extends HttpServlet {
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"

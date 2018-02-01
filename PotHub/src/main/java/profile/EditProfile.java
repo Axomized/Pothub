@@ -41,6 +41,7 @@ public class EditProfile extends HttpServlet {
 		try {
 			Database db = new Database(0);
 			DatabaseUserModel dum = db.getUserProfile(username);
+			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -65,20 +66,24 @@ public class EditProfile extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='Login'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"
@@ -182,7 +187,7 @@ public class EditProfile extends HttpServlet {
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					else {
 						out.print("<img src='images/profile.png' id='profilePicThumbnail' height='150' width='150'/>");
@@ -253,6 +258,7 @@ public class EditProfile extends HttpServlet {
 			boolean contact_NoError = false;
 			boolean bioError = false;
 			boolean addressError = false;
+			boolean unitNoError = false;
 			
 			if (validateInputs(isFiltered, gender, contact_No, bio, address, unitNo)) {
 				if (isFiltered != null && !isFiltered.isEmpty()) {
@@ -289,7 +295,12 @@ public class EditProfile extends HttpServlet {
 					}
 				}
 				if (unitNo != null && !unitNo.isEmpty()) {
-					profileUpdate.setUnitNo(unitNo);
+					if (unitNo.length() == 6) {
+						profileUpdate.setUnitNo(unitNo);
+					}
+					else {
+						unitNoError = true;
+					}
 				}
 				if (profilePicName != null && !profilePicName.isEmpty()) {
 					profileUpdate.setProfilePicName(profilePicName);
@@ -329,20 +340,24 @@ public class EditProfile extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='Login'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"
@@ -455,14 +470,17 @@ public class EditProfile extends HttpServlet {
 					out.print("									</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
 					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>"
-					+ "											</div>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>");
+					if (unitNoError) {
+						out.print("<div class='errorMsg'>Invalid unit number.</div>");
+					}
+					out.print("									</div>"
 					+ "										</div>"
 					+ "									</div>"
 					+ "									<div id='userPicDiv' class='col-sm-3'>"
 					+ "										<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' id='profilePicThumbnail' height='150' width='150'/>");
 					}
 					else {
 						out.print("<img src='images/profile.png' id='profilePicThumbnail' height='150' width='150'/>");

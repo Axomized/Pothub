@@ -36,6 +36,7 @@ public class Profile extends HttpServlet {
 		try {
 			Database db = new Database(0);
 			DatabaseUserModel dum = db.getUserProfile(username);
+			
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -60,20 +61,24 @@ public class Profile extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"
@@ -107,7 +112,7 @@ public class Profile extends HttpServlet {
 					+ "					<div id='profilePicDiv' class='col-sm-3'>"
 					+ "						<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='/Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
 					}
 					else {
 						out.print("<img src='images/profile.png' height='150' width='150'/>");

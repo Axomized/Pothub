@@ -3,13 +3,7 @@ package donation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.security.SecureRandom;
 import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -40,6 +34,7 @@ public class Donation extends HttpServlet {
 		
 		try {
 			Database db = new Database(0);
+			DatabaseUserModel dum = db.getUserProfile(username);
 			PrintWriter out = response.getWriter();
 			out.print("<!DOCTYPE html>"
 					+ "<html>"
@@ -64,20 +59,24 @@ public class Donation extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"
@@ -275,6 +274,7 @@ public class Donation extends HttpServlet {
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
 								se.sendEmail("dr.que9@gmail.com", pinNo);
+								//se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
 						}
@@ -304,6 +304,7 @@ public class Donation extends HttpServlet {
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
 								se.sendEmail("dr.que9@gmail.com", pinNo);
+								//se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
 						}
@@ -337,6 +338,7 @@ public class Donation extends HttpServlet {
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
 								se.sendEmail("dr.que9@gmail.com", pinNo);
+								//se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
 						}
@@ -366,6 +368,7 @@ public class Donation extends HttpServlet {
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
 								se.sendEmail("dr.que9@gmail.com", pinNo);
+								//se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
 						}
@@ -412,20 +415,24 @@ public class Donation extends HttpServlet {
 					+ "				<h1>PotHub</h1>"
 					+ "			</div>"
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "				<div id='profilePic'>"
-					+ "					<img src='images/profile.png' height='50' width='50'/>"
-					+ "					<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' height='50' width='50'/>");
+					}
+					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
 					+ "				<div id='profileDropdownDiv'>"
 					+ "					<a href='Profile'>Profile</a>"
-					+ "					<a href='LoginPage'>Logout</a>"
+					+ "					<a href='Logout'>Logout</a>"
 					+ "				</div>"
 					+ "			</div>"
 					+ "		</div>"
 					+ "		<div id='navigation'>"
 					+ "			<ul>"
 					+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-					+ "				<li id='lprivatemessage'><a href='PrivateMessage'>Private Message</a></li>"
 					+ "				<li class='dropdown'>"
 					+ "					<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "					<ul class='dropdown-menu'>"

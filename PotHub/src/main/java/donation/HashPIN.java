@@ -52,10 +52,7 @@ public class HashPIN {
 	}
 
 	public static void main(String[] args) {
-		HashPIN HP = new HashPIN();
-		byte [] newSalt = HP.createSalt();
-		System.out.println("Salt: " + HP.getEncodedSalt(HP.createSalt()));
-		System.out.println("Hash: " + HP.getHashedPIN("S3675418I", newSalt));
+		
 	}
 
 }
