@@ -40,10 +40,15 @@ public class AdminBans extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+		
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+
 		BansSearchObject bso = new BansSearchObject();
 
 		if (request.getParameter("username") != null) {
@@ -94,9 +99,7 @@ public class AdminBans extends HttpServlet {
 						+ "<th>Username</th>" + "<th>Ban Reason</th>" + "<th>Ban Date</th>" + "<th>Ban End</th>"
 						+ "<th>Banned by</th>" + "<th>&nbsp;</th>" + "</tr>" + "</thead>" + "<tbody>");
 
-		Database db;
 		ArrayList<BansModel> bans = new ArrayList<BansModel>();
-		try {
 			db = new Database(0);
 			bans = db.getBansModel(bso);
 			db.getAppeal();
@@ -129,11 +132,6 @@ public class AdminBans extends HttpServlet {
 				}
 			}
 
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		}
 		if (bans.size() == 0) {
 			for (int i = 0; i < 10; i++) {
 				pw.append(
@@ -159,6 +157,14 @@ public class AdminBans extends HttpServlet {
 				+ "<p>We like food</p>" + "<p>"
 				+ "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>" + "</p>"
 				+ "</div>" + "</body>" + "</html>");
+			}
+		else{
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	/**

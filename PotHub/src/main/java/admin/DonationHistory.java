@@ -40,10 +40,18 @@ public class DonationHistory extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))!=2){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		PrintWriter pw = response.getWriter();
 		
@@ -109,8 +117,6 @@ public class DonationHistory extends HttpServlet {
     +"<tbody>");
 
 	try {
-		Database db = new Database(0);
-
 		if(userSubject!=null){
 			dso.setiGN(userSubject);
 		}
@@ -130,7 +136,7 @@ public class DonationHistory extends HttpServlet {
 			pw.append("</tr>");
 		}
 		
-	} catch (ClassNotFoundException | SQLException e) {
+	} catch (SQLException e) {
 		e.printStackTrace();
 	}
 	
@@ -169,6 +175,10 @@ public class DonationHistory extends HttpServlet {
 +"</div>"
 +"</body>"
 +"</html>");
+	}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	/**

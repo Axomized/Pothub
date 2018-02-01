@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,6 +10,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import database.Database;
 
 /**
  * Servlet implementation class Forum
@@ -32,10 +35,15 @@ public class AdminPanel extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+	
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+			
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 		+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -118,7 +126,14 @@ public class AdminPanel extends HttpServlet {
 		+ "</body>"
 		+ "</html>");
 	}
-
+		else{
+			response.sendRedirect("AdminLogin");
+			return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)

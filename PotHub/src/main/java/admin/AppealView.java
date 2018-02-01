@@ -36,10 +36,14 @@ public class AppealView extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		String subjectUser = request.getParameter("user");
 		String appealID = request.getParameter("appealID");
@@ -71,7 +75,6 @@ public class AppealView extends HttpServlet {
 						+ "<p id='logout'><a href='Logout'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
 						+ "<div id='content-wrapper'>" + "<h1>Showing appeal #" + appealID + " from " + subjectUser
 						+ "</h1>");
-		Database db;
 		try {
 			db = new Database(0);
 			AppealModel appeal = db.getAppealsByAppealID(Integer.parseInt(appealID));
@@ -100,6 +103,14 @@ public class AppealView extends HttpServlet {
 			response.sendRedirect(request.getHeader("referer"));
 			e.printStackTrace();
 		}
+		}
+		else{
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
 	}
 
 	/**
@@ -108,8 +119,16 @@ public class AppealView extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			Database db = new Database(2);
+		try{
+		HttpSession session = request.getSession(false);
+		Database db = new Database(0);
+
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+			db = new Database(2);
 
 			if (request.getParameter("action") != null 
 					|| request.getParameter("username") != null
@@ -124,11 +143,15 @@ public class AppealView extends HttpServlet {
 					db.verdictOnAppeal(Integer.parseInt(request.getParameter("appealID")), 1);
 				}
 			}
-			
-			response.sendRedirect("AdminBans");
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
 		}
-	}
+			else{
+	    		response.sendRedirect("AdminLogin");
+	    		return;
+			}
+			} catch (ClassNotFoundException | SQLException e) {
+				e.printStackTrace();
+			}
+		}
+			
 
-}
+	}

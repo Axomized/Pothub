@@ -40,10 +40,14 @@ public class AdminRanks extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+	
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		RankSearchObject rso = new RankSearchObject();
 		
@@ -104,8 +108,7 @@ public class AdminRanks extends HttpServlet {
         +"</tr>"
     +"</thead>"
     +"<tbody>");
-		
-		Database db;
+
 		ArrayList<DatabaseUserModel> dbus = new ArrayList<DatabaseUserModel>();
 		try {
 			db = new Database(0);
@@ -190,6 +193,14 @@ pw.append("</tbody>"
 +"</body>"
 +"</html>");
 	}
+		else{
+			response.sendRedirect("AdminLogin");
+			return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -197,16 +208,19 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try{
 		HttpSession session = request.getSession(false);
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		
-		try {
-			Database db = new Database(2);
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+			db = new Database(2);
 			if(request.getParameter("toChange")!=null||Integer.parseInt(request.getParameter("toChange"))<=2||Integer.parseInt(request.getParameter("toChange"))>=0){
 			db.updateRank(request.getParameter("ign"),Integer.parseInt(request.getParameter("toChange")));
+			}
 		}
 			response.sendRedirect("AdminRanks");
 		} catch (ClassNotFoundException | SQLException e) {

@@ -37,10 +37,14 @@ public class AdminReports extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		PrintWriter pw = response.getWriter();
 		
@@ -109,8 +113,7 @@ public class AdminReports extends HttpServlet {
         +"</tr>"
     +"</thead>"
     +"<tbody>");
-		
-		Database db;
+
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
@@ -212,21 +215,30 @@ public class AdminReports extends HttpServlet {
 +"</body>"
 +"</html>");
 	}
-
+		else{
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
+	}
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		try{
 		HttpSession session = request.getSession(false);
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		
-		try {
-			Database db = new Database(2);
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+			db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){
 				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
 			}
@@ -234,6 +246,7 @@ public class AdminReports extends HttpServlet {
 				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
 			}
 			response.sendRedirect("AdminReports");	
+		}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

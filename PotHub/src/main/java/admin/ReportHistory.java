@@ -37,10 +37,14 @@ public class ReportHistory extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		PrintWriter pw = response.getWriter();
 		ReportSearchObject rso = new ReportSearchObject();
@@ -106,8 +110,7 @@ public class ReportHistory extends HttpServlet {
         +"</tr>"
     +"</thead>"
     +"<tbody>");
-            
-		Database db;
+
 		ArrayList<ReportModel> reports = new ArrayList<ReportModel>();
 		try {
 			db = new Database(0);
@@ -202,6 +205,14 @@ pw.append("</tbody>"
 +"</body>"
 +"</html>");
 	}
+		else{
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		}catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
@@ -209,8 +220,16 @@ pw.append("</tbody>"
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		try {
-			Database db = new Database(2);
+		try{
+		HttpSession session = request.getSession(false);
+		Database db = new Database(0);
+
+		if(session==null||session.getAttribute("user")==null){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+			db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){
 				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
 			}
@@ -218,10 +237,16 @@ pw.append("</tbody>"
 				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
 			}
 
-			response.sendRedirect("HistoryAdminReports?user="+request.getParameter("whoDo"));	
+			response.sendRedirect("HistoryAdminReports?user="+request.getParameter("whoDo"));
+		}
+		else{
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
 	}
+		
 
 }

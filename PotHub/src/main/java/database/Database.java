@@ -156,6 +156,16 @@ public class Database {
 		return false;
 	}
 	
+	public int getPermissionForIGN(String ign) throws SQLException{
+		PreparedStatement pptstmt = conn.prepareStatement("SELECT userPermission FROM databaseUser WHERE IGN = ?");
+		pptstmt.setString(1, ign);
+		ResultSet rs = pptstmt.executeQuery();
+		while(rs.next()){
+			return rs.getInt("userPermission");
+		}
+		return 0;
+	}
+	
 	public DatabaseUserModel getDatabaseUserByIGN(String ign) throws SQLException {
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM DatabaseUser WHERE IGN = ?");
 		ps.setString(1, ign);

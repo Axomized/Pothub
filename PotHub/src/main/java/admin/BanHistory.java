@@ -40,10 +40,18 @@ public class BanHistory extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
+		try{
+		Database db = new Database(0);
+
 		if(session==null||session.getAttribute("user")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))!=2){
+    		response.sendRedirect("AdminLogin");
+    		return;
+		}
+		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
 		
 		BansSearchObject bso = new BansSearchObject();
 		String userSubject = "User";
@@ -97,7 +105,6 @@ public class BanHistory extends HttpServlet {
 		    +"</thead>"
 		    +"<tbody>");
 		    
-Database db;
 ArrayList<BansModel> bans = new ArrayList<BansModel>();
 ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
 try {
@@ -215,7 +222,11 @@ if((bans.size()+appeals.size())==0){
 +"</div>"
 +"</body>"
 +"</html>");
+	}		
+	}catch(ClassNotFoundException | SQLException e){
+		e.printStackTrace();
 	}
+}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
