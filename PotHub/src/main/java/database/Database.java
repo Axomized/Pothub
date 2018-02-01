@@ -24,6 +24,7 @@ import adminSearch.SearchSanitizer;
 import database.model.*;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
+import potcastTalk.TalkTimer;
 import profile.ProfileDonationSearch;
 import profile.ProfileUpdate;
 
@@ -842,6 +843,8 @@ public class Database {
 		ps.setInt(9, pcm.getPicture());
 		
 		ps.executeUpdate();
+		
+		TalkTimer.addToTimer(pcm);
 	}
 	
 	//Potcast Add

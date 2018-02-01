@@ -160,10 +160,15 @@ public class PotcastMy extends HttpServlet {
 			for (PotcastModel ap : pots) {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
+			
+			ArrayList<String> distances = new ArrayList<String>();
+			
+			if(postalCodes.size()>0){
 
-			ArrayList<String> distances = MapDistance
+			distances = MapDistance
 					.getJsonFromURL(MapDistance.mapURLBuilder(postalCodes, 
 							dbu0.getAddress()));
+			}
 
 			int counter = 0;
 			for (PotcastModel pot : pots) {

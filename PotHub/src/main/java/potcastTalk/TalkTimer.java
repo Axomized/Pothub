@@ -2,7 +2,6 @@ package potcastTalk;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Timer;
@@ -51,7 +50,6 @@ public class TalkTimer extends HttpServlet {
 	}
 	
     public void init() throws ServletException {
-          //running timer task as daemon thread
   		try {
           Database db = new Database(0);
           ArrayList<PotcastModel> potcastsToEmail = db.getPotcastStartCookingEmail();
@@ -66,7 +64,9 @@ public class TalkTimer extends HttpServlet {
 		}
     }
     
-    public static void addToTimer(Email email, Date sendWhen){
-    	//Send email
+    public static void addToTimer(PotcastModel pot){
+    	TimerTask timerTask = new EmailTask(pot);
+    	timer.schedule(timerTask, pot.getBidStopTime());
+    	System.out.println(timerTask+" "+pot.getBidStopTime());
     }
 }

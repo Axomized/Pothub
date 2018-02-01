@@ -127,9 +127,14 @@ public class PotcastRegister extends HttpServlet {
 						+ "<div class='formElement'>" + "<button>Submit</button>" + "</div>" + "</div>" + "</form>"
 						+ "</div>");
 
-			} else {
+			} else if(db.getUserPriviledge(username)){
 				pw.append("<div id='wrapper'>" + "<div id='secondHeader'>"
 						+ "<h2>You have the maximum number of active Potcasts! Have fun serving your visitors first!</h2>"
+						+ "</div>" + "</div>");
+			}
+			else{
+				pw.append("<div id='wrapper'>" + "<div id='secondHeader'>"
+						+ "<h2>Only established users may start potcasts.</h2>"
 						+ "</div>" + "</div>");
 			}
 			pw.append("<div id='footer'>" + "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>"
