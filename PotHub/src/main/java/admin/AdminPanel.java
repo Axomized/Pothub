@@ -38,11 +38,11 @@ public class AdminPanel extends HttpServlet {
 		try{
 		Database db = new Database(0);
 	
-		if(session==null||session.getAttribute("user")==null){
+		if(session==null||session.getAttribute("username")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
 			
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"

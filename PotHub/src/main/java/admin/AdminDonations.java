@@ -43,11 +43,11 @@ public class AdminDonations extends HttpServlet {
 		Database db = new Database(0);
 		
 		HttpSession session = request.getSession(false);
-		if(session==null||session.getAttribute("user")==null){
+		if(session==null||session.getAttribute("username")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
 		
 		DonationSearchObject dm = new DonationSearchObject();
 		

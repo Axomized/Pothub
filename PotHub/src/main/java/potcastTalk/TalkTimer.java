@@ -67,6 +67,5 @@ public class TalkTimer extends HttpServlet {
     public static void addToTimer(PotcastModel pot){
     	TimerTask timerTask = new EmailTask(pot);
     	timer.schedule(timerTask, pot.getBidStopTime());
-    	System.out.println(timerTask+" "+pot.getBidStopTime());
     }
 }

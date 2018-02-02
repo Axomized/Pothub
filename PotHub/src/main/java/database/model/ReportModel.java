@@ -27,6 +27,11 @@ public class ReportModel {
 	public ReportModel() {
 
 	}
+	
+	public ReportModel(String evidenceType, int evidence){
+		this.evidenceType=evidenceType;
+		this.evidence=evidence;
+	}
 
 	public int getReportID() {
 		return reportID;

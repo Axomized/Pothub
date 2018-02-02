@@ -1271,6 +1271,18 @@ public class Database {
 		return eventID;
 	}
 	
+	// Get eventName from eventID
+	public String getEventNameFromEventID(int eventID) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ps = conn.prepareStatement("SELECT EventName FROM Event WHERE EventID = ?;");
+		ps.setInt(1, eventID);
+		
+		ResultSet rs = ps.executeQuery();
+		rs.next();
+		String eventName = rs.getString("EventName");
+		
+		return eventName;
+	}
+	
 	// Get eventID from eventName
 	public boolean isOwner(int eventID, String iGN) throws SQLException, UnsupportedEncodingException {
 		PreparedStatement ps = conn.prepareStatement("SELECT iGN FROM Event WHERE EventID = ?;");

@@ -16,7 +16,6 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
-import login.BanChecker;
 import login.PBKDF2;
 
 /**
@@ -130,12 +129,7 @@ public class AdminLogin extends HttpServlet {
 			    	{
 			    		HttpSession session = request.getSession();
 			    		
-			    		if (BanChecker.isThisGuyBanned(dum.getiGN()))
-			    		{
-			    			session.setAttribute("ign", dum.getiGN());
-			    			response.sendRedirect("AppealPage");
-			    		}
-			    		else if (dum.getUserPermission()!=2){
+			    		if (dum.getUserPermission()!=2){
 					    	out.println("<script type=\"text/javascript\">");
 							out.println("alert('Invalid username or password.');");
 							out.println("</script>");
@@ -151,7 +145,7 @@ public class AdminLogin extends HttpServlet {
 			    			
 			    			if(verify){
 				    		session.setMaxInactiveInterval(900);
-			    			session.setAttribute("user", dum.getiGN());
+			    			session.setAttribute("username", dum.getiGN());
 			    			if (!lm.isPasswordResetted())
 				    		{
 			    				out.println("<script type=\"text/javascript\">");

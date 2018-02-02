@@ -40,11 +40,11 @@ public class AdminReports extends HttpServlet {
 		try{
 		Database db = new Database(0);
 
-		if(session==null||session.getAttribute("user")==null){
+		if(session==null||session.getAttribute("username")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
 		
 		PrintWriter pw = response.getWriter();
 		
@@ -129,21 +129,26 @@ public class AdminReports extends HttpServlet {
 				if(rep.isGuiltyOrNot()==2){
 					pw.append("<td>Guilty</td><td>"
 					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-					+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Pardon</button></form></td>");
+					+"<a href='AdminRouter?evidence="+rep.getEvidence()+"&evidenceType="+rep.getEvidenceType()+"'><button>Evidence</button></a>"
+					+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/>"
+					+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'>"
+					+ "</input><button type='submit'>Pardon</button></form></td>");
 				}
 				else if(rep.isGuiltyOrNot()==1){
 					pw.append("<td>Innocent</td><td>"
-							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/>"
-							+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input>"
-							+ "<button type='submit'>Convict</button></form></td>");
+					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+					+"<a href='AdminRouter?evidence="+rep.getEvidence()+"&evidenceType="+rep.getEvidenceType()+"'><button>Evidence</button></a>"
+					+"<form method='post'><input type='hidden' name='whatDo' value='convict'/>"
+					+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input>"
+					+ "<button type='submit'>Convict</button></form></td>");
 				}
 				else{
 					pw.append("<td>Undecided</td><td>"
-						+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/>"
-						+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
-						+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
+					+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
+					+"<a href='AdminRouter?evidence="+rep.getEvidence()+"&evidenceType="+rep.getEvidenceType()+"'><button>Evidence</button></a>"
+					+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/>"
+					+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
+					+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				pw.append("</td>");
 				pw.append("</tr>");
