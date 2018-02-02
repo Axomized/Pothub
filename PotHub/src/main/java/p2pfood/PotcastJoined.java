@@ -188,31 +188,30 @@ public class PotcastJoined extends HttpServlet {
 						+ "<div id='column2'>");
 
 				if (db.getBidsForPotcast(ap.getPotcastID()).size() > ap.getMaxBids()) {
-					pw.append("<div class='row2'>" + ap.getMaxBids() + "/" + ap.getMaxBids() + " Bids, ");
+					pw.append("<div class='row2'>" + ap.getMaxBids() + "/" + ap.getMaxBids() + " Bids, $"
+							+ db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids() - 1).getBidAmount());
 
-					pw.append(TimestampToDateTime(ap.getBidStopTime()));
-
-					pw.append("</div>" + "<div class='row2'>$"
-							+ db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids() - 1).getBidAmount() + "</div>"
+					pw.append("</div>" 
+							+ "<div class='row2'>"
+							+ pw.append(TimestampToDateTime(ap.getBidStopTime()))
+							+ "</div>"
 							+ "</div>");
 				} else {
 					pw.append("<div class='row2'>" + db.getBidsForPotcast(ap.getPotcastID()).size() + "/"
-							+ ap.getMaxBids() + " Bids, ");
+							+ ap.getMaxBids() + " Bids, $" + ap.getMinBid());
 
-					pw.append(TimestampToDateTime(ap.getBidStopTime()));
-
-					pw.append("</div>" + "<div class='row2'>$" + ap.getMinBid() + "</div>" + "</div>");
+					pw.append("</div>" + "<div class='row2'>Closing at "+TimestampToDateTime(ap.getBidStopTime())+ "</div>" + "</div>");
 				}
 
 				pw.append("<div id='column2'><div class='row2'>");
 
-				pw.append(TimestampToDateTime(ap.getPickupTime()));
+				pw.append("Pickup at "+TimestampToDateTime(ap.getPickupTime()));
 
-				pw.append(", " + distances.get(counter) + "</div></div></a>");
+				pw.append("</div><div class='row2'>" + distances.get(counter) + " away</div></div></a>");
 				counter++;
 			}
 
-			pw.append("</div>" + "<div id='footer'>"
+			pw.append("</div></div>" + "<div id='footer'>"
 					+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>" + "<p>We like food</p>"
 					+ "<p>" + "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 					+ "</p>" + "</div>" + "</body>" + "</html>");

@@ -125,8 +125,8 @@ public class PotcastList extends HttpServlet {
 					+ "<link rel='stylesheet' type='text/css' href='css/p2plist.css' />" 
 					+ "    <style>"
 					+ "      #map {"
-					+ "        height: 80%;"
-					+ "        width: 80%;"
+					+ "        height: 1000px;"
+					+ "        width: 800px;"
 					+ "        margin: 50px;"	
 					+ "        border-radius: 20px;"	
 					+ "      }"
@@ -201,18 +201,20 @@ public class PotcastList extends HttpServlet {
 							+ "</div>");
 				} else {
 					pw.append("<div class='row2'>" + db.getBidsForPotcast(ap.getPotcastID()).size() + "/"
-							+ ap.getMaxBids() + " Bids, ");
-
-					pw.append(TimestampToDateTime(ap.getBidStopTime()));
-
-					pw.append("</div>" + "<div class='row2'>$" + ap.getMinBid() + "</div>" + "</div>");
+							+ ap.getMaxBids() + " Bids, $" + ap.getMinBid()
+							+ "</div>" + "<div class='row2'>Closing at: " 	
+							+ TimestampToDateTime(ap.getBidStopTime())
+							+ "</div>"
+							+ "</div>");
 				}
 
-				pw.append("<div id='column2'><div class='row2'>");
+				pw.append("<div id='column2'><div class='row2'>Pickup at: ");
 
 				pw.append(TimestampToDateTime(ap.getPickupTime()));
 
-				pw.append(", " + distances3.get(counter3) + "</div></div></div></a>");
+				pw.append("</div>"
+						+ "<div class='row2'>" + distances3.get(counter3) + " away</div>"
+						+ "</div></div></a>");
 				counter3++;
 			}
 
@@ -242,27 +244,27 @@ public class PotcastList extends HttpServlet {
 						+ "<div id='column2'>");
 
 				if (db.getBidsForPotcast(ap.getPotcastID()).size() > ap.getMaxBids()) {
-					pw.append("<div class='row2'>" + ap.getMaxBids() + "/" + ap.getMaxBids() + " Bids, ");
-
-					pw.append(TimestampToDateTime(ap.getBidStopTime()));
-
-					pw.append("</div>" + "<div class='row2'>$"
-							+ db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids() - 1).getBidAmount() + "</div>"
+					pw.append("<div class='row2'>" + ap.getMaxBids() + "/" + ap.getMaxBids() + " Bids, $"
+							+ db.getBidsForPotcast(ap.getPotcastID()).get(ap.getMaxBids() - 1).getBidAmount() 
+							+ " Closing at: </div>"
+							+ TimestampToDateTime(ap.getBidStopTime())
 							+ "</div>");
 				} else {
 					pw.append("<div class='row2'>" + db.getBidsForPotcast(ap.getPotcastID()).size() + "/"
-							+ ap.getMaxBids() + " Bids, ");
-
-					pw.append(TimestampToDateTime(ap.getBidStopTime()));
-
-					pw.append("</div>" + "<div class='row2'>$" + ap.getMinBid() + "</div>" + "</div>");
+							+ ap.getMaxBids() + " Bids, $" + ap.getMinBid()
+							+ "</div>" + "<div class='row2'>Closing at: " 	
+							+ TimestampToDateTime(ap.getBidStopTime())
+							+ "</div>"
+							+ "</div>");
 				}
 
-				pw.append("<div id='column2'><div class='row2'>");
+				pw.append("<div id='column2'><div class='row2'>Pickup at: ");
 
 				pw.append(TimestampToDateTime(ap.getPickupTime()));
 
-				pw.append(", " + distances.get(counter) + "</div></div></div></a>");
+				pw.append("</div>"
+						+ "<div class='row2'>" + distances.get(counter) + " away</div>"
+						+ "</div></div></a>");
 				counter++;
 			}
 
