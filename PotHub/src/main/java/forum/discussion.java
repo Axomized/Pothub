@@ -91,9 +91,15 @@ public class discussion extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
-						+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
-						+ "				<li class='dropdown'>"
+						+ "				<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
+						out.print("					<li class='dropdown'>");
+						out.print("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+						out.print("			        	<ul class='dropdown-menu'>");
+						out.print("			        		<li><a href='EventPage'>Events</a></li>");
+						out.print("		        			<li><a href='MyEventPage'>My Events</a></li>");
+						out.print("			        	</ul>");
+						out.print("		    		</li>");
+						out.print("				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
 						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
@@ -154,13 +160,26 @@ public class discussion extends HttpServlet {
 									out.println("<video src='Video/" +  fileName + "' autoplay loop controls width='200' height='200'/>");
 									out.println("</div></div>");
 								}
-								/*else {
-									File tempFile = File.createTempFile(fileName, ".tmp", null);
+								
+								else {
+								  out.println(
+									 "<div class=\"dropdown\">" + 
+									 "  <button class=\"btn btn-secondary dropdown-toggle\" type=\"button\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">" + 
+									 fileName + 
+									 "  </button>" + 
+									 "  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">" + 
+									 "    <a class=\"dropdown-item\" onclick='showPreview()'>Preview</a>" + 
+									 "    <a class=\"dropdown-item\" onclick='showDownload()'>Download</a>" + 
+									 "  </div>" + 
+									 "</div>"
+								   + "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=http://58.182.48.127:8080/PotHub/Video/" + fileName + " &embedded=true'></iframe>"
+										  );
+									/*File tempFile = File.createTempFile(fileName, ".tmp", null);
 									FileOutputStream fos = new FileOutputStream(tempFile);
 									fos.write(d.getFileData());
-									out.println("");
+									out.println("");*/
 								}
-							*/
+							
 							
 							}
 							

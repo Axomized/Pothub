@@ -61,7 +61,7 @@ public class test123 extends HttpServlet {
 			out.println("<html>"
 					//+ "<p>file name is " + ftm.getFileName() + "</p>"
 					//+ "<p><a href='"+ ftm.getFileName() + "' download>Download here!</a></p>"
-					+ "<iframe style='width:80%; height:80%; 'src='https://docs.google.com/gview?url=http://111.65.44.227:8080/PotHub/Video/" + ftm.getFileName() + " &embedded=true'></iframe>" 
+					+ "<iframe style='width:80%; height:80%; 'src='https://docs.google.com/gview?url=http://58.182.48.127:8080/PotHub/Video/" + ftm.getFileName() + " &embedded=true'></iframe>" 
 					+ "</html>"
 					+ "");
 		}
