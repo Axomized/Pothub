@@ -184,17 +184,28 @@ public class PotcastDetail extends HttpServlet {
 					}
 					
 					if(relevantReports.size()<=2&&doesNotExist&&!pm.getiGN().equals(username)){
-					pw.append( "<button id='reportButton' onclick='showReportables();'><img src='images/flag.png' height=30 width=30></button>"
-					+ "<div id='reportOptions'>" 
-					+ "<form method='post' action='reportHandler' id='reportList'>"
-					+ "<input name='evidenceType' value='Potcast' type='hidden'></input>"
-					+ "<input name='evidence' value='"
-					+ pm.getPotcastID()
-					+ "' type='hidden'></input>"
-					+ "<textarea name='reason' maxlength='100' required></textarea>"
-					+ "<input type='submit'></input>"
-					+ "</form>"
-					+ "</div>");
+						pw.append( "<button id='reportButton' onclick='showReport;'><p><img src='images/flag.png' height=30 width=30>Report</p></button>");
+						pw.append("				<div id='popup'>");
+						pw.append("					<div id='popup-title'>");
+						pw.append("						<p><b>Report Event</b>");
+						pw.append("					</div>");
+						pw.append("					<div id='popup-icons'>");
+						pw.append("						<form method='post' action='reportHandler'>");
+						pw.append("						<label class='radio-inline'><input type='radio' name='reason' value='Sexual/Offensive content'> Sexual/Offensive content</label><br>");
+						pw.append("						<label class='radio-inline'><input type='radio' name='reason' value='Harmful or abusive content'> Harmful or abusive content</label><br>");
+						pw.append("						<label class='radio-inline'><input type='radio' name='reason' value='Promotes terrorism'> Promotes terrorism</label><br>");
+						pw.append("						<label class='radio-inline'><input type='radio' name='reason' value='Spam/Misleading'> Spam/Misleading</label><br>");
+						pw.append("						<label class='radio-inline'><input type='radio' name='reason' value='Others'> Others</label><br>");
+						pw.append("						<input type='text' class='form-control' name='othersText' id='othersText' placeholder='Type here...'>"
+						+ "<input name='evidenceType' value='Potcast' type='hidden'></input>"
+						+ "<input name='evidence' value='"
+						+ pm.getPotcastID()
+						+ "' type='hidden'>");
+						pw.append("						<button class='btn btn-success'>Submit</button>");
+						pw.append("						</form>");
+						pw.append("					</div>");
+						pw.append("					<i class='fa fa-times-circle-o fa-2x' aria-hidden='true' id='closeBtn'></i>");
+						pw.append("					</div>");
 					}
 					
 					pw.append( "<img height=400 width =400 src='/PotHub/Image/" + db.getImageByImageID(pm.getPicture())

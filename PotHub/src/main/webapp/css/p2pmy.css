@@ -406,6 +406,7 @@ input {
 	border-radius:10px; 
 	margin-top:20px;
 	margin-bottom:20px;
+	box-shadow: -5px 5px 20px 0px black;
 }
 
 #displayUnit div { float:left;}

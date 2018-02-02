@@ -172,7 +172,6 @@ public class PotcastMy extends HttpServlet {
 
 			int counter = 0;
 			for (PotcastModel pot : pots) {
-				DatabaseUserModel dbu = db.getDatabaseUserByIGN(pot.getiGN());
 				pw.append("<a href='p2pdetail?potcastID=" + pot.getPotcastID() + "'><div id='displayUnit' ");
 				if (System.currentTimeMillis() > pot.getPickupTime().getTime()) {
 					pw.append("class='inactive'>");
@@ -195,10 +194,10 @@ public class PotcastMy extends HttpServlet {
 					cost = pot.getMinBid();
 				}
 
-				pw.append(" Bids, " + timestampToDateTime(pot.getBidStopTime()) + "</div>" + "<div class='row2'>$"
-						+ cost + "</div></div>" + "<div id='column2'><div class='row2'>"
-						+ timestampToDateTime(pot.getPickupTime()) + ", " + distances.get(counter) + "</div>"
-						+ "<div class='row3'>" + dbu.getUnitNo() + " Singapore, " + dbu.getAddress()
+				pw.append(" Bids, $" + cost + "</div>" + "<div class='row2'>Closing at "
+						+ timestampToDateTime(pot.getBidStopTime()) + "</div></div>" + "<div id='column2'><div class='row2'>"
+						+ "Pickup at " + timestampToDateTime(pot.getPickupTime()) + ", " + distances.get(counter) + "</div>"
+						+ "<div class='row3'>" + distances.get(counter)+" away"
 						+ "</div></div></div></a>");
 
 				counter++;

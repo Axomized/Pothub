@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.ReportModel;
 
@@ -36,6 +37,7 @@ public class ReportHandler extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		response.sendRedirect("Forum");
+		return;
 	}
 
 	/**
@@ -61,37 +63,74 @@ public class ReportHandler extends HttpServlet {
 			}
 
 			if(relevantReports.size()>=2){
-				System.out.println("Too many reports");
 				response.sendRedirect(request.getHeader("referer"));
+				return;
 			}
-			else{
+			else if(request.getParameter("reason")!=null){
 				ReportModel rep = new ReportModel();
+				
+				if(request.getParameter("evidenceType").equals("Forum")){
+					String test = db.getForumModelByID(Integer.parseInt(request.getParameter("evidence"))).getiGN();
+					if(test!=null&&test.length()>0){
+					rep.setiGNReceive(test);
+					}
+					else{
+						response.sendRedirect(request.getHeader("referer"));
+						return;
+					}
+				}
+				
+				else if(request.getParameter("evidenceType").equals("Event")){
+					String test = db.getPersonWithEventID(Integer.parseInt(request.getParameter("evidence")));
+					if(test!=null&&test.length()>0){
+					rep.setiGNReceive(test);
+					}
+					else{
+						response.sendRedirect(request.getHeader("referer"));
+						return;
+					}
+				}
+				
+				else if(request.getParameter("evidenceType").equals("Potcast")){
+					String test = db.getPotcastByID(Integer.parseInt(request.getParameter("evidence"))).getiGN();
+					if(test!=null&&test.length()>0){
+						rep.setiGNReceive(test);
+					}
+					else{
+						response.sendRedirect(request.getHeader("referer"));
+						return;
+					}
+				}
+				
 				rep.setDate(new Date(System.currentTimeMillis()));
 				rep.setEvidence(Integer.parseInt(request.getParameter("evidence")));
 				rep.setEvidenceType(request.getParameter("evidenceType"));
 				rep.setGuiltyOrNot(0);
 				rep.setiGNSend((String) session.getAttribute("username"));
-				rep.setReason(request.getParameter("reason"));
-				
-				if(request.getParameter("evidenceType").equals("Forum")){
-					rep.setiGNReceive(db.getForumModelByID(Integer.parseInt(request.getParameter("evidence"))).getiGN());
+
+				if(request.getParameter("reason").equals("Others")){
+					if(request.getParameter("othersText")!=null
+							&&SearchSanitizer.sanitise(request.getParameter("othersText")).replace(" ", "").length()>0){
+						rep.setReason(request.getParameter("othersText"));
+					}
+					else{
+						response.sendRedirect(request.getHeader("referer"));
+						return;
+					}
 				}
-				
-				else if(request.getParameter("evidenceType").equals("Event")){
-					rep.setiGNReceive((db.getPersonWithEventID(Integer.parseInt(request.getParameter("evidence")))));
-				}
-				
-				else if(request.getParameter("evidenceType").equals("Potcast")){
-					rep.setiGNReceive(db.getPotcastByID(Integer.parseInt(request.getParameter("evidence"))).getiGN());
+				else{
+					rep.setReason(request.getParameter("reason"));
 				}
 				
 				db.addReport(rep);
 			}
 
 			response.sendRedirect(request.getHeader("referer"));
+			return;
 		} catch (Exception e) {
 			e.printStackTrace();
 			response.sendRedirect(request.getHeader("referer"));
+			return;
 		}
 	}
 }

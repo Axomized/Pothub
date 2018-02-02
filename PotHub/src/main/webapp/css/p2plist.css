@@ -348,6 +348,7 @@ button {
     text-decoration: none;
     font-size:1.2em;
     border-radius:5px;
+    padding: 3px;
 }
 
 #toggleSpan {
@@ -358,6 +359,7 @@ button {
     text-align: center;
     text-decoration: none;
     width: 120px;
+    border-radius: 5px;
 }
 
 td button:hover {
@@ -404,6 +406,7 @@ input[type=text] {
 	margin-top:20px;
 	margin-bottom:20px;
 	background: #f3decb;
+	box-shadow: -5px 5px 20px 0px black;
 }
 
 #thumbnailBox img{

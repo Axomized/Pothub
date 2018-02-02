@@ -595,3 +595,49 @@ button {
 #reportOptions ul li:hover{
 	color: black;
 }
+
+/* Event Content */
+#popup-container{
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 100%;
+	font-size: 16px;
+	background-color: rgb(100, 100, 100);
+	background-color: rgba(100, 100, 100, 0.7);
+	z-index: 3;
+	display: none;
+}
+
+#popup{
+	width: 40%;
+	height: 40%;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	z-index: 3;
+	margin-top: -10%;
+	margin-left: -20%; /* (Width / 2) */
+	border: 2px solid #4f2f03;
+	background-color: #f8eee7;
+	border-radius: 5px;
+	display: flex;
+	flex-direction: column;
+}
+
+#popup-title{
+	font-size: 36px;
+	text-align: center;
+}
+
+#popup-icons{
+	margin: auto;
+}
+
+#popup > i{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	z-index: 4;
+}
