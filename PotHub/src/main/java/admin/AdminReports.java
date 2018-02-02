@@ -134,12 +134,15 @@ public class AdminReports extends HttpServlet {
 				else if(rep.isGuiltyOrNot()==1){
 					pw.append("<td>Innocent</td><td>"
 							+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
+							+"<form method='post'><input type='hidden' name='whatDo' value='convict'/>"
+							+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input>"
+							+ "<button type='submit'>Convict</button></form></td>");
 				}
 				else{
 					pw.append("<td>Undecided</td><td>"
 						+"<a href='HistoryAdminReports?user="+rep.getiGNReceive()+"'><button>History</button></a>"
-						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
+						+"<form method='post'><input type='hidden' name='whatDo' value='pardon'/>"
+						+ "<input type='hidden' name='reportID' value='"+rep.getReportID()+"'/><button type='submit'>Pardon</button></form>"
 						+"<form method='post'><input type='hidden' name='whatDo' value='convict'/><input type='hidden' name='reportID' value='"+rep.getReportID()+"'></input><button type='submit'>Convict</button></form></td>");
 				}
 				pw.append("</td>");

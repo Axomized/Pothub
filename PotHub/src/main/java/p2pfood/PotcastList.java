@@ -103,9 +103,12 @@ public class PotcastList extends HttpServlet {
 				postalCodes3.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 
+			ArrayList<String> distances3 = new ArrayList<String>();
+			if(postalCodes3.size()>0){
 			String url = MapDistance.mapURLBuilder(postalCodes3, dbu0.getAddress());
 
-			ArrayList<String> distances3 = MapDistance.getJsonFromURL(url);
+			distances3 = MapDistance.getJsonFromURL(url);
+			}
 			PrintWriter pw = response.getWriter();
 
 			pw.append("<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='ISO-8859-1'>" + "<meta name='viewport'"
@@ -122,8 +125,8 @@ public class PotcastList extends HttpServlet {
 					+ "<link rel='stylesheet' type='text/css' href='css/p2plist.css' />" 
 					+ "    <style>"
 					+ "      #map {"
-					+ "        height: 1000px;"
-					+ "        width: 1500px;"
+					+ "        height: 80%;"
+					+ "        width: 80%;"
 					+ "        margin: 50px;"	
 					+ "        border-radius: 20px;"	
 					+ "      }"
@@ -215,7 +218,6 @@ public class PotcastList extends HttpServlet {
 
 			pw.append("<h1>Active Potcasts: </h1>");
 
-			System.out.println(pso.getExecutableSQL());
 			ArrayList<PotcastModel> activePotcasts = db.getLatestPotcasts(pso);
 			ArrayList<String> postalCodes = new ArrayList<String>();
 
@@ -223,8 +225,12 @@ public class PotcastList extends HttpServlet {
 				postalCodes.add(db.getDatabaseUserPostalCodeFromIGN(ap.getiGN()));
 			}
 
-			String url0 = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
-			ArrayList<String> distances = MapDistance.getJsonFromURL(url0);
+			ArrayList<String> distances = new ArrayList<String>();
+			
+			if(postalCodes.size()>0){
+				String url0 = MapDistance.mapURLBuilder(postalCodes, dbu0.getAddress());
+				distances = MapDistance.getJsonFromURL(url0);
+			}
 			int counter = 0;
 			for (PotcastModel ap : activePotcasts) {
 				pw.append("<a href='p2pdetail?potcastID=" + ap.getPotcastID()
@@ -289,7 +295,6 @@ public class PotcastList extends HttpServlet {
 + "          destinations: [");
 			
 			boolean notFirst=false;
-			System.out.println(postalCodes);
 			for(String postCode : postalCodes){
 				if(notFirst){
 					pw.append(",");
