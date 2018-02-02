@@ -277,8 +277,10 @@ public class createNewPost extends HttpServlet {
 			out.println("<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head><title>Success</title><meta charset=\"UTF-8\">"
-					+ "<script>setInterval(function(){ window.location.href = 'Forum'; }, 2000);</script></head>"
-					+ "<body><h1>Success</h1><br><a href='Forum'>Hi Mr Teo</a></body>"
+					+ "<script>setInterval(function(){ window.location.href = 'Forum'; }, 1000);</script></head>"
+					+ "<body>"
+					+ "<img src='images/loadingg.gif' />"
+					+ "</body>"
 					+ "</html>");
 	        
 	        

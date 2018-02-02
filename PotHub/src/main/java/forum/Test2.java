@@ -41,26 +41,12 @@ public class Test2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		out.println("<!DOCTYPE html>"
-				+ "<html>"
-				+ "<head>"
-				//+ "<script src='https://www.google.com/recaptcha/api/challenge?k=6LdoEUIUAAAAAFPLD3IhU98g25qAWdFezJEnOD0f'></script>"
-				+ "<script src='https://www.google.com/recaptcha/api.js'></script>"
-				+ "<script> function recaptchaCallback(){ alert('please check the captcha!!'); return false; }</script>"
-				+ "</head>"
-				+ "<body>"
-				+"<form action='Test2' method='post'>"
-				//+ "<textarea name='recaptcha_challenge_field' rows='3' cols='40'></textarea>"
-				//+ " <input type='hidden' name='recaptcha_response_field' value='manual_challenge'>"
-				+  "Username: <input type='text' name='user'> <br>"
-				+  "Password: <input type='password' name='pwd'> <br>"
-				+  "<div class='g-recaptcha' data-callback='recaptchaCallback' data-sitekey='6LdoEUIUAAAAAFPLD3IhU98g25qAWdFezJEnOD0f'></div>"
-				+  "<br> <input type='submit' value='Login'>"	    
-			    +  "</form>"
-	
-				+ "</body>"
+		out.println("<html>"
+				//+ "<p>file name is " + ftm.getFileName() + "</p>"
+				//+ "<p><a href='"+ ftm.getFileName() + "' download>Download here!</a></p>"
+				+ "<iframe style='width:80%; height:80%; 'src='https://docs.google.com/gview?url=http://111.65.44.227:8080/PotHub/Video/" + "Hello MR TEO.docx" + " &embedded=true'></iframe>" 
 				+ "</html>"
-		);
+				+ "");
 		out.close();
 	}
 

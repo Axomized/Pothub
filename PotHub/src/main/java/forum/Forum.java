@@ -272,7 +272,7 @@ public class Forum extends HttpServlet {
 							out.println(
 									  "							<div class='subscribe'>"
 									//+ "								<form action='Forum' method='post'>"
-									+ "									<button type='submit'>Subscribed</button>"
+									+ "									<button style='border:none; background-color:white;' type='submit'>Subscribed</button>"
 									//+ "									<input type='hidden' name='nnn' value='" +  username +"'></input>"
 									//+ "									<input type='hidden' name='mmm' value='" + qw.getiGN()  + "'></input>"
 									//+ "								</form>"
@@ -285,7 +285,7 @@ public class Forum extends HttpServlet {
 						out.println(
 						  "							<div class='subscribe'>"
 						+ "								<form action='Forum' method='post'>"
-						+ "									<button type='submit'>Subscribe</button>"
+						+ "									<button style='border:none; background-color:red; cursor:pointer;' type='submit'>Subscribe</button>"
 						+ "									<input type='hidden' name='nnn' value='" +  username +"'></input>"
 						+ "									<input type='hidden' name='mmm' value='" + qw.getiGN()  + "'></input>"
 						+ "								</form>"

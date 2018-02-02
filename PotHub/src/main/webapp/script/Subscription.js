@@ -49,3 +49,18 @@ function filter(aa){
 	document.getElementById("omgosh").value = aa;
 	document.getElementById("thisis").submit();
 }
+
+function removingSub(rrr){
+	alert("are you suree?");
+	document.getElementById("uniquee").innerHTML = "Are you sure you want to unsubscribe from " + rrr + "?";
+	document.getElementById("getthiss").value = rrr;
+	document.getElementById("overlay1").style.display = "block";
+}
+
+function backk(){
+	document.getElementById("overlay1").style.display = "none";
+}
+
+function unSUB(){
+	document.getElementById("unsubbing").submit();
+}

@@ -33,7 +33,6 @@ public class Subscription extends HttpServlet {
         super();
         // TODO Auto-generated constructor stub
     }
-
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
@@ -84,7 +83,7 @@ public class Subscription extends HttpServlet {
 						+ "		<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 						+ "			<div id='profilePic'>"
 						+ "				<img src='images/profile.png' height='50' width='50'/>"
-						+ "				<span id='welcomeSpan'>Welcome, [Placeholder]</span>"
+						+ "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
 						+ "				<a href='Profile'>Profile</a>"
@@ -195,10 +194,14 @@ public class Subscription extends HttpServlet {
 								
 								out.println(
 										//  "			<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
-										  "			<div>" + s + "</div>"
+										  "			<div style='font-size:30px; padding-left:3%; '>" + s + "</div>"
 										+ "			<input id='omgosh' type='hidden' name='jjk' />"
 										+ " 		</div>"
-										+ "		</form><hr>");
+										+ "		</form>"
+										+ "		<div class='deleting' style='padding-top:2%;'>"
+										+ "     	<button style='width:100%; border:none; cursor:pointer; ' onclick=\"removingSub('" + s + "')\">Unsubscribe</button>"
+										+ "		</div>"
+										+ "<hr>");
 								
 							}
 						}
@@ -209,17 +212,34 @@ public class Subscription extends HttpServlet {
 						+ "							<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
 						+ "							<div> Default Name </div>"
 						+ "                     </div><hr>"
-						
-						+ "						<div class='everyone'>"
-						+ "							<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
-						+ "							<div> Default Name </div>"
-						+ "                     </div><hr>"
-						
-						+ "						<div class='everyone'>"
-						+ "							<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
-						+ "							<div> Default Name </div>"
-						+ "                     </div><hr>"
 						+ "					</div>"
+						
+						
+						
+						
+						
+						
+						
+						//unSUB hidden content
+						+ "			<div id='overlay1'>"
+						+ "				<div id='backgd1'>"
+						+ "					<p id='uniquee'>Are you sure you want to unsubscribe ?</p><hr>"
+						+ "					<form id='unsubbing' action='Subscription' method='Post'>"
+						+ "						<input type='hidden' id='getthiss' name='theUN'></input>"
+						+ "						<input type='hidden' value='" + username + "' name='theUN1'></input>"
+						+ "	    				<div>"
+						+ "	    					<button type='button'  onclick='unSUB()' class='btn' style='background-color:red; font-size:25px; cursor:pointer;' >UNSUBSCRIBE</button>"
+						+ "	    					<button type='button' onclick='backk()' class='btn' style='background-color:white; font-size:25px; cursor:pointer;'>Cancel</button>"
+						+ "	    				</div>"
+						+ "				  	</form>"
+						+ "				  </div>"
+						+ "			</div>"
+						
+						
+						
+						
+						
+						
 						+ "					<div id='forumm'>"//start forum div
 						);//start of filtered forum
 						
@@ -264,7 +284,7 @@ public class Subscription extends HttpServlet {
 						if(canvote == 1) {
 							out.println(	
 						  "						<div class='voting'>"
-						+ "						<form id='gonext' action='Forum' method='Post'>"	
+						+ "						<form id='gonext' action='Subscription' method='Post'>"	
 						+ "						<input type='hidden' name='hisname' value=' " + username +"'>"
 						+ "						<input type='hidden' name='hisid' value=' " + qw.getPostID() + "'>"
 						+ "						<input type='hidden' name='upordown' id='yesorno' >"
@@ -367,7 +387,8 @@ public class Subscription extends HttpServlet {
 						+ "	    				</div>"
 						+ "				  	</form>"
 						+ "				  </div>"
-						+ "			</div>");
+						+ "			</div>"
+						);
 								}//close loop
 								}//close if statement for filtering	
 							}//close try
@@ -420,8 +441,11 @@ public class Subscription extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		String unSUb = request.getParameter("theUN");
+		String unsub = request.getParameter("theUN1");
 		String updown = request.getParameter("upordown");
 		System.out.println(updown);
+		//goes into the voting thing
 		if(updown != null && !updown.isEmpty())
 		{
 		String validate = updown.replaceAll("\\s","");
@@ -461,7 +485,29 @@ public class Subscription extends HttpServlet {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
+		//goes into the unsubscribe thing
 		}
+		else if(unSUb != null && !unSUb.isEmpty()){
+			try {
+				Database db = new Database(2);
+				SubscriptionModel sm = new SubscriptionModel();
+				sm.setIGN(unSUb);
+				sm.setSubs(unsub);
+				db.deleteSubscription(sm);
+				out.println("<html>"
+						+ "<p>SUCCESS UNSUBSCRIBING</p>"
+						+ "</html>");
+				
+			}
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
 		else {
 			System.out.println("nope");
 		}
