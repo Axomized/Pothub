@@ -192,7 +192,7 @@ public class ProfileDonation extends HttpServlet {
 					+ "													<input type='date' id='beforeDate' class='searchInput' name='beforeDate'>"
 					+ "												</div>"
 					+ "												<div id='buttonDiv' class='searchDiv'>"
-					+ "													<input type='submit' id='searchBtn' name='searchBtn' value='Search'>"
+					+ "													<input type='submit' id='searchBtn'>"
 					+ "												</div>"
 					+ "											</div>"
 					+ "										</form>"

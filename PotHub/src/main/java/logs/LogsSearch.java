@@ -126,7 +126,7 @@ public class LogsSearch {
 			searchQuery = searchQuery.substring(0, searchQuery.length() - 6);
 		}
 		
-		searchQuery += " ORDER BY LogID;";
+		searchQuery += " ORDER BY LogID DESC;";
 		System.out.println(searchQuery);
 		
 		return searchQuery;

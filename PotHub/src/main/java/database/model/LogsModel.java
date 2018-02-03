@@ -1,8 +1,12 @@
 package database.model;
 
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
+import javax.servlet.http.HttpServletRequest;
 
 public class LogsModel {
 	private int logID;
@@ -86,5 +90,16 @@ public class LogsModel {
 		DateTimeFormatter format = DateTimeFormatter.ofPattern("dd/MM/yyyy hh:mm a");
 		String dateString = datetime.format(format);
 		return dateString;
+	}
+	
+	public String getClientIP(HttpServletRequest request) throws UnknownHostException {
+		String ip = request.getHeader("X-FORWARDED-FOR");
+		if (ip == null || ip.isEmpty()) {
+			ip = request.getRemoteAddr();
+			if (ip == null || ip.isEmpty() || ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
+				ip = InetAddress.getLocalHost().getHostAddress();
+			}
+		}
+		return ip;
 	}
 }

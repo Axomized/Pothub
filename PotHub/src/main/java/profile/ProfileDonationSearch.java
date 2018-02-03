@@ -110,7 +110,7 @@ public class ProfileDonationSearch {
 			}
 		}
 		
-		searchQuery += " ORDER BY DonationID;";
+		searchQuery += " ORDER BY DonationID DESC;";
 		System.out.println(searchQuery);
 		
 		return searchQuery;

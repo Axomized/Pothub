@@ -221,26 +221,37 @@ public class ConfirmDonation extends HttpServlet {
 								DatabaseUserModel dumOnBehalf = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								db.updateTotalDonation(dumOnBehalf.getTotalDonation().add(tsm.getTemporaryAmount()), tsm.getTemporaryOnBehalf());
 								DatabaseUserModel dumOnBehalfAfter = db.getUserProfile(tsm.getTemporaryOnBehalf());
-								if (dumOnBehalfAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
+								if ((dumOnBehalfAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumOnBehalfAfter.isPriviledged())) {
 									db.updateIsPrivileged(true, tsm.getTemporaryOnBehalf());
+									lm.setiGN(tsm.getTemporaryOnBehalf());
+									lm.setLogDate(Timestamp.from(Instant.now()));
+									lm.setiPAddress(lm.getClientIP(request));
+									lm.setLogType("Others");
+									lm.setLogActivity(tsm.getTemporaryOnBehalf() + " became privileged");
+									db.insertLogs(lm);
 								}
 								lm.setiGN(username);
 								lm.setLogDate(Timestamp.from(Instant.now()));
-								lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+								lm.setiPAddress(lm.getClientIP(request));
 								lm.setLogType("Donation");
 								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
 								db.insertLogs(lm);
 							}
 							else {
-								
 								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
 								DatabaseUserModel dumAfter = db.getUserProfile(username);
-								if (dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) {
+								if ((dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumAfter.isPriviledged())) {
 									db.updateIsPrivileged(true, username);
+									lm.setiGN(username);
+									lm.setLogDate(Timestamp.from(Instant.now()));
+									lm.setiPAddress(lm.getClientIP(request));
+									lm.setLogType("Others");
+									lm.setLogActivity(username + " became privileged");
+									db.insertLogs(lm);
 								}
 								lm.setiGN(username);
 								lm.setLogDate(Timestamp.from(Instant.now()));
-								lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+								lm.setiPAddress(lm.getClientIP(request));
 								lm.setLogType("Donation");
 								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
 								db.insertLogs(lm);
