@@ -236,6 +236,64 @@ public class Database {
 		ps.executeUpdate();
 	}
 	
+	public int[] getPrivilegedUserNumbers() throws SQLException{
+		int privileged = 0;
+		int not = 0;
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT isPriviledged FROM DatabaseUser");
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			if (rs.getBoolean("isPriviledged")){
+				privileged++;
+			}
+			else{
+				not++;
+			}
+		}
+		return new int[]{privileged,not};
+	}
+	
+	public int[] getForgiveness() throws SQLException{
+		int privileged = 0;
+		int not = 0;
+		
+		PreparedStatement ps = conn.prepareStatement("SELECT Pardoned FROM Bans");
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()) {
+			if (rs.getBoolean("Pardoned")){
+				privileged++;
+			}
+			else{
+				not++;
+			}
+		}
+		return new int[]{privileged,not};
+	}
+	
+	public int[] getJoinDatesForGraph() throws SQLException{
+		long weekLength = 7*24*3600*1000;
+		int[] toRet = new int[]{0,0,0,0};
+		PreparedStatement ps = conn.prepareStatement("SELECT JoinDate FROM DatabaseUser WHERE JoinDate > ? ORDER BY JoinDate ASC");
+		ps.setDate(1, new Date(System.currentTimeMillis()-(4*weekLength)));
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			if(rs.getDate("JoinDate").getTime()<(System.currentTimeMillis()-(3*weekLength))){
+				toRet[0]++;
+			}
+			else if(rs.getDate("JoinDate").getTime()<(System.currentTimeMillis()-(2*weekLength))){
+				toRet[1]++;
+			}
+			else if(rs.getDate("JoinDate").getTime()<(System.currentTimeMillis()-(1*weekLength))){
+				toRet[2]++;
+			}
+			else{
+				toRet[3]++;
+			}
+		}
+		return toRet;
+	}
+	
 	//For Login Page
 	public LoginModel getLogin(String enteredPassword, String enteredEmail) throws SQLException, NoSuchAlgorithmException, InvalidKeySpecException {
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT Email, Password, Salt, passwordResetted FROM Login WHERE Email = ?;");

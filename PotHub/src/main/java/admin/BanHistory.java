@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import adminSearch.BansSearchObject;
 import database.Database;
 import database.model.AppealModel;
@@ -53,6 +55,11 @@ public class BanHistory extends HttpServlet {
 		String userSubject = "User";
 		if(request.getParameter("user")!=null){
 			userSubject = request.getParameter("user");
+			bso.setiGN(userSubject);
+		}
+		else{
+			response.sendRedirect("AdminBans");
+			return;
 		}
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
@@ -106,7 +113,7 @@ ArrayList<AppealModel> appeals =new ArrayList<AppealModel>();
 try {
 	db = new Database(0);
 	bans = db.getBansModel(bso);
-	appeals = db.getAppeal();
+	appeals = db.getAppealsForUser(userSubject);
 	for(BansModel ban:bans){
 		pw.append("<tr>");
 		if(ban.getEndDate().compareTo(new Date(System.currentTimeMillis()))>0){
@@ -115,7 +122,7 @@ try {
 		else{
 			pw.append("<td>Active Ban</td>");
 		}
-		pw.append("<td>"+ban.getReason()+"</td>");
+		pw.append("<td>"+Encode.forHtml(ban.getReason())+"</td>");
 		pw.append("<td>"+ban.getStartDate()+"</td>");
 		pw.append("<td>"+ban.getEndDate()+"</td>");
 		pw.append("<td>"+ban.getAdmin()+"</td>");
@@ -134,14 +141,10 @@ try {
 		else{
 			pw.append("<td>Pending Appeal</td>");
 		}
-		pw.append("<td>"+apl.getMessage()+"</td>");
-		pw.append("<td>"+apl.getReceiveDate()+"</td>");
-		if(apl.getDateApproved()!=null){
-		pw.append("<td>"+apl.getDateApproved()+"</td>");
-		}
-		else{
-			pw.append("<td>&nbsp;</td>");
-		}
+		
+		pw.append(nullCellAvoid(apl.getMessage()));
+		pw.append(nullCellAvoid(apl.getReceiveDate().toString()));
+		pw.append(nullCellAvoid(apl.getDateApproved().toString()));
 		pw.append("<td>&nbsp;</td>");
 		
 		pw.append("</td>");
@@ -232,6 +235,15 @@ if((bans.size()+appeals.size())==0){
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
+	}
+	
+	private static String nullCellAvoid(String str){
+		if(str!=null){
+			return "<td>"+Encode.forHtml(str)+"</td>";
+		}
+		else{
+			return "<td>&nbsp;</td>";
+		}
 	}
 
 }

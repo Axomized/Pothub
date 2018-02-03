@@ -55,6 +55,7 @@ public class AdminPanel extends HttpServlet {
 		+ "<meta http-equiv='content-language' content='en-us' />"
 		+ "<meta http-equiv='content-type' content='text/html; charset=utf-8' />"
 		+ "<link rel='stylesheet' type='text/css' media='screen' href='css/adminpanelfront.css' />"
+		+ "<script type='text/javascript' src='https://www.gstatic.com/charts/loader.js'></script>"
 		+ "</head>"
 		+ "<body id='babout'>"
 		+ "<div id='header'>"
@@ -73,48 +74,101 @@ public class AdminPanel extends HttpServlet {
 		+ "<div id='wrapper'>"
  		+ "<div id='content-wrapper'>"
   		+ "<div id='content'>"
-		+ "<h4>Recent Bans</h4>"
-		+ "<dl>"
-		+ "<dt>Wei Xuan</dt>"
-		+ "<dd>Spam</dd>"
-		+ "<dt>Matt</dt>"
-		+ "<dd>Persistent Vulgarities</dd>"
-		+ "<dt>XuanZheng</dt>"
-		+ "<dd>Inappropriate messages</dd>"
-		+ "<dt>&nbsp;</dt>"
-		+ "<dd>&nbsp;</dd>"
-		+ "<dt>&nbsp;</dt>"
-		+ "<dd>&nbsp;</dd>"
-		+ "</dl>"
-		+ "</div>"
+		+ "<h4>User privilege</h4>");
+		
+		pw.append("<div id='piechart' style='width: 400px; height: 400px;'></div>");
+		int[] privNumbers = db.getPrivilegedUserNumbers();
+		pw.append("<script>"
+				+ "google.charts.load('current', {'packages':['corechart']});"
+				+ "google.charts.setOnLoadCallback(drawChart);"
+				+ "function drawChart() {"
+
+				+ "var data = google.visualization.arrayToDataTable(["
+				+ "['Task', 'Loyal users'],"
+				+ "['Loyal',     " + privNumbers[0] + "],"
+				+ "['Unproven',  " + privNumbers[1] +"]"
+				+ "]);"
+
+				+ "var options = {"
+				+ "title: 'My Users',"
+				+ "backgroundColor: '#f8eee7'"
+				+ "};"
+
+				+ "var chart = new google.visualization.PieChart(document.getElementById('piechart'));"
+
+				+ "chart.draw(data, options);"
+				+ "}</script>");
+		
+		pw.append( "</div>"
 		+ "<div id='content'>"
-		+ "<h4>Recent Pardons</h4>"
-		+ "<dl>"
-		+ "<dt>Darren</dt>"
-		+ "<dd>Harassment</dd>"
-		+ "<dt>Xiang Jing</dt>"
-		+ "<dd>Multiple Scams</dd>"
-		+ "<dt>&nbsp;</dt>"
-		+ "<dd>&nbsp;</dd>"
-		+ "<dt>&nbsp;</dt>"
-		+ "<dd>&nbsp;</dd>"
-		+ "<dt>&nbsp;</dt>"
-		+ "<dd>&nbsp;</dd>"
-		+ "</dl>"
-		+ "</div>"
+		+ "<h4>Recent Pardons</h4>");
+		
+		pw.append("<div id='piechart2' style='width: 400px; height: 400px;'></div>");
+		int[] forgiveNumbers = db.getForgiveness();
+		pw.append("<script>"
+				+ "google.charts.load('current', {'packages':['corechart']});"
+				+ "google.charts.setOnLoadCallback(drawChart);"
+				+ "function drawChart() {"
+
+				+ "var data = google.visualization.arrayToDataTable(["
+				+ "['Status', 'BansAndAppeals'],"
+				+ "['Pardoned',     " + forgiveNumbers[0] + "],"
+				+ "['Unpardoned',  " + forgiveNumbers[1] +"]"
+				+ "]);"
+
+				+ "var options = {"
+				+ "title: 'Pardoned and unpardoned bans',"
+				+ "colors: ['yellow','green'],"
+				+ "backgroundColor: '#f8eee7'"
+				+ "};"
+
+				+ "var chart = new google.visualization.PieChart(document.getElementById('piechart2'));"
+
+				+ "chart.draw(data, options);"
+				+ "}</script>");
+		
+		pw.append( "</div>"
 		+ "</div>"
 		+ "<div id='sidebar-wrapper'>"
 		+ "<div id='sidebar'>"
-		+ "<h4>Numbers</h4>"
-		+ "<div id='content'>"
-		+ "<dl>"
-		+ "<dt>New Members / 24 Hours</dt><dd>100</dd>"
-		+ "<dt>New Members / 7 Days</dt><dd>500</dd>"
-		+ "<dt>Active Members / 24 Hours</dt><dd>200</dd>"
-		+ "<dt>Active Members / 7 Days</dt><dd>400</dd>"
-		+ "<dt>Total Members</dt><dd>2400</dd>"
-		+ "</dl>"
-		+ "</div>"
+		+ "<div id='content'>");
+		
+		pw.append("<div id='chart_div' style='width: 750px; height: 750px;'></div>");
+		
+		int[] joins = db.getJoinDatesForGraph();
+		pw.append("<script>google.charts.load('current', {packages: ['corechart', 'line']});"
+		+ "google.charts.setOnLoadCallback(drawCurveTypes);"
+
+		+ "function drawCurveTypes() {"
+		+ "      var data = new google.visualization.DataTable();"
+		+ "      data.addColumn('number', 'Week');"
+		+ "      data.addColumn('number', 'Joins');"
+
+		+ "      data.addRows(["
+		+ "       [1,"+joins[0]+"],"
+		+ "       [2,"+joins[1]+"],"
+		+ "       [3,"+joins[2]+"],"
+		+ "       [4,"+joins[3]+"],"
+		+ "      ]);"
+
+		+ "      var options = {"
+		+ "        hAxis: {"
+		+ "          title: 'Time'"
+		+ "        },"
+		+ "        vAxis: {"
+		+ "        },"
+		+ "        series: {"
+		+ "          1: {curveType: 'function'}"
+		+ "        },"
+		+ "			colors: ['purple','orange'],"
+		+ "			backgroundColor: '#f8eee7'"
+		+ "      };"
+
+		+ "      var chart = new google.visualization.LineChart(document.getElementById('chart_div'));"
+		+ "      chart.draw(data, options);"
+		+ "    }</script>");
+		
+		pw.append( "</div>"
 		+ "</div>"
 		+ "</div>"
 		+ "<div id='footer'>"
