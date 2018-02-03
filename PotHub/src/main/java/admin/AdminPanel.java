@@ -131,6 +131,7 @@ public class AdminPanel extends HttpServlet {
 		+ "</div>"
 		+ "<div id='sidebar-wrapper'>"
 		+ "<div id='sidebar'>"
+		+ "<h4>New users in the last 4 weeks</h4>"
 		+ "<div id='content'>");
 		
 		pw.append("<div id='chart_div' style='width: 750px; height: 750px;'></div>");
@@ -156,6 +157,7 @@ public class AdminPanel extends HttpServlet {
 		+ "          title: 'Time'"
 		+ "        },"
 		+ "        vAxis: {"
+		+ "          title: 'Joins'"
 		+ "        },"
 		+ "        series: {"
 		+ "          1: {curveType: 'function'}"
