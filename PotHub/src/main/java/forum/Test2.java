@@ -42,9 +42,17 @@ public class Test2 extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
 		out.println("<html>"
+				+ "<head><title>Success</title><meta charset=\"UTF-8\">"
+				+ "<script>function show(){document.getElementById('thiss').style.display = 'block' }"
+				+ "function hide(){document.getElementById('thiss').style.display = 'none'}"
+				+ "</script></head>"
 				//+ "<p>file name is " + ftm.getFileName() + "</p>"
 				//+ "<p><a href='"+ ftm.getFileName() + "' download>Download here!</a></p>"
-				+ "<iframe style='width:80%; height:80%; 'src='https://docs.google.com/gview?url=http://111.65.44.227:8080/PotHub/Video/" + "Hello MR TEO.docx" + " &embedded=true'></iframe>" 
+				+ "<body>"
+				+ "<button onclick='show()'>SHOW</button>"
+				+ "<button onclick='hide()'>HIDE</button>"
+				+ "<iframe id='thiss' style='width:80%; height:80%; display:none; 'src='https://docs.google.com/gview?url=http://58.182.48.127:8080/PotHub/Video/" + "Hello MR TEO.docx" + " &embedded=true'></iframe>" 
+				+ "</body>"
 				+ "</html>"
 				+ "");
 		out.close();

@@ -3,6 +3,7 @@ package forum;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -96,9 +97,15 @@ public class Subscription extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
-						+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
-						+ "				<li class='dropdown'>"
+						+ "				<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
+						out.print("					<li class='dropdown'>");
+						out.print("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+						out.print("			        	<ul class='dropdown-menu'>");
+						out.print("			        		<li><a href='EventPage'>Events</a></li>");
+						out.print("		        			<li><a href='MyEventPage'>My Events</a></li>");
+						out.print("			        	</ul>");
+						out.print("		    		</li>");
+						out.print("				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
 						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
@@ -454,14 +461,13 @@ public class Subscription extends HttpServlet {
 		String pos = request.getParameter("hisid");
 		String neww = pos.replaceAll("\\s","");
 		int pid = Integer.valueOf(neww);
-		Date date = new Date();
-		java.sql.Date sqldate = new java.sql.Date(date.getTime());
+		Timestamp tsm = new Timestamp(System.currentTimeMillis());
 		try {
 			Database db = new Database(2);
 			ForumVoteModel fvm = new ForumVoteModel();
 			fvm.setiGN(ign);
 			fvm.setPostID(pid);
-			fvm.setDate(sqldate);
+			fvm.setDate(tsm);
 			db.addForumVote(fvm);
 			int votes = db.getVotes(pid);
 			if(validate.equals("up")) {

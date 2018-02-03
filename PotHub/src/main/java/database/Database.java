@@ -1858,7 +1858,7 @@ public class Database {
 		PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO ForumVote(PostID, IGN, Date) VALUES (?,?,?); ");
 		ppstmt.setInt(1, fP.getPostID());
 		ppstmt.setString(2, fP.getiGN());
-		ppstmt.setDate(3, fP.getDate());
+		ppstmt.setTimestamp(3, fP.getDate());
 
 		executeUpdate(ppstmt);
 	}
@@ -1869,7 +1869,7 @@ public class Database {
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String iGN = rs.getString("IGN");
-			Date date = rs.getDate("Date");
+			Timestamp date = rs.getTimestamp("Date");
 			
 			votes.add(new ForumVoteModel(postID, iGN, date));
 		}
@@ -1877,7 +1877,7 @@ public class Database {
 	}
 	
 	public boolean getWhetherCanVoteForumVoteModel(String iGN, int postID) throws SQLException{
-		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM ForumVote WHERE IGN = ? AND POSTID = ?;");
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM ForumVote WHERE IGN = ? AND PostID = ?;");
 		ppstmt.setString(1, iGN);
 		ppstmt.setInt(2, postID);
 		ResultSet rs = ppstmt.executeQuery();

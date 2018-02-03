@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -44,7 +45,6 @@ public class Forum extends HttpServlet {
 			throws ServletException, IOException {
 		String username = "";
 		
-		int canvote = 0;
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
@@ -71,7 +71,8 @@ public class Forum extends HttpServlet {
 						+ "<!-- Optional theme -->"
 						+ "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 						+ "<!-- My Own Script -->"
-						+ "<script src='script/forum.js'></script>"
+						+ "<script src=\"http://code.jquery.com/jquery-3.3.1.min.js\" integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\" crossorigin=\"anonymous\"></script>"
+						+ "<script src='script/forum.js' defer></script>"
 						+ "<!-- My Style Sheet -->"
 						+ "<link rel='stylesheet' type='text/css' href='css/Forum.css' />"
 						+ "</head>"
@@ -98,9 +99,15 @@ public class Forum extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
-						+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
-						+ "				<li class='dropdown'>"
+						+ "				<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
+						out.print("					<li class='dropdown'>");
+						out.print("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+						out.print("			        	<ul class='dropdown-menu'>");
+						out.print("			        		<li><a href='EventPage'>Events</a></li>");
+						out.print("		        			<li><a href='MyEventPage'>My Events</a></li>");
+						out.print("			        	</ul>");
+						out.print("		    		</li>");
+						out.print("				<li class='dropdown'>"
 						+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 						+ "			        <ul class='dropdown-menu'>"
 						+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"
@@ -146,12 +153,12 @@ public class Forum extends HttpServlet {
 							for(ForumPostModel qw: fa){	
 								int count = 0;
 								int po = 1;
+								int canvote = 0;
 								for(CommentModel df: cmm) {
 									if(qw.getPostID() == df.getPostID()) {
 										count ++;
 									}
 								}
-								
 								
 								if(dbms.getWhetherCanVoteForumVoteModel(username, qw.getPostID())) { // so this is no duplicate? yea oki go try
 									canvote = 1;
@@ -163,18 +170,16 @@ public class Forum extends HttpServlet {
 						if(canvote == 1) {
 							out.println(	
 						  "						<div class='voting'>"
-						+ "						<form id='gonext' action='Forum' method='Post'>"	
-						+ "						<input type='hidden' name='hisname' value=' " + username +"'>"
-						+ "						<input type='hidden' name='hisid' value=' " + qw.getPostID() + "'>"
+						+ "						<input type='hidden' name='hisname' value='" + username +"'>"
+						+ "						<input type='hidden' name='hisid' value='" + qw.getPostID() + "'>"
 						+ "						<input type='hidden' name='upordown' id='yesorno' >"
-						+ "							<p onclick='upfirst()' style='text-align: center;'>"
+						+ "							<p onclick='upfirst(this)' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"
 						+ "							<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
-						+ "							<p onclick='downfirst()' style='text-align: center;'>"
+						+ "							<p onclick='downfirst(this)' style='text-align: center;'>"
 						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
 						+ "							</p>"		
-						+ "						</form>"
 						+ "						</div>"
 						+ "						<div class='iconpic'>"
 						);
@@ -224,7 +229,7 @@ public class Forum extends HttpServlet {
 						+ "								<p>"
 						+ "									<form action='discussion'><button type='submit' style='cursor:pointer' class='btn'>Reply</button>"
 						+ "									<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input></form>"
-						+ "									<a onclick='showsth()' href='#reports' style='margin-right: 2%;'>Report</a><a href='#' >Share</a>"
+						+ "									<a onclick=\"showsth('" + qw.getPostID() + "')\"  style='margin-right: 2%;'>Report</a><a href='#' >Share</a>"
 						+ "								</p>"
 						+ "							</div>"
 						+ "						</div>"
@@ -319,6 +324,7 @@ public class Forum extends HttpServlet {
 						+ "				<div id='backgd'>"
 						+ "					<p>May we know your reason for reporting?</p>"
 						+ "					<form>"
+						+ "						<input type='hidden' id='storeReport'></input>"
 						+ "				    	<div class='checkbox'>"
 						+ "				      		<label><input type='checkbox' value=''>This post contains spams</label>"
 						+ "				   		 </div>"
@@ -352,9 +358,6 @@ public class Forum extends HttpServlet {
 						+ "				href='#'>Support</a>"
 						+ "		</p>"
 						+ "	</div>"
-						+ "	<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js'"
-						+ "		integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n'"
-						+ "		crossorigin='anonymous'></script>"
 						+ "	<script"
 						+ "		src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'"
 						+ "		integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb'"
@@ -375,90 +378,44 @@ public class Forum extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
-		String naame = "";
-		String updown = request.getParameter("upordown");
+		String updown = request.getParameter("upordown"); //Total Upvotes
 		System.out.println(updown);
-		if(updown != null && !updown.isEmpty())
-		{
-		String validate = updown.replaceAll("\\s","");
-		String ignn = request.getParameter("hisname");
-		String ign = ignn.replaceAll("\\s","");
-		String pos = request.getParameter("hisid");
-		String neww = pos.replaceAll("\\s","");
-		int pid = Integer.valueOf(neww);
-		Date date = new Date();
-		java.sql.Date sqldate = new java.sql.Date(date.getTime());
-		try {
-			Database db = new Database(2);
-			ForumVoteModel fvm = new ForumVoteModel();
-			fvm.setiGN(ign);
-			fvm.setPostID(pid);
-			fvm.setDate(sqldate);
-			db.addForumVote(fvm);
-			int votes = db.getVotes(pid);
-			if(validate.equals("up")) {
-			votes ++;
-			db.updateVotes(votes, pid);
-			//updating the person total vote count here
-			ArrayList<ForumPostModel> fvmm = new ArrayList<ForumPostModel>();
-			fvmm = db.getForumModel();
-			for(ForumPostModel sd:fvmm) {
-				if(sd.getPostID() == pid) {
-					naame = sd.getiGN();
-				}
+		if(updown != null && !updown.isEmpty()){
+			String ignn = request.getParameter("hisname"); //IGN
+			Integer pos = Integer.valueOf(request.getParameter("hisid")); //PostID
+			Timestamp tsm = new Timestamp(System.currentTimeMillis());
+			try {
+				Database db = new Database(2);
+				ForumVoteModel fvm = new ForumVoteModel();
+				fvm.setiGN(ignn);
+				fvm.setPostID(pos);
+				fvm.setDate(tsm);
+				db.addForumVote(fvm);
+				db.updateVotes(Integer.parseInt(updown), pos);
 			}
-			int da = db.getDatabaseUserPoints(naame);
-			da ++;
-			db.addDatabaseUserPoints(da, naame);
-			//end of updating vote
-			out.println("<html>"
-					+ "<p>SUCCESS UPVOTING</p>"
-					+ "</html>");
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
 			}
-			else {
-				votes --;
-				db.updateVotes(votes, pid);
+		}else {
+			String ign11 = request.getParameter("nnn");
+			String author1 = request.getParameter("mmm");
+			try {
+				Database dbb = new Database(2);
+				SubscriptionModel sm = new SubscriptionModel();
+				sm.setIGN(author1);
+				sm.setSubs(ign11);
+				dbb.insertSubscription(sm);
 				out.println("<html>"
-						+ "<p>SUCCESS DOWNVOTING</p>"
+						+ "<p>SUCCESS Subscribing</p>"
 						+ "</html>");
 			}
-			
+			catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}
-		
-		
-		
-		else {
-		
-		
-		
-		String ign11 = request.getParameter("nnn");
-		String ign1 = ign11.replaceAll("\\s","");
-		String author1 = request.getParameter("mmm");
-		String author = author1.replaceAll("\\s","");
-		try {
-			Database dbb = new Database(2);
-			SubscriptionModel sm = new SubscriptionModel();
-			sm.setIGN(author);
-			sm.setSubs(ign1);
-			dbb.insertSubscription(sm);
-			out.println("<html>"
-					+ "<p>SUCCESS Subscribing</p>"
-					+ "</html>");
-		}
-		catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		}
-		
-		
 	}
-
 }
