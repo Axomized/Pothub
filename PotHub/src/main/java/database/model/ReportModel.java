@@ -6,11 +6,11 @@ public class ReportModel {
 	private int reportID;
 	private String iGNSend;
 	private String iGNReceive;
-	private String evidenceType;
+	private String evidenceType;//forum
 	private Date date;
-	private int evidence;
+	private int evidence;//forum ID
 	private String reason;
-	private int guiltyOrNot;
+	private int guiltyOrNot;//0
 	
 	public ReportModel(int reportID, String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence,
 			String reason, int guiltyOrNot) {

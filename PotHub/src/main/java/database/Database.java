@@ -1888,6 +1888,18 @@ public class Database {
 		}
 	}
 	
+	public boolean getWhetherCanCommentCommentModel(String iGN, int postID) throws SQLException{
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT * FROM Comment WHERE IGN = ? AND PostID = ?;");
+		ppstmt.setString(1, iGN);
+		ppstmt.setInt(2, postID);
+		ResultSet rs = ppstmt.executeQuery();
+		if(rs.next()) {
+			return false; // Got duplicate
+		}else {
+			return true; // Dont have (Can comment)
+		}
+	}
+	
 	//PeopleEventListModel
 	public void updatePeopleEventList(String sql, PeopleEventListModel pELM) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement(sql);

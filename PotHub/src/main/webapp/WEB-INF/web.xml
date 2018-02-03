@@ -244,6 +244,12 @@
 		<servlet-class>potcastTalk.TalkTimer</servlet-class>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+		<servlet>
+			<servlet-name>SuccessReporting</servlet-name>
+			<display-name>SuccessReporting</display-name>
+			<description></description>
+			<servlet-class>forum.SuccessReporting</servlet-class>
+		</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -399,6 +405,10 @@
 	<servlet-mapping>
 		<servlet-name>Subscription2</servlet-name>
 		<url-pattern>/Subscription2</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>SuccessReporting</servlet-name>
+		<url-pattern>/SuccessReporting</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>15</session-timeout>

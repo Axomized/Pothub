@@ -215,7 +215,7 @@ public class Forum extends HttpServlet {
 						  "						</div>"
 						+ "						<div class='info'>"
 						+ "							<div class='title'>"
-						+ "								<h2 style='color: blue' onclick='location.href='discussion';'>" + qw.getThread() + "</h2>"
+						+ "								<form action='discussion' id='dd1'><h2 style='color:blue; cursor:pointer;' onclick='sameas()'>" + qw.getThread() + "</h2>"
 						+ "							</div>"
 						+ "							<div class='subDescription'>"
 						+ "								<p>" + qw.getDescription() + "</p>"
@@ -227,9 +227,9 @@ public class Forum extends HttpServlet {
 						+ "							</div>"
 						+ "							<div class='reporting'>"
 						+ "								<p>"
-						+ "									<form action='discussion'><button type='submit' style='cursor:pointer' class='btn'>Reply</button>"
+						+ "									<button type='submit' style='cursor:pointer' class='btn'>Reply</button>"
 						+ "									<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input></form>"
-						+ "									<a onclick=\"showsth('" + qw.getPostID() + "')\"  style='margin-right: 2%;'>Report</a><a href='#' >Share</a>"
+						+ "									<a onclick=\"showsth('" + qw.getPostID() + ", " + qw.getiGN() + "')\"  style='margin-right: 2%;'>Report</a>"
 						+ "								</p>"
 						+ "							</div>"
 						+ "						</div>"
@@ -314,7 +314,7 @@ public class Forum extends HttpServlet {
 						
 						
 						
-						
+						//report
 						
 						
 						out.println(
@@ -323,23 +323,26 @@ public class Forum extends HttpServlet {
 						+ "			<div id='overlay'>"
 						+ "				<div id='backgd'>"
 						+ "					<p>May we know your reason for reporting?</p>"
-						+ "					<form>"
-						+ "						<input type='hidden' id='storeReport'></input>"
+						+ "					<form id='whyareyou' action='SuccessReporting' method='POST'>"
+						+ "						<input type='hidden' id='storeReport' name='forumID'></input>"
+						+ "						<input type='hidden' value='" + username + "' name='ignsend'></input>"
+						+ "						<input type='hidden' id='kimtan' name='whyyoureport'></input>"
+						//+ "						<input type='hidden' id='kimjung' name='forumID'></input>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value=''>This post contains spams</label>"
+						+ "				      		<label><input type='checkbox' value='This post contains spams' id='1first'>This post contains spams</label>"
 						+ "				   		 </div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				     		<label><input type='checkbox' value=''>This post contains abusive or harmful words</label>"
+						+ "				     		<label><input type='checkbox' value='This post contains abusive or harmful words' id='2first'>This post contains abusive or harmful words</label>"
 						+ "				    	</div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value=''>This post is not relevant to food</label>"
+						+ "				      		<label><input type='checkbox' value='This post is not relevant to food' id='3first'>This post is not relevant to food</label>"
 						+ "				    	</div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value=''>This post does not contains wrong informations</label>"
+						+ "				      		<label><input type='checkbox' value='This post does not contains wrong informations' id='4first'>This post does not contains wrong informations</label>"
 						+ "				   		 </div>"
 						+ "				   		 <div class='form-group'>"
 						+ "	     					 <label for='Other Comment'>Comment:</label>"
-						+ "	      					<textarea class='form-control' rows='5' id='comment'></textarea>"
+						+ "	      					<textarea class='form-control' rows='5' id='comment' name='somanytext'></textarea>"
 						+ "	    				</div>"
 						+ "	    				<div>"
 						+ "	    					<button type='button'  onclick='success()' class='btn'>Submit</button>"

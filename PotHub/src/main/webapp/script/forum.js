@@ -43,7 +43,7 @@ function downfirst(current){
 }
 
 function showsth(ppp){
-	document.getElementById("storeReport").value = ppp
+	document.getElementById("storeReport").value = ppp;
 	document.getElementById("overlay").style.display = "block";
 }
 
@@ -52,9 +52,22 @@ function cancell(){
 }
 
 function success(){
-	var x = document.getElementById("storeReport").value
+	var x = document.getElementById("storeReport").value;
 	alert("Success reporting of " + x);
 	document.getElementById("overlay").style.display = "none";
+	if(document.getElementById("1first").checked){
+		document.getElementById("kimtan").value = document.getElementById("1first").value;
+	}
+	else if(document.getElementById("2first").checked){
+		document.getElementById("kimtan").value = document.getElementById("2first").value;
+	}
+	else if(document.getElementById("3first").checked){
+		document.getElementById("kimtan").value = document.getElementById("3first").value;
+	}
+	else if(document.getElementById("4first").checked){
+		document.getElementById("kimtan").value = document.getElementById("4first").value;
+	}
+	document.getElementById("whyareyou").submit();
 }
 
 function gonext(){
@@ -64,6 +77,10 @@ function gonext(){
 
 function gosub(){
 	location.href = "Subscription";
+}
+
+function sameas(){
+	document.getElementById("dd1").submit();
 }
 
 
