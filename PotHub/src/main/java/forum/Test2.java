@@ -9,6 +9,7 @@ import java.io.StringReader;
 import java.net.URL;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.json.Json;
 import javax.json.JsonObject;
@@ -26,6 +27,7 @@ import org.apache.commons.compress.utils.IOUtils;
 
 import database.Database;
 import database.model.FileTableModel;
+import database.model.ForumPostModel;
 import net.tanesha.recaptcha.ReCaptchaImpl;
 import net.tanesha.recaptcha.ReCaptchaResponse;
 import net.tanesha.recaptcha.ReCaptcha;
@@ -43,8 +45,11 @@ public class Test2 extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			Database d = new Database(2);
-			boolean f = d.getWhetherCanCommentCommentModel("GordonRamsey", 12);
-			System.out.println(f);
+			ArrayList <ForumPostModel> fpm = new ArrayList<ForumPostModel>();
+			fpm = d.getForumPostModelbasedonupvote();
+			for(ForumPostModel fff : fpm) {
+				System.out.println(fff.getThread());
+			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {

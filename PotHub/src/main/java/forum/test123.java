@@ -41,7 +41,7 @@ public class test123 extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		try {
 			Database db = new Database(2);
-			String fileName = db.getFileNameByFileID(15);
+			//String fileName = db.getFileNameByFileID(15);
 			FileTableModel ftm = new FileTableModel();
 			ftm = db.getFileTableByFileID(15);
 			File tempFile = File.createTempFile(ftm.getFileName(), ".tmp", null);

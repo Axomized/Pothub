@@ -16,6 +16,10 @@ function goFor(){
 	location.href = "Forum";
 }
 
+function gotre(){
+	location.href = "Trending";
+}
+
 function showsth(){
 	document.getElementById("overlay").style.display = "block";
 }

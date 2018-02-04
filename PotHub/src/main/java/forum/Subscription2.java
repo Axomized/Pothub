@@ -125,6 +125,7 @@ public class Subscription2 extends HttpServlet {
 						+ "				<p style='text-align:right; width:98%; padding-left:2%;'>"
 						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='goFor()'>Forum</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left; background-color: white;' class='btn' onclick='gosub()'>My Subscription</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gotre()'>Trending</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border-color:blue; border-radius: 5px; background-color:red; border:solid;' id='creatingnew' onclick='gonext()' class='btn'>Create New Thread</button>"
 						+ "				</p>"
 						+ "				</div>"

@@ -1,6 +1,7 @@
 package forum;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.CommentModel;
+import database.model.FileTableModel;
 import database.model.ForumPostModel;
 
 /**
@@ -169,10 +171,10 @@ public class discussion extends HttpServlet {
 									 "  </button>" + 
 									 "  <div class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\">" + 
 									 "    <a class=\"dropdown-item\" onclick='showPreview()'>Preview</a>" + 
-									 "    <a class=\"dropdown-item\" onclick='showDownload()'>Download</a>" + 
+									 "    <form action='discussion' method='POST' id='goto'><a class=\"dropdown-item\" onclick='showDownload()'>Download</a><input type='hidden' name='sdsd' value='" + fileName + "' /></form>" + 
 									 "  </div>" + 
 									 "</div>"
-								   + "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=http://58.182.48.127:8080/PotHub/Video/" + fileName + " &embedded=true'></iframe>"
+								   + "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=http://119.74.135.44:8080/PotHub/Video/" + fileName + " &embedded=true'></iframe>"
 										  );
 									/*File tempFile = File.createTempFile(fileName, ".tmp", null);
 									FileOutputStream fos = new FileOutputStream(tempFile);
@@ -303,6 +305,9 @@ public class discussion extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
+		String download = request.getParameter("sdsd");//filename
+		if(download == null || download.isEmpty()) {
+			
 		String haha = request.getParameter("rtor");
 		String myign = request.getParameter("myign");
 		int id = Integer.parseInt(request.getParameter("jesus"));
@@ -325,7 +330,33 @@ public class discussion extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
+		}//end the if statement
+		
+		//download the file
+		else {
+			try {
+			Database df = new Database(2);
+			FileTableModel ftm = new FileTableModel();
+			ftm = df.getFileTableByFileName(download);
+			File tempFile = File.createTempFile(download, ".tmp", null);
+			FileOutputStream fos = new FileOutputStream(tempFile);
+			fos.write(ftm.getData());
+			response.setContentType("text/html");
+			response.setContentType("APPLICATION/OCTET-STREAM");
+			response.setHeader("Content-Disposition", "attachment;filename=\"" + ftm.getFileName() +"\"");
+			FileInputStream stream = new FileInputStream(tempFile);
+			int i;   
+			while ((i=stream.read()) != -1) {  
+			out.write(i);   
+			}   
+			stream.close(); 
+			}
+			catch (ClassNotFoundException | SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
 		
 		
 	}

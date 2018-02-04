@@ -128,6 +128,7 @@ public class Subscription extends HttpServlet {
 						+ "				<p style='text-align:right; width:98%; padding-left:2%;'>"
 						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='goFor()'>Forum</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left; background-color: white;' class='btn' onclick='gosub()'>My Subscription</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gotre()'>Trending</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border-color:blue; border-radius: 5px; background-color:red; border:solid;' id='creatingnew' onclick='gonext()' class='btn'>Create New Thread</button>"
 						+ "				</p>"
 						+ "				</div>"
@@ -212,14 +213,14 @@ public class Subscription extends HttpServlet {
 								
 							}
 						}
+						if(naming.size() == 0) {
+							out.println("<p>You have not subscribe to anyon yet!</p>");
+						}
 						
 						
 						out.println(
-						  "						<div class='everyone'>"
-						+ "							<div><img src='images/tzuyu.jpg' height='70' width='70' style='border-radius:50%;' /></div>"
-						+ "							<div> Default Name </div>"
-						+ "                     </div><hr>"
-						+ "					</div>"
+						  
+						  "					</div>"
 						
 						
 						
@@ -397,6 +398,10 @@ public class Subscription extends HttpServlet {
 						+ "			</div>"
 						);
 								}//close loop
+								else {
+									out.println("<p>You have not created any Forum Post Yet!</p>");
+									break;
+								}
 								}//close if statement for filtering	
 							}//close try
 							 catch (SQLException e) {

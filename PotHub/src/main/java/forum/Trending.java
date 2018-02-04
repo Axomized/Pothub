@@ -1,13 +1,11 @@
 package forum;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -24,24 +22,20 @@ import database.model.ForumVoteModel;
 import database.model.SubscriptionModel;
 
 /**
- * Servlet implementation class Forum
+ * Servlet implementation class Trending
  */
-public class Forum extends HttpServlet {
+public class Trending extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+       
+    /**
+     * @see HttpServlet#HttpServlet()
+     */
+    public Trending() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public Forum() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String username = "";
 		
@@ -62,7 +56,7 @@ public class Forum extends HttpServlet {
 						+ "<meta name='viewport'"
 						+ "	content='width=device-width, initial-scale=1, shrink-to-fit=no'>"
 						+ "<!-- Page Title -->"
-						+ "<title>Forum</title>"
+						+ "<title>Trending</title>"
 						+ "<!-- Latest compiled and CSS -->"
 						+ "<link rel='stylesheet'"
 						+ "	href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'"
@@ -128,9 +122,9 @@ public class Forum extends HttpServlet {
 						+ "				Welcome " + username + ""
 						+ "				</p>"
 						+ "				<p style='text-align:right; width:98%; padding-left:2%;'>"
-						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left; background-color:white;' class='btn' onclick='gofor()'>Forum</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gofor()'>Forum</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gosub()'>My Subscription</button>"
-						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left;' class='btn' onclick='gotre()'>Trending</button>"
+						+ "					<button style='font-size:25px; cursor:pointer; border:solid; border-radius: 20px 20px 2px 2px; float:left; background-color:white;' class='btn' onclick='gotre()'>Trending</button>"
 						+ "					<button style='font-size:25px; cursor:pointer; border-color:blue; border-radius: 5px; background-color:red; border:solid;' id='creatingnew' onclick='gonext()' class='btn'>Create New Thread</button>		"
 						+ "				</p>"
 						+ "				</div>"
@@ -142,7 +136,7 @@ public class Forum extends HttpServlet {
 						
 						try {
 							Database dbms = new Database(2);
-							ArrayList<ForumPostModel> fa = dbms.getForumModel();
+							ArrayList<ForumPostModel> fa = dbms.getForumPostModelbasedonupvote();
 							ArrayList<CommentModel> cmm = dbms.getCommentModel();
 							ArrayList<SubscriptionModel> smm = dbms.getSubscriptionModel();
 							FileTableModel ftm = new FileTableModel();
@@ -422,4 +416,5 @@ public class Forum extends HttpServlet {
 			}
 		}
 	}
+
 }

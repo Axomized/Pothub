@@ -2,6 +2,8 @@ package forum;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -10,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import database.Database;
 import database.model.ReportModel;
 
 /**
@@ -37,6 +40,7 @@ public class SuccessReporting extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		Date date1 = new Date(System.currentTimeMillis());
 		String reportdes = "NOTHING";
 		ArrayList <String> haha = new ArrayList<String>();
 		String ignreceive = request.getParameter("ignsend"); //person reporting
@@ -62,15 +66,31 @@ public class SuccessReporting extends HttpServlet {
 		rm.setEvidenceType("Forum");
 		rm.setReason(reportdes);
 		rm.setEvidence(Integer.parseInt(id));
+		rm.setiGNReceive(ignsend);
+		rm.setiGNSend(ignreceive);
+		rm.setDate(date1);
+		rm.setReportID(0);
+		rm.setGuiltyOrNot(0);
+		try {
+			Database db = new Database(2);
+			db.addReport(rm);
+			PrintWriter out = response.getWriter();
+			out.println("<html>");
+			out.println("	<head>");
+			out.println("	</head>");
+			out.println("	<body>");
+			out.println("		<p style='font-size:50px;'>Report Successful Received</p>");
+			out.println("	</body>");
+			out.println("</html>");
+		}
+		 catch (SQLException e) {
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		
-		PrintWriter out = response.getWriter();
-		out.println("<html>");
-		out.println("	<head>");
-		out.println("	</head>");
-		out.println("	<body>");
-		out.println("		<p style='font-size:50px;'>Report Successful Received</p>");
-		out.println("	</body>");
-		out.println("</html>");
+		
 	}
 
 }

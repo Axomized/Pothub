@@ -250,6 +250,12 @@
 			<description></description>
 			<servlet-class>forum.SuccessReporting</servlet-class>
 		</servlet>
+		<servlet>
+			<servlet-name>Trending</servlet-name>
+			<display-name>Trending</display-name>
+			<description></description>
+			<servlet-class>forum.Trending</servlet-class>
+		</servlet>
 	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
@@ -409,6 +415,10 @@
 	<servlet-mapping>
 		<servlet-name>SuccessReporting</servlet-name>
 		<url-pattern>/SuccessReporting</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>Trending</servlet-name>
+		<url-pattern>/Trending</url-pattern>
 	</servlet-mapping>
 	<session-config>
 		<session-timeout>15</session-timeout>

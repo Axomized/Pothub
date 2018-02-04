@@ -12,5 +12,6 @@ function showPreview(){
 
 function showDownload(){
 	alert("are you sure?");
+	document.getElementById("goto").submit();
 }
 	  

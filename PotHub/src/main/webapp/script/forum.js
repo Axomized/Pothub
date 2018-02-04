@@ -79,6 +79,14 @@ function gosub(){
 	location.href = "Subscription";
 }
 
+function gofor(){
+	location.href = "Forum";
+}
+
+function gotre(){
+	location.href = "Trending";
+}
+
 function sameas(){
 	document.getElementById("dd1").submit();
 }
