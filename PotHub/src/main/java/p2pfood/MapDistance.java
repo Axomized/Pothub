@@ -36,12 +36,21 @@ public class MapDistance {
   }
 
   public static ArrayList<String> getJsonFromURL(String url) throws JSONException, IOException{
+	    ArrayList<String> toRet = new ArrayList<String>();
+	    
 	    JSONObject json = readJsonFromUrl(url);
 	    JSONArray array = json.getJSONArray("rows");
-	    JSONObject json1 = array.getJSONObject(0);
-	    JSONArray array1 = json1.getJSONArray("elements");
+	    JSONObject json1 = null;
+	    JSONArray array1 = null;
 	    
-	    ArrayList<String> toRet = new ArrayList<String>();
+	    try{
+	    json1 = array.getJSONObject(0);
+	    array1 = json1.getJSONArray("elements");
+	    }
+    	catch(JSONException j ){
+    		toRet.add("N.A");
+    	}
+	    
 	    
 	    for(int i =0; i<array1.length();i++){
 	    	try{

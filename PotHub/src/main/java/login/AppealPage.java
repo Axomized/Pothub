@@ -149,11 +149,14 @@ public class AppealPage extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		out.println("<script type=\"text/javascript\">");
 		out.println("alert('Thanks for your appeal. We will get back to you soon.');");
-		out.println("window.location.href = 'Login'");
 		out.println("</script>");
 		}
 		catch(ClassNotFoundException | SQLException e){
+			e.printStackTrace();
 			
+		}
+		finally{
+			doGet(request, response);
 		}
 	}
 

@@ -445,6 +445,7 @@ input {
 	padding:10px;
 	border-radius:5px;
 	font-size:1.5em;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodDesc {
@@ -453,6 +454,7 @@ input {
 	background-color:#f3decb;
 	padding:10px;
 	border-radius:10px;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodBits {
@@ -460,6 +462,7 @@ input {
 	background-color:#f3decb;
 	padding:10px;
 	border-radius:10px;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodBits2 {
@@ -468,6 +471,7 @@ input {
 	border-radius:10px;
 	width:45%;
 	display:inline-block;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodBits2b {
@@ -477,6 +481,7 @@ input {
 	border-radius:10px;
 	width:45%;
 	display:inline-block;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodPrice {
@@ -485,6 +490,7 @@ input {
 	padding:10px;
 	border-radius:10px;
 	font-size:1.5em;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodBuyers {
@@ -493,12 +499,14 @@ input {
 	background-color:#f3decb;
 	padding:10px;
 	border-radius:10px;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodPicture {
 	border-radius: 10px;
 	border: 1px black solid;
 	float:left;
+	box-shadow: -2px 2px 20px 0px black;
 }
 
 #foodAndMap {

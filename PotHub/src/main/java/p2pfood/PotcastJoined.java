@@ -140,7 +140,7 @@ public class PotcastJoined extends HttpServlet {
 							+ "				<li id='ldonate'><a href='Donation'>Donate</a></li>" 
 							+ "			</ul>" 
 							+ "		</div>" + "	</div>" + "<div id='wrapper'>"
-							+ "<div id='secondHeader'>" + "<h2>My Potcasts</h2>"
+							+ "<div id='secondHeader'>" + "<h2>Joined Potcasts</h2>"
 
 							+ "<div id='searchBar'</div>" + "<p>Search Titles: </p>" + "<form method='get'>"
 							+ "<input type='text' name='title'></input><input type='submit'></input>"
@@ -211,7 +211,7 @@ public class PotcastJoined extends HttpServlet {
 				counter++;
 			}
 
-			pw.append("</div></div>" + "<div id='footer'>"
+			pw.append("</div></div></div>" + "<div id='footer'>"
 					+ "<p>Copyright &copy; 2017 &ndash; 2018 PotHub. All rights reserved. </p>" + "<p>We like food</p>"
 					+ "<p>" + "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 					+ "</p>" + "</div>" + "</body>" + "</html>");

@@ -126,8 +126,9 @@ public class PotcastRegister extends HttpServlet {
 						+ "</div>");
 
 			} else if(db.getUserPriviledge(username)){
-				pw.append("<div id='wrapper'>" + "<div id='secondHeader'>"
-						+ "<h2>You have the maximum number of active Potcasts! Have fun serving your visitors first!</h2>"
+				pw.append("<div id='wrapper'>" + "<div id='rejectMessage'>"
+						+ "<h2>You have the maximum number of active Potcasts!</h2>"
+						+ "<p>Have fun serving your visitors first!</p>"
 						+ "</div>" + "</div>");
 			}
 			else{
@@ -153,11 +154,16 @@ public class PotcastRegister extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session == null) {
 			response.sendRedirect("Login");
+			return;
 		}
 		Database db;
 		try {
 			db = new Database(2);
 
+			if(db.getNumberOfPotcastsFrom((String)session.getAttribute("username"))>0){
+				response.sendRedirect("p2plist");
+				return;
+			}
 			// Defaults
 			PotcastModel pcm = new PotcastModel();
 			if (request.getParameter("title") != null && request.getParameter("description") != null

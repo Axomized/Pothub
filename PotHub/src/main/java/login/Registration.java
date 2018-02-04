@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.DatabaseUserModel;
-import database.model.LoginModel;
 
 /**
  * Servlet implementation class Registration2
