@@ -43,8 +43,6 @@ public class ReportIDRouter extends HttpServlet {
 		}
 		
 		if(request.getParameter("evidence")==null||request.getParameter("evidenceType")==null){
-			System.out.println(request.getParameter("evidence")==null);
-			System.out.println(request.getParameter("evidenceType")==null);
 			response.sendRedirect(request.getHeader("referer"));
 			return;
 		}

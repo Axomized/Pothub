@@ -18,6 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.DatabaseUserModel;
@@ -216,14 +218,14 @@ public class PotcastDetail extends HttpServlet {
 
 			if (pm.getMaxBids() < bids.size()) {
 				pw.append("<p>Price: $" + bids.get(bids.size() - pm.getMaxBids()).getBidAmount() + "</p></div>"
-						+ "<div id='foodDesc'>" + "<p id='descHead'>Description: </p><p>" + pm.getDescription() + "</p>" + "</div>"
+						+ "<div id='foodDesc'>" + "<p id='descHead'>Description: </p><p>" + Encode.forHtml(pm.getDescription()) + "</p>" + "</div>"
 						+ "<div id='foodBits2'><p>");
 				pw.append(pm.getMaxBids() + "/" + pm.getMaxBids() 
 				+ "Bids</p></div><div id='foodBits2b'><p>Closing at ");
 			} else {
 				pw.append("<p>Price: $" + pm.getMinBid() + "</p>" + "</div>" 
 						+ "<div id='foodDesc'>" + "<p id='descHead'>Description: </p><p>"
-						+ pm.getDescription() + "</p></div>" 
+						+ Encode.forHtml(pm.getDescription()) + "</p></div>" 
 						+ "<div id='foodBits2'><p>");
 				pw.append(bids.size() + "/" + pm.getMaxBids() 
 				+ "Bids</p></div><div id='foodBits2b'><p>Closing at ");

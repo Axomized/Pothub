@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.AppealModel;
 import database.model.BansModel;
@@ -80,7 +82,7 @@ public class AppealView extends HttpServlet {
 			AppealModel appeal = db.getAppealsByAppealID(Integer.parseInt(appealID));
 			BansModel ban = db.getBansByID(appeal.getBanID());
 
-			pw.append("<p id='appealBlock'>" + appeal.getMessage() + "</p>" + "<p id='appealBlock'>Sent on "
+			pw.append("<p id='appealBlock'>" + Encode.forHtml(appeal.getMessage()) + "</p>" + "<p id='appealBlock'>Sent on "
 					+ appeal.getReceiveDate() + "</p>" + "<p id='appealBlock'>Initially banned for: " + ban.getReason()
 					+ "</p>" + "<div id='appealBlock'>" + "<form method='post'>"
 					+ "<input type='hidden' name ='action' value='pardon'></input>"

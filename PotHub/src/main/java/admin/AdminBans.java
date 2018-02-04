@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import adminSearch.BansSearchObject;
 import database.Database;
 import database.model.AppealModel;
@@ -106,7 +108,7 @@ public class AdminBans extends HttpServlet {
 			for (BansModel ban : bans) {
 				pw.append("<tr>");
 				pw.append("<td>" + ban.getiGN() + "</td>");
-				pw.append("<td>" + ban.getReason() + "</td>");
+				pw.append("<td>" + Encode.forHtml(ban.getReason()) + "</td>");
 				pw.append("<td>" + ban.getStartDate() + "</td>");
 				pw.append("<td>" + ban.getEndDate() + "</td>");
 				pw.append("<td>" + ban.getAdmin() + "</td>");

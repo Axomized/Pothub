@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -59,6 +60,9 @@ public class TalkTimer extends HttpServlet {
         	  	TimerTask timerTask = new EmailTask(i);
           		timer.schedule(timerTask, i.getBidStopTime());
           }
+          
+          purgeImages();
+          
 		} catch (FileNotFoundException | ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
@@ -67,5 +71,10 @@ public class TalkTimer extends HttpServlet {
     public static void addToTimer(PotcastModel pot){
     	TimerTask timerTask = new EmailTask(pot);
     	timer.schedule(timerTask, pot.getBidStopTime());
+    }
+    
+    public static void purgeImages(){
+    	TimerTask timerTask = new ImagePurgeTask();
+    	timer.scheduleAtFixedRate(timerTask, new Date(System.currentTimeMillis()+(long)60000), 3600000);
     }
 }

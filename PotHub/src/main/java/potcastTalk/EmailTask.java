@@ -49,10 +49,6 @@ public class EmailTask extends TimerTask {
        Database db = new Database(2);
        db.setPotcastEmailAsSend(potcast.getPotcastID());
     }
-    
-    public static void main(String args[]){
-
-    }
 
 	public Date getSendWhen() {
 		return sendWhen;

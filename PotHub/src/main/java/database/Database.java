@@ -1616,6 +1616,11 @@ public class Database {
 		return null;
 	}
 	
+	public void purgeUnusedImages() throws SQLException {
+		PreparedStatement ppt = conn.prepareStatement("DELETE FROM ImageTable WHERE inUse = 0");
+		ppt.executeUpdate();
+	}
+	
 	//Get ImageName by ImageID
 	public String getImageByImageID(int iD) throws SQLException { 
 		PreparedStatement ppstmt = conn.prepareStatement("SELECT ImageName FROM ImageTable WHERE ImageID = ?;");

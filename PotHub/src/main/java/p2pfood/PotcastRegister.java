@@ -19,8 +19,6 @@ import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import org.apache.commons.compress.utils.IOUtils;
-import org.springframework.web.util.HtmlUtils;
-
 import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.PotcastModel;
@@ -180,7 +178,7 @@ public class PotcastRegister extends HttpServlet {
 
 				pcm.setiGN((String) session.getAttribute("username"));
 				pcm.setTitle(SearchSanitizer.sanitise(request.getParameter("title")));
-				pcm.setDescription(encodeDescription(request.getParameter("description")));
+				pcm.setDescription(request.getParameter("description"));
 				pcm.setMaxBids(Integer.parseInt(request.getParameter("portions")));
 				pcm.setMinBid(Integer.parseInt(request.getParameter("ppp")));
 
@@ -226,12 +224,8 @@ public class PotcastRegister extends HttpServlet {
 		}
 		doGet(request, response);
 	}
-
+	
 	private String encodeString(String line) throws UnsupportedEncodingException {
 		return URLEncoder.encode(line, "UTF-8");
-	}
-	
-	private String encodeDescription(String line){
-		return HtmlUtils.htmlEscape(line);
 	}
 }
