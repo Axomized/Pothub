@@ -84,10 +84,10 @@ public class ProfileDonation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -133,10 +133,10 @@ public class ProfileDonation extends HttpServlet {
 					+ "					<div id='profilePicDiv' class='col-sm-3'>"
 					+ "						<div id='profileImgDiv'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='150' width='150'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='150' width='150'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='150' width='150'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='150' width='150'/>");
 					}
 					out.print("				</div>"
 					+ "						<div id='displayNameDiv'>"

@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.sql.SQLException;
+import java.time.Instant;
+import java.sql.Timestamp;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -19,6 +21,7 @@ import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import database.model.LogsModel;
 
 @MultipartConfig(fileSizeThreshold = 1024*1024*2, maxFileSize = 1024*1024*5, maxRequestSize = 1024*1024*5*5)
 public class EditProfile extends HttpServlet {
@@ -68,10 +71,10 @@ public class EditProfile extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -245,6 +248,7 @@ public class EditProfile extends HttpServlet {
 		try {
 			Database db = new Database(2);
 			ProfileUpdate profileUpdate = new ProfileUpdate(username);
+			LogsModel lm = new LogsModel();
 			String isFiltered = request.getParameter("checkFilter");
 			String gender = request.getParameter("genderSelect");
 			String contact_No = request.getParameter("contactNoInput");
@@ -309,6 +313,12 @@ public class EditProfile extends HttpServlet {
 				
 				if (db.updateUserProfile(profileUpdate)) {
 					updateProfileSuccess = true;
+					lm.setiGN(username);
+					lm.setLogDate(Timestamp.from(Instant.now()));
+					lm.setiPAddress(lm.getClientIP(request));
+					lm.setLogType("Profile");
+					lm.setLogActivity(username + " edited profile information");
+					db.insertLogs(lm);
 				}
 			}
 			else {
@@ -342,10 +352,10 @@ public class EditProfile extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"

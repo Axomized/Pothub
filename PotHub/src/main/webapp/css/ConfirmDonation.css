@@ -128,6 +128,10 @@ body {
 	text-align: center;
 }
 
+.roundProfilePic {
+	border-radius: 50%;
+}
+
 #profileDropdownDiv {
 	display: none;
 	position: absolute;

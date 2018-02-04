@@ -35,17 +35,14 @@ public class ValidateCard {
 	
 	public boolean validateCode(String ccNumber, String securityCode) {
 		boolean isValid = false;
-		String amexRegex = "^3[47]";
-		Pattern pat = Pattern.compile(amexRegex);
-		Matcher mat = pat.matcher(ccNumber);
 		
-		if (mat.find()) {
-			if (securityCode.length() == 4) {
+		if (ccNumber.matches("^3[47]")) {
+			if (securityCode.length() == 4 && securityCode.matches("\\d+")) {
 				isValid = true;
 			}
 		}
 		else {
-			if (securityCode.length() == 3) {
+			if (securityCode.length() == 3 && securityCode.matches("\\d+")) {
 				isValid = true;
 			}
 		}
@@ -53,7 +50,11 @@ public class ValidateCard {
 	}
 
 	public static void main(String[] args) {
-		
+		String hi = "aaa";
+		ValidateCard vc = new ValidateCard();
+		if (vc.validateCode("111", hi)) {
+			System.out.println("Hello");
+		}
 	}
 
 }

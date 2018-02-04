@@ -78,10 +78,10 @@ public class ConfirmDonation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -220,6 +220,12 @@ public class ConfirmDonation extends HttpServlet {
 							if (tsm.getTemporaryOnBehalf() != null && !tsm.getTemporaryOnBehalf().isEmpty()) {
 								DatabaseUserModel dumOnBehalf = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								db.updateTotalDonation(dumOnBehalf.getTotalDonation().add(tsm.getTemporaryAmount()), tsm.getTemporaryOnBehalf());
+								lm.setiGN(username);
+								lm.setLogDate(Timestamp.from(Instant.now()));
+								lm.setiPAddress(lm.getClientIP(request));
+								lm.setLogType("Donation");
+								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
+								db.insertLogs(lm);
 								DatabaseUserModel dumOnBehalfAfter = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								if ((dumOnBehalfAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumOnBehalfAfter.isPriviledged())) {
 									db.updateIsPrivileged(true, tsm.getTemporaryOnBehalf());
@@ -230,15 +236,15 @@ public class ConfirmDonation extends HttpServlet {
 									lm.setLogActivity(tsm.getTemporaryOnBehalf() + " became privileged");
 									db.insertLogs(lm);
 								}
+							}
+							else {
+								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
 								lm.setiGN(username);
 								lm.setLogDate(Timestamp.from(Instant.now()));
 								lm.setiPAddress(lm.getClientIP(request));
 								lm.setLogType("Donation");
-								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
+								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
 								db.insertLogs(lm);
-							}
-							else {
-								db.updateTotalDonation(dum.getTotalDonation().add(tsm.getTemporaryAmount()), username);
 								DatabaseUserModel dumAfter = db.getUserProfile(username);
 								if ((dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumAfter.isPriviledged())) {
 									db.updateIsPrivileged(true, username);
@@ -249,12 +255,6 @@ public class ConfirmDonation extends HttpServlet {
 									lm.setLogActivity(username + " became privileged");
 									db.insertLogs(lm);
 								}
-								lm.setiGN(username);
-								lm.setLogDate(Timestamp.from(Instant.now()));
-								lm.setiPAddress(lm.getClientIP(request));
-								lm.setLogType("Donation");
-								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
-								db.insertLogs(lm);
 							}
 							db.deleteFromTempStore(username);
 							response.sendRedirect("DonationSuccess");
@@ -327,10 +327,10 @@ public class ConfirmDonation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"

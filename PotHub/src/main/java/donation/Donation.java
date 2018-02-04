@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.TemporaryStoreModel;
+import login.BanChecker;
 
 public class Donation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,6 +28,10 @@ public class Donation extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
@@ -61,10 +66,10 @@ public class Donation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -229,6 +234,10 @@ public class Donation extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
@@ -417,10 +426,10 @@ public class Donation extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -635,7 +644,6 @@ public class Donation extends HttpServlet {
 			e.printStackTrace();
 		}
 		return false;
-		
 	}
 
 }

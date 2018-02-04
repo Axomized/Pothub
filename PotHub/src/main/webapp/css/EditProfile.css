@@ -128,6 +128,10 @@ body {
 	cursor: pointer;
 }
 
+.roundProfilePic {
+	border-radius: 50%;
+}
+
 #profilePic {
 	padding: 10px 20px;
 	text-align: center;
@@ -437,6 +441,10 @@ body {
 	border: 1px solid #49274a;
 	color: #49274a;
 	background-color: #f8eee7;
+}
+
+#profilePicThumbnail {
+	border-radius: 50%;
 }
 
 .errorMsg {

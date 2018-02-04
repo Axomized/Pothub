@@ -10,6 +10,7 @@
 		<!-- Optional theme -->
 		<script src="https://use.fontawesome.com/aff6d7353c.js"></script>
 		<!-- My Own Script -->
+		<script src="http://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 		<script src="../script/AddFoodPref.js"></script>
 		<!-- My Style Sheet -->
 		<link rel="stylesheet" type="text/css" href="../css/AddFoodPref.css"/>
@@ -91,6 +92,7 @@
 								<button id="otherBtn" class="editBtn" disabled>Add to list</button>
 								<button id="doneBtn" class="editBtn">Done</button>
 							</div>
+							<div class="errorMsg">Please select a food to add.</div>
 							<form id="addFoodForm" method="post">
 								<div id="meatListDiv">
 									<div class="foodPrefDiv">
@@ -387,6 +389,7 @@
 										
 									</div>
 								</div>
+								<div class="errorMsg">Please select a food to add.</div>
 								<div id="updateBtnDiv" class="buttonsDiv">
 									<input type="submit" id="saveBtn" class="editBtn" value="Save Changes">
 								</div>
@@ -404,7 +407,6 @@
 			</p>
 		</div>
 		<!-- Optional Bootstrap Scripts -->
-		<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js" integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn" crossorigin="anonymous"></script>
 	</body>

@@ -3,6 +3,8 @@ package profile;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
+import database.model.LogsModel;
 import login.PBKDF2;
 
 public class ChangePassword extends HttpServlet {
@@ -62,10 +65,10 @@ public class ChangePassword extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"
@@ -186,6 +189,7 @@ public class ChangePassword extends HttpServlet {
 		try {
 			Database db = new Database(2);
 			DatabaseUserModel dum = db.getUserProfile(username);
+			LogsModel logs = new LogsModel();
 			PBKDF2 hashClass = new PBKDF2();
 			LoginModel lm = db.getUserPassSalt(dum.getEmail());
 			LoginModel lmUpdate = new LoginModel();
@@ -208,8 +212,13 @@ public class ChangePassword extends HttpServlet {
 					lmUpdate.setEmail(dum.getEmail());
 					if (db.updateUserPassAndSalt(lmUpdate)) {
 						passChangeSuccess = true;
+						logs.setiGN(username);
+						logs.setLogDate(Timestamp.from(Instant.now()));
+						logs.setiPAddress(logs.getClientIP(request));
+						logs.setLogType("Profile");
+						logs.setLogActivity(username + " changed password");
+						db.insertLogs(logs);
 					}
-					System.out.println("Can change password successfully");
 				}
 				if (!hashClass.getHashedPass(oldPass, decodedSalt).equals(lm.getPassword())) {
 					incorrectPass = true;
@@ -251,10 +260,10 @@ public class ChangePassword extends HttpServlet {
 					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
 					+ "				<div id='profilePic'>");
 					if (dum.getProfilePic() != 0) {
-						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' height='50' width='50'/>");
+						out.print("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
 					}
 					else {
-						out.print("<img src='images/profile.png' height='50' width='50'/>");
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
 					}
 					out.print("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
 					+ "				</div>"

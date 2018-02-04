@@ -60,6 +60,6 @@ function addOthers() {
 		otherInput.style.display = "none";
 		otherBtn.style.display = "none";
 		doneBtn.style.display = "none";
-		$("html, body").animate({ scrollTop: document.body.scrollHeight }, 1000);
+		$("html, body").animate({scrollTop: document.body.scrollHeight}, 1000);
 	}
 }
