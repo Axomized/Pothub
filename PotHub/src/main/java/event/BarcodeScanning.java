@@ -100,7 +100,6 @@ public class BarcodeScanning extends HttpServlet {
 			sb.append("			<div class='container-fluid'>");
 			sb.append("				<ul>");
 			sb.append("					<li id='lhome'><a href='Forum'>Home</a></li>");
-			sb.append("					<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
 			sb.append("					<li class='dropdown'>");
 			sb.append("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 			sb.append("			        	<ul class='dropdown-menu'>");

@@ -55,17 +55,17 @@ function success(){
 	var x = document.getElementById("storeReport").value;
 	alert("Success reporting of " + x);
 	document.getElementById("overlay").style.display = "none";
-	if(document.getElementById("1first").checked){
-		document.getElementById("kimtan").value = document.getElementById("1first").value;
+	if(document.getElementById("Check1").checked){
+		document.getElementById("kimtan").value = document.getElementById("Check1").value;
 	}
-	else if(document.getElementById("2first").checked){
-		document.getElementById("kimtan").value = document.getElementById("2first").value;
+	else if(document.getElementById("Check2").checked){
+		document.getElementById("kimtan").value = document.getElementById("Check2").value;
 	}
-	else if(document.getElementById("3first").checked){
-		document.getElementById("kimtan").value = document.getElementById("3first").value;
+	else if(document.getElementById("Check3").checked){
+		document.getElementById("kimtan").value = document.getElementById("Check3").value;
 	}
-	else if(document.getElementById("4first").checked){
-		document.getElementById("kimtan").value = document.getElementById("4first").value;
+	else if(document.getElementById("Check4").checked){
+		document.getElementById("kimtan").value = document.getElementById("Check4").value;
 	}
 	document.getElementById("whyareyou").submit();
 }
@@ -91,6 +91,22 @@ function sameas(){
 	document.getElementById("dd1").submit();
 }
 
+function selectOnlyThis(id) {
+	document.getElementById("comment").value = '';
+    for (var i = 1;i <= 4; i++)
+    {
+        document.getElementById("Check" + i).checked = false;
+    }
+    document.getElementById(id).checked = true;
+}
+
+function checkforcheck(){
+	for (var i = 1;i <= 4; i++)
+    {
+        document.getElementById("Check" + i).checked = false;
+    }
+	
+}
 
 var audio = new Audio('/PotHub/images/jj.mp3');
 audio.addEventListener('ended', function() {

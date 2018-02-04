@@ -234,7 +234,7 @@ public class Subscription extends HttpServlet {
 							}
 						}
 						if(naming.size() == 0) {
-							out.println("<p>You have not subscribe to anyon yet!</p>");
+							out.println("<p>You have not subscribe to anyone yet!</p>");
 						}
 						
 						
@@ -419,7 +419,7 @@ public class Subscription extends HttpServlet {
 						);
 								}//close loop
 								else {
-									out.println("<p>You have not created any Forum Post Yet!</p>");
+									out.println("<div id='herehere' style='height: 100%; display: flex; justify-content: center; align-items: center;'><p>You have not created any Forum Post Yet!</p></div>");
 									break;
 								}
 								}//close if statement for filtering	

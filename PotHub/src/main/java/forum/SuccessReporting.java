@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import admin.ReportToURL;
 import database.Database;
 import database.model.ReportModel;
 
@@ -72,8 +73,7 @@ public class SuccessReporting extends HttpServlet {
 		rm.setReportID(0);
 		rm.setGuiltyOrNot(0);
 		try {
-			Database db = new Database(2);
-			db.addReport(rm);
+			ReportToURL.execute(rm);
 			PrintWriter out = response.getWriter();
 			out.println("<html>");
 			out.println("	<head>");
