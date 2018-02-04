@@ -5,6 +5,7 @@ import java.io.PrintWriter;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
@@ -19,6 +20,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import database.Database;
 import database.model.FileTableModel;
 import database.model.ForumPostModel;
+import database.model.LogsModel;
 
 
 @MultipartConfig(fileSizeThreshold=8024*1024*2, maxFileSize=8024*1024*10, maxRequestSize=8024*1024*50)
@@ -201,6 +203,7 @@ public class createNewPost extends HttpServlet {
 		Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 		try {
 			Database db = new Database(2);
+			LogsModel lm = new LogsModel();
 			int latest = db.getFileCount();
 			int checks = 1;
 			int checking = db.getFileCount();
@@ -274,6 +277,12 @@ public class createNewPost extends HttpServlet {
 	        	fp.setPicture(latest);
 	        }
 	        db.addForumPost(fp);
+	        lm.setiGN(username2);
+	        lm.setLogDate(Timestamp.from(Instant.now()));
+	        lm.setiPAddress(lm.getClientIP(request));
+	        lm.setLogType("Forum");
+	        lm.setLogActivity(username2 + " created a thread - " + forumT);
+	        db.insertLogs(lm);
 			out.println("<!DOCTYPE html>"
 					+ "<html>"
 					+ "<head><title>Success</title><meta charset=\"UTF-8\">"

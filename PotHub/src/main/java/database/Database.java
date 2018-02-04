@@ -1790,6 +1790,28 @@ public class Database {
 		executeUpdate(ppstmt);
 	}
 	
+	public ArrayList<ForumPostModel> getForumPostModelbasedonupvote() throws SQLException {
+		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
+		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY Upvotes DESC");
+		while(rs.next()) {
+			int postID = rs.getInt("PostID");
+			String thread = rs.getString("Thread");
+			int upvotes = rs.getInt("Upvotes");
+			String iGN = rs.getString("IGN");
+			Timestamp date = rs.getTimestamp("Date");
+			int picture = rs.getInt("Picture");
+			String description = rs.getString("Description");
+			String fileAttachment = rs.getString("FileAttachment");
+			String text = rs.getString("ForumNormalText");
+			String url = rs.getString("ForumURL");
+			
+			
+			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment, text, url));
+		}
+		return forums;
+	
+	}
+	
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
 		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID DESC;");
@@ -1828,6 +1850,7 @@ public class Database {
 	
 	public ForumPostModel getForumModelByID(int postID) throws SQLException{
 		PreparedStatement ps = conn.prepareStatement("SELECT * FROM ForumPost WHERE postID = ?");
+		ps.setInt(1, postID);
 		ResultSet rs = ps.executeQuery();
 		while(rs.next()) {
 			int postID1 = rs.getInt("PostID");

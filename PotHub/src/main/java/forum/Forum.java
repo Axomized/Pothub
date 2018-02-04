@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -21,6 +22,7 @@ import database.model.DatabaseUserModel;
 import database.model.FileTableModel;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.LogsModel;
 import database.model.SubscriptionModel;
 
 /**
@@ -172,7 +174,7 @@ public class Forum extends HttpServlet {
 							out.println(	
 						  "						<div class='voting'>"
 						+ "						<input type='hidden' name='hisname' value='" + username +"'>"
-						+ "						<input type='hidden' name='hisid' value='" + qw.getPostID() + "'>"
+						+ "						<input type='hidden' name='hisid' value='" + qw.getPostID() + "'>"						
 						+ "						<input type='hidden' name='upordown' id='yesorno' >"
 						+ "							<p onclick='upfirst(this)' style='text-align: center;'>"
 						+ "								<i style='cursor:pointer;' class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
@@ -391,11 +393,31 @@ public class Forum extends HttpServlet {
 			try {
 				Database db = new Database(2);
 				ForumVoteModel fvm = new ForumVoteModel();
+				LogsModel lm = new LogsModel();
 				fvm.setiGN(ignn);
 				fvm.setPostID(pos);
 				fvm.setDate(tsm);
 				db.addForumVote(fvm);
 				db.updateVotes(Integer.parseInt(updown), pos);
+				ForumPostModel fpm = new ForumPostModel();
+				fpm = db.getForumModelByID(pos);
+				String name3 = fpm.getiGN();
+				DatabaseUserModel dum = db.getUserProfile(name3);
+				int totalpoints = dum.getPoints();
+				totalpoints ++;
+				if(totalpoints > 49 && !dum.isPriviledged()) {
+					db.updateIsPrivileged(true, name3);
+					db.addDatabaseUserPoints(totalpoints, name3);
+					lm.setiGN(name3);
+					lm.setLogDate(Timestamp.from(Instant.now()));
+					lm.setiPAddress(lm.getClientIP(request));
+					lm.setLogType("Others");
+					lm.setLogActivity(name3 + " became privileged");
+					db.insertLogs(lm);
+				}
+				else if(totalpoints < 50) {
+					db.addDatabaseUserPoints(totalpoints, name3);
+				}
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();
