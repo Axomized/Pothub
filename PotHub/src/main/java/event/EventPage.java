@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 
 import org.owasp.encoder.Encode;
 
+import admin.ReportToURL;
 import database.Database;
 import database.model.EventModel;
 import database.model.ReportModel;
@@ -285,7 +286,7 @@ public class EventPage extends HttpServlet {
 				}else {
 					rM = new ReportModel(0, iGN, eventOwner, "Event", timenow, Integer.parseInt(eventID), type, 0);
 				}
-				DB.addReport(rM);
+				ReportToURL.execute(rM);
 				//ReportModel(String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence, String reason, int guiltyOrNot)
 			}
 		} catch (ClassNotFoundException e) {

@@ -1463,17 +1463,17 @@ public class Database {
 		ppstmt.setString(11, eM.getFileList());
 		ppstmt.setString(12, eM.getStatus());
 
+		executeUpdate(ppstmt);
+		
 		ArrayList<String> als = eM.getGuestArray();
 		for(String s: als) {
-			PreparedStatement ppstmt1 = conn.prepareStatement("INSET INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES(?,?,?);");
-			ppstmt1.setInt(1, eM.getEventID());
+			PreparedStatement ppstmt1 = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES(?,?,?);");
+			ppstmt1.setInt(1, getEventIDFromEventName(eM.getEventName()));
 			ppstmt1.setString(2, s);
 			ppstmt1.setBoolean(3, false);
 			
 			executeUpdate(ppstmt1);
 		}
-		
-		executeUpdate(ppstmt);
 	}
 	
 	public void updateEvent(String sql, EventModel eM) throws SQLException { 
@@ -1939,16 +1939,17 @@ public class Database {
 			int numberOfCurrentPpt = rs.getInt(1);
 			PreparedStatement ppstmt1 = conn.prepareStatement("SELECT Max_No_People FROM Event WHERE EventID = ?;");
 			ppstmt1.setInt(1, eventID);
-			ResultSet rs1 = ppstmt.executeQuery();
+			ResultSet rs1 = ppstmt1.executeQuery();
+			rs1.next();
 			if(numberOfCurrentPpt >= rs1.getInt("Max_No_People")) {
 				return false;
 			}
 		}
-		PreparedStatement ppstmt1 = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES (?,?,'0');");
-		ppstmt1.setInt(1, eventID);
-		ppstmt1.setString(2, iGN);
+		PreparedStatement ppstmt2 = conn.prepareStatement("INSERT INTO PeopleEventConfirmList(EventID, IGN, Confirmed) VALUES (?,?,'0');");
+		ppstmt2.setInt(1, eventID);
+		ppstmt2.setString(2, iGN);
 		
-		executeUpdate(ppstmt);
+		executeUpdate(ppstmt2);
 		return true;
 	}
 	
@@ -2007,20 +2008,20 @@ public class Database {
 	}
 	
 	// Whether IGN is in confirm list
-		public void addParticipationPoints(int eventID) throws SQLException {
-			PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ? AND Confirmed = 'true';");
-			ppstmt.setInt(1, eventID);
-			
-			ResultSet rs = ppstmt.executeQuery();
-			while(rs.next()) {
-				PreparedStatement ppstmt1 = conn.prepareStatement("SELECT Points FROM Database WHERE IGN = ?;");
-				ppstmt1.setString(1, rs.getString("IGN"));
-				PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Database SET Points = ? WHERE iGN = ?;");
-				ppstmt2.setInt(1, (rs.getInt("Points") + 10));
-				ppstmt2.setString(2, rs.getString("IGN"));
-				executeUpdate(ppstmt2);
-			}
+	public void addParticipationPoints(int eventID) throws SQLException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT IGN FROM PeopleEventConfirmList WHERE EventID = ? AND Confirmed = 'true';");
+		ppstmt.setInt(1, eventID);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			PreparedStatement ppstmt1 = conn.prepareStatement("SELECT Points FROM Database WHERE IGN = ?;");
+			ppstmt1.setString(1, rs.getString("IGN"));
+			PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Database SET Points = ? WHERE iGN = ?;");
+			ppstmt2.setInt(1, (rs.getInt("Points") + 10));
+			ppstmt2.setString(2, rs.getString("IGN"));
+			executeUpdate(ppstmt2);
 		}
+	}
 		
 	// Set people in confirm list "Confirmed"
 	public void setPeopleEventListConfirmConfirmed(int eventID, String iGN) throws SQLException {
@@ -2028,6 +2029,27 @@ public class Database {
 		ppstmt.setInt(1, eventID);
 		ppstmt.setString(2, iGN);
 		executeUpdate(ppstmt);
+	}
+	
+	// Whether user is guest
+	public boolean isBarcodeScanningGuest(String iGN, int eventID) throws SQLException, UnsupportedEncodingException {
+		PreparedStatement ppstmt = conn.prepareStatement("SELECT Guest FROM Event WHERE EventID = ?;");
+		ppstmt.setInt(1, eventID);
+		
+		ResultSet rs = ppstmt.executeQuery();
+		while(rs.next()) {
+			String guest = rs.getString("Guest");
+			EventModel eM = new EventModel();
+			eM.setGuest(guest);
+			ArrayList<String> als = eM.getGuestArray();
+			
+			for(String s: als) {
+				if(s.equals(iGN)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 	
 	public void close() throws SQLException {

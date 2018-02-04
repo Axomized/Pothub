@@ -3,11 +3,13 @@ package event;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
-import java.sql.Date;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
@@ -22,6 +24,7 @@ import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.EventModel;
+import database.model.LogsModel;
 
 public class EventofEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -74,7 +77,7 @@ public class EventofEventPage extends HttpServlet {
 			sb.append("		<!-- Optional theme -->");
 			sb.append("		<script defer src='https://use.fontawesome.com/aff6d7353c.js'></script>");
 			sb.append("		<!-- My Script -->");
-			sb.append("		<script src='../script/EventofEventPage.js' defer></script>");
+			sb.append("		<script src='../script/EventofEventPage.min.js' defer></script>");
 			sb.append("		<!-- My Style Sheet -->");
 			sb.append("		<link rel='stylesheet' type='text/css' href='../css/EventofEventCss.css' />");
 			sb.append("	</head>");
@@ -185,6 +188,11 @@ public class EventofEventPage extends HttpServlet {
 					sb.append("							<button class='btn btn-warning' onclick=\"changeColor(this); removePendingRequest('" + nameOfEvent + "', '" + username + "')\">Pending</button> <!-- Servlet change the text according to status -->");
 					sb.append("						</div>");
 					break;
+				case "Z":
+					sb.append("						<div class='event-header-button'>");
+					sb.append("							<button class='btn'>Ended</button> <!-- Servlet change the text according to status -->");
+					sb.append("						</div>");
+					break;
 				default:
 					sb.append("						<div class='event-header-button'>");
 					sb.append("							<button class='btn btn-success' onclick=\"changeColor(this); sendJoinRequest('" + nameOfEvent + "', '" + username + "')\">Join</button> <!-- Servlet change the text according to status -->");
@@ -290,7 +298,19 @@ public class EventofEventPage extends HttpServlet {
 				String username = "";
 				switch(type) {
 					case "Close":
+						HttpSession session = request.getSession(false);
+			            username = (String)session.getAttribute("username");
 						DB.setEventStatus(eventName, "Z");
+						
+						// Logs cancel Event
+						LogsModel lm = new LogsModel();
+						lm.setiGN(username);
+						lm.setLogDate(Timestamp.from(Instant.now()));
+						lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+						lm.setLogType("Event");
+						lm.setLogActivity(username + " cancelled event");
+						DB.insertLogs(lm);
+						
 						break;
 					case "RemoveConfirm":
 						username = request.getParameter("iGN");

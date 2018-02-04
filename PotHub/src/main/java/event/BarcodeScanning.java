@@ -1,6 +1,9 @@
 package event;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -13,6 +16,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.http.HttpHeaders;
 
 import database.Database;
+import database.model.LogsModel;
 
 public class BarcodeScanning extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -130,7 +134,12 @@ public class BarcodeScanning extends HttpServlet {
 			sb.append("						<ul id='userList'>");
 			
 			for(String s: notScannedList) {
-				sb.append("						<li>" + s + "</li>");
+				if(db.isBarcodeScanningGuest(s, EVENTID)) {
+					sb.append("						<li class='guestName'>" + s + "</li>");
+				}else {
+					sb.append("						<li>" + s + "</li>");
+				}
+				
 			}
 			
 			sb.append("						</ul>");
@@ -195,6 +204,15 @@ public class BarcodeScanning extends HttpServlet {
 				final int EVENTID = DB.getEventIDFromEventName(EVENTNAME);
 				DB.setPeopleEventListConfirmConfirmed(EVENTID, USERNAME);
 			}
+			// Logs Ended Event
+			LogsModel lm = new LogsModel();
+			lm.setiGN(USERNAME);
+			lm.setLogDate(Timestamp.from(Instant.now()));
+			lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+			lm.setLogType("Event");
+			lm.setLogActivity(USERNAME + " ended event");
+			DB.insertLogs(lm);
+			
 			response.getWriter().write("Success");
 		} catch(Exception e) {
 			e.printStackTrace();

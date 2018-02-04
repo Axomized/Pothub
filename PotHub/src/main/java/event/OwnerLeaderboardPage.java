@@ -160,6 +160,7 @@ public class OwnerLeaderboardPage extends HttpServlet {
 		}
 	}
 
+	// Log Event to Logs
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

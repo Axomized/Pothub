@@ -2,6 +2,7 @@ package event;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.InetAddress;
 import java.net.URLEncoder;
 import java.nio.file.Paths;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -29,6 +31,7 @@ import org.apache.commons.compress.utils.IOUtils;
 
 import database.Database;
 import database.model.EventModel;
+import database.model.LogsModel;
 
 @MultipartConfig(fileSizeThreshold=(1024*1024*10), maxFileSize=(1024*1024*25), maxRequestSize=1024*1024*5*5*4)
 public class CreateEventPage extends HttpServlet {
@@ -224,8 +227,8 @@ public class CreateEventPage extends HttpServlet {
 			sb.append("							<input type='text' class='form-control' id='mainAddress' name='Address'><br>");
 			sb.append("						</div>");
 			sb.append("						<div class='col form-group'>");
-			sb.append("							<p><b>Additional Address</b></p>");
-			sb.append("							<input type='text' class='form-control' id='additionalAddress' name='AdditionalAddress'>");
+			sb.append("							<p><b>Unit-No/Address</b></p>");
+			sb.append("							<input type='text' class='form-control' placeholder='Type here...' id='additionalAddress' name='AdditionalAddress'>");
 			sb.append("						</div>");
 			sb.append("					</div>");
 			sb.append("				</div>");
@@ -320,6 +323,15 @@ public class CreateEventPage extends HttpServlet {
 		    eM.setiGN(currentIGN); // Current IGN
 		    eM.setStatus("H");
 		    db.insertCreateEvent(eM);
+		    
+		    // Logs Created Event
+		    LogsModel lm = new LogsModel();
+		    lm.setiGN(currentIGN);
+		    lm.setLogDate(Timestamp.from(Instant.now()));
+		    lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+		    lm.setLogType("Event");
+		    lm.setLogActivity(currentIGN + " created event");
+		    db.insertLogs(lm);
 		    
 		    response.sendRedirect("MyEventPage");
 		} catch (ClassNotFoundException e) {

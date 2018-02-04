@@ -34,7 +34,7 @@ function removeConfirmRequest(eventName, username) {
 		"type": "POST",
 		"data": {"Type": "RemoveConfirm", "eventName" : eventName, "iGN": username}
 	});
-	location.reload(); // Reload the page cause I lazy retype some codes
+	windows.location.href = "../EventPage"; // Redirect page
 }
 
 function removePendingRequest(eventName, username) {
@@ -54,7 +54,9 @@ function sendJoinRequest(eventName, username) {
 		"type": "POST",
 		"data": {"Type": "Join", "eventName" : eventName, "iGN": username},
 		success: function aaa(res) {
-			if(res) {
+			console.log("Wolf: " + res);
+			console.log("Wolf2: " + Boolean.valueOf(res));
+			if(Boolean.valueOf(res)) {
 				location.reload(); // Reload the page cause I lazy retype some codes
 			}else {
 				alert("Maximum participants entered.");

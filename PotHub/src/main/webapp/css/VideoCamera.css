@@ -193,6 +193,11 @@ body {
 	padding: 20px;
 }
 
+.guestName{
+	color: red;
+	font-weight: bold;
+}
+
 /* Footer */
 
 #footer p { 
