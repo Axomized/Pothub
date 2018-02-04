@@ -18,9 +18,11 @@ import javax.servlet.http.Part;
 import org.apache.commons.compress.utils.IOUtils;
 
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.FileTableModel;
 import database.model.ForumPostModel;
 import database.model.LogsModel;
+import login.BanChecker;
 
 
 @MultipartConfig(fileSizeThreshold=8024*1024*2, maxFileSize=8024*1024*10, maxRequestSize=8024*1024*50)
@@ -36,6 +38,10 @@ public class createNewPost extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if(BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
@@ -74,9 +80,24 @@ public class createNewPost extends HttpServlet {
 				+ "		</div>"
 				
 				+ "		<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-				+ "			<div id='profilePic'>"
-				+ "				<img src='images/profile.png' height='50' width='50'/>"
-				+ "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
+				+ "			<div id='profilePic'>");
+				try {
+					Database dc = new Database(2);
+					DatabaseUserModel dumdum = dc.getUserProfile(username);
+					if (dumdum.getProfilePic() != 0) {
+						out.print("<img src='Image/" + dc.getImageByImageID(dumdum.getProfilePic()) + "' style='border-radius:50%;' height='50' width='50'/>");
+					}
+					else {
+						out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+					}
+				}
+				catch (ClassNotFoundException e) {
+					e.printStackTrace();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				out.println(
+				  "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
 				+ "			</div>"
 				+ "			<div id='profileDropdownDiv'>"
 				+ "				<a href='Profile'>Profile</a>"
@@ -89,9 +110,16 @@ public class createNewPost extends HttpServlet {
 				+ "		<div class='container-fluid'>"
 				+ "			<ul class='nav navbar-nav'>"
 				+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-				+ "				<li id='lprivatemessage'><a href='PrivateMesage'>Private Message</a></li>"
-				+ "				<li id='levent'><a href='EventPage'>Event</a></li>"
-				+ "				<li class='dropdown'>"
+				);
+				out.print("					<li class='dropdown'>");
+				out.print("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
+				out.print("			        	<ul class='dropdown-menu'>");
+				out.print("			        		<li><a href='EventPage'>Events</a></li>");
+				out.print("		        			<li><a href='MyEventPage'>My Events</a></li>");
+				out.print("			        	</ul>");
+				out.print("		    		</li>");
+				out.print(
+				  "				<li class='dropdown'>"
 				+ "			        <a class='dropdown-toggle' data-toggle='dropdown' href='#'>Podcast</a>"
 				+ "			        <ul class='dropdown-menu'>"
 				+ "			          <li><a href='p2plist'>Active PotCasts</a></li>"

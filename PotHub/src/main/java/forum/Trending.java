@@ -20,6 +20,7 @@ import database.model.FileTableModel;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
 import database.model.SubscriptionModel;
+import login.BanChecker;
 
 /**
  * Servlet implementation class Trending
@@ -42,6 +43,10 @@ public class Trending extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if(BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
@@ -78,9 +83,24 @@ public class Trending extends HttpServlet {
 						+ "		</div>"
 						
 						+ "		<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-						+ "			<div id='profilePic'>"
-						+ "				<img src='images/profile.png' height='50' width='50'/>"
-						+ "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
+						+ "			<div id='profilePic'>");
+						try {
+							Database dc = new Database(2);
+							DatabaseUserModel dumdum = dc.getUserProfile(username);
+							if (dumdum.getProfilePic() != 0) {
+								out.print("<img src='Image/" + dc.getImageByImageID(dumdum.getProfilePic()) + "' style='border-radius:50%;' height='50' width='50'/>");
+							}
+							else {
+								out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+							}
+						}
+						catch (ClassNotFoundException e) {
+							e.printStackTrace();
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+						out.println(
+						  "				<span id='welcomeSpan'>Welcome, " + username + "</span>"
 						+ "			</div>"
 						+ "			<div id='profileDropdownDiv'>"
 						+ "				<a href='Profile'>Profile</a>"
@@ -93,7 +113,7 @@ public class Trending extends HttpServlet {
 						+ "		<div class='container-fluid'>"
 						+ "			<ul class='nav navbar-nav'>"
 						+ "				<li id='lhome'><a href='Forum'>Home</a></li>"
-						+ "				<li id='lprivatemessage'><a href='html/ComingSoon.html'>Private Message</a></li>");
+						);
 						out.print("					<li class='dropdown'>");
 						out.print("		        		<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>");
 						out.print("			        	<ul class='dropdown-menu'>");
