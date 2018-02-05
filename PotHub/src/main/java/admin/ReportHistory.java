@@ -234,7 +234,8 @@ pw.append("</tbody>"
 				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
 			}
 			if(request.getParameter("whatDo").equals("convict")){
-				db.convictUser(false, Integer.parseInt(request.getParameter("reportID")), "Admin");
+				ReportModel rm = db.getReportByID(Integer.parseInt(request.getParameter("reportID")));
+				db.convictUser(false, rm, (String)session.getAttribute("username"));
 			}
 
 			response.sendRedirect("HistoryAdminReports?user="+request.getParameter("whoDo"));

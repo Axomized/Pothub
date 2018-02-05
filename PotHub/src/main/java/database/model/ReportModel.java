@@ -96,4 +96,13 @@ public class ReportModel {
 	public void setGuiltyOrNot(int guiltyOrNot) {
 		this.guiltyOrNot = guiltyOrNot;
 	}
+
+	@Override
+	public String toString() {
+		return "ReportModel [reportID=" + reportID + ", iGNSend=" + iGNSend + ", iGNReceive=" + iGNReceive
+				+ ", evidenceType=" + evidenceType + ", date=" + date + ", evidence=" + evidence + ", reason=" + reason
+				+ ", guiltyOrNot=" + guiltyOrNot + "]";
+	}
+	
+	
 }

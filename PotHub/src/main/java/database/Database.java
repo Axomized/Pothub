@@ -1165,17 +1165,11 @@ public class Database {
 		ps.executeUpdate();
 	}
 
-	public void convictUser(boolean permanent, int reportID, String admin) throws SQLException{
+	public void convictUser(boolean permanent, ReportModel rm, String admin) throws SQLException{
 			long maxTime = (long)21459167 * (long)1000000;
-			
-			ReportSearchObject rso = new ReportSearchObject();
-			rso.setReportID(reportID);
-			
-			ArrayList<ReportModel> rms = this.getManyReports(rso);
-			ReportModel subjectUser = rms.get(0);
 		
 			PreparedStatement ppstmt = conn.prepareStatement("INSERT INTO Bans (IGN, startDate, endDate, reason, admin, pardoned) Values (?,?,?,?,?,?)");
-			ppstmt.setString(1, subjectUser.getiGNReceive());
+			ppstmt.setString(1, rm.getiGNReceive());
 			ppstmt.setDate(2, new Date(System.currentTimeMillis()));
 			
 			
@@ -1184,7 +1178,7 @@ public class Database {
 			}
 			else{
 				BansSearchObject bso = new BansSearchObject();
-				bso.setiGN(subjectUser.getiGNReceive());
+				bso.setiGN(rm.getiGNReceive());
 
 				if(howManyBans(bso)==0){
 					ppstmt.setDate(3, new Date(System.currentTimeMillis()+(86400*1000)));
@@ -1200,16 +1194,39 @@ public class Database {
 				}
 			}
 
-			ppstmt.setString(4,subjectUser.getReason());
-			ppstmt.setString(5, "HandsomeMatt");
+			ppstmt.setString(4,rm.getiGNReceive());
+			ppstmt.setString(5, admin);
 			ppstmt.setBoolean(6, false);
 
 			executeUpdate(ppstmt);
 			
-			PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Report SET guiltyOrNot=2 WHERE ReportID = ?");
-			ppstmt2.setInt(1, reportID);
+			PreparedStatement ppstmt2 = conn.prepareStatement("UPDATE Report SET guiltyOrNot=2 WHERE Evidence = ? AND EvidenceType = ?");
+			ppstmt2.setInt(1, rm.getEvidence());
+			ppstmt2.setString(2, rm.getEvidenceType());
 			
 			ppstmt2.execute();
+	}
+	
+	public ReportModel getReportByID(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM Report WHERE ReportID = ?");
+		ps.setInt(1, id);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			int reportID = 				rs.getInt("reportID");
+			String iGNSend = 			rs.getString("IGNSend");
+			String iGNReceive = 		rs.getString("IGNReceive");
+			String evidenceType = 		rs.getString("evidenceType");
+			Date date =					rs.getDate("Date");
+			int evidence = 				rs.getInt("Evidence");
+			String reason = 			rs.getString("reason");
+			int guiltyOrNot = 		rs.getInt("guiltyOrNot");
+			
+			return new ReportModel(reportID, iGNSend, iGNReceive, evidenceType, date, evidence,
+					reason, guiltyOrNot);
+		}
+		
+		return null;
 	}
 	
 	public void pardonUser(String iGN) throws SQLException{
