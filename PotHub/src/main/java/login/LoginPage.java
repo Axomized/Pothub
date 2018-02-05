@@ -129,7 +129,7 @@ public class LoginPage extends HttpServlet {
 			    		
 			    		if (BanChecker.isThisGuyBanned(dum.getiGN()))
 			    		{
-			    			session.setAttribute("ign", dum.getiGN());
+			    			session.setAttribute("username", dum.getiGN());
 			    			response.sendRedirect("AppealPage");
 			    		}
 			    		else 

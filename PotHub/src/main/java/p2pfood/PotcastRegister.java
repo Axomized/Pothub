@@ -22,6 +22,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.PotcastModel;
+import login.BanChecker;
 
 /**
  * Servlet implementation class Forum
@@ -51,6 +52,11 @@ public class PotcastRegister extends HttpServlet {
 		if (session != null) {
 			username = (String) session.getAttribute("username");
 		} else {
+			response.sendRedirect("Login");
+			return;
+		}
+		
+		if(BanChecker.isThisGuyBanned(username)){
 			response.sendRedirect("Login");
 			return;
 		}

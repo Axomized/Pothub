@@ -42,15 +42,21 @@ public class AppealPage extends HttpServlet {
 			db = new Database(0);
 
 		HttpSession session = request.getSession(false);
-		if(session==null){
-			response.sendRedirect(request.getHeader("referer"));
+		if(session==null||session.getAttribute("username")==null){
+			response.sendRedirect("Login");
 			return;
 		}
-		String ign = (String) session.getAttribute("ign");
+		
+		String username = (String) session.getAttribute("username");
+		
+		if(!BanChecker.isThisGuyBanned(username)){
+			response.sendRedirect("Login");
+			return;
+		}
 		
 		boolean validUser = false;
 		String messageToShow = "";
-		ArrayList<BansModel> bans = db.getBansForUser(ign);
+		ArrayList<BansModel> bans = db.getBansForUser(username);
 		for(BansModel ban : bans){
 			if(ban.getEndDate().getTime()>System.currentTimeMillis()&&!ban.isPardoned()){//Found an active ban
 				if(db.getAppealsByBanID(ban.getBanID())!=null){//Found an active appeal
@@ -72,7 +78,8 @@ public class AppealPage extends HttpServlet {
 		}
 		
 		if(!validUser){
-			response.sendRedirect(request.getHeader("referer"));
+			response.sendRedirect("Login");
+			return;
 		}
 		pw.print(
 				"<!DOCTYPE html>"
@@ -124,14 +131,14 @@ public class AppealPage extends HttpServlet {
 		response.setContentType("text/html; charset=UTF-8");
 		HttpSession session = request.getSession();
 		
-		String ign = (String) session.getAttribute("ign");
+		String username = (String) session.getAttribute("username");
 		String message = request.getParameter("message");
 		
 		try{
 		Database db = new Database(2);
 		int banID = 0;
 		
-		ArrayList<BansModel> bans = db.getBansForUser(ign);
+		ArrayList<BansModel> bans = db.getBansForUser(username);
 		for(BansModel ban : bans){
 			if(ban.getEndDate().getTime()>System.currentTimeMillis()&&!ban.isPardoned()){
 				banID=ban.getBanID();
@@ -140,7 +147,7 @@ public class AppealPage extends HttpServlet {
 		AppealModel appeal = new AppealModel();
 		appeal.setApproval(0);
 		appeal.setBanID(banID);
-		appeal.setiGN(ign);
+		appeal.setiGN(username);
 		appeal.setMessage(message);
 		appeal.setReceiveDate(new Date(System.currentTimeMillis()));
 		

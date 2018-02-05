@@ -26,6 +26,7 @@ import database.model.DatabaseUserModel;
 import database.model.PotcastBidModel;
 import database.model.PotcastModel;
 import database.model.ReportModel;
+import login.BanChecker;
 
 /**
  * Servlet implementation class Forum
@@ -58,6 +59,11 @@ public class PotcastDetail extends HttpServlet {
 		}
 		else{
 			username=(String) session.getAttribute("username");
+		}
+		
+		if(BanChecker.isThisGuyBanned(username)){
+			response.sendRedirect("Login");
+			return;
 		}
 		
 		int potcastID=0;

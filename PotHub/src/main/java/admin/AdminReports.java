@@ -240,11 +240,11 @@ public class AdminReports extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		Database db = new Database(0);
 
-		if(session==null||session.getAttribute("user")==null){
+		if(session==null||session.getAttribute("username")==null){
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
 			db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){
 				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));

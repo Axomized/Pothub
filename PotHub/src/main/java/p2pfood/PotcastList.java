@@ -20,6 +20,7 @@ import adminSearch.SearchSanitizer;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.PotcastModel;
+import login.BanChecker;
 
 /**
  * Servlet implementation class Forum
@@ -51,6 +52,12 @@ public class PotcastList extends HttpServlet {
 			response.sendRedirect("Login");
 			return;
 		}
+		
+		if(BanChecker.isThisGuyBanned(username)){
+			response.sendRedirect("Login");
+			return;
+		}
+		
 		if (username.equals("")) {
 			response.sendRedirect("Login");
 			return;
