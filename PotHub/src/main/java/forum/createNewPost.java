@@ -147,7 +147,7 @@ public class createNewPost extends HttpServlet {
 						+ "					  <div class='form-group'>"
 						+ "						<div class='dropdown'>" 
 						+ "  						<button class='btn btn-secondary dropdown-toggle' type='button' id='dropdownMenuButton' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>" 
-						+ "    							Dropdown button" 
+						+ "    							Select Upload Type" 
 						+ "  						</button>" 
 						+ "  						<div class='dropdown-menu' aria-labelledby='dropdownMenuButton'>" 
 						//+ "    							<a onclick='showT()' class='dropdown-item' href='#'>Text</a>" 

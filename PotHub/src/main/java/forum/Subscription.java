@@ -283,8 +283,11 @@ public class Subscription extends HttpServlet {
 			FileTableModel ftm = new FileTableModel();
 			DatabaseUserModel dumm = new DatabaseUserModel();
 
+			boolean haveOrNot = false;
 			for(ForumPostModel qw: fa){
+				System.out.println("Before loop " + qw.getiGN());
 				if(reall.equals(qw.getiGN())) {
+					haveOrNot = true;
 					System.out.println("Hello " + reall);
 					System.out.println("Hello2 " + qw.getiGN());
 					int count = 0;
@@ -292,7 +295,7 @@ public class Subscription extends HttpServlet {
 					for(CommentModel df: cmm) {
 						if(qw.getPostID() == df.getPostID()) {
 							count ++;
-							break;
+							
 						}
 					}
 
@@ -430,12 +433,11 @@ public class Subscription extends HttpServlet {
 									+ "				  </div>"
 									+ "			</div>"
 							);
-				}//close loop
-				else {
-					out.println("<div id='herehere' style='height: 100%; display: flex; justify-content: center; align-items: center;'><p>You have not created any Forum Post Yet!</p></div>");
-					break;
-				}
-			}//close if statement for filtering	
+				}//close if
+			}//close loop
+			if(!haveOrNot) {
+				out.println("<div id='herehere' style='height: 100%; display: flex; justify-content: center; align-items: center;'><p>You have not created any Forum Post Yet!</p></div>");
+			}
 		}//close try
 		catch (SQLException e) {
 			e.printStackTrace();
