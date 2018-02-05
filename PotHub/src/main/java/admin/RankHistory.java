@@ -42,8 +42,8 @@ public class RankHistory extends HttpServlet {
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
-		
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
+			
 		PrintWriter pw = response.getWriter();
 		pw.append("<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 		+"<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>"
@@ -72,7 +72,7 @@ public class RankHistory extends HttpServlet {
 		+"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 		+"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 		+"</ul>"
-		+"<p id='logout'><a href='Logout'>Logout</a></p>"
+		+"<p id='logout'><a href='AdminLogout'>Logout</a></p>"
 		+ "</div>"
 		+"<div id='wrapper'>"
 		  +"<div id='content-wrapper'>"

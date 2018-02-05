@@ -5,7 +5,10 @@ import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -14,9 +17,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import database.model.AdminTwoFAModel;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 import login.PBKDF2;
+import login.SendEmail;
+import potcastTalk.Email;
 
 /**
  * Servlet implementation class LoginPage
@@ -148,11 +154,36 @@ public class AdminLogin extends HttpServlet {
 			    			session.setAttribute("username", dum.getiGN());
 			    			if (!lm.isPasswordResetted())
 				    		{
-			    				out.println("<script type=\"text/javascript\">");
-			    				out.println("alert('You have successfully logged in. Welcome!');");
-			    				out.println("window.location.href = 'AdminGeneral'");
-			    				out.println("</script>");
+			    				db = new Database(2);
+			    				AdminTwoFAModel atfam = new AdminTwoFAModel();
+			    				atfam.setiGN(dum.getiGN());
+			    				atfam.setSessionID(session.getId());
+			    				atfam.setTerminated(false);
+			    				atfam.setTimeRequested(new Timestamp(System.currentTimeMillis()));
+			    				
+			    				RandomString rs = new RandomString(10);
+			    				String rando = rs.nextString();
+			    				atfam.setTwoFAKey(rando);
+			    			
+			    				db.killAllAdminTwoFA(dum.getiGN());
+			    				db.addTwoFA(atfam);
+			    				
+			    				Email email = new Email(dum.getEmail(),"Approval code for login at "+new Timestamp(System.currentTimeMillis()).toString(),"Your code is "+rando);
+			    				SendEmail.sendEmail(email);
+			    				response.sendRedirect("AdminLogon");
+			    				return;
 				    		}
+				    		else
+				    		{
+				    			String email = request.getParameter("username");
+				    			HttpSession HttpSession = request.getSession();
+				    			HttpSession.setAttribute("username", email);
+				    			
+				    			out.println("<script type=\"text/javascript\">");
+			    				out.println("alert('Please change your password.');");
+			    				out.println("window.location.href = 'ForceChangePassword'");
+			    				out.println("</script>");				    		
+			    			}
 			    			}
 			    			else{
 						    	System.out.println("Captcha fail!");
@@ -194,7 +225,14 @@ public class AdminLogin extends HttpServlet {
 			e.printStackTrace();
 		} catch (InvalidKeySpecException e) {
 			e.printStackTrace();
+		} catch (AddressException e) {
+			e.printStackTrace();
+		} catch (MessagingException e) {
+			e.printStackTrace();
 		}
+			finally{
+				doGet(request, response);
+			}
 		
 	}
 

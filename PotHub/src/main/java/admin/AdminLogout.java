@@ -2,6 +2,7 @@ package admin;
 
 import java.io.IOException;
 import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
-import database.model.ReportModel;
 
 /**
  * Servlet implementation class Forum
  */
-@WebServlet("/AdminRouter")
-public class ReportIDRouter extends HttpServlet {
+@WebServlet("/AdminLogout")
+public class AdminLogout extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public ReportIDRouter() {
+	public AdminLogout() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -34,33 +34,19 @@ public class ReportIDRouter extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession(false);
-		try{
-		Database db = new Database(0);
-		
-		if(session==null||session.getAttribute("username")==null){
-    		response.sendRedirect("AdminLogin");
-    		return;
+		if(session!=null){
+			try{
+				Database db = new Database(2);
+				db.killAdminSession(session.getId());
+				session.invalidate();
+			}catch(SQLException e){
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
-		
-		if(request.getParameter("evidence")==null||request.getParameter("evidenceType")==null){
-			response.sendRedirect(request.getHeader("referer"));
-			return;
-		}
-		
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
-			response.sendRedirect(ReportToURL.execute(new ReportModel(request.getParameter("evidenceType"),Integer.parseInt(request.getParameter("evidence")))));
-			return;
-		}
-		else{
-    		response.sendRedirect("AdminLogin");
-    		return;
-		}
-		}
-		}
-		catch(ClassNotFoundException | SQLException e){
-			e.printStackTrace();
-		}
+		response.sendRedirect("AdminLogin");
+		return;
 	}
 
 	/**

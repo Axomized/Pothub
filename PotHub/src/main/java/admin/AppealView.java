@@ -45,8 +45,8 @@ public class AppealView extends HttpServlet {
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
-		
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
+			
 		String subjectUser = request.getParameter("user");
 		String appealID = request.getParameter("appealID");
 
@@ -74,7 +74,7 @@ public class AppealView extends HttpServlet {
 						+ "<a href='AdminDonations'>Donations</a>" + "</li>" + "<li>"
 						+ "<a href='AdminRanks'>Forum Control</a>" + "</li>" + "<li>"
 						+ "<a href='AdminReports'>Reports</a>" + "</li>" + "</ul>"
-						+ "<p id='logout'><a href='Logout'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
+						+ "<p id='logout'><a href='AdminLogout'>Logout</a></p>" + "</div>" + "<div id='wrapper'>"
 						+ "<div id='content-wrapper'>" + "<h1>Showing appeal #" + appealID + " from " + subjectUser
 						+ "</h1>");
 		try {

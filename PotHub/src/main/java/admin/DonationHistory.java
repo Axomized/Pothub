@@ -47,8 +47,8 @@ public class DonationHistory extends HttpServlet {
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
-		
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
+			
 		PrintWriter pw = response.getWriter();
 		
 		DonationSearchObject dso = new DonationSearchObject();
@@ -96,7 +96,7 @@ public class DonationHistory extends HttpServlet {
 +"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
 +"</ul>"
-+"<p id='logout'><a href='Logout'>Logout</a></p>"
++"<p id='logout'><a href='AdminLogout'>Logout</a></p>"
 + "</div>"
 +"<div id='wrapper'>"
   +"<div id='content-wrapper'>"

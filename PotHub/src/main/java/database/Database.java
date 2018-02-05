@@ -2075,6 +2075,97 @@ public class Database {
 		return false;
 	}
 	
+	//Admin 2FA
+	public void addTwoFA(AdminTwoFAModel atfam) throws SQLException{
+		PreparedStatement pptstmt = conn.prepareStatement("INSERT INTO AdminTwoFA (ign, sessionid, timerequested, twofakey, terminated) VALUES (?,?,?,?,?)");
+		pptstmt.setString(1, atfam.getiGN());
+		pptstmt.setString(2, atfam.getSessionID());
+		pptstmt.setTimestamp(3, new Timestamp(System.currentTimeMillis()));
+		pptstmt.setString(4, atfam.getTwoFAKey());
+		pptstmt.setBoolean(5, atfam.isTerminated());
+		
+		pptstmt.executeUpdate();
+	}
+	
+	public int authTwoFA(AdminTwoFAModel atfam) throws SQLException{
+		PreparedStatement pptstmt = conn.prepareStatement("SELECT twofakey, timerequested, fails FROM AdminTwoFA WHERE sessionid = ? AND terminated = ?");
+		pptstmt.setString(1, atfam.getSessionID());
+		pptstmt.setBoolean(2, false);
+		
+		ResultSet rs = pptstmt.executeQuery();
+		while(rs.next()){
+		int fails = rs.getInt("fails");
+			if(fails>=3){
+				return 2;
+			}
+			if(atfam.getTwoFAKey().equals(rs.getString("twofakey"))){
+				if(rs.getTimestamp("timerequested").getTime()<(System.currentTimeMillis()+(long)120000)){
+					return 1; //On time
+				}
+				else{
+					return 2; //Reset
+				}
+			}
+			else{
+				PreparedStatement ps2 = conn.prepareStatement("UPDATE AdminTwoFA SET fails = ? WHERE sessionid = ?");
+				ps2.setInt(1, fails+1);
+				ps2.setString(2, atfam.getSessionID());
+				ps2.executeUpdate();
+				return 0; //Key Wrong
+			}
+		}
+		return 0;
+	}
+	
+	public boolean authAdminSession(String sessionID) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT * FROM AdminSession WHERE SessionID = ?");
+		ps.setString(1, sessionID);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			if(rs.getBoolean("terminated")||rs.getTimestamp("timeAuthenticated").getTime()<System.currentTimeMillis()-(long)600000){
+				return false;
+			}
+			else{
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void addAdminSession(AdminSessionModel asm) throws SQLException{
+		PreparedStatement pptstmt = conn.prepareStatement("INSERT INTO AdminSession (ign, sessionid, timeauthenticated, terminated) VALUES (?,?,?,?)");
+		pptstmt.setString(1, asm.getiGN());
+		pptstmt.setString(2, asm.getSessionID());
+		pptstmt.setTimestamp(3, asm.getTimeAuthenticated());
+		pptstmt.setBoolean(4, asm.isTerminated());
+		
+		pptstmt.executeUpdate();
+	}
+	
+	public void killAdminTwoFA(String sessionID) throws SQLException{
+		PreparedStatement ppt = conn.prepareStatement("UPDATE AdminTwoFA SET terminated = 'true' WHERE sessionID = ?");
+		ppt.setString(1, sessionID);
+		ppt.executeUpdate();
+	}
+	
+	public void killAdminSession(String sessionID) throws SQLException{
+		PreparedStatement ppt = conn.prepareStatement("UPDATE AdminSession SET terminated = 'true' WHERE sessionID = ?");
+		ppt.setString(1, sessionID);
+		ppt.executeUpdate();
+	}
+	
+	public void killAllAdminTwoFA(String username) throws SQLException{
+		PreparedStatement ppt = conn.prepareStatement("UPDATE AdminTwoFA SET terminated = 'true' WHERE ign = ?");
+		ppt.setString(1, username);
+		ppt.executeUpdate();
+	}
+	
+	public void killAllAdminSession(String username) throws SQLException{
+		PreparedStatement ppt = conn.prepareStatement("UPDATE AdminSession SET terminated = 'true' WHERE ign = ?");
+		ppt.setString(1, username);
+		ppt.executeUpdate();
+	}
+	
 	public void close() throws SQLException {
 		conn.close();
 	}
