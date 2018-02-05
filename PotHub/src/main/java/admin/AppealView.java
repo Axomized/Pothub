@@ -129,7 +129,7 @@ public class AppealView extends HttpServlet {
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
 			db = new Database(2);
 
 			if (request.getParameter("action") != null 

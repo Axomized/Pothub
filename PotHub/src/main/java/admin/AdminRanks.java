@@ -216,7 +216,7 @@ pw.append("</tbody>"
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("user"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
 			db = new Database(2);
 			if(request.getParameter("toChange")!=null||Integer.parseInt(request.getParameter("toChange"))<=2||Integer.parseInt(request.getParameter("toChange"))>=0){
 			db.updateRank(request.getParameter("ign"),Integer.parseInt(request.getParameter("toChange")));

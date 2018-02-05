@@ -42,7 +42,6 @@ public class KillPotcast extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		System.out.println("KILLING!");
 		try{
 		HttpSession session = request.getSession(false);
 		Database db = new Database(2);

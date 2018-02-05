@@ -244,7 +244,7 @@ public class AdminReports extends HttpServlet {
     		response.sendRedirect("AdminLogin");
     		return;
 		}
-		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2){
+		else if(db.getPermissionForIGN((String)session.getAttribute("username"))==2&&db.authAdminSession(session.getId())){
 			db = new Database(2);
 			if(request.getParameter("whatDo").equals("pardon")){
 				db.pardonReport(Integer.parseInt(request.getParameter("reportID")));
