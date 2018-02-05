@@ -18,6 +18,12 @@ function hideReportables() {
 	document.getElementById("reportButton").setAttribute( "onClick", "showReportables()" );
 }
 
+function hideReports() {
+	console.log("Hiding reportables");
+	document.getElementById("popup").style.display = "none";
+	document.getElementById("reportButton").setAttribute( "onClick", "showReportables()" );
+}
+
 $(document).ready(function() {
 	hideReportables();
 });

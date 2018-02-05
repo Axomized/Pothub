@@ -564,6 +564,17 @@ button {
     float: left;
 }
 
+#deleteButton {
+	background-color: transparent;
+    border: none;
+    color: #94618e;
+    padding:10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    float: left;
+}
+
 #reportList {
 	display:none;
 	float:left;

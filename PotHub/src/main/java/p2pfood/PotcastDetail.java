@@ -119,8 +119,6 @@ public class PotcastDetail extends HttpServlet {
 			}
 			
 			for(PotcastBidModel bid : bids){
-				System.out.println(bid.getRating());
-				System.out.println(bid.getiGN());
 				if(!bid.getRating().equals("") && bid.getiGN().equals(username)){
 					canRate = false;
 				}
@@ -190,9 +188,25 @@ public class PotcastDetail extends HttpServlet {
 							doesNotExist = false;
 						}
 					}
+					if(pm.getiGN().equals(username)&&pm.getBidStopTime().getTime()>System.currentTimeMillis()){
+						pw.append("<form method='post' action='deletePotcast'>"
+								+ "<p><button id='deleteButton'><img src='images/cross.png' height=30 width=30>Delete</button>"
+								+ "<input type='hidden' name='potcastID' value='"
+								+ pm.getPotcastID()
+								+ "'></input></p>"
+								+ "</form>");
+					}
+					else if(db.getPermissionForIGN(username)>0){
+						pw.append( "<form method='post' action='deletePotcast'>"
+								+ "<p><button id='deleteButton'><img src='images/cross.png' height=30 width=30>Delete</button>"
+								+ "<input type='hidden' name='potcastID' value='"
+								+ pm.getPotcastID()
+								+ "'></input></p>"
+								+ "</form>");
+					}
 					
 					if(relevantReports.size()<=2&&doesNotExist&&!pm.getiGN().equals(username)){
-						pw.append( "<button id='reportButton' onclick='showReport;'><p><img src='images/flag.png' height=30 width=30>Report</p></button>");
+						pw.append( "<p><button id='reportButton' onclick='showReport;'><img src='images/flag.png' height=30 width=30>Report</button></p>");
 						pw.append("				<div id='popup'>");
 						pw.append("					<div id='popup-title'>");
 						pw.append("						<p><b>Report Event</b>");
@@ -212,7 +226,7 @@ public class PotcastDetail extends HttpServlet {
 						pw.append("						<button class='btn btn-success'>Submit</button>");
 						pw.append("						</form>");
 						pw.append("					</div>");
-						pw.append("					<i class='fa fa-times-circle-o fa-2x' aria-hidden='true' id='closeBtn'></i>");
+						pw.append("					<i class='fa fa-times-circle-o fa-2x' aria-hidden='true' id='closeBtn' onclick='hideReports()'></i>");
 						pw.append("					</div>");
 					}
 					

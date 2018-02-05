@@ -897,6 +897,12 @@ public class Database {
 		}
 	}
 	
+	public void deletePotcast(int id) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("DELETE FROM Potcast WHERE PotcastID = ?");
+		ps.setInt(1, id);
+		ps.executeUpdate();
+	}
+	
 	//Potcast Add
 	public void addPotcast(PotcastModel pcm) throws SQLException{
 		PreparedStatement ps = conn.prepareStatement("INSERT INTO Potcast (IGN, Title, Description, MaxBids, MinBid, BidStopTime, PickupTime, StartingCR, Picture) VALUES (?,?,?,?,?,?,?,?,?)");
