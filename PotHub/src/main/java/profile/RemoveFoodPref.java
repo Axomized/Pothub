@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.FoodPreferencesModel;
+import login.BanChecker;
 
 public class RemoveFoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,9 +28,14 @@ public class RemoveFoodPref extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -179,9 +185,14 @@ public class RemoveFoodPref extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -195,6 +206,7 @@ public class RemoveFoodPref extends HttpServlet {
 					db.deleteFoodPref(username, s);
 				}
 				response.sendRedirect("FoodPref");
+				return;
 			}
 			else {
 				showError = true;

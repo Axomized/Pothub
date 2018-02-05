@@ -157,9 +157,14 @@ public class Logs extends HttpServlet {
 					for (LogsModel lm : db.getLogs(logsSearch)) {
 						out.print("<tr>"
 								+ "	<td>" + lm.converTimestamp(lm.getLogDate()) + "</td>"
-								+ "	<td>" + lm.getiPAddress() + "</td>"
-								+ "	<td>" + lm.getiGN() + "</td>"
-								+ " <td>" + lm.getLogType() + "</td>"
+								+ "	<td>" + lm.getiPAddress() + "</td>");
+						if (lm.getiGN() == null || lm.getiGN().isEmpty()) {
+							out.print("<td>NIL</td>");
+						}
+						else {
+							out.print("<td>" + lm.getiGN() + "</td>");
+						}
+						out.print(" <td>" + lm.getLogType() + "</td>"
 								+ "	<td>" + lm.getLogActivity() + "</td>"
 								+ "</tr>");
 					}

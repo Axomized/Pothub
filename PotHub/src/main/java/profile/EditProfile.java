@@ -22,6 +22,7 @@ import org.owasp.encoder.Encode;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.LogsModel;
+import login.BanChecker;
 
 @MultipartConfig(fileSizeThreshold = 1024*1024*2, maxFileSize = 1024*1024*5, maxRequestSize = 1024*1024*5*5)
 public class EditProfile extends HttpServlet {
@@ -36,9 +37,14 @@ public class EditProfile extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -240,9 +246,14 @@ public class EditProfile extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -299,7 +310,7 @@ public class EditProfile extends HttpServlet {
 					}
 				}
 				if (unitNo != null && !unitNo.isEmpty()) {
-					if (unitNo.length() == 6) {
+					if (unitNo.length() == 7) {
 						profileUpdate.setUnitNo(unitNo);
 					}
 					else {
@@ -422,7 +433,7 @@ public class EditProfile extends HttpServlet {
 					+ "							<form id='profileForm' autocomplete='off' enctype='multipart/form-data' method='post'>"
 					+ "								<div id='editProfileDiv' class='row'>"
 					+ "									<div id='userInfoDiv' class='col-sm-9'>");
-					if (updateProfileSuccess) {
+					if (updateProfileSuccess && !contact_NoError && !bioError && !addressError && !unitNoError) {
 						out.print("<div id='updateSuccessDiv'>"
 								+ "	<p>Updated profile successfully.</p>"
 								+ "</div>");

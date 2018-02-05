@@ -16,6 +16,7 @@ import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 import database.model.LogsModel;
+import login.BanChecker;
 import login.PBKDF2;
 
 public class ChangePassword extends HttpServlet {
@@ -30,9 +31,14 @@ public class ChangePassword extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -181,9 +187,14 @@ public class ChangePassword extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {

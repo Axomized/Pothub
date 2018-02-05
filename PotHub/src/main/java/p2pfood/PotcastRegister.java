@@ -9,6 +9,8 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.time.Instant;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
@@ -21,6 +23,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.compress.utils.IOUtils;
 import adminSearch.SearchSanitizer;
 import database.Database;
+import database.model.LogsModel;
 import database.model.PotcastModel;
 import login.BanChecker;
 
@@ -172,6 +175,7 @@ public class PotcastRegister extends HttpServlet {
 			}
 			// Defaults
 			PotcastModel pcm = new PotcastModel();
+			LogsModel lm = new LogsModel();
 			if (request.getParameter("title") != null && request.getParameter("description") != null
 					&& request.getParameter("portions") != null && request.getParameter("ppp") != null
 					&& request.getParameter("bidStopTime") != null && request.getParameter("pickupTime") != null
@@ -209,6 +213,13 @@ public class PotcastRegister extends HttpServlet {
 
 				// TODO: Add sanitizer for description
 				db.addPotcast(pcm);
+				
+				lm.setiGN((String)session.getAttribute("username"));
+				lm.setLogDate(Timestamp.from(Instant.now()));
+				lm.setiPAddress(lm.getClientIP(request));
+				lm.setLogType("Potcast");
+				lm.setLogActivity((String)session.getAttribute("username") + " created potcast - " + "\"" + SearchSanitizer.sanitise(request.getParameter("title")) + "\"");
+				db.insertLogs(lm);
 				
 				PrintWriter out = response.getWriter();
 		    	out.println("<script type=\"text/javascript\">");

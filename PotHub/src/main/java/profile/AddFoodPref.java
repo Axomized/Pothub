@@ -15,6 +15,7 @@ import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.FoodListModel;
 import database.model.FoodPreferencesModel;
+import login.BanChecker;
 
 public class AddFoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,9 +29,14 @@ public class AddFoodPref extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -241,6 +247,10 @@ public class AddFoodPref extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
@@ -274,6 +284,7 @@ public class AddFoodPref extends HttpServlet {
 					}
 				}
 				response.sendRedirect("FoodPref");
+				return;
 			}
 			else {
 				showError = true;

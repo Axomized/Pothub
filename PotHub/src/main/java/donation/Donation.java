@@ -35,6 +35,7 @@ public class Donation extends HttpServlet {
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -241,6 +242,7 @@ public class Donation extends HttpServlet {
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -282,10 +284,10 @@ public class Donation extends HttpServlet {
 							tsm.setTemporarySalt(encodedSalt);
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
-								se.sendEmail("dr.que9@gmail.com", pinNo);
-								//se.sendEmail(dum.getEmail(), pinNo);
+								se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
+							return;
 						}
 						if (!(checkUserExists(behalfName, db))) {
 							behalfNameError = true;
@@ -312,10 +314,10 @@ public class Donation extends HttpServlet {
 							tsm.setTemporarySalt(encodedSalt);
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
-								se.sendEmail("dr.que9@gmail.com", pinNo);
-								//se.sendEmail(dum.getEmail(), pinNo);
+								se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
+							return;
 						}
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;
@@ -346,10 +348,10 @@ public class Donation extends HttpServlet {
 							tsm.setTemporarySalt(encodedSalt);
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
-								se.sendEmail("dr.que9@gmail.com", pinNo);
-								//se.sendEmail(dum.getEmail(), pinNo);
+								se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
+							return;
 						}
 						if (!(checkUserExists(behalfName, db))) {
 							behalfNameError = true;
@@ -376,10 +378,10 @@ public class Donation extends HttpServlet {
 							tsm.setTemporarySalt(encodedSalt);
 							tsm.setTemporaryTime(tsm.getTime5MinsLater());
 							if (db.insertTempStore(tsm)) {
-								se.sendEmail("dr.que9@gmail.com", pinNo);
-								//se.sendEmail(dum.getEmail(), pinNo);
+								se.sendEmail(dum.getEmail(), pinNo);
 							}
 							response.sendRedirect("ConfirmDonation");
+							return;
 						}
 						if (!(new BigDecimal(donateAmt).compareTo(new BigDecimal("2000.00")) <= 0)) {
 							donateAmtError = true;

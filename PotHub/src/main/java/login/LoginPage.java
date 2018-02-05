@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -16,6 +18,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
+import database.model.LogsModel;
 
 /**
  * Servlet implementation class LoginPage
@@ -112,7 +115,8 @@ public class LoginPage extends HttpServlet {
 			
 			try 
 			{
-				Database db = new Database(0);
+				Database db = new Database(2);
+				LogsModel logs = new LogsModel();
 			    
 			    if(db.getEmail(enteredEmail) == true)
 			    {
@@ -137,6 +141,13 @@ public class LoginPage extends HttpServlet {
 			    			session.setAttribute("username", dum.getiGN());
 			    			if (lm.isPasswordResetted() == false)
 				    		{
+			    				logs.setiGN(dum.getiGN());
+			    				logs.setLogDate(Timestamp.from(Instant.now()));
+			    				logs.setiPAddress(logs.getClientIP(request));
+			    				logs.setLogType("Login");
+			    				logs.setLogActivity(dum.getiGN() + " logged in successfully");
+			    				db.insertLogs(logs);
+			    				
 			    				out.println("<script type=\"text/javascript\">");
 			    				out.println("alert('You have successfully logged in. Welcome!');");
 			    				out.println("window.location.href = 'Forum'");
@@ -158,6 +169,13 @@ public class LoginPage extends HttpServlet {
 			    	
 			    	else
 				    {
+			    		logs.setiGN(dum.getiGN());
+	    				logs.setLogDate(Timestamp.from(Instant.now()));
+	    				logs.setiPAddress(logs.getClientIP(request));
+	    				logs.setLogType("Login");
+	    				logs.setLogActivity(dum.getiGN() + " failed to login");
+	    				db.insertLogs(logs);
+			    		
 				    	System.out.println("Login fail!");
 				    	out.println("<script type=\"text/javascript\">");
 						out.println("alert('Invalid username or password.');");
@@ -168,6 +186,12 @@ public class LoginPage extends HttpServlet {
 			    
 			    else
 			    {
+    				logs.setLogDate(Timestamp.from(Instant.now()));
+    				logs.setiPAddress(logs.getClientIP(request));
+    				logs.setLogType("Login");
+    				logs.setLogActivity("Failed login attempt - User don't exist");
+    				db.insertLogs(logs);
+			    	
 			    	System.out.println("Login fail!");
 			    	out.println("<script type=\"text/javascript\">");
 					out.println("alert('Invalid username or password.');");

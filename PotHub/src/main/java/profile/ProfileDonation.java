@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.DonationModel;
+import login.BanChecker;
 
 public class ProfileDonation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,9 +28,14 @@ public class ProfileDonation extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -212,9 +218,14 @@ public class ProfileDonation extends HttpServlet {
 					for (DonationModel dm : db.getUserDonation(search, username)) {
 						out.print("<tr>"
 								+ "	<td>" + dm.converTimestamp(dm.getDonationDate()) + "</td>"
-								+ "	<td>" + dm.getDonationAmount() + "</td>"
-								+ "	<td>" + dm.getOnBehalf() + "</td>"
-								+ "</tr>");
+								+ "	<td>" + dm.getDonationAmount() + "</td>");
+						if (dm.getOnBehalf() == null || dm.getOnBehalf().isEmpty()) {
+							out.print("<td>NIL</td>");
+						}
+						else {
+							out.print("<td>" + dm.getOnBehalf() + "</td>");
+						}
+						out.print("</tr>");
 					}
 					out.print("							</tbody>"
 					+ "								</table>"

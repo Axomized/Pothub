@@ -12,6 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import login.BanChecker;
 
 public class DonationSuccess extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,9 +26,14 @@ public class DonationSuccess extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {

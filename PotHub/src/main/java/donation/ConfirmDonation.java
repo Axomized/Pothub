@@ -3,7 +3,6 @@ package donation;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.math.BigDecimal;
-import java.net.InetAddress;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.Instant;
@@ -19,6 +18,7 @@ import database.model.DatabaseUserModel;
 import database.model.DonationModel;
 import database.model.LogsModel;
 import database.model.TemporaryStoreModel;
+import login.BanChecker;
 
 public class ConfirmDonation extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -29,13 +29,26 @@ public class ConfirmDonation extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = "";
+		Integer pinAttempts = null;
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
-			session.setAttribute("pinAttempts", 0);
+			if ((Integer)session.getAttribute("pinAttempts") == null) {
+				session.setAttribute("pinAttempts", 0);
+				pinAttempts = (Integer)session.getAttribute("pinAttempts");
+			}
+			else {
+				pinAttempts = (Integer)session.getAttribute("pinAttempts");
+			}
+			
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -43,13 +56,20 @@ public class ConfirmDonation extends HttpServlet {
 			DatabaseUserModel dum = db.getUserProfile(username);
 			TemporaryStoreModel tsmCheck = db.getTempStore(username);
 			Timestamp currentTime = Timestamp.from(Instant.now());
+			String errorMsg = "";
 			boolean resendPIN = false;
 			if (tsmCheck == null) {
 				response.sendRedirect("Donation");
+				return;
 			}
 			else {
 				if (currentTime.after(tsmCheck.getTemporaryTime())) {
 					resendPIN = true;
+					errorMsg = "PIN has expired. Click to send a new PIN.";
+				}
+				else if (pinAttempts > 2) {
+					resendPIN = true;
+					errorMsg = "You have exceeded maximum amount of tries. Click to send a new PIN.";
 				}
 			}
 			PrintWriter out = response.getWriter();
@@ -130,7 +150,7 @@ public class ConfirmDonation extends HttpServlet {
 								+ "	<input type='password' id='pinInput5' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput4\", \"pinInput6\")'>"
 								+ "	<input type='password' id='pinInput6' name='pinInput' maxlength='1' disabled required oninput='moveToNext(this, \"pinInput5\", \"pinInput6\")'>"
 								+ "</div>"
-								+ "<div id='errorMsg'>PIN has expired. Click to send a new PIN.</div>"
+								+ "<div id='errorMsg'>" + errorMsg + "</div>"
 								+ "<div id='buttonsDiv'>"
 								+ "	<input type='submit' id='resendBtn' name='resendBtn' value='Resend PIN' onclick='onResend()'>"
 								+ "	<input type='submit' id='confirmBtn' name='confirmBtn' value='Confirm' style='cursor:not-allowed;' disabled>"
@@ -181,9 +201,14 @@ public class ConfirmDonation extends HttpServlet {
 		if (session != null) {
 			username = (String)session.getAttribute("username");
 			pinAttempts = (Integer)session.getAttribute("pinAttempts");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {
@@ -212,6 +237,7 @@ public class ConfirmDonation extends HttpServlet {
 					
 					if (currentTime.before(tsm.getTemporaryTime())) {
 						if (hashedPIN.equals(tsm.getTemporaryPIN())) {
+							session.setAttribute("pinAttempts", 0);
 							dm.setDonationAmount(tsm.getTemporaryAmount());
 							dm.setDonationDate(Timestamp.from(Instant.now()));
 							dm.setiGN(iGN);
@@ -224,7 +250,7 @@ public class ConfirmDonation extends HttpServlet {
 								lm.setLogDate(Timestamp.from(Instant.now()));
 								lm.setiPAddress(lm.getClientIP(request));
 								lm.setLogType("Donation");
-								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
+								lm.setLogActivity(username + " donated " + "$" + tsm.getTemporaryAmount() + " on behalf of " + tsm.getTemporaryOnBehalf());
 								db.insertLogs(lm);
 								DatabaseUserModel dumOnBehalfAfter = db.getUserProfile(tsm.getTemporaryOnBehalf());
 								if ((dumOnBehalfAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumOnBehalfAfter.isPriviledged())) {
@@ -243,7 +269,7 @@ public class ConfirmDonation extends HttpServlet {
 								lm.setLogDate(Timestamp.from(Instant.now()));
 								lm.setiPAddress(lm.getClientIP(request));
 								lm.setLogType("Donation");
-								lm.setLogActivity(username + " donated " + tsm.getTemporaryAmount());
+								lm.setLogActivity(username + " donated " + "$" + tsm.getTemporaryAmount());
 								db.insertLogs(lm);
 								DatabaseUserModel dumAfter = db.getUserProfile(username);
 								if ((dumAfter.getTotalDonation().compareTo(new BigDecimal("10")) >= 0) && (!dumAfter.isPriviledged())) {
@@ -258,18 +284,16 @@ public class ConfirmDonation extends HttpServlet {
 							}
 							db.deleteFromTempStore(username);
 							response.sendRedirect("DonationSuccess");
+							return;
 						}
 						else {
 							incorrectPIN = true;
 							errorMessage = "PIN is incorrect.";
-							session.setAttribute("pinAttempts", pinAttempts++);
+							session.setAttribute("pinAttempts", ++pinAttempts);
 							
 							if (pinAttempts > 2) {
 								resendPIN = true;
-								errorMessage = "Please click to send a new PIN.";
-							}
-							else {
-								session.setAttribute("pinAttempts", pinAttempts++);
+								errorMessage = "You have exceeded maximum amount of tries. Click to send a new PIN.";
 							}
 						}
 					}
@@ -292,13 +316,13 @@ public class ConfirmDonation extends HttpServlet {
 					tsmResend.setTemporarySalt(encodedSalt);
 					tsmResend.setTemporaryTime(tsmResend.getTime5MinsLater());
 					if (db.updateTempStore(tsmResend)) {
-						se.sendEmail("dr.que9@gmail.com", pinNo);
-						//se.sendEmail(dum.getEmail(), pinNo);
+						se.sendEmail(dum.getEmail(), pinNo);
 					}
 				}
 			}
 			else {
 				response.sendRedirect("DonationSuccess");
+				return;
 			}
 			
 			PrintWriter out = response.getWriter();

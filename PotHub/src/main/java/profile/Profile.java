@@ -15,6 +15,7 @@ import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import login.BanChecker;
 
 public class Profile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -28,9 +29,14 @@ public class Profile extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {

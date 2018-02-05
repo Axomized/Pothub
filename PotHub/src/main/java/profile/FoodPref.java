@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import database.Database;
 import database.model.DatabaseUserModel;
 import database.model.FoodPreferencesModel;
+import login.BanChecker;
 
 public class FoodPref extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -27,9 +28,14 @@ public class FoodPref extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session != null) {
 			username = (String)session.getAttribute("username");
+			if (BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	            return;
+	        }
 		}
 		else {
 			response.sendRedirect("Login");
+			return;
 		}
 		
 		try {

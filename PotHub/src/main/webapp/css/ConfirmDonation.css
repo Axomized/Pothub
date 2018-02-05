@@ -1,6 +1,8 @@
 @CHARSET "ISO-8859-1";
 
 html {
+	position: relative;
+	min-height: 100%;
 	margin: 0;
 	padding: 0;
 	color: #aaaaaa;
@@ -60,7 +62,7 @@ input {
 /* Structure */
 
 body {
-	margin: 0;
+	margin: 0 0 115px 0;
 	float: left;
 	width: 100%;
 	background-color: #f8eee7;
@@ -96,6 +98,9 @@ body {
 }
 
 #footer {
+	height: 115px;
+	position: absolute;
+	bottom: 0;
 	clear: both;
 	float: left;
 	width: 100%; 

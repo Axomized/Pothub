@@ -5,6 +5,8 @@ import java.io.PrintWriter;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.Instant;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import database.Database;
 import database.model.DatabaseUserModel;
+import database.model.LogsModel;
 
 /**
  * Servlet implementation class Registration2
@@ -109,6 +112,7 @@ public class Registration extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		DatabaseUserModel dum = new DatabaseUserModel();
+		LogsModel lm = new LogsModel();
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String confirmPassword = request.getParameter("password2");
@@ -121,7 +125,7 @@ public class Registration extends HttpServlet {
 		
 		try 
 		{
-			Database db1 = new Database(0);		
+			Database db1 = new Database(0);
 		
 			if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
 			{	
@@ -212,8 +216,15 @@ public class Registration extends HttpServlet {
 				PBKDF2.createHash(password, email);
 			
 						
-				Database db = new Database(1);
+				Database db = new Database(2);
 				db.insertRegistration(dum);
+				
+				lm.setiGN(name);
+				lm.setLogDate(Timestamp.from(Instant.now()));
+				lm.setiPAddress(lm.getClientIP(request));
+				lm.setLogType("Registration");
+				lm.setLogActivity("A new user has registered - " + "\"" + name + "\"");
+				db.insertLogs(lm);
 				
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('You have successfully registered!');");
