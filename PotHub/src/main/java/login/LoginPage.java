@@ -186,6 +186,7 @@ public class LoginPage extends HttpServlet {
 			    
 			    else
 			    {
+			    	logs.setiGN(null);
     				logs.setLogDate(Timestamp.from(Instant.now()));
     				logs.setiPAddress(logs.getClientIP(request));
     				logs.setLogType("Login");
