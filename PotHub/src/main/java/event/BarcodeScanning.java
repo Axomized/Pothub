@@ -17,6 +17,7 @@ import org.apache.http.HttpHeaders;
 
 import database.Database;
 import database.model.LogsModel;
+import login.BanChecker;
 
 public class BarcodeScanning extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -34,6 +35,10 @@ public class BarcodeScanning extends HttpServlet {
 	            }
 	        }
 	        else {
+	            response.sendRedirect("Login");
+	        }
+
+			if(BanChecker.isThisGuyBanned(username)){
 	            response.sendRedirect("Login");
 	        }
 	        
@@ -84,7 +89,7 @@ public class BarcodeScanning extends HttpServlet {
 			
 			String currentProfilePic = db.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
@@ -203,13 +208,14 @@ public class BarcodeScanning extends HttpServlet {
 				final int EVENTID = DB.getEventIDFromEventName(EVENTNAME);
 				DB.setPeopleEventListConfirmConfirmed(EVENTID, USERNAME);
 			}
+			
 			// Logs Ended Event
 			LogsModel lm = new LogsModel();
 			lm.setiGN(USERNAME);
 			lm.setLogDate(Timestamp.from(Instant.now()));
-			lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
+			lm.setiPAddress(lm.getClientIP(request));
 			lm.setLogType("Event");
-			lm.setLogActivity(USERNAME + " ended event");
+			lm.setLogActivity(USERNAME + " created event - \"" + EVENTNAME + "\"");
 			DB.insertLogs(lm);
 			
 			response.getWriter().write("Success");

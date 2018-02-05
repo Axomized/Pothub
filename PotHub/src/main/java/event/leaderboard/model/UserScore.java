@@ -125,6 +125,8 @@ public class UserScore {
 		
 		lock.lockRead();
 		
+		lBD.setiGN(userTo);
+		
 		if (userDetails.containsKey(userTo)) {
 			lBD = userDetails.get(userTo);
 		}

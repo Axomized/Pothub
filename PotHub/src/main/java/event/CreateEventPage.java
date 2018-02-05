@@ -32,6 +32,7 @@ import org.apache.commons.compress.utils.IOUtils;
 import database.Database;
 import database.model.EventModel;
 import database.model.LogsModel;
+import login.BanChecker;
 
 @MultipartConfig(fileSizeThreshold=(1024*1024*10), maxFileSize=(1024*1024*25), maxRequestSize=1024*1024*5*5*4)
 public class CreateEventPage extends HttpServlet {
@@ -137,6 +138,10 @@ public class CreateEventPage extends HttpServlet {
 	        else {
 	            response.sendRedirect("Login");
 	        }
+
+			if(BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	        }
 	        
 			Database db = new Database(0);
 			response.setContentType("text/html");
@@ -145,9 +150,9 @@ public class CreateEventPage extends HttpServlet {
 			StringBuffer sb = new StringBuffer();
 			String currentProfilePic = db.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
-				sb.append("					<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
@@ -323,14 +328,14 @@ public class CreateEventPage extends HttpServlet {
 		    eM.setStatus("H");
 		    db.insertCreateEvent(eM);
 		    
-		    // Logs Created Event
-		    LogsModel lm = new LogsModel();
-		    lm.setiGN(currentIGN);
-		    lm.setLogDate(Timestamp.from(Instant.now()));
-		    lm.setiPAddress(InetAddress.getLocalHost().getHostAddress());
-		    lm.setLogType("Event");
-		    lm.setLogActivity(currentIGN + " created event");
-		    db.insertLogs(lm);
+		    // Logs create Event
+			LogsModel lm = new LogsModel();
+			lm.setiGN(currentIGN);
+			lm.setLogDate(Timestamp.from(Instant.now()));
+			lm.setiPAddress(lm.getClientIP(request));
+			lm.setLogType("Event");
+			lm.setLogActivity(currentIGN + " created event - \"" + eventName + "\"");
+			db.insertLogs(lm);
 		    
 		    response.sendRedirect("MyEventPage");
 		} catch (ClassNotFoundException e) {

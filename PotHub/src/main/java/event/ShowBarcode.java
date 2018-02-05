@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.microsoft.sqlserver.jdbc.SQLServerException;
-
 import database.Database;
+import login.BanChecker;
 
 public class ShowBarcode extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -30,6 +29,10 @@ public class ShowBarcode extends HttpServlet {
 	    	response.sendRedirect("Login");
 	    }
         
+		if(BanChecker.isThisGuyBanned(username)){
+            response.sendRedirect("Login");
+        }
+		
 		try {
 			Database DB = new Database(0);
 			ArrayList<String[]> alsa = new ArrayList<String[]>();
@@ -72,7 +75,7 @@ public class ShowBarcode extends HttpServlet {
 
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}

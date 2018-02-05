@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import login.BanChecker;
 
 public class OwnerLeaderboardPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -23,6 +24,10 @@ public class OwnerLeaderboardPage extends HttpServlet {
 	            eventName = (String)SESSION.getAttribute("EventName");
 	        }
 	        else {
+	            response.sendRedirect("Login");
+	        }
+
+			if(BanChecker.isThisGuyBanned(username)){
 	            response.sendRedirect("Login");
 	        }
 	        
@@ -60,7 +65,7 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			if(currentProfilePic != null) {
 				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
 			}else {
-				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");

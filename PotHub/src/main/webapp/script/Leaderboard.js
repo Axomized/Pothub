@@ -178,7 +178,8 @@ function displayBar(userTo, score, index){
 	var div5 = document.createElement("div"); 	// progressbarbar
 	div5.className = "progressbarbar";
 	div5.style.width = (score * 20) + "%";
-	var content3 = document.createTextNode((score * 2) + " / 10");
+	var totalScore = score * 2;
+	var content3 = document.createTextNode(totalScore + " / 10");
 	div5.appendChild(content3);
 	div4.appendChild(div5);
 	div3.appendChild(div4);
@@ -187,7 +188,7 @@ function displayBar(userTo, score, index){
 		if($("#displayName").val() !== userTo){ // Check the one he clicked is not showing on the left already
 			stompClient.send("/app/register2/" + eventName + "/" + iGN, {}, userTo);
 		}
-		displayUsersDetail(userTo);
+		displayUsersDetail(JSON.stringify({"iGN": userTo, "totalScore": totalScore}));
 	});
 	if(index != null){
 		$(".right-bottom-container").children("div").eq(index).after(div);
@@ -203,7 +204,7 @@ function displayUsersDetail(lbd) {
 		var iGN = lbd.iGN;
 		var title = lbd.title;
 		var desc = lbd.desc;
-		var score = lbd.totalScore;
+		var score = (lbd.totalScore * 2);
 		
 		// Get User Profile Picture
 		$.ajax({
@@ -223,14 +224,14 @@ function displayUsersDetail(lbd) {
 		$.ajax({
 			"url": "Image",
 			"type": "POST",
-			"data": {"iGN" : iGN},
+			"data": {"iGN" : lbd.iGN},
 			success: function aaa(res) {
 				$("#displayImage").attr("src", "Image/" + res);
 			}
 		});
 		$("#displayName").text("User never register");
-		$("#displayIGN").text("Cooked by: " + iGN);
-		$("#displayScore").text(score + " / 10");
+		$("#displayIGN").text("Cooked by: " + lbd.iGN);
+		$("#displayScore").text((lbd.totalScore * 2) + " / 10");
 		$("#displayDesc").text("User never register");
 	}
 }
@@ -238,25 +239,25 @@ function displayUsersDetail(lbd) {
 //Process json to see whether to display or animate
 function displayAndAnimateBar(json) {
 	currentTotalRank = currentArray.length + 1
-	//Display top 3 (Not working yet)
+	//Display top 3
 	for(v in json){
 		if(v < 3){
-			//console.log(json[v].userTo);
 			// Get User Profile Picture
 			$.ajax({
 				"url": "Image",
 				"type": "POST",
-				"data": {"iGN" : json[v].userTo},
+				"data": {"iGN" : json[v].userTo, "Placement": v},
 				success: function aaa(res) {
-					switch(parseInt(v)){
+					res1 = res.split("~");
+					switch(parseInt(res1[1])){
 						case 0:
-							$("#1stPlaceImage").attr("src", "Image/" + res);
+							$("#1stPlaceImage").attr("src", "Image/" + res1[0]);
 							break;
 						case 1:
-							$("#2ndPlaceImage").attr("src", "Image/" + res);
+							$("#2ndPlaceImage").attr("src", "Image/" + res1[0]);
 							break;
 						case 2:
-							$("3rdPlaceImage").attr("src", "Image/" + res);
+							$("3rdPlaceImage").attr("src", "Image/" + res1[0]);
 							break;
 					}
 				}
@@ -297,7 +298,7 @@ function displayLeaderboardDetails(lbd){
 	var iGN = lbd.iGN;
 	var title = lbd.title;
 	var desc = lbd.desc;
-	var score = lbd.totalScore;
+	var score = lbd.totalScore * 2;
 	
 	// Get User Profile Picture
 	$.ajax({

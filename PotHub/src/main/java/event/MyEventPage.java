@@ -20,6 +20,7 @@ import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.EventModel;
+import login.BanChecker;
 
 public class MyEventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -47,7 +48,11 @@ public class MyEventPage extends HttpServlet {
 			}else {
 				response.sendRedirect("Login");
 			}
-        
+
+			if(BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	        }
+			
 			ServletOutputStream out = response.getOutputStream();
 			StringBuffer sb = new StringBuffer();
 			sb.append("<!DOCTYPE html>");
@@ -78,7 +83,7 @@ public class MyEventPage extends HttpServlet {
 
 			String currentProfilePic = db.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}

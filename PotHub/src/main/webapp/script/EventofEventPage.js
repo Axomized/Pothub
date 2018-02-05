@@ -22,9 +22,11 @@ function closeEvent(eventName) {
 	$.ajax({
 		"url": "EventofEventPage",
 		"type": "POST",
-		"data": {"Type": "Close", "eventName" : eventName}
+		"data": {"Type": "Close", "eventName" : eventName},
+		success: function aaa(){
+			windows.location.href = "../EventPage"; // Redirect the page
+		}
 	});
-	location.reload(); // Reload the page cause I lazy retype some codes
 }
 
 function removeConfirmRequest(eventName, username) {

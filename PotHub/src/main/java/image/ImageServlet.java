@@ -57,17 +57,21 @@ public class ImageServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		final String IGN = request.getParameter("iGN");
 		try {
+			response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
+			response.setCharacterEncoding("UTF-8");
+			
 			final Database DB = new Database(0);
 			
 			final String FILENAME = DB.getUserProfilePic(IGN);
-			if(FILENAME == null || "".equals(FILENAME)) {
-				response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write("Empty");
+			if(FILENAME != null || !"".equals(FILENAME)) {
+				final String PLACEMENT = request.getParameter("Placement"); // If I use it for the ranking
+				if(PLACEMENT != null && !PLACEMENT.isEmpty()) {
+					response.getWriter().write(FILENAME + "~" + PLACEMENT);
+				}else {
+					response.getWriter().write(FILENAME);
+				}
 			} else {
-				response.setContentType("text/plain");  // Set content type of the response so that jQuery knows what it can expect.
-				response.setCharacterEncoding("UTF-8");
-				response.getWriter().write(FILENAME);
+				response.getWriter().write("Empty");
 			}
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();

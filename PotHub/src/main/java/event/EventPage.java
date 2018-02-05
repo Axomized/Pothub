@@ -23,6 +23,7 @@ import admin.ReportToURL;
 import database.Database;
 import database.model.EventModel;
 import database.model.ReportModel;
+import login.BanChecker;
 
 public class EventPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -106,6 +107,10 @@ public class EventPage extends HttpServlet {
 	        else {
 	            response.sendRedirect("Login");
 	        }
+
+			if(BanChecker.isThisGuyBanned(username)){
+	            response.sendRedirect("Login");
+	        }
 	        
 	        StringBuffer sb = new StringBuffer();
 			sb.append("		<!--  Navigation Bar -->");
@@ -118,7 +123,7 @@ public class EventPage extends HttpServlet {
 			
 			String currentProfilePic = db.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
@@ -269,7 +274,6 @@ public class EventPage extends HttpServlet {
 	// Report event
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			final Database DB = new Database(1);
 			String type = request.getParameter("Type");
 			if(type.isEmpty() || type == null) {
 				doGet(request, response);

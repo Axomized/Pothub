@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import database.Database;
+import login.BanChecker;
 
 public class ParticipantLeaderboardPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -25,6 +26,10 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 	            eventName = (String)session.getAttribute("EventName");
 	        }
 	        else {
+	            response.sendRedirect("Login");
+	        }
+
+			if(BanChecker.isThisGuyBanned(username)){
 	            response.sendRedirect("Login");
 	        }
 	        
@@ -59,7 +64,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
 				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50'/>");
 			}
@@ -219,7 +224,7 @@ public class ParticipantLeaderboardPage extends HttpServlet {
 			sb.append("		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>");
 			sb.append("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>");
 			sb.append("	    <!-- My Own Script -->");
-			sb.append("		<script src='script/Leaderboard.min.js'></script>");
+			sb.append("		<script src='script/Leaderboard.js'></script>");
 			sb.append("		<script src='script/VideoParticipant2.min.js'></script>");
 			sb.append("	</body>");
 			sb.append("</html>");
