@@ -425,9 +425,7 @@ public class Trending extends HttpServlet {
 				sm.setIGN(author1);
 				sm.setSubs(ign11);
 				dbb.insertSubscription(sm);
-				out.println("<html>"
-						+ "<p>SUCCESS Subscribing</p>"
-						+ "</html>");
+				response.sendRedirect("Forum");
 			}
 			catch (ClassNotFoundException e) {
 				e.printStackTrace();

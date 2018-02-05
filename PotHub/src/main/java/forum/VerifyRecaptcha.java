@@ -12,7 +12,9 @@ import javax.json.JsonReader;
 import javax.net.ssl.HttpsURLConnection;
 public class VerifyRecaptcha {
 	public static final String url = "https://www.google.com/recaptcha/api/siteverify";
-	public static final String secret = "6LdoEUIUAAAAANJh8x4SYiVGri487rpzVwyFT5hj";
+	//for localhost: 6LdoEUIUAAAAANJh8x4SYiVGri487rpzVwyFT5hj
+	// for web : 6LdFc0QUAAAAAN6ghzTQJAv4JXr4JzaONyj69tRT
+	public static final String secret = "6LdFc0QUAAAAAN6ghzTQJAv4JXr4JzaONyj69tRT";
 	private final static String USER_AGENT = "Mozilla/5.0";
 	public static boolean verify(String gRecaptchaResponse) throws IOException {
 		if (gRecaptchaResponse == null || "".equals(gRecaptchaResponse)) {

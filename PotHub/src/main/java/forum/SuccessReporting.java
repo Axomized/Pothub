@@ -75,13 +75,7 @@ public class SuccessReporting extends HttpServlet {
 		try {
 			ReportToURL.execute(rm);
 			PrintWriter out = response.getWriter();
-			out.println("<html>");
-			out.println("	<head>");
-			out.println("	</head>");
-			out.println("	<body>");
-			out.println("		<p style='font-size:50px;'>Report Successful Received</p>");
-			out.println("	</body>");
-			out.println("</html>");
+			response.sendRedirect("Forum");
 		}
 		 catch (SQLException e) {
 				e.printStackTrace();

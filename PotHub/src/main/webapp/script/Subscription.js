@@ -6,7 +6,6 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 function gonext(){
-	alert("creating");
 	location.href = "createNewPost";
 }
 function gosub(){
@@ -49,13 +48,11 @@ function downfirst(){
 }
 
 function filter(aa){
-	alert("the value is" + aa);
 	document.getElementById("omgosh").value = aa;
 	document.getElementById("thisis").submit();
 }
 
 function removingSub(rrr){
-	alert("are you suree?");
 	document.getElementById("uniquee").innerHTML = "Are you sure you want to unsubscribe from " + rrr + "?";
 	document.getElementById("getthiss").value = rrr;
 	document.getElementById("overlay1").style.display = "block";

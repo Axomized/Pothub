@@ -36,39 +36,40 @@ import net.tanesha.recaptcha.ReCaptchaFactory;
 @MultipartConfig(fileSizeThreshold=8024*1024*2, maxFileSize=8024*1024*10, maxRequestSize=8024*1024*50)
 public class Test2 extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	String userid = "haha";
        
     public Test2() {
         super();
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 		PrintWriter out = response.getWriter();
-		try {
-			Database d = new Database(2);
-			ArrayList <ForumPostModel> fpm = new ArrayList<ForumPostModel>();
-			fpm = d.getForumPostModelbasedonupvote();
-			for(ForumPostModel fff : fpm) {
-				System.out.println(fff.getThread());
-			}
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		userid = request.getParameter("ddee");
+		String id = (String) request.getSession().getAttribute("userid");
+		System.out.println("Session Id for this page" + id);
+		out.println("<html>"
+				+ "<head>"
+				+ "</head>"
+				+ "<body>"
+				+ "<p>Page2</p>"
+				+ "<form action='Test2' method='POST'>"
+				+ "<input type='text' name='dde'></input>"
+				+ "<input type='hidden' name='ll' value='" + userid + "'></input>"
+				+ "<input type='submit' value='submit'></input>"
+				+ "</form>"
+				+ "</body>"
+				+ "</html>");
+		request.getSession().setAttribute("userid", null);
 	}
 
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// get request parameters for userID and password
-			String user = request.getParameter("user");
-			String pwd = request.getParameter("pwd");
-			// get reCAPTCHA request param
-			String gRecaptchaResponse = request.getParameter("g-recaptcha-response");
-			System.out.println(gRecaptchaResponse);
-			boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-			// logging example
-			System.out.println("User=" + user + "::password=" + pwd + "::Captcha Verify"+verify);
-
-			
+		String haha = request.getParameter("dde");
+		String userr = request.getParameter("ll");
+		System.out.println(haha);
+		System.out.println(userr);
+		request.getSession().setAttribute("userid", userr);
+		response.sendRedirect("Test2");
 		
 	 }
 }

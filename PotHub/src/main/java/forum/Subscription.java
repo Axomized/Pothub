@@ -163,6 +163,7 @@ public class Subscription extends HttpServlet {
 							Database db = new Database(2);
 							ArrayList<SubscriptionModel> sm = new ArrayList<SubscriptionModel>();
 							
+							
 							sm = db.getSubscriptionModel();
 							for(SubscriptionModel a:sm) {
 								if(username.equals(a.getSubs())) {
@@ -279,6 +280,7 @@ public class Subscription extends HttpServlet {
 							ArrayList<ForumPostModel> fa = dbms.getForumModel();
 							ArrayList<CommentModel> cmm = dbms.getCommentModel();
 							FileTableModel ftm = new FileTableModel();
+							DatabaseUserModel dumm = new DatabaseUserModel();
 							
 							for(ForumPostModel qw: fa){	
 								if(reall.equals(qw.getiGN().replaceAll("\\s",""))) {
@@ -378,9 +380,21 @@ public class Subscription extends HttpServlet {
 						+ "							</div>"
 						+ "						</div>"
 						+ "						<div class='author'>"
-						+ "							<div class='profilepic'>"
-						+ "								<img src='images/tzuyu.jpg' height='70' width='70' />"
-						+ "							</div>"
+						+ "							<div class='profilepic'>");
+						
+							dumm = dbms.getUserProfile(qw.getiGN());
+						
+						
+								if (dumm.getProfilePic() != 0) {
+									out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
+								}
+								else {
+									out.print("<img src='images/profile.png' height='70' width='70'/>");
+								}
+						
+						
+						out.println(
+						  "							</div>"
 						+ "							<div id='name'>" + qw.getiGN() + "</div>"
 						+ "							<div id='date'>" + qw.getDate() + "</div>");
 						
@@ -526,9 +540,7 @@ public class Subscription extends HttpServlet {
 				sm.setIGN(unSUb);
 				sm.setSubs(unsub);
 				db.deleteSubscription(sm);
-				out.println("<html>"
-						+ "<p>SUCCESS UNSUBSCRIBING</p>"
-						+ "</html>");
+				response.sendRedirect("Subscription");
 				
 			}
 			catch (ClassNotFoundException e) {

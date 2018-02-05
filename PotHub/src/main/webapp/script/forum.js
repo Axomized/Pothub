@@ -71,7 +71,6 @@ function success(){
 }
 
 function gonext(){
-	alert("creating");
 	location.href = "createNewPost";
 }
 
@@ -93,28 +92,27 @@ function sameas(){
 
 function selectOnlyThis(id) {
 	document.getElementById("comment").value = '';
-    for (var i = 1;i <= 4; i++)
-    {
-        document.getElementById("Check" + i).checked = false;
-    }
-    document.getElementById(id).checked = true;
+	for (var i = 1;i <= 4; i++)
+	{
+		document.getElementById("Check" + i).checked = false;
+	}
+	document.getElementById(id).checked = true;
 }
 
 function checkforcheck(){
 	for (var i = 1;i <= 4; i++)
-    {
-        document.getElementById("Check" + i).checked = false;
-    }
-	
+	{
+		document.getElementById("Check" + i).checked = false;
+	}
+
 }
 
-var audio = new Audio('/PotHub/images/jj.mp3');
+function submit(input){
+	input.parentNode.submit();
+}
+
+var audio = new Audio('images/jjawesome.mp3');
 audio.addEventListener('ended', function() {
-	var audio = new Audio('/PotHub/images/cat.mp3');
-	audio.addEventListener('ended', function() {
-		this.currentTime = 0;
-	    this.play();
-	}, false);
-    audio.play();
+	audio.play();
 }, false);
 audio.play();
