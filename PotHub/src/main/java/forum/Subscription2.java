@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.Instant;
 import java.util.ArrayList;
 
 import javax.servlet.ServletException;
@@ -18,6 +19,7 @@ import database.model.DatabaseUserModel;
 import database.model.FileTableModel;
 import database.model.ForumPostModel;
 import database.model.ForumVoteModel;
+import database.model.LogsModel;
 import database.model.SubscriptionModel;
 import login.BanChecker;
 
@@ -40,7 +42,6 @@ public class Subscription2 extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		PrintWriter out = response.getWriter();
-		int canvote = 1;
 		String username = "";
 		HttpSession session = request.getSession(false);
 		if (session != null) {
@@ -72,7 +73,7 @@ public class Subscription2 extends HttpServlet {
 						+ "<!-- Optional theme -->"
 						+ "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
 						+ "<!-- My Own Script -->"
-						+ "<script src='script/Subscription.js'></script>"
+						+ "<script src='script/Subscription.js' defer></script>"
 						+ "<!-- My Style Sheet -->"
 						+ "<link rel='stylesheet' type='text/css' href='css/Subscription.css' />"
 						+ "</head>"
@@ -289,53 +290,43 @@ public class Subscription2 extends HttpServlet {
 								ArrayList<ForumVoteModel> fvm = new ArrayList<ForumVoteModel>();
 								fvm = dbms.getForumVoteModel();
 								for(ForumVoteModel f:fvm) {
-									if(f.getPostID() == qw.getPostID()) {
-										if(f.getiGN().equals(username)) {
-											canvote = 0;
-										}
-										else {
-											canvote = 1;
-										}
-									}
-									else {
+									int canvote = 0;
+									if(dbms.getWhetherCanVoteForumVoteModel(username, qw.getPostID())) { // so this is no duplicate? yea oki go try
 										canvote = 1;
 									}
-								}
-								out.println(
-						  
-						  "					<div class='cb'>" );
-						if(canvote == 1) {
-							out.println(	
-						  "						<div class='voting'>"
-						+ "						<form id='gonext' action='Subscription2' method='Post'>"	
-						+ "						<input type='hidden' name='hisname' value=' " + username +"'>"
-						+ "						<input type='hidden' name='hisid' value=' " + qw.getPostID() + "'>"
-						+ "						<input type='hidden' name='upordown' id='yesorno' >"
-						+ "							<p onclick='upfirst()' style='text-align: center;'>"
-						+ "								<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
-						+ "							</p>"
-						+ "							<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
-						+ "							<p onclick='downfirst()' style='text-align: center;'>"
-						+ "								<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
-						+ "							</p>"		
-						+ "						</form>"
-						+ "						</div>"
-						+ "						<div class='iconpic'>"
-						);
-							}
-						else if(canvote == 0) {
-							out.println("<div class='voting'>"
-									+ "<p style='text-align: center;'>"
-									+ "<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
-									+ "</p>"
-									+ "<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
-									+ "<p style='text-align: center;'>"
-									+ "<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
-									+ "</p>"
-									+"</div>"
-									+"<div class='iconpic'>"
-									);
-						}
+									out.println(
+
+											"					<div class='cb'>" );
+									if(canvote == 1) {
+										out.println(	
+												"						<div class='voting'>"
+														+ "						<input type='hidden' name='hisname' value='" + username +"'>"
+														+ "						<input type='hidden' name='hisid' value='" + qw.getPostID() + "'>"						
+														+ "						<input type='hidden' name='upordown' id='yesorno' >"
+														+ "							<p onclick='upfirst(this)' style='text-align: center;'>"
+														+ "								<i style='cursor:pointer;' class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
+														+ "							</p>"
+														+ "							<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
+														+ "							<p onclick='downfirst(this)' style='text-align: center;'>"
+														+ "								<i style='cursor:pointer;' class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
+														+ "							</p>"		
+														+ "						</div>"
+														+ "						<div class='iconpic'>"
+												);
+									}
+									else if(canvote == 0) {
+										out.println("<div class='voting'>"
+												+ "<p style='text-align: center;'>"
+												+ "<i class='fa fa-arrow-up fa-3x' aria-hidden='true'></i>"
+												+ "</p>"
+												+ "<p id='firstcount' style='text-align: center;'>" + qw.getUpvotes() + "</p>"
+												+ "<p style='text-align: center;'>"
+												+ "<i class='fa fa-arrow-down fa-3x' aria-hidden='true'></i>"
+												+ "</p>"
+												+"</div>"
+												+"<div class='iconpic'>"
+												);
+									}
 						
 						if(qw.getPicture() == 1) {
 							out.println("<img src='images/MAC.png' height='80' width='80' />");
@@ -354,7 +345,10 @@ public class Subscription2 extends HttpServlet {
 						  "						</div>"
 						+ "						<div class='info'>"
 						+ "							<div class='title'>"
-						+ "								<h2 style='color: blue' onclick='location.href='discussion';'>" + qw.getThread() + "</h2>"
+						+ "									<form action='discussion'>"
+						+ "										<h2 style='color:blue; cursor:pointer;' onclick='submit(this)'>" + qw.getThread() + "</h2>"
+						+ "										<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input>"
+						+ "									</form>"//form ends here
 						+ "							</div>"
 						+ "							<div class='subDescription'>"
 						+ "								<p>" + qw.getDescription() + "</p>"
@@ -366,9 +360,10 @@ public class Subscription2 extends HttpServlet {
 						+ "							</div>"
 						+ "							<div class='reporting'>"
 						+ "								<p>"
-						+ "									<form action='discussion'><button type='submit' style='cursor:pointer' class='btn'>Reply</button>"
-						+ "									<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input></form>"
-						+ "									<a onclick='showsth()' href='#reports' style='margin-right: 2%;'>Report</a><a href='#' >Share</a>"
+						+ "									<form action='discussion' id='dd1'>"
+						+ "									<button type='submit' style='cursor:pointer' class='btn'>Reply</button>"
+						+ "									<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input>"
+						+ "									</form>"//form ends here
 						+ "								</p>"
 						+ "							</div>"
 						+ "						</div>"
@@ -429,7 +424,8 @@ public class Subscription2 extends HttpServlet {
 						);
 								}//close loop
 								}//close if statement for filtering	
-							}//close try
+							}
+						}//close try
 							 catch (SQLException e) {
 								e.printStackTrace();
 							} catch (ClassNotFoundException e) {
@@ -456,9 +452,10 @@ public class Subscription2 extends HttpServlet {
 						+ "				href='#'>Support</a>"
 						+ "		</p>"
 						+ "	</div>"
-						+ "	<script src='https://code.jquery.com/jquery-3.1.1.slim.min.js'"
-						+ "		integrity='sha384-A7FZj7v+d/sdmMqp/nOQwliLvUsJfDHW+k9Omg/a/EheAdgtzNs3hpfag6Ed950n'"
-						+ "		crossorigin='anonymous'></script>"
+						+ "<script" 
+						+ "  src=\"http://code.jquery.com/jquery-3.3.1.min.js\"" 
+						+ "  integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\"" 
+						+ "  crossorigin=\"anonymous\"></script>"
 						+ "	<script"
 						+ "		src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'"
 						+ "		integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb'"
@@ -477,77 +474,62 @@ public class Subscription2 extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String updown = request.getParameter("upordown"); //Total Upvotes
 		PrintWriter out = response.getWriter();
 		String unSUb = request.getParameter("theUN");
 		String unsub = request.getParameter("theUN1");
-		String updown = request.getParameter("upordown");
+		//String updown = request.getParameter("upordown");
 		System.out.println(updown);
-		if(updown != null && !updown.isEmpty())
-		{
-		String validate = updown.replaceAll("\\s","");
-		String ignn = request.getParameter("hisname");
-		String ign = ignn.replaceAll("\\s","");
-		String pos = request.getParameter("hisid");
-		String neww = pos.replaceAll("\\s","");
-		int pid = Integer.valueOf(neww);
-		Timestamp tsm = new Timestamp(System.currentTimeMillis());
+		//goes into the voting thing
 		try {
 			Database db = new Database(2);
-			ForumVoteModel fvm = new ForumVoteModel();
-			fvm.setiGN(ign);
-			fvm.setPostID(pid);
-			fvm.setDate(tsm);
-			db.addForumVote(fvm);
-			int votes = db.getVotes(pid);
-			if(validate.equals("up")) {
-			votes ++;
-			db.updateVotes(votes, pid);
-			out.println("<html>"
-					+ "<p>SUCCESS UPVOTING</p>"
-					+ "</html>");
+			if(updown != null && !updown.isEmpty()){
+				String ignn = request.getParameter("hisname"); //IGN
+				Integer pos = Integer.valueOf(request.getParameter("hisid")); //PostID
+				Timestamp tsm = new Timestamp(System.currentTimeMillis());
+				ForumVoteModel fvm = new ForumVoteModel();
+				
+				// Logging for Logs
+				LogsModel lm = new LogsModel();
+				fvm.setiGN(ignn);
+				fvm.setPostID(pos);
+				fvm.setDate(tsm);
+				db.addForumVote(fvm);
+				db.updateVotes(Integer.parseInt(updown), pos);
+				
+				ForumPostModel fpm = new ForumPostModel();
+				fpm = db.getForumModelByID(pos);
+				String name3 = fpm.getiGN();
+				DatabaseUserModel dum = db.getUserProfile(name3);
+				int totalpoints = dum.getPoints();
+				totalpoints ++;
+				db.addDatabaseUserPoints(totalpoints, name3);
+				DatabaseUserModel dum2 = db.getUserProfile(name3);
+				if(dum2.getPoints() > 49 && !dum.isPriviledged()) {
+					db.updateIsPrivileged(true, name3);
+
+					lm.setiGN(name3);
+					lm.setLogDate(Timestamp.from(Instant.now()));
+					lm.setiPAddress(lm.getClientIP(request));
+					lm.setLogType("Others");
+					lm.setLogActivity(name3 + " became privileged");
+					db.insertLogs(lm);
+				}
 			}
-			else {
-				votes --;
-				db.updateVotes(votes, pid);
-				out.println("<html>"
-						+ "<p>SUCCESS DOWNVOTING</p>"
-						+ "</html>");
+			else if(unSUb != null && !unSUb.isEmpty()){
+				SubscriptionModel sm = new SubscriptionModel();
+				sm.setIGN(unSUb);
+				sm.setSubs(unsub);
+				db.deleteSubscription(sm);
+				response.sendRedirect("Subscription");
+			}else {
+				System.out.println("nope");
 			}
-			
 		}
 		catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
-		
-		//goes into the unsubscribe thing
-		}
-		else if(unSUb != null && !unSUb.isEmpty()){
-			try {
-				Database db = new Database(2);
-				SubscriptionModel sm = new SubscriptionModel();
-				sm.setIGN(unSUb);
-				sm.setSubs(unsub);
-				db.deleteSubscription(sm);
-				response.sendRedirect("Subscription");
-				
-			}
-			catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		
-		else {
-			System.out.println("nope");
-		}
-		
-		
-		
 	}
-
 }

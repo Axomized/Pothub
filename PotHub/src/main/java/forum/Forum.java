@@ -413,7 +413,6 @@ public class Forum extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		PrintWriter out = response.getWriter();
 		String updown = request.getParameter("upordown"); //Total Upvotes
-		System.out.println(updown);
 		try {
 			Database db = new Database(2);
 			if(updown != null && !updown.isEmpty()){

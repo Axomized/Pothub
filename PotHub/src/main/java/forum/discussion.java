@@ -186,7 +186,7 @@ public class discussion extends HttpServlet {
 												"    <form action='discussion' method='POST' id='goto'><a class=\"dropdown-item\" onclick='showDownload()'>Download</a><input type='hidden' name='sdsd' value='" + fileName + "' /></form>" + 
 												"  </div>" + 
 												"</div>"
-												+ "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=http://119.74.135.44:8080/PotHub/Video/" + fileName + " &embedded=true'></iframe>"
+												+ "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=https://pothubwebapp.azurewebsites.net/Video/" + fileName + " &embedded=true'></iframe>"
 										);
 								/*File tempFile = File.createTempFile(fileName, ".tmp", null);
 									FileOutputStream fos = new FileOutputStream(tempFile);

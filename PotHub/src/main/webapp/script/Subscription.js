@@ -32,21 +32,46 @@ function success(){
 	document.getElementById("overlay").style.display = "none";
 }
 
-function upfirst(){
-	var h = document.getElementById("firstcount").innerHTML;
-	alert("upvoted by 11 from" + h);
-	document.getElementById("yesorno").value = "up";
-	document.getElementById("gonext").submit();
-	
+function upfirst(current){
+	current = $(current);
+	var totalUpvotes = current.next().text();
+	var id = current.prev().prev().val();
+	var name = current.prev().prev().prev().val();
+	// Submit Vote
+	$.ajax({
+		"url": "Forum",
+		"type": "POST",
+		"data": {"upordown" : parseInt(totalUpvotes) + 1, "hisname": name, "hisid": id},
+		success: function(res) {
+			alert("Success");
+			current.next().text(parseInt(totalUpvotes) + 1);
+			window.location.href = "Forum";
+		}
+	});
 }
 
-function downfirst(){
-	var h = document.getElementById("firstcount").innerHTML;
-	alert("downvoted by 11 from" + h);
-	document.getElementById("yesorno").value = "down";
-	document.getElementById("gonext").submit();
+function downfirst(current){
+	current = $(current);
+	var totalUpvotes = current.prev().text();
+	var id = current.prev().prev().prev().prev().val();
+	var name = current.prev().prev().prev().prev().prev().val();
+	// Submit Vote
+	$.ajax({
+		"url": "Forum",
+		"type": "POST",
+		"data": {"upordown" : parseInt(totalUpvotes) - 1, "hisname": name, "hisid": id},
+		success: function(res) {
+			alert("Success");
+			current.prev().text(parseInt(totalUpvotes) - 1);
+			window.location.href = "Forum";
+		}
+	});
 }
 
+function submit(input){
+	input.parentNode.submit();
+}
+//dont touch
 function filter(aa){
 	document.getElementById("omgosh").value = aa;
 	document.getElementById("thisis").submit();

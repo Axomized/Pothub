@@ -86,10 +86,6 @@ function gotre(){
 	location.href = "Trending";
 }
 
-function sameas(){
-	document.getElementById("dd1").submit();
-}
-
 function selectOnlyThis(id) {
 	document.getElementById("comment").value = '';
 	for (var i = 1;i <= 4; i++)
