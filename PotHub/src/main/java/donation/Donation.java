@@ -122,7 +122,9 @@ public class Donation extends HttpServlet {
 					+ "									<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
 					+ "									<datalist id='behalfNameList'>");
 					for (String s : db.getDatabaseUserIGN()) {
-						out.print("<option value='" + s + "'></option>"); 
+						if (!s.equals(username)) {
+							out.print("<option value='" + s + "'></option>");
+						}
 					}
 					out.print("							</datalist>"
 					+ "								</div>"
@@ -485,7 +487,9 @@ public class Donation extends HttpServlet {
 								+ "		<div class='errorMsg'>Donee does not exist.</div>"
 								+ "		<datalist id='behalfNameList'>");
 						for (String s : db.getDatabaseUserIGN()) {
-							out.print("		<option value='" + s + "'></option>");
+							if (!s.equals(username)) {
+								out.print("<option value='" + s + "'></option>");
+							}
 						}
 						out.print("		</datalist>"
 								+ "	</div>"
@@ -503,7 +507,9 @@ public class Donation extends HttpServlet {
 								+ "		<input type='text' id='behalfName' name='behalfName' list='behalfNameList'>"
 								+ "		<datalist id='behalfNameList'>");
 						for (String s : db.getDatabaseUserIGN()) {
-							out.print("		<option value='" + s + "'></option>");
+							if (!s.equals(username)) {
+								out.print("<option value='" + s + "'></option>");
+							}
 						}
 						out.print("		</datalist>"
 								+ "	</div>"

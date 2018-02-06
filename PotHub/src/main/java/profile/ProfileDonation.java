@@ -171,8 +171,10 @@ public class ProfileDonation extends HttpServlet {
 					+ "													<label id='onBehalfLabel' for='onBehalf'>Search by donee:</label>"
 					+ "													<input type='text' id ='onBehalf' class='searchInput' name='onBehalf' list='onBehalfList'>"
 					+ "													<datalist id='onBehalfList'>");
-					for (String userIGN : db.getDatabaseUserIGN()) {
-						out.print("<option value='" + userIGN + "'></option>");
+					for (String s : db.getDatabaseUserIGN()) {
+						if (!s.equals(username)) {
+							out.print("<option value='" + s + "'></option>");
+						}
 					}
 					out.print("											</datalist>"
 					+ "												</div>"

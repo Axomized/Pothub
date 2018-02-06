@@ -178,9 +178,14 @@ public class EditProfile extends HttpServlet {
 					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='optionalInput(this); onlyNumbers(this)'>"
 					+ "										</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
-					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='optionalInput(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>"
-					+ "											<div id='bioInfoText'>Only a maximum of 255 characters.</div>"
+					+ "											<label id='bioLabel' for='bioText'>Bio</label>");
+					if (dum.getBio() == null || dum.getBio().isEmpty()) {
+						out.print("<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='optionalInput(this)'></textarea>");
+					}
+					else {
+						out.print("<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='optionalInput(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>");
+					}
+					out.print("									<div id='bioInfoText'>Only a maximum of 255 characters.</div>"
 					+ "										</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"

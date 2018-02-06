@@ -200,9 +200,14 @@ public class Profile extends HttpServlet {
 					+ "									Bio"
 					+ "								</div>"
 					+ "								<div class='thatLine'></div>"
-					+ "								<div id='lower-BioDiv'>"
-					+ "									<p>" + Encode.forHtml(dum.getBio()) + "</p>"
-					+ "								</div>"
+					+ "								<div id='lower-BioDiv'>");
+					if (dum.getBio() == null || dum.getBio().isEmpty()) {
+						out.print("<p>" + Encode.forHtml(dum.getBio()) + "</p>");
+					}
+					else {
+						out.print("<p></p>");
+					}
+					out.print("						</div>"
 					+ "							</div>"
 					+ "							<div id='addressDiv'>"
 					+ "								<div id='upper-AddressDiv'>"
