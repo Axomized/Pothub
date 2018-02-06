@@ -5,10 +5,12 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -285,9 +287,25 @@ public class Forum extends HttpServlet {
 				out.print("							</div>"
 						+ "							<div id='name'>" + qw.getiGN() + "</div>");
 
-				SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+				
+				SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+				Date d = new Date();
+				String inputString1 = dateFormat.format(qw.getDate());
+				String inputString2 = dateFormat.format(d);
+				try {
+				    Date date1 = dateFormat.parse(inputString1);
+				    Date date2 = dateFormat.parse(inputString2);
+				    long diff = date2.getTime() - date1.getTime();
+				    if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) == 0) {
+				    	 out.println( "	 <div id='date'>" + "Posted Recently" + "</div>");
+				    }
+				    else if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) != 0)
+				    out.println( "<div id='date'>" + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days ago</div>");
+				} catch (ParseException e) {
+				    e.printStackTrace();
+				}
 
-				out.println( "							<div id='date'>" + dateFormat.format(qw.getDate()) + "</div>");
+				
 
 				for(SubscriptionModel pp :smm) {
 					if(pp.getSubs().replaceAll("\\s","").equals(username.replaceAll("\\s",""))) {

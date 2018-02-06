@@ -6,9 +6,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -92,6 +96,7 @@ public class discussion extends HttpServlet {
 		try {
 			Database dbms = new Database(2);
 			DatabaseUserModel dumdum = dbms.getUserProfile(username);
+			FileTableModel ftm = new FileTableModel();
 			if (dumdum.getProfilePic() != 0) {
 				out.print("<img src='Image/" + dbms.getImageByImageID(dumdum.getProfilePic()) + "' style='border-radius:50%;' height='50' width='50'/>");
 			}
@@ -142,13 +147,49 @@ public class discussion extends HttpServlet {
 				if(qw.getPostID() == ddd) {
 					out.println(
 							"					<div id='title111'>"
-									+ "						<div class='iconpic'><img src='images/MAC.png' height='80' width='80'/></div>"
+									+ "						<div class='iconpic'>");
+					
+					if(qw.getPicture() == 1) {
+						out.println("<img src='images/MAC.png' height='80' width='80' />");
+					}
+					else {
+						ftm = dbms.getFileTableByFileID(qw.getPicture());
+						out.println("<img src='Video/" +  ftm.getFileName() + "' height='80' width='80' />");
+					}
+					
+					
+					
+									
+									
+									out.println(
+									  "						</div>"
 									+ "						<div class='text1'>"
 									+ "							<div id='title'><h2 style='color:blue'>" + qw.getThread() +"</h2></div>"
-									+ "							<div id='name'>Submitted by:" + qw.getiGN() + "</div>"
-									+ "							<div id='date'>" + qw.getDate() + "</div>"
-									+ "						</div>"
-									+ "						<div>"
+									+ "							<div id='name'>Submitted by:" + qw.getiGN() + "</div>");
+									
+									
+									SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+									Date d = new Date();
+									String inputString1 = dateFormat.format(qw.getDate());
+									String inputString2 = dateFormat.format(d);
+									try {
+									    Date date1 = dateFormat.parse(inputString1);
+									    Date date2 = dateFormat.parse(inputString2);
+									    long diff = date2.getTime() - date1.getTime();
+									    System.out.println ("Days: " + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS));
+									    if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) == 0) {
+									    	 out.println( "	 <div id='date'>" + "Posted Recently" + "</div>");
+									    }
+									    else if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) != 0)
+									    out.println( "<div id='date'>" + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days ago</div>");
+									} catch (ParseException e) {
+									    e.printStackTrace();
+									}
+									
+									
+									out.println(
+									  "						</div>"
+									+ "						<div style='margin-left: 3%; margin-top: 1%; margin-bottom: 3%;'>"
 									//+ "							<p></p>"//for displaying text
 									+ "							<p><a href='" + qw.getForumURL() + "'></a></p>");// for displaying URL);
 
@@ -168,7 +209,8 @@ public class discussion extends HttpServlet {
 							int extensionPos = fileName.lastIndexOf('.');
 							String ext = fileName.substring(extensionPos);
 							if(ext.equalsIgnoreCase(".png") || ext.equalsIgnoreCase(".jpeg") || ext.equalsIgnoreCase(".jpg") || ext.equalsIgnoreCase(".gif")) {
-								out.println("<img src='Video/" +  fileName + "' width='200' height='200' />");
+								out.println("<button class='btn' id='buttt' style='display:none; cursor:pointer;' onclick='minimizee()'>Hide</button>");
+								out.println("<img id='images' onclick='expandd()' src='Video/" +  fileName + "' width='200' height='200' />");
 							}
 							else if(ext.equalsIgnoreCase(".mp4") || ext.equalsIgnoreCase(".webm") || ext.equalsIgnoreCase(".ogg")) {
 								out.println("<video src='Video/" +  fileName + "' autoplay loop controls width='200' height='200'/>");
@@ -209,7 +251,7 @@ public class discussion extends HttpServlet {
 				out.println(
 						"					<div id='firstly'>"
 								+ "						<form action='discussion' method='POST'>"	
-								+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor'></textarea>"
+								+ "						<textarea class='form-control' id='exampleFormControlTextarea1' rows='3' name='rtor' placeholder='Enter your comments here'></textarea>"
 								+ "						<input type='hidden' name='myign' value='" + username + "'>"
 								+ "						<input type='hidden' name='jesus' value='" + ddd  + "'>"
 								+ "						<input type='submit' value='Post/Submit' id='postBtn' cursor:pointer;' class='btn'>"
@@ -227,7 +269,6 @@ public class discussion extends HttpServlet {
 			for(CommentModel d:cc) {
 				System.out.println("Loop: " + d.getPostID() + ", " + d.getiGN());
 				if(d.getPostID() == ddd) {
-					System.out.println("Loop: Entered");
 					out.println(
 
 							"						<div class='mycomment'>"
@@ -247,10 +288,28 @@ public class discussion extends HttpServlet {
 					out.println(
 							"</div>"
 							+ "								<div class='tgt'>"
-							+ "									<div>" + d.getiGN() +"</div>"
-							+ "									<div>" + d.getDate() + "</div>"
-							+ "									"
-							+ "								</div>"
+							+ "									<div>" + d.getiGN() +"</div>");
+					
+					
+					SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+					Date dd = new Date();
+					String inputString1 = dateFormat.format(d.getDate());
+					String inputString2 = dateFormat.format(dd);
+					try {
+					    Date date1 = dateFormat.parse(inputString1);
+					    Date date2 = dateFormat.parse(inputString2);
+					    long diff = date2.getTime() - date1.getTime();
+					    if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) == 0) {
+					    	 out.println( "	 <div id='date'>" + "Posted Recently" + "</div>");
+					    }
+					    else if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) != 0)
+					    out.println( "<div id='date'>" + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days ago</div>");
+					} catch (ParseException e) {
+					    e.printStackTrace();
+					}
+							
+							out.println(
+							  "								</div>"
 							+ "							</div>"
 							+ "							<div id='authorcomments'>"
 							+ "								<p>" + d.getDescription()

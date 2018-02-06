@@ -4,8 +4,11 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -269,9 +272,22 @@ public class Trending extends HttpServlet {
 						out.print("							</div>"
 						+ "							<div id='name'>" + qw.getiGN() + "</div>");
 						
-						SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-						
-						out.println( "							<div id='date'>" + dateFormat.format(qw.getDate()) + "</div>");
+						SimpleDateFormat dateFormat = new SimpleDateFormat("dd MM yyyy");
+						Date d = new Date();
+						String inputString1 = dateFormat.format(qw.getDate());
+						String inputString2 = dateFormat.format(d);
+						try {
+						    Date date1 = dateFormat.parse(inputString1);
+						    Date date2 = dateFormat.parse(inputString2);
+						    long diff = date2.getTime() - date1.getTime();
+						    if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) == 0) {
+						    	 out.println( "	 <div id='date'>" + "Posted Recently" + "</div>");
+						    }
+						    else if(TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) != 0)
+						    out.println( "<div id='date'>" + TimeUnit.DAYS.convert(diff, TimeUnit.MILLISECONDS) + " days ago</div>");
+						} catch (ParseException e) {
+						    e.printStackTrace();
+						}
 						
 						for(SubscriptionModel pp :smm) {
 							if(pp.getSubs().replaceAll("\\s","").equals(username.replaceAll("\\s",""))) {
@@ -344,20 +360,20 @@ public class Trending extends HttpServlet {
 						+ "						<input type='hidden' id='kimtan' name='whyyoureport'></input>"
 						//+ "						<input type='hidden' id='kimjung' name='forumID'></input>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value='This post contains spams' id='1first'>This post contains spams</label>"
+						+ "				      		<label><input type='checkbox' value='This post contains spams' id='Check1' onclick='selectOnlyThis(this.id)'>This post contains spams</label>"
 						+ "				   		 </div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				     		<label><input type='checkbox' value='This post contains abusive or harmful words' id='2first'>This post contains abusive or harmful words</label>"
+						+ "				     		<label><input type='checkbox' value='This post contains abusive or harmful words' id='Check2' onclick='selectOnlyThis(this.id)'>This post contains abusive or harmful words</label>"
 						+ "				    	</div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value='This post is not relevant to food' id='3first'>This post is not relevant to food</label>"
+						+ "				      		<label><input type='checkbox' value='This post is not relevant to food' id='Check3' onclick='selectOnlyThis(this.id)'>This post is not relevant to food</label>"
 						+ "				    	</div>"
 						+ "				    	<div class='checkbox'>"
-						+ "				      		<label><input type='checkbox' value='This post does not contains wrong informations' id='4first'>This post does not contains wrong informations</label>"
+						+ "				      		<label><input type='checkbox' value='This post does not contains wrong informations' id='Check4' onclick='selectOnlyThis(this.id)'>This post does not contains wrong informations</label>"
 						+ "				   		 </div>"
 						+ "				   		 <div class='form-group'>"
 						+ "	     					 <label for='Other Comment'>Comment:</label>"
-						+ "	      					<textarea class='form-control' rows='5' id='comment' name='somanytext'></textarea>"
+						+ "	      					<textarea onclick='checkforcheck()' class='form-control' rows='5' id='comment' name='somanytext'></textarea>"
 						+ "	    				</div>"
 						+ "	    				<div>"
 						+ "	    					<button type='button'  onclick='success()' class='btn'>Submit</button>"
