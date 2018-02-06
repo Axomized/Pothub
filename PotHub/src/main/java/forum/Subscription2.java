@@ -17,6 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.CommentModel;
 import database.model.DatabaseUserModel;
@@ -346,12 +348,12 @@ public class Subscription2 extends HttpServlet {
 									+ "						<div class='info'>"
 									+ "							<div class='title'>"
 									+ "									<form action='discussion'>"
-									+ "										<h2 style='color:blue; cursor:pointer;' onclick='submit(this)'>" + qw.getThread() + "</h2>"
+									+ "										<h2 style='color:blue; cursor:pointer;' onclick='submit(this)'>" + Encode.forHtml(qw.getThread()) + "</h2>"
 									+ "										<input type='hidden' name='ForumPostID' value='" + qw.getPostID() + "'></input>"
 									+ "									</form>"//form ends here
 									+ "							</div>"
 									+ "							<div class='subDescription'>"
-									+ "								<p>" + qw.getDescription() + "</p>"
+									+ "								<p>" + Encode.forHtml(qw.getDescription()) + "</p>"
 									+ "							</div>"
 									+ "							<div class='commentscount'>"
 									+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>" + count +""

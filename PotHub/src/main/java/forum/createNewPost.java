@@ -169,9 +169,10 @@ public class createNewPost extends HttpServlet {
 				+"					  	<p id='image1' style='display:none; margin-bottom: 5px; margin-top: 5px;'>Submit your picture here: <input type='file' name='pic123' accept='.png, .jpeg, .jpg, .gif''>"
 				+"						<i onclick='closeI()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
-				+"					  	<p id='link1' style='display:none;' >Enter the url here: <input type='url' name='link'>"
+				/*+"					  	<p id='link1' style='display:none;' >Enter the url here: <input type='url' name='link'>"
 				+"						<i onclick='closeU()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"
+				*/
 				+"					  	<p id='file1' style='display:none; margin-top: 5px;'>Submit your file here: <input type='file' name='file69' accept='.txt, .docx'>"
 				+"						<i onclick='closeF()' class='fa fa-close' style='font-size:18px'></i>"	
 				+"						</p>"

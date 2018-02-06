@@ -20,6 +20,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.CommentModel;
 import database.model.DatabaseUserModel;
@@ -164,7 +166,7 @@ public class discussion extends HttpServlet {
 									out.println(
 									  "						</div>"
 									+ "						<div class='text1'>"
-									+ "							<div id='title'><h2 style='color:blue'>" + qw.getThread() +"</h2></div>"
+									+ "							<div id='title'><h2 style='color:blue'>" + Encode.forHtml(qw.getThread()) +"</h2></div>"
 									+ "							<div id='name'>Submitted by:" + qw.getiGN() + "</div>");
 									
 									
@@ -228,7 +230,7 @@ public class discussion extends HttpServlet {
 												"    <form action='discussion' method='POST' id='goto'><a class=\"dropdown-item\" onclick='showDownload()'>Download</a><input type='hidden' name='sdsd' value='" + fileName + "' /></form>" + 
 												"  </div>" + 
 												"</div>"
-												+ "<iframe id='thiss' style='width:50%; height:50%; display:none; 'src='https://docs.google.com/gview?url=https://pothubwebapp.azurewebsites.net/Video/" + fileName + " &embedded=true'></iframe>"
+												+ "<iframe id='thiss' style='width:500px; height:600px; display:none; 'src='https://docs.google.com/gview?url=https://pothubwebapp.azurewebsites.net/Video/" + fileName + " &embedded=true'></iframe>"
 										);
 								/*File tempFile = File.createTempFile(fileName, ".tmp", null);
 									FileOutputStream fos = new FileOutputStream(tempFile);
@@ -267,7 +269,7 @@ public class discussion extends HttpServlet {
 			ArrayList<CommentModel> cc = dbms.getCommentModel();
 			DatabaseUserModel dumm = new DatabaseUserModel();
 			for(CommentModel d:cc) {
-				System.out.println("Loop: " + d.getPostID() + ", " + d.getiGN());
+				
 				if(d.getPostID() == ddd) {
 					out.println(
 
@@ -312,7 +314,7 @@ public class discussion extends HttpServlet {
 							  "								</div>"
 							+ "							</div>"
 							+ "							<div id='authorcomments'>"
-							+ "								<p>" + d.getDescription()
+							+ "								<p>" + Encode.forHtml(d.getDescription())
 							+ "								</p>"
 							+ "							</div>"
 							+ "						</div>"

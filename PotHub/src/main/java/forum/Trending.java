@@ -16,6 +16,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.owasp.encoder.Encode;
+
 import database.Database;
 import database.model.CommentModel;
 import database.model.DatabaseUserModel;
@@ -230,10 +232,10 @@ public class Trending extends HttpServlet {
 						  "						</div>"
 						+ "						<div class='info'>"
 						+ "							<div class='title'>"
-						+ "								<form action='discussion' id='dd1'><h2 style='color:blue; cursor:pointer;' onclick='sameas()'>" + qw.getThread() + "</h2>"
+						+ "								<form action='discussion' id='dd1'><h2 style='color:blue; cursor:pointer;' onclick='sameas()'>" + Encode.forHtml(qw.getThread()) + "</h2>"
 						+ "							</div>"
 						+ "							<div class='subDescription'>"
-						+ "								<p>" + qw.getDescription() + "</p>"
+						+ "								<p>" + Encode.forHtml(qw.getDescription()) + "</p>"
 						+ "							</div>"
 						+ "							<div class='commentscount'>"
 						+ "								<p onclick='location.href='discussion';' style='font-family:' Comic SansMS', cursive, sans-serif;'>" + count +""
