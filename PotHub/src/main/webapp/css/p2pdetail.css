@@ -438,6 +438,7 @@ input {
 	margin-left: 420px;
 	width:50%;
 	margin-top:100px;
+	margin-bottom:100px;
 }
 
 #foodTitle {
@@ -546,7 +547,7 @@ button {
 }
 
 #bidNumberBox {
-	margin-left:20px;
+	margin-right:20px;
 }
 
 #foodDesc input {
@@ -668,4 +669,52 @@ button {
 
 .roundProfilePic {
 	border-radius: 50%;
+}
+
+.pointsDiv {
+    margin-top: 10px;
+    background-color: #f3decb;
+    padding: 10px 8px;
+    box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+}
+
+.upper-Divtitle {
+	height: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 2em;
+    font-weight: 600;
+    padding: 3px 0px;
+}
+
+.lower-Divtitle {
+	height: 50%;
+    display: flex;
+    align-items: center;
+    padding: 5px 0px;
+    font-size: 1.5em;
+}
+
+.upper-Div {
+	height: 50%;
+    display: flex;
+    align-items: center;
+    font-size: 1.5em;
+    font-weight: 600;
+    padding: 3px 0px;
+}
+
+.lower-Div {
+	font-size: 1em;
+	height: 50%;
+    display: flex;
+    align-items: center;
+    padding: 5px 0px;
+}
+
+.thatLine {
+	content: "";
+    display: block;
+    margin: auto;
+    border-top: 1px solid #fff;
 }
