@@ -97,6 +97,9 @@ public class PotcastJoined extends HttpServlet {
 			}
 
 			PrintWriter pw = response.getWriter();
+			
+			DatabaseUserModel dum = db.getUserProfile(username);
+			
 			pw.append(
 					"<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>"
 							+ "<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>" + "<head>"
@@ -116,9 +119,16 @@ public class PotcastJoined extends HttpServlet {
 							+ "<link rel='stylesheet' type='text/css' href='css/p2pmy.css' />" + "</head>" + "<body>"
 							+ "	<!--  Navigation Bar -->" + "		<div id='header'>" + "<div id='companyTitle'>"
 							+ "<h1>PotHub</h1>" + "</div>"
-							+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-							+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
-							+ "<span id='welcomeSpan'>Welcome, " + username + "</span>" + "</div>"
+							+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
+							+ "				<div id='profilePic'>");
+							if (dum.getProfilePic() != 0) {
+								pw.append("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
+							}
+							else {
+								pw.append("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+							}
+							pw.append("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
+							+ "				</div>"
 							+ "<div id='profileDropdownDiv'>" + "<a href='Profile'>Profile</a>");
 
 							pw.append("<a href='Logout'>Logout</a>");

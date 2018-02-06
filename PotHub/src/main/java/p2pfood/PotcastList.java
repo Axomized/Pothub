@@ -116,6 +116,8 @@ public class PotcastList extends HttpServlet {
 
 			distances3 = MapDistance.getJsonFromURL(url);
 			}
+			
+			DatabaseUserModel dum = db.getUserProfile(username);
 			PrintWriter pw = response.getWriter();
 
 			pw.append("<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='ISO-8859-1'>" + "<meta name='viewport'"
@@ -141,9 +143,16 @@ public class PotcastList extends HttpServlet {
 					+ "</head>" + "<body>"
 					+ "	<!--  Navigation Bar -->" + "		<div id='header'>" + "<div id='companyTitle'>"
 					+ "<h1>PotHub</h1>" + "</div>"
-					+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
-					+ "<span id='welcomeSpan'>Welcome, " + username + "</span>" + "</div>"
+					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						pw.append("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
+					}
+					else {
+						pw.append("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+					}
+					pw.append("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				</div>"
 					+ "<div id='profileDropdownDiv'>" + "<a href='Profile'>Profile</a>");
 
 			pw.append("<a href='Logout'>Logout</a>");

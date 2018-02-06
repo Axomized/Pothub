@@ -665,3 +665,7 @@ button {
 	background-color: #f3decb;
 	color: black;
 }
+
+.roundProfilePic {
+	border-radius: 50%;
+}

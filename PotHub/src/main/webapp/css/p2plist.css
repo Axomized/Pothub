@@ -651,3 +651,7 @@ input[type=text] {
     right: 45px;
     font-size: 60px;
 }
+
+.roundProfilePic {
+	border-radius: 50%;
+}

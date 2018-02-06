@@ -655,3 +655,7 @@ input[type=number] {
 #searchBar p{
 	font-size:1.4em;
 }
+
+.roundProfilePic {
+	border-radius: 50%;
+}

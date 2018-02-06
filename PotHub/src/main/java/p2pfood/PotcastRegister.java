@@ -23,6 +23,7 @@ import javax.servlet.http.Part;
 import org.apache.commons.compress.utils.IOUtils;
 import adminSearch.SearchSanitizer;
 import database.Database;
+import database.model.DatabaseUserModel;
 import database.model.LogsModel;
 import database.model.PotcastModel;
 import login.BanChecker;
@@ -66,6 +67,9 @@ public class PotcastRegister extends HttpServlet {
 
 		try {
 			Database db = new Database(0);
+			
+			DatabaseUserModel dum = db.getUserProfile(username);
+			
 			PrintWriter pw = response.getWriter();
 			pw.append("<!DOCTYPE html>" + "<html>" + "<head>" + "<meta charset='ISO-8859-1'>" + "<meta name='viewport'"
 					+ "	content='width=device-width, initial-scale=1, shrink-to-fit=no'>" + "<!-- Favicon -->"
@@ -81,10 +85,17 @@ public class PotcastRegister extends HttpServlet {
 					+ "<link rel='stylesheet' type='text/css' href='css/p2preg.css' />" + "</head>" + "<body>"
 					+ "	<!--  Navigation Bar -->" + "		<div id='header'>" + "<div id='companyTitle'>"
 					+ "<h1>PotHub</h1>" + "</div>"
-					+ "<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
-					+ "<div id='profilePic'>" + "<img src='images/profile.png' height='50' width='50'/>"
-					+ "<span id='welcomeSpan'>Welcome, " + username + " </span>" + "</div>"
-					+ "<div id='profileDropdownDiv'>");
+					+ "			<div id='profilePicWrapDiv' onmouseover='showProfileDropdown()' onmouseout='hideProfileDropdown()'>"
+					+ "				<div id='profilePic'>");
+					if (dum.getProfilePic() != 0) {
+						pw.append("<img src='Image/" + db.getImageByImageID(dum.getProfilePic()) + "' class='roundProfilePic' height='50' width='50'/>");
+					}
+					else {
+						pw.append("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+					}
+					pw.append("			<span id='welcomeSpan'>Welcome, " + username + "</span>"
+					+ "				</div>"
+					+ "<div id='profileDropdownDiv'>" + "<a href='Profile'>Profile</a>");
 
 			pw.append("<a href='Logout'>Logout</a>");
 
