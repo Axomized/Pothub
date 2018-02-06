@@ -196,11 +196,11 @@ public class Subscription2 extends HttpServlet {
 
 					if (dumm.getProfilePic() != 0) {
 
-						out.print("<div><img src='Image/" + k.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70' style='border-radius:50%;' /></div>");
+						out.print("<div><img src='Image/" + k.getImageByImageID(dumm.getProfilePic()) + "' style='border-radius:50%;' height='70' width='70' style='border-radius:50%;' /></div>");
 
 					}
 					else {
-						out.print("<div><img src='images/profile.png' height='70' width='70'/></div>");
+						out.print("<div><img src='images/profile.png' style='border-radius:50%;' height='70' width='70'/></div>");
 					}
 				}
 				catch (ClassNotFoundException e) {

@@ -100,7 +100,7 @@ public class Forum extends HttpServlet {
 				out.print("<img src='Image/" + dc.getImageByImageID(dumdum.getProfilePic()) + "' style='border-radius:50%;' height='50' width='50'/>");
 			}
 			else {
-				out.print("<img src='images/profile.png' class='roundProfilePic' height='50' width='50'/>");
+				out.print("<img src='images/profile.png' class='roundProfilePic' style='border-radius:50%;' height='50' width='50'/>");
 			}
 		}
 		catch (ClassNotFoundException e) {
@@ -272,10 +272,10 @@ public class Forum extends HttpServlet {
 
 
 				if (dumm.getProfilePic() != 0) {
-					out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
+					out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' style='border-radius:50%;' height='70' width='70'/>");
 				}
 				else {
-					out.print("<img src='images/profile.png' height='70' width='70'/>");
+					out.print("<img src='images/profile.png' style='border-radius:50%;' height='70' width='70'/>");
 				}
 
 

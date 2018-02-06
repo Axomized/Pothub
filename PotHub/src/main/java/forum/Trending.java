@@ -255,10 +255,10 @@ public class Trending extends HttpServlet {
 						
 						
 						if (dumm.getProfilePic() != 0) {
-							out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' height='70' width='70'/>");
+							out.print("<img src='Image/" + dbms.getImageByImageID(dumm.getProfilePic()) + "' style='border-radius:50%;' height='70' width='70'/>");
 						}
 						else {
-							out.print("<img src='images/profile.png' height='70' width='70'/>");
+							out.print("<img src='images/profile.png' style='border-radius:50%;' height='70' width='70'/>");
 						}
 						
 						
