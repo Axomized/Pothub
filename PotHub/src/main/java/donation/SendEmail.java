@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 public class SendEmail {
 	private static final String SMTP_HOST_NAME = "smtp.sendgrid.net";
-	private static final String SMTP_AUTH_USER = "azure_0305d0fd475a14075c13118cc95f5c34@azure.com";
+	private static final String SMTP_AUTH_USER = "azure_4cdfa1595fb2bcdd6704973e1524bf45@azure.com";
 	private static final String SMTP_AUTH_PWD = "ITP292-03";
 
 	public void sendEmail(String receipientEmail, String content) {

@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import database.Database;
 import database.model.LogsModel;
@@ -20,28 +21,35 @@ public class Logs extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession(false);
 		try {
 			Database db = new Database(0);
 			LogsSearch logsSearch = new LogsSearch();
-			String iGN = request.getParameter("username");
-			String logType = request.getParameter("selectType");
-			String dateInput = request.getParameter("selectDate");
-			String afterDate = request.getParameter("afterDate");
-			String beforeDate = request.getParameter("beforeDate");
-			
-			if (iGN != null && !iGN.isEmpty()) {
-				logsSearch.setiGN(iGN);
+			if (session == null || session.getAttribute("username") == null) {
+	    		response.sendRedirect("AdminLogin");
+	    		return;
 			}
-			if (logType != null && !logType.isEmpty()) {
-				logsSearch.setLogType(logType);
-			}
-			if (dateInput != null && !dateInput.isEmpty()) {
-				logsSearch.setDateInput(dateInput);
+			else if (db.getPermissionForIGN((String)session.getAttribute("username")) == 2 && db.authAdminSession(session.getId())) {
+				String iGN = request.getParameter("username");
+				String logType = request.getParameter("selectType");
+				String dateInput = request.getParameter("selectDate");
+				String afterDate = request.getParameter("afterDate");
+				String beforeDate = request.getParameter("beforeDate");
 				
-				if (dateInput.equals("Custom")) {
-					if ((afterDate != null && !afterDate.isEmpty()) && (beforeDate != null && !beforeDate.isEmpty())) {
-						logsSearch.setAfterDate(afterDate);
-						logsSearch.setBeforeDate(beforeDate);
+				if (iGN != null && !iGN.isEmpty()) {
+					logsSearch.setiGN(iGN);
+				}
+				if (logType != null && !logType.isEmpty()) {
+					logsSearch.setLogType(logType);
+				}
+				if (dateInput != null && !dateInput.isEmpty()) {
+					logsSearch.setDateInput(dateInput);
+					
+					if (dateInput.equals("Custom")) {
+						if ((afterDate != null && !afterDate.isEmpty()) && (beforeDate != null && !beforeDate.isEmpty())) {
+							logsSearch.setAfterDate(afterDate);
+							logsSearch.setBeforeDate(beforeDate);
+						}
 					}
 				}
 			}
