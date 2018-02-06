@@ -100,7 +100,7 @@ public class LogsSearch {
 					searchQuery += " IGN IS NULL AND";
 				}
 				else {
-					searchQuery += " IGN = '" + iGN + "' AND";
+					searchQuery += " IGN = '" + iGN.replaceAll("'", "''") + "' AND";
 				}
 			}
 			if ((logType != null && !logType.isEmpty()) && !logType.equals("All")) {

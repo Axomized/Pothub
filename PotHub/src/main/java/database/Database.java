@@ -25,6 +25,7 @@ import database.model.*;
 import logs.LogsSearch;
 import p2pfood.PotcastSearchObject;
 import potcastTalk.TalkTimer;
+import profile.FoodPrefFilter;
 import profile.ProfileDonationSearch;
 import profile.ProfileUpdate;
 
@@ -1901,6 +1902,28 @@ public class Database {
 	public ArrayList<ForumPostModel> getForumModel() throws SQLException{
 		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
 		ResultSet rs = getResultSet("SELECT * FROM ForumPost ORDER BY PostID DESC;");
+		while(rs.next()) {
+			int postID = rs.getInt("PostID");
+			String thread = rs.getString("Thread");
+			int upvotes = rs.getInt("Upvotes");
+			String iGN = rs.getString("IGN");
+			Timestamp date = rs.getTimestamp("Date");
+			int picture = rs.getInt("Picture");
+			String description = rs.getString("Description");
+			String fileAttachment = rs.getString("FileAttachment");
+			String text = rs.getString("ForumNormalText");
+			String url = rs.getString("ForumURL");
+			
+			
+			forums.add(new ForumPostModel(postID, thread, upvotes, iGN, date, picture, description, fileAttachment, text, url));
+		}
+		return forums;
+	}
+	
+	public ArrayList<ForumPostModel> getForumModelForForum(String name, FoodPrefFilter filter) throws SQLException{
+		ArrayList<ForumPostModel> forums = new ArrayList<ForumPostModel>();
+		PreparedStatement ppstmt = conn.prepareStatement(filter.getFilterForumQuery(name));
+		ResultSet rs = ppstmt.executeQuery();
 		while(rs.next()) {
 			int postID = rs.getInt("PostID");
 			String thread = rs.getString("Thread");

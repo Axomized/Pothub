@@ -95,7 +95,7 @@ public class ProfileDonationSearch {
 				searchQuery += " AND OnBehalf = ''";
 			}
 			else {
-				searchQuery += " AND OnBehalf = '" + onBehalf + "'";
+				searchQuery += " AND OnBehalf = '" + onBehalf.replaceAll("'", "''") + "'";
 			}
 		}
 		if (dateInput != null && !dateInput.isEmpty()) {
