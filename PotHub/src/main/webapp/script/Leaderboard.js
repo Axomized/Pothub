@@ -336,7 +336,7 @@ function startVotingDisplay(userTo) {
 // End
 function countDownAndRedirectToEndPage () {
 	stompDisconnect();
-	window.location.href = "EventOfEventPage/" + encodeURI(eventName);
+	window.location.href = "EventPage/";
 }
 
 // Video Stream

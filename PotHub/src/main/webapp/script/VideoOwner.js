@@ -74,7 +74,7 @@ $(document).ready(function aaa(){
 				"type": "POST",
 				"data": {"eventName": eventName, "status": "E"},
 				success: function aaa() {
-					window.location.href = "EventofEvent/" + eventName;
+					window.location.href = "EventPage";
 				}
 			});
 			

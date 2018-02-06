@@ -63,9 +63,9 @@ public class OwnerLeaderboardPage extends HttpServlet {
 			
 			String currentProfilePic = DB.getUserProfilePic(username);
 			if(currentProfilePic != null) {
-				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50'/>");
+				sb.append("				<img src='Image/" + currentProfilePic + "' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
 			}else {
-				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50' style='border-radius:50%' />");
+				sb.append("				<img src='images/profile.png' alt='ProfilePicture' height='50' width='50' />");
 			}
 			sb.append("					<span id='welcomeSpan'>Welcome, " + username + "</span>");
 			sb.append("				</div>");
