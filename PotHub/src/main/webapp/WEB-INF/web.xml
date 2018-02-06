@@ -257,6 +257,10 @@
 			<servlet-class>forum.Trending</servlet-class>
 		</servlet>
 	<servlet-mapping>
+		<servlet-name>LoginPage</servlet-name>
+		<url-pattern>/error</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
 		<servlet-name>EventPage</servlet-name>
 		<url-pattern>/EventPage</url-pattern>
 	</servlet-mapping>

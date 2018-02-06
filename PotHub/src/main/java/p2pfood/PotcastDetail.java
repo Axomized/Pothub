@@ -231,7 +231,7 @@ public class PotcastDetail extends HttpServlet {
 								+ "</form>");
 					}
 					
-					if(relevantReports.size()<=2&&doesNotExist&&!pm.getiGN().equals(username)){
+					if(relevantReports.size()<=2&&doesNotExist&&!pm.getiGN().equals(username)&&canReport){
 						pw.append( "<p><button id='reportButton' onclick='showReport;'><img src='images/flag.png' height=30 width=30>Report</button></p>");
 						pw.append("				<div id='popup'>");
 						pw.append("					<div id='popup-title'>");
@@ -276,14 +276,14 @@ public class PotcastDetail extends HttpServlet {
 			pw.append("<div class='pointsDiv'><div class='upper-Div'><p>Pickup at</div><div class='thatLine'></div><div id='lower-Div'>"+ timestampToDateTime(pm.getPickupTime()) +"</p></div></div>");
 			pw.append("<div class='pointsDiv'><div class='upper-Div'><p>Address</div><div class='thatLine'></div><div id='lower-Div'>" + dbu.getUnitNo() + ", Singapore " + dbu.getAddress() + "</p></div></div>");
 			
-			pw.append("<div class='pointsDiv'>" + "<p onclick='showReportBuyers()' id='buyerPara'>Report No-Shows </p>" + "<ul id='buyersList'>");
-			
-			if(!canReport){
+			if(!username.equals(pm.getiGN())){
+				pw.append("<div class='pointsDiv'>" + "<p id='buyerPara1'>Buyers  </p>" + "<ul id='buyersList'>");
 				for (PotcastBidModel bid : bids) {
 					pw.append("<li>" + bid.getiGN() + "</li>");
 				}
 			}
 			else{
+				pw.append("<div class='pointsDiv'>" + "<p onclick='showReportBuyers()' id='buyerPara'>Report No-Shows </p>" + "<ul id='buyersList'>");
 				for (PotcastBidModel bid : bids) {
 					pw.append("<form method='post' action='noShowHandler'>"
 							+ "<input type='hidden' name='bidder' value='"+bid.getiGN()+"'></input>"
