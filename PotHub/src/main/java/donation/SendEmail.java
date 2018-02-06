@@ -23,9 +23,6 @@ public class SendEmail {
 	public void sendEmail(String receipientEmail, String content) throws MessagingException {
 		String to = receipientEmail;
 		String from = "pothubaspj@gmail.com";
-		//final String username = "pothubaspj@gmail.com";
-		//final String password = "ITP292-03";
-		//String host = "smtp.gmail.com";
 
 		Properties properties = new Properties();
         properties.put("mail.transport.protocol", "smtp");
@@ -37,20 +34,17 @@ public class SendEmail {
         Session mailSession = Session.getDefaultInstance(properties, auth);
         MimeMessage message = new MimeMessage(mailSession);
         Multipart multipart = new MimeMultipart("alternative");
-        BodyPart part1 = new MimeBodyPart();
-        part1.setText("This is the PIN to confirm your donation. It is valid only for 5 minutes.\n\n" + content);
-        multipart.addBodyPart(part1);
+        BodyPart part = new MimeBodyPart();
+        part.setText("This is the PIN to confirm your donation. It is valid only for 5 minutes.\n\n" + content);
+        multipart.addBodyPart(part);
         message.setFrom(new InternetAddress(from));
         message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
         message.setSubject("PotHub Donation PIN");
         message.setContent(multipart);
         
         Transport transport = mailSession.getTransport();
-	    // Connect the transport object.
 	    transport.connect();
-	    // Send the message.
 	    transport.sendMessage(message, message.getAllRecipients());
-	    // Close the connection.
 	    transport.close();
 	}
 	
