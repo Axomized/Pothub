@@ -78,8 +78,7 @@ public class Subscription extends HttpServlet {
 						+ "	crossorigin='anonymous'>"
 						+ "<!-- Optional theme -->"
 						+ "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
-						+ "<!-- My Own Script -->"
-						+ "<script src='script/Subscription.js' defer></script>"
+						
 						+ "<!-- My Style Sheet -->"
 						+ "<link rel='stylesheet' type='text/css' href='css/Subscription.css' />"
 						+ "</head>"
@@ -490,6 +489,8 @@ public class Subscription extends HttpServlet {
 				+ "  src=\"http://code.jquery.com/jquery-3.3.1.min.js\"" 
 				+ "  integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\"" 
 				+ "  crossorigin=\"anonymous\"></script>"
+				+ "<!-- My Own Script -->"
+				+ "<script src='script/Subscription.js' defer></script>"
 				+ "	<script"
 				+ "		src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'"
 				+ "		integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb'"

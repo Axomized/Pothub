@@ -27,6 +27,7 @@ import database.model.ForumVoteModel;
 import database.model.LogsModel;
 import database.model.SubscriptionModel;
 import login.BanChecker;
+import profile.FoodPrefFilter;
 
 /**
  * Servlet implementation class Forum
@@ -79,9 +80,6 @@ public class Forum extends HttpServlet {
 						+ "	crossorigin='anonymous'>"
 						+ "<!-- Optional theme -->"
 						+ "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
-						+ "<!-- My Own Script -->"
-						+ "<script src=\"http://code.jquery.com/jquery-3.3.1.min.js\" integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\" crossorigin=\"anonymous\"></script>"
-						+ "<script src='script/forum.js' defer></script>"
 						+ "<!-- My Style Sheet -->"
 						+ "<link rel='stylesheet' type='text/css' href='css/Forum.css' />"
 						+ "</head>"
@@ -169,7 +167,8 @@ public class Forum extends HttpServlet {
 
 		try {
 			Database dbms = new Database(2);
-			ArrayList<ForumPostModel> fa = dbms.getForumModel();
+			FoodPrefFilter filter = new FoodPrefFilter();
+			ArrayList<ForumPostModel> fa = dbms.getForumModelForForum(username, filter);
 			ArrayList<CommentModel> cmm = dbms.getCommentModel();
 			ArrayList<SubscriptionModel> smm = dbms.getSubscriptionModel();
 			FileTableModel ftm = new FileTableModel();
@@ -410,6 +409,9 @@ public class Forum extends HttpServlet {
 						+ "				href='#'>Support</a>"
 						+ "		</p>"
 						+ "	</div>"
+						+ "<!-- My Own Script -->"
+						+ "<script src=\"http://code.jquery.com/jquery-3.3.1.min.js\" integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\" crossorigin=\"anonymous\"></script>"
+						+ "<script src='script/forum.js' defer></script>"
 						+ "	<script"
 						+ "		src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'"
 						+ "		integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb'"
