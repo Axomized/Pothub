@@ -111,10 +111,10 @@ public class ProfileUpdate {
 					updateQuery += " Gender = '" + gender.charAt(0) + "',";
 				}
 			}
-			if (contact_No != null && !contact_No.isEmpty()) {
+			if (contact_No != null) {
 				updateQuery += " Contact_No = '" + contact_No + "',";
 			}
-			if (bio != null && !bio.isEmpty()) {
+			if (bio != null) {
 				updateQuery += " Bio = '" + bio + "',";
 			}
 			if (address != null && !address.isEmpty()) {

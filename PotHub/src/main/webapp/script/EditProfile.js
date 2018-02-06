@@ -6,8 +6,41 @@ function hideProfileDropdown() {
 	document.getElementById("profileDropdownDiv").style.display = "none";
 }
 
-function startedTyping(inputsForFilled) {
+function postalCodeType(inputsForFilled) {
 	if (inputsForFilled.value.length > 0) {
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+		
+	}
+	else if (inputsForFilled.value.length == 0) {
+		document.getElementById("postalCodeText").style.display = "block";
+		document.getElementById("updateBtn").disabled = true;
+		document.getElementById("updateBtn").style.cursor = "not-allowed";
+	}
+	else {
+		document.getElementById("updateBtn").disabled = true;
+		document.getElementById("updateBtn").style.cursor = "not-allowed";
+	}
+}
+
+function unitNoType(inputsForFilled) {
+	if (inputsForFilled.value.length > 0) {
+		document.getElementById("updateBtn").disabled = false;
+		document.getElementById("updateBtn").style.cursor = "pointer";
+	}
+	else if (inputsForFilled.value.length == 0) {
+		document.getElementById("unitNoText").style.display = "block";
+		document.getElementById("updateBtn").disabled = true;
+		document.getElementById("updateBtn").style.cursor = "not-allowed";
+	}
+	else {
+		document.getElementById("updateBtn").disabled = true;
+		document.getElementById("updateBtn").style.cursor = "not-allowed";
+	}
+}
+
+function optionalInput(inputsForFilled) {
+	if (inputsForFilled.value.length >= 0) {
 		document.getElementById("updateBtn").disabled = false;
 		document.getElementById("updateBtn").style.cursor = "pointer";
 	}

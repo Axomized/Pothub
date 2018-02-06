@@ -79,7 +79,7 @@ public class Logs extends HttpServlet {
 					+ "				<li><a href='AdminRanks'>Forum Control</a></li>"
 					+ "				<li><a href='AdminReports'>Reports</a></li>"
 					+ "				<li><a href='Logs'>Logs</a></li>"
-					+ "				<li><a href='Logout' id='logoutLink'>Logout</a></li>"
+					+ "				<li id='logoutLink'><a href='AdminLogout'>Logout</a></li>"
 					+ "			</ul>"
 					+ "		</div>"
 					+ "		<div id='wrapper'>"

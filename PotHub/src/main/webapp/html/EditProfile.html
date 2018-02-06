@@ -109,23 +109,25 @@
 										</div>
 										<div id="contactNoDiv" class="divWrap">
 											<label id="contactNoLabel" for="contactNoInput">Contact Number</label>
-											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" maxlength="8" oninput="startedTyping(this); onlyNumbers(this)">
+											<input type="text" id="contactNoInput" class="inputsForFill" name="contactNoInput" maxlength="8" oninput="optionalInput(this); onlyNumbers(this)">
 											<div class="errorMsg">Only a maximum of 8 numbers.</div>
 										</div>
 										<div id="bioDiv" class="divWrap">
 											<label id="bioLabel" for="bioText">Bio</label>
-											<textarea id="bioText" class="inputsForFill" name="bioText" maxlength="255" oninput="startedTyping(this)"></textarea>
+											<textarea id="bioText" class="inputsForFill" name="bioText" maxlength="255" oninput="optionalInput(this)"></textarea>
 											<div id="bioInfoText">Only a maximum of 255 characters.</div>
 										</div>
 										<div id="addressDiv" class="divWrap">
 											<div id="postalCodeDiv">
-												<label id="postalCodeLabel" for="postalCodeInput">Postal Code</label>
-												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" maxlength="6" oninput="startedTyping(this); onlyNumbers(this)">
+												<label id="postalCodeLabel" for="postalCodeInput">Postal Code<span class="requiredSpan">*</span></label>
+												<input type="text" id="postalCodeInput" class="inputsForFill" name="postalCodeInput" maxlength="6" oninput="postalCodeType(this); onlyNumbers(this)">
+												<div id="postalCodeText">Postal code cannot be empty.</div>
 												<div class="errorMsg">Only a maximum of 6 numbers.</div>
 											</div>
 											<div id="unitNoDiv" class="innerDiv">
-												<label id="unitNoLabel" for="unitNoInput">Unit Number</label>
-												<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" oninput="startedTyping(this)">
+												<label id="unitNoLabel" for="unitNoInput">Unit Number<span class="requiredSpan">*</span></label>
+												<input type="text" id="unitNoInput" class="inputsForFill" name="unitNoInput" oninput="unitNoType(this)">
+												<div id="unitNoText">Unit number cannot be empty.</div>
 												<div class="errorMsg">Invalid unit number.</div>
 											</div>
 										</div>

@@ -96,7 +96,12 @@ public class LogsSearch {
 			searchQuery += " WHERE";
 			
 			if (iGN != null && !iGN.isEmpty()) {
-				searchQuery += " IGN = '" + iGN + "' AND";
+				if (iGN.equals("NIL")) {
+					searchQuery += " IGN IS NULL AND";
+				}
+				else {
+					searchQuery += " IGN = '" + iGN + "' AND";
+				}
 			}
 			if ((logType != null && !logType.isEmpty()) && !logType.equals("All")) {
 				searchQuery += " LogType = '" + logType + "' AND";

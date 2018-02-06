@@ -175,21 +175,23 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='startedTyping(this); onlyNumbers(this)'>"
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='optionalInput(this); onlyNumbers(this)'>"
 					+ "										</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>"
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='optionalInput(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>"
 					+ "											<div id='bioInfoText'>Only a maximum of 255 characters.</div>"
 					+ "										</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
-					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='startedTyping(this); onlyNumbers(this)'>"
+					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code<span class='requiredSpan'>*</span></label>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='postalCodeType(this); onlyNumbers(this)'>"
+					+ "												<div id='postalCodeText'>Your address might be used in features like potcast.</div>"
 					+ "											</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
-					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>"
+					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number<span class='requiredSpan'>*</span></label>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='unitNoType(this)'>"
+					+ "												<div id='unitNoText'>Your address might be used in features like potcast.</div>"
 					+ "											</div>"
 					+ "										</div>"
 					+ "									</div>"
@@ -269,6 +271,7 @@ public class EditProfile extends HttpServlet {
 			Part profilePicPart = request.getPart("profilePicFile");
 			String profilePicName = Paths.get(profilePicPart.getSubmittedFileName()).getFileName().toString();
 			byte[] profilePicByte = IOUtils.toByteArray(profilePicPart.getInputStream());
+			String errorMsg = "";
 			boolean updateProfileSuccess = false;
 			boolean contact_NoError = false;
 			boolean bioError = false;
@@ -285,15 +288,18 @@ public class EditProfile extends HttpServlet {
 				if (gender != null && !gender.isEmpty()) {
 					profileUpdate.setGender(gender);
 				}
-				if (contact_No != null && !contact_No.isEmpty()) {
-					if (contact_No.length() == 8 && contact_No.matches("\\d+")) {
+				if (contact_No != null) {
+					if (contact_No.isEmpty()) {
+						profileUpdate.setContact_No(contact_No);
+					}
+					else if (contact_No.length() > 0 && contact_No.matches("\\d+")) {
 						profileUpdate.setContact_No(contact_No);
 					}
 					else {
 						contact_NoError = true;
 					}
 				}
-				if (bio != null && !bio.isEmpty()) {
+				if (bio != null) {
 					if (bio.length() <= 255) {
 						profileUpdate.setBio(bio);
 					}
@@ -307,15 +313,25 @@ public class EditProfile extends HttpServlet {
 					}
 					else {
 						addressError = true;
+						errorMsg = "Only a maximum of 6 numbers.";
 					}
 				}
+				else {
+					addressError = true;
+					errorMsg = "Postal code cannot be empty.";
+				}
 				if (unitNo != null && !unitNo.isEmpty()) {
-					if (unitNo.length() == 7) {
+					if (unitNo.length() <= 7) {
 						profileUpdate.setUnitNo(unitNo);
 					}
 					else {
 						unitNoError = true;
+						errorMsg = "Invalid unit number.";
 					}
+				}
+				else {
+					unitNoError = true;
+					errorMsg = "Unit number cannot be empty.";
 				}
 				if (profilePicName != null && !profilePicName.isEmpty()) {
 					profileUpdate.setProfilePicName(profilePicName);
@@ -466,14 +482,14 @@ public class EditProfile extends HttpServlet {
 					+ "										</div>"
 					+ "										<div id='contactNoDiv' class='divWrap'>"
 					+ "											<label id='contactNoLabel' for='contactNoInput'>Contact Number</label>"
-					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='startedTyping(this); onlyNumbers(this)'>");
+					+ "											<input type='text' id='contactNoInput' class='inputsForFill' name='contactNoInput' maxlength='8' value='" + Encode.forHtml(dum.getContact_No()) + "' oninput='optionalInput(this); onlyNumbers(this)'>");
 					if (contact_NoError) {
 						out.print("<div class='errorMsg'>Only a maximum of 8 numbers.</div>");
 					}
 					out.print("								</div>"
 					+ "										<div id='bioDiv' class='divWrap'>"
 					+ "											<label id='bioLabel' for='bioText'>Bio</label>"
-					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='startedTyping(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>");
+					+ "											<textarea id='bioText' class='inputsForFill' name='bioText' maxlength='255' oninput='optionalInput(this)'>" + Encode.forHtml(dum.getBio()) + "</textarea>");
 					if (bioError) {
 						out.print("<div id='bioInfoText' style='color: #f74225; font-weight: 600;'>Only a maximum of 255 characters.</div>");
 					}
@@ -483,17 +499,19 @@ public class EditProfile extends HttpServlet {
 					out.print("								</div>"
 					+ "										<div id='addressDiv' class='divWrap'>"
 					+ "											<div id='postalCodeDiv'>"
-					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code</label>"
-					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='startedTyping(this); onlyNumbers(this)'>");
+					+ "												<label id='postalCodeLabel' for='postalCodeInput'>Postal Code<span class='requiredSpan'>*</span></label>"
+					+ "												<input type='text' id='postalCodeInput' class='inputsForFill' name='postalCodeInput' maxlength='6' value='" + Encode.forHtml(dum.getAddress()) + "' oninput='postalCodeType(this); onlyNumbers(this)'>"
+					+ "												<div id='postalCodeText'>Your address might be used in features like potcast.</div>");
 					if (addressError) {
-						out.print("<div class='errorMsg'>Only a maximum of 6 numbers.</div>");
+						out.print("<div class='errorMsg'>" + errorMsg + "</div>");
 					}
 					out.print("									</div>"
 					+ "											<div id='unitNoDiv' class='innerDiv'>"
-					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number</label>"
-					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='startedTyping(this)'>");
+					+ "												<label id='unitNoLabel' for='unitNoInput'>Unit Number<span class='requiredSpan'>*</span></label>"
+					+ "												<input type='text' id='unitNoInput' class='inputsForFill' name='unitNoInput' value='" + Encode.forHtml(dum.getUnitNo()) + "' oninput='unitNoType(this)'>"
+					+ "												<div id='unitNoText'>Your address might be used in features like potcast.</div>");
 					if (unitNoError) {
-						out.print("<div class='errorMsg'>Invalid unit number.</div>");
+						out.print("<div class='errorMsg'>" + errorMsg + "</div>");
 					}
 					out.print("									</div>"
 					+ "										</div>"
@@ -545,12 +563,11 @@ public class EditProfile extends HttpServlet {
 	}
 	
 	private boolean validateInputs(String isFiltered, String gender, String contact_No, String bio, String address, String unitNo) {
-		boolean isNotNull = false;
-		if ((isFiltered != null && !isFiltered.isEmpty()) || (gender != null && !gender.isEmpty()) || (contact_No != null && !contact_No.isEmpty()) || (bio != null && !bio.isEmpty()) || (address != null && !address.isEmpty() 
+		if ((isFiltered != null && !isFiltered.isEmpty()) || (gender != null && !gender.isEmpty()) || (contact_No != null) || (bio != null) || (address != null && !address.isEmpty() 
 				|| (unitNo != null && !unitNo.isEmpty()))) {
-			isNotNull = true;
+			return true;
 		}
-		return isNotNull;
+		return false;
 	}
 
 }

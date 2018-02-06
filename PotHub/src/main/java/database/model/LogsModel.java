@@ -93,12 +93,9 @@ public class LogsModel {
 	}
 	
 	public String getClientIP(HttpServletRequest request) throws UnknownHostException {
-		String ip = request.getHeader("X-FORWARDED-FOR");
-		if (ip == null || ip.isEmpty()) {
-			ip = request.getRemoteAddr();
+		String ip = request.getRemoteAddr();
 			if (ip == null || ip.isEmpty() || ip.equalsIgnoreCase("0:0:0:0:0:0:0:1")) {
 				ip = InetAddress.getLocalHost().getHostAddress();
-			}
 		}
 		return ip;
 	}

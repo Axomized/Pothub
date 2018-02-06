@@ -91,7 +91,12 @@ public class ProfileDonationSearch {
 			searchQuery += " AND DonationAmount = '" + donationAmount + "'";
 		}
 		if (onBehalf != null && !onBehalf.isEmpty()) {
-			searchQuery += " AND OnBehalf = '" + onBehalf + "'";
+			if (onBehalf.equals("NIL")) {
+				searchQuery += " AND OnBehalf = ''";
+			}
+			else {
+				searchQuery += " AND OnBehalf = '" + onBehalf + "'";
+			}
 		}
 		if (dateInput != null && !dateInput.isEmpty()) {
 			if (dateInput.equals("Custom")) {

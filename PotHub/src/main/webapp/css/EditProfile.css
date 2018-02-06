@@ -458,6 +458,25 @@ body {
 	font-weight: 600;
 }
 
+#postalCodeText {
+	display: none;
+	color: #f74225;
+	text-align: left;
+	font-weight: 600;
+}
+
+#unitNoText {
+	display: none;
+	color: #f74225;
+	text-align: left;
+	font-weight: 600;
+}
+
+.requiredSpan {
+	color: #f74225;
+	margin-left: 3px;
+}
+
 /* Footer */
 
 #footer p { 
