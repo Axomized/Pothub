@@ -127,7 +127,8 @@ public class Registration extends HttpServlet {
 		{
 			Database db1 = new Database(0);
 		
-			if(!email.matches("^[a-zA-Z0-9]+@[a-zA-Z0-9]+(.[a-zA-Z]{2,})$"))
+			if(!email.matches("^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$") ||
+					email.length() == 0)
 			{	
 				out.println("<script type=\"text/javascript\">");
 				out.println("alert('Please enter your email address in the format someone@example.com.');");

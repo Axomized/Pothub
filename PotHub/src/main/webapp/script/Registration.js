@@ -1,16 +1,16 @@
 function validateEmail() {
 	var email = document.getElementById("email").value;
-    var atpos = email.indexOf("@");
-    var dotpos = email.lastIndexOf(".");
+    var validEmail = new RegExp('^([_a-zA-Z0-9-]+(\\.[_a-zA-Z0-9-]+)*@[a-zA-Z0-9-]+(\\.[a-zA-Z0-9-]+)*(\\.[a-zA-Z]{1,6}))?$');
     
-    if (atpos<1 || dotpos<atpos+2 || dotpos+2>=email.length) 
+    if (!email.match(validEmail) || email.length == 0)
     {
 		document.getElementById("messageEmail").style.visibility = "visible";
-	}
-	else 
-	{
+    }
+    else
+    {
 		document.getElementById("messageEmail").style.visibility = "hidden";
-	}
+    }
+    
 
 }
 
