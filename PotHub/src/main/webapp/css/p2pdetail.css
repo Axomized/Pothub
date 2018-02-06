@@ -660,3 +660,8 @@ button {
 	right: 10px;
 	z-index: 4;
 }
+
+.plainTextButton{
+	background-color: #f3decb;
+	color: black;
+}

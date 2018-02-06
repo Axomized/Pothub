@@ -124,6 +124,14 @@ public class PotcastDetail extends HttpServlet {
 				}
 			}
 			
+
+			//Check if can report
+			boolean canReport = false;
+			
+			if(System.currentTimeMillis()>pm.getPickupTime().getTime()+(long)3600000&&pm.getiGN().equals(username)){
+				canReport = true;
+			}
+
 			ArrayList<ReportModel> reports = db.getReportsFromOneUser((String) session.getAttribute("username"));
 			ArrayList<ReportModel> relevantReports = new ArrayList<ReportModel>();
 			
@@ -131,6 +139,12 @@ public class PotcastDetail extends HttpServlet {
 				if(report.isGuiltyOrNot()==0){
 					relevantReports.add(report);
 				}
+			}
+			
+			//Check if restricted
+			boolean restricted = false;
+			if(db.isPotcastRestricted(username)){
+				restricted=true;
 			}
 			
 			pw.append(
@@ -256,10 +270,28 @@ public class PotcastDetail extends HttpServlet {
 					+ "<div id='foodDesc'><p>Address: </p>"
 					+ "<p>" + dbu.getUnitNo() + ", Singapore " + dbu.getAddress() + "</p>" + "</div>"
 					+ "<div id='foodBuyers'>" + "<p>Buyers: </p>" + "<ul>");
-			for (PotcastBidModel bid : bids) {
-				pw.append("<li>" + bid.getiGN() + "</li>");
+			
+			if(!canReport){
+				for (PotcastBidModel bid : bids) {
+					pw.append("<li>" + bid.getiGN() + "</li>");
+				}
 			}
+			else{
+				for (PotcastBidModel bid : bids) {
+					pw.append("<form method='post' action='noShowHandler'>"
+							+ "<input type='hidden' name='bidder' value='"+bid.getiGN()+"'></input>"
+							+ "<input type='hidden' name='bidon' value='"+bid.getPotcastID()+"'></input>"
+							+ "<li><button class='plainTextButton'>" 
+							+ bid.getiGN() 
+							+ "</button></li></form>");
+				}
+			}
+			
 			pw.append("</ul>" + "</div>");
+			
+					if(restricted&&db.isPotcastRecent(username)){
+						canBid=false;
+					}
 
 					if(canBid){
 					pw.append("<div id='foodDesc'><form method='post'><input type='hidden' name='potcastID' value='"+pm.getPotcastID()+"'></input><input type='number' id='bidNumberBox' name='amount'></input>"
@@ -267,7 +299,6 @@ public class PotcastDetail extends HttpServlet {
 						+ "</form></div>");
 					}
 					if (request.getParameter("response") != null) {
-						System.out.println(request.getParameter("response"));
 						pw.append("<div id='foodDesc'><p>"+SearchSanitizer.sanitise(request.getParameter("response")) + "</p></div>");
 					}
 					
@@ -278,6 +309,11 @@ public class PotcastDetail extends HttpServlet {
 								+ "<button>Send Rating!</button>" 
 								+ "</form></div>");
 					}
+					if(restricted){
+						pw.append("<div id='foodDesc'>"
+								+ "<p>You are restricted due to frequent reports of not collecting food you bidded for! You may only bid once evrey 24 hours.</p>"
+								+ "</div>");
+					}
 					pw.append("</div>");
 					
 					pw.append( "</div>" + "<div id='footer'>"
@@ -285,11 +321,14 @@ public class PotcastDetail extends HttpServlet {
 					+ "<p>" + "<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a href='#'>Support</a>"
 					+ "</p>" + "</div>" + "</body>" + "</html>");
 		} catch (SQLException e) {
+			e.printStackTrace();
 			response.sendRedirect("p2plist");
 		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 			response.sendRedirect("p2plist");
 		} catch (Exception e) {
-			
+			e.printStackTrace();
+			response.sendRedirect("p2plist");
 		}
 	}
 

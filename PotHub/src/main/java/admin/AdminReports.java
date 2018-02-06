@@ -204,6 +204,7 @@ public class AdminReports extends HttpServlet {
    	+"<option value='Forum'>Forum Post</option>"
    	+"<option value='Event'>Event</option>"
    	+"<option value='Potcast'>Potcast</option>"
+   	+"<option value='Potcast Bid'>Potcast Bid</option>"
    	+"</select>"
    	+"</div></p>"
 	+"</div>"

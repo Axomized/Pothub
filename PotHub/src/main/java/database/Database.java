@@ -867,6 +867,69 @@ public class Database {
 		return pbms;
 	}
 	
+	public boolean didGuyBidOnPotcast(String guy, int potcastID) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT PotcastID FROM PotcastBid WHERE ign = ? AND PotcastID = ?");
+		ps.setString(1, guy);
+		ps.setInt(2, potcastID);
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isGuyBidOnPotcastReported(String guy, String reporter, int potcastID) throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT ReportID FROM Report WHERE ignreceive = ? AND ignsend = ? AND evidence = ? AND evidenceType = ?");
+		ps.setString(1, guy);
+		ps.setString(2, reporter);
+		ps.setInt(3, potcastID);
+		ps.setString(4, "Potcast Bid");
+		ResultSet rs = ps.executeQuery();
+		while(rs.next()){
+			return true;
+		}
+		
+		return false;
+	}
+	
+	public boolean isPotcastRestricted(String user) throws SQLException{
+		double reports = 0;
+		double bidsTotal = 0;
+		
+		bidsTotal = this.getBidsForPotcastUser(user).size();
+			PreparedStatement ps = conn.prepareStatement("SELECT ReportID FROM Report WHERE ignreceive = ? AND evidenceType = ?");
+			ps.setString(1, user);
+			ps.setString(2, "Potcast Bid");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()){
+				reports++;
+			}
+
+			if(reports/bidsTotal >= 0.5){
+				return true;
+			}
+			else{
+				return false;
+			}
+	}
+	
+	public boolean isPotcastRecent(String user)throws SQLException{
+		PreparedStatement ps = conn.prepareStatement("SELECT a.pickupTime FROM potcast a INNER JOIN potcastBid b ON a.ign = b.ign WHERE a.ign = ?");
+		ps.setString(1, user);
+		ResultSet rs = ps.executeQuery();
+		
+		while(rs.next()){
+			if(rs.getTimestamp("pickupTime").getTime()+(long)86400000<System.currentTimeMillis()){
+				return true;
+			}
+			else{
+				return false;
+			}
+		}
+		return false;
+	}
+	
 	public String addPotcastBid(PotcastBidModel pbm) throws SQLException{
 		ArrayList<PotcastBidModel> bids = this.getBidsForPotcast(pbm.getPotcastID());
 		PotcastModel pot = this.getPotcastByID(pbm.getPotcastID());
