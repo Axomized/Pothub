@@ -2,6 +2,8 @@ package logs;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -9,6 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.owasp.encoder.Encode;
 
 import database.Database;
 import database.model.LogsModel;
@@ -173,7 +177,7 @@ public class Logs extends HttpServlet {
 							out.print("<td>" + lm.getiGN() + "</td>");
 						}
 						out.print(" <td>" + lm.getLogType() + "</td>"
-								+ "	<td>" + lm.getLogActivity() + "</td>"
+								+ "	<td>" + decodeString(lm.getLogActivity()) + "</td>"
 								+ "</tr>");
 					}
 					out.print("					</tbody>"
@@ -204,6 +208,10 @@ public class Logs extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
+	}
+	
+	private String decodeString(String input) throws UnsupportedEncodingException {
+		return Encode.forHtml(URLDecoder.decode(input, "UTF-8"));
 	}
 
 }
