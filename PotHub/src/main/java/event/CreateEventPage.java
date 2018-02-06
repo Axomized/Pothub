@@ -232,13 +232,13 @@ public class CreateEventPage extends HttpServlet {
 			sb.append("						</div>");
 			sb.append("						<div class='col form-group'>");
 			sb.append("							<p><b>Unit-No/Address</b></p>");
-			sb.append("							<input type='text' class='form-control' placeholder='Type here...' id='additionalAddress' name='AdditionalAddress'>");
+			sb.append("							<input type='text' class='form-control' id='additionalAddress' name='AdditionalAddress'>");
 			sb.append("						</div>");
 			sb.append("					</div>");
 			sb.append("				</div>");
 			sb.append("				<div id='description-container' class='form-group row color-container'>");
 			sb.append("					<p><b>Description</b></p>");
-			sb.append("					<textarea id='description' class='form-control' placeholder='Type here...' name='EventDesc'></textarea>");
+			sb.append("					<textarea id='description' class='form-control' name='EventDesc'></textarea>");
 			sb.append("				</div>");
 			sb.append("				<div id='guest-container' class='form-group'>");
 			sb.append("					<p><b>Guest</b></p>");
