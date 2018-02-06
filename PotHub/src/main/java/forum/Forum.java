@@ -73,13 +73,13 @@ public class Forum extends HttpServlet {
 						+ "	content='width=device-width, initial-scale=1, shrink-to-fit=no'>"
 						+ "<!-- Page Title -->"
 						+ "<title>Forum</title>"
-						+ "<!-- Latest compiled and CSS -->"
-						+ "<link rel='stylesheet'"
-						+ "	href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css'"
-						+ "	integrity='sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ'"
-						+ "	crossorigin='anonymous'>"
-						+ "<!-- Optional theme -->"
-						+ "<script src='https://use.fontawesome.com/aff6d7353c.js'></script>"
+						+ "<!-- Latest compiled and CSS -->");
+						out.print("		<!-- Latest compiled and CSS -->");
+						out.print("		<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css' integrity='sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb' crossorigin='anonymous'>");
+						out.print("		<!-- Optional Script (Icons) -->");
+						out.print("		<script src='https://use.fontawesome.com/aff6d7353c.js'></script>");
+						out.print("		<!-- My Own Script -->");
+						out.print("		<script src='script/forum.js' defer></script>"
 						+ "<!-- My Style Sheet -->"
 						+ "<link rel='stylesheet' type='text/css' href='css/Forum.css' />"
 						+ "</head>"
@@ -408,18 +408,11 @@ public class Forum extends HttpServlet {
 						+ "			<a href='#'>Terms of Service</a> | <a href='#'>Privacy</a> | <a"
 						+ "				href='#'>Support</a>"
 						+ "		</p>"
-						+ "	</div>"
-						+ "<!-- My Own Script -->"
-						+ "<script src=\"http://code.jquery.com/jquery-3.3.1.min.js\" integrity=\"sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=\" crossorigin=\"anonymous\"></script>"
-						+ "<script src='script/forum.js' defer></script>"
-						+ "	<script"
-						+ "		src='https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js'"
-						+ "		integrity='sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb'"
-						+ "		crossorigin='anonymous'></script>"
-						+ "	<script"
-						+ "		src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js'"
-						+ "		integrity='sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn'"
-						+ "		crossorigin='anonymous'></script>"
+						+ "	</div>");
+						out.print("		<!-- Some required javascript -->");
+						out.print("		<script src='https://code.jquery.com/jquery-3.2.1.min.js'></script>");
+						out.print("		<script src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js' integrity='sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh' crossorigin='anonymous'></script>");
+						out.print("		<script src='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js' integrity='sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ' crossorigin='anonymous'></script>"
 						+ "</body>"
 						+ "</html>"
 				);
