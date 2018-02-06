@@ -52,7 +52,7 @@ public class ProfileDonation extends HttpServlet {
 				search.setOnBehalf(onBehalf);
 			}
 			if (amount != null && !amount.isEmpty()) {
-				search.setDonationAmount(new BigDecimal(amount));
+				search.setDonationAmount(new BigDecimal(amount.replaceAll("\\D+", "")));
 			}
 			if (dateInput != null && !dateInput.isEmpty()) {
 				search.setDateInput(dateInput);
@@ -220,7 +220,7 @@ public class ProfileDonation extends HttpServlet {
 					for (DonationModel dm : db.getUserDonation(search, username)) {
 						out.print("<tr>"
 								+ "	<td>" + dm.converTimestamp(dm.getDonationDate()) + "</td>"
-								+ "	<td>" + dm.getDonationAmount() + "</td>");
+								+ "	<td>" + "$" + dm.getDonationAmount() + "</td>");
 						if (dm.getOnBehalf() == null || dm.getOnBehalf().isEmpty()) {
 							out.print("<td>NIL</td>");
 						}

@@ -112,16 +112,16 @@ public class ProfileUpdate {
 				}
 			}
 			if (contact_No != null) {
-				updateQuery += " Contact_No = '" + contact_No + "',";
+				updateQuery += " Contact_No = '" + contact_No.replaceAll("'", "''") + "',";
 			}
 			if (bio != null) {
-				updateQuery += " Bio = '" + bio + "',";
+				updateQuery += " Bio = '" + bio.replaceAll("'", "''") + "',";
 			}
 			if (address != null && !address.isEmpty()) {
-				updateQuery += " Address = '" + address + "',";
+				updateQuery += " Address = '" + address.replaceAll("'", "''") + "',";
 			}
 			if (unitNo != null && !unitNo.isEmpty()) {
-				updateQuery += " UnitNo = '" + unitNo + "',";
+				updateQuery += " UnitNo = '" + unitNo.replaceAll("'", "''") + "',";
 			}
 			if ((profilePicName != null && !profilePicName.isEmpty()) && (profilePicByte != null)) {
 				updateQuery += " ProfilePic = '" + db.addPictureWithDupeCheck(profilePicName, profilePicByte) + "',";
