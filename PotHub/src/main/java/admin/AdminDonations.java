@@ -97,6 +97,7 @@ public class AdminDonations extends HttpServlet {
 +"<li>"+"<a href='AdminDonations'>Donations</a>"+"</li>"
 +"<li>"+"<a href='AdminRanks'>Forum Control</a>"+"</li>"
 +"<li>"+"<a href='AdminReports'>Reports</a>"+"</li>"
++"<li><a href='Logs'>Logs</a></li>"
 +"</ul>"
 +"<p id='logout'><a href='AdminLogout'>Logout</a></p>"
 + "</div>"

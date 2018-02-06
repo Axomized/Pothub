@@ -345,10 +345,6 @@
 		<url-pattern>/Login</url-pattern>
 	</servlet-mapping>
 	<servlet-mapping>
-		<servlet-name>LoginPage</servlet-name>
-		<url-pattern></url-pattern>
-	</servlet-mapping>
-	<servlet-mapping>
 		<servlet-name>FoodPref</servlet-name>
 		<url-pattern>/FoodPref</url-pattern>
 	</servlet-mapping>
