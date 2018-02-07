@@ -10,7 +10,7 @@ import javax.mail.internet.AddressException;
 
 import database.Database;
 import database.model.PotcastModel;
-import login.SendEmail;
+import donation.SendEmail;
 
 public class EmailTask extends TimerTask {
 	private Date sendWhen;
@@ -45,7 +45,8 @@ public class EmailTask extends TimerTask {
     }
 
     private void completeTask() throws AddressException, MessagingException, FileNotFoundException, ClassNotFoundException, SQLException {
-       SendEmail.sendEmail(email);
+		SendEmail se = new SendEmail();
+		se.sendEmail(email);
        Database db = new Database(2);
        db.setPotcastEmailAsSend(potcast.getPotcastID());
     }

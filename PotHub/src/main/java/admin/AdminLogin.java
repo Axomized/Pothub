@@ -21,7 +21,7 @@ import database.model.AdminTwoFAModel;
 import database.model.DatabaseUserModel;
 import database.model.LoginModel;
 import login.PBKDF2;
-import login.SendEmail;
+import donation.SendEmail;
 import potcastTalk.Email;
 
 /**
@@ -169,7 +169,8 @@ public class AdminLogin extends HttpServlet {
 			    				db.addTwoFA(atfam);
 			    				
 			    				Email email = new Email(dum.getEmail(),"Approval code for login at "+new Timestamp(System.currentTimeMillis()).toString(),"Your code is "+rando);
-			    				SendEmail.sendEmail(email);
+			    				SendEmail se = new SendEmail();
+			    				se.sendEmail(email);
 			    				response.sendRedirect("AdminLogon");
 			    				return;
 				    		}
