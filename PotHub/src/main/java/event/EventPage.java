@@ -274,6 +274,7 @@ public class EventPage extends HttpServlet {
 	// Report event
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
+			final Database DB = new Database(2);
 			String type = request.getParameter("Type");
 			if(type.isEmpty() || type == null) {
 				doGet(request, response);
@@ -289,7 +290,8 @@ public class EventPage extends HttpServlet {
 				}else {
 					rM = new ReportModel(0, iGN, eventOwner, "Event", timenow, Integer.parseInt(eventID), type, 0);
 				}
-				ReportToURL.execute(rM);
+				System.out.println(ReportToURL.execute(rM));
+				DB.addReport(rM);
 				//ReportModel(String iGNSend, String iGNReceive, String evidenceType, Date date, int evidence, String reason, int guiltyOrNot)
 			}
 		} catch (ClassNotFoundException e) {

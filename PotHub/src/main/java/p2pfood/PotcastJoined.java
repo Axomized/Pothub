@@ -140,8 +140,8 @@ public class PotcastJoined extends HttpServlet {
 							+ "				<li class='dropdown'>"
 							+ "			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 							+ "			        	<ul class='dropdown-menu'>"
-							+ "				        	<li><a href='/PotHub/EventPage'>Events</a></li>"
-							+ "				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>"
+							+ "				        	<li><a href='EventPage'>Events</a></li>"
+							+ "				        	<li><a href='MyEventPage'>My Events</a></li>"
 							+ "			        	</ul>"
 							+ "			    	</li>"
 							+ "				<li class='dropdown'>"
@@ -197,7 +197,7 @@ public class PotcastJoined extends HttpServlet {
 				}
 
 				pw.append("<div id='thumbnailBox'>");
-				pw.append("<img height=150 width=150 src='/PotHub/Image/"
+				pw.append("<img height=150 width=150 src='Image/"
 						+ db.getImageTableByImageID(ap.getPicture()).getImageName() + "'/></div>");
 				pw.append("<div id='column1'>" + "<div class='row1 foodTitle'>" + ap.getTitle() + "</div>");
 				pw.append("<div class='row1'>" + ap.getiGN() + ", " + ap.getStartingCR() + "CR</div>" + "</div>"

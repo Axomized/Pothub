@@ -41,48 +41,50 @@ public class SuccessReporting extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Date date1 = new Date(System.currentTimeMillis());
-		String reportdes = "NOTHING";
-		ArrayList <String> haha = new ArrayList<String>();
-		String ignreceive = request.getParameter("ignsend"); //person reporting
-		String postID = request.getParameter("forumID");
-		String whyreport = request.getParameter("whyyoureport");//checkbox report
-		String textreport = request.getParameter("somanytext");//text report
-		Scanner sc = new Scanner(postID);
-		sc.useDelimiter(",");
-		haha.add(sc.next());
-		haha.add(sc.next());
-		sc.close();
-		String id = haha.get(0);//id of forum post
-		String ignsend = haha.get(1);//person reported
-		if(whyreport.isEmpty() || whyreport == null) {
-			reportdes = textreport;
-		}
-		else {
-			reportdes = whyreport;
-		}
-		System.out.println("The reason for you to report is : " + reportdes);
-		
-		ReportModel rm = new ReportModel();
-		rm.setEvidenceType("Forum");
-		rm.setReason(reportdes);
-		rm.setEvidence(Integer.parseInt(id));
-		rm.setiGNReceive(ignsend);
-		rm.setiGNSend(ignreceive);
-		rm.setDate(date1);
-		rm.setReportID(0);
-		rm.setGuiltyOrNot(0);
 		try {
-			ReportToURL.execute(rm);
-			PrintWriter out = response.getWriter();
-			response.sendRedirect("Forum");
-		}
-		 catch (SQLException e) {
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			Database db = new Database(2);
+		
+			Date date1 = new Date(System.currentTimeMillis());
+			String reportdes = "NOTHING";
+			ArrayList <String> haha = new ArrayList<String>();
+			String ignreceive = request.getParameter("ignsend"); //person reporting
+			String postID = request.getParameter("forumID");
+			String whyreport = request.getParameter("whyyoureport");//checkbox report
+			String textreport = request.getParameter("somanytext");//text report
+			Scanner sc = new Scanner(postID);
+			sc.useDelimiter(",");
+			haha.add(sc.next());
+			haha.add(sc.next());
+			sc.close();
+			String id = haha.get(0);//id of forum post
+			String ignsend = haha.get(1);//person reported
+			if(whyreport.isEmpty() || whyreport == null) {
+				reportdes = textreport;
 			}
+			else {
+				reportdes = whyreport;
+			}
+			System.out.println("The reason for you to report is : " + reportdes);
+			
+			ReportModel rm = new ReportModel();
+			rm.setEvidenceType("Forum");
+			rm.setReason(reportdes);
+			rm.setEvidence(Integer.parseInt(id));
+			rm.setiGNReceive(ignsend);
+			rm.setiGNSend(ignreceive);
+			rm.setDate(date1);
+			rm.setReportID(0);
+			rm.setGuiltyOrNot(0);
+			
+			ReportToURL.execute(rm);
+			db.addReport(rm);
+			
+			response.sendRedirect("Forum");
+		} catch (ClassNotFoundException e1) {
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
 		
 		
 	}

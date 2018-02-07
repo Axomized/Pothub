@@ -141,8 +141,8 @@ public class PotcastMy extends HttpServlet {
 									+ "				<li class='dropdown'>"
 									+ "			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 									+ "			        	<ul class='dropdown-menu'>"
-									+ "				        	<li><a href='/PotHub/EventPage'>Events</a></li>"
-									+ "				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>"
+									+ "				        	<li><a href='EventPage'>Events</a></li>"
+									+ "				        	<li><a href='MyEventPage'>My Events</a></li>"
 									+ "			        	</ul>"
 									+ "			    	</li>"
 									+ "				<li class='dropdown'>"
@@ -194,7 +194,7 @@ public class PotcastMy extends HttpServlet {
 				} else {
 					pw.append("class='active'>");
 				}
-				pw.append("<div id='thumbnailBox'><img height=150 width=150 src='/PotHub/Image/"
+				pw.append("<div id='thumbnailBox'><img height=150 width=150 src='Image/"
 						+ db.getImageByImageID(pot.getPicture()) + "'></div>" + "<div id='column1'>"
 						+ "<div class='row1 foodTitle'>" + pot.getTitle() + "</div>" + "<div class='row1'>"
 						+ pot.getiGN() + ", " + pot.getStartingCR() + "</div></div>" + "<div id='column2'>"

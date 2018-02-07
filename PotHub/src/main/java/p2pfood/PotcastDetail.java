@@ -191,8 +191,8 @@ public class PotcastDetail extends HttpServlet {
 					+ "				<li class='dropdown'>"
 					+ "			        	<a class='dropdown-toggle' data-toggle='dropdown' href='#'>Event</a>"
 					+ "			        	<ul class='dropdown-menu'>"
-					+ "				        	<li><a href='/PotHub/EventPage'>Events</a></li>"
-					+ "				        	<li><a href='/PotHub/MyEventPage'>My Events</a></li>"
+					+ "				        	<li><a href='EventPage'>Events</a></li>"
+					+ "				        	<li><a href='MyEventPage'>My Events</a></li>"
 					+ "			        	</ul>"
 					+ "			    	</li>"
 					+ "				<li class='dropdown'>"
@@ -256,7 +256,7 @@ public class PotcastDetail extends HttpServlet {
 						pw.append("					</div>");
 					}
 					
-					pw.append( "<img height=400 width =400 src='/PotHub/Image/" + db.getImageByImageID(pm.getPicture())
+					pw.append( "<img height=400 width =400 src='Image/" + db.getImageByImageID(pm.getPicture())
 					+ "' id='foodPicture'>" + "<iframe src='//www.google.com/maps/embed/v1/place?" + "&zoom=15"
 					+ "&key=AIzaSyDmftQ7JHdzj22y3wlP01IH_LlTgFQ3JOE" + "&q=Singapore," + dbu.getAddress()
 					+ "' id='foodPicture'></iframe>" + "</div>" + "<div id='foodText'>" + "<div class='pointsDiv'><div class='upper-Divtitle'><p>"
@@ -277,7 +277,7 @@ public class PotcastDetail extends HttpServlet {
 			pw.append("<div class='pointsDiv'><div class='upper-Div'><p>Address</div><div class='thatLine'></div><div id='lower-Div'>" + dbu.getUnitNo() + ", Singapore " + dbu.getAddress() + "</p></div></div>");
 			
 			if(!username.equals(pm.getiGN())){
-				pw.append("<div class='pointsDiv'>" + "<p id='buyerPara1'>Buyers  </p>" + "<ul id='buyersList'>");
+				pw.append("<div class='pointsDiv'>" + "<p id='buyerPara1'>Buyers  </p>" + "<ul id='buyersList1'>");
 				for (PotcastBidModel bid : bids) {
 					pw.append("<li>" + bid.getiGN() + "</li>");
 				}

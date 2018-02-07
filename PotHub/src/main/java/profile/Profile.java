@@ -202,10 +202,10 @@ public class Profile extends HttpServlet {
 					+ "								<div class='thatLine'></div>"
 					+ "								<div id='lower-BioDiv'>");
 					if (dum.getBio() == null || dum.getBio().isEmpty()) {
-						out.print("<p>" + Encode.forHtml(dum.getBio()) + "</p>");
+						out.print("<p></p>");
 					}
 					else {
-						out.print("<p></p>");
+						out.print("<p>" + Encode.forHtml(dum.getBio()) + "</p>");
 					}
 					out.print("						</div>"
 					+ "							</div>"
